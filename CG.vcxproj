@@ -44,11 +44,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\T\Desktop\AL\CG\externals\Imgui;C:\Users\T\Desktop\AL\CG\externals\nlohmann;C:\Users\T\Desktop\AL\CG\externals</IncludePath>
+    <IncludePath>$(ProjectDir)\externals\Imgui;$(ProjectDir)\externals\nlohmann;$(ProjectDir)\externals</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\T\Desktop\AL\CG\externals\Imgui;C:\Users\T\Desktop\AL\CG\externals\nlohmann;C:\Users\T\Desktop\AL\CG\externals</IncludePath>
+    <IncludePath>$(ProjectDir)\externals\Imgui;$(ProjectDir)\externals\nlohmann;$(ProjectDir)\externals</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -59,7 +59,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)\externals\assimp\include;$(ProjectDir)\Application;$(ProjectDir)\Engine;$(ProjectDir\externals</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\externals\assimp\include;$(ProjectDir)\Application;$(ProjectDir)\Engine;$(ProjectDi)r\externals</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
