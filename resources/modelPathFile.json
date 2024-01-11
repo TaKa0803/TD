@@ -1,6 +1,6 @@
 {
   "modelPathFile": {
-    "タグ名" :  ["ディレクトリ名","フォルダ"],
+    "タグ名": [ "ディレクトリ名", "フォルダ" ],
     "ALPlayer": [ "resources", "ALPlayer" ],
     "plane": [ "resources", "plane" ],
     "player": [ "resources", "player" ],
