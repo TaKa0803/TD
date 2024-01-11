@@ -80,7 +80,7 @@ Player::Player() {
 	input_->SetDeadLine(0.3f);
 
 	collider_ = std::make_unique<SphereCollider>();
-	collider_->Initialize(world_);
+	collider_->Initialize("sphere",world_);
 	collider_->SetScale(1.5f);
 
 	//攻撃データの初期化
@@ -253,7 +253,7 @@ void Player::Draw(const Matrix4x4& viewprojection) {
 		Index++;
 	}
 
-	//collider_->Draw();
+	collider_->Draw();
 }
 
 void Player::DebugWindow(const char* name) {

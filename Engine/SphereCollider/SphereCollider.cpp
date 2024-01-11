@@ -1,23 +1,22 @@
 #include "SphereCollider.h"
 #include"InstancingModelManager/InstancingModelManager.h"
 
-void SphereCollider::Initialize(const WorldTransform&world) {
+void SphereCollider::Initialize(const std::string& tag, const WorldTransform&world) {
 	InstancingGameObject::Initialize("sphere");
 
 	world_.SetParent(&world);
 
-	
+	tag_ = tag;
 }
 
+
 void SphereCollider::Update() {
-	
 	world_.scale_ = { wide_,wide_,wide_ };
 	world_.UpdateMatrix();
-	
 }
 
 void SphereCollider::Draw() {
-	InstancingModelManager::GetInstance()->SetWorld(tag_, world_);
+	InstancingModelManager::GetInstance()->SetWorld("sphere", world_);
 }
 
 bool SphereCollider::IsHit(const SphereCollider& sphere, Vector3& backVec) {

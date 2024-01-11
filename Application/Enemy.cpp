@@ -29,7 +29,7 @@ void Enemy::Initialize(const Vector3& position, const WorldTransform* playerWorl
 	mWorlds[RFOOT].translate_ = { 0.5f,-0.8f,0 };
 
 	collider_ = std::make_unique<SphereCollider>();
-	collider_->Initialize(world_);
+	collider_->Initialize("play", world_);
 	collider_->SetScale(1.5f);
 
 
@@ -249,5 +249,5 @@ void Enemy::Draw() {
 		IndexX++;
 	}
 
-	//collider_->Draw();
+	collider_->Draw();
 }

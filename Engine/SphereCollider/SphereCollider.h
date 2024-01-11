@@ -5,7 +5,7 @@ class SphereCollider : InstancingGameObject {
 
 public:
 
-	void Initialize(const WorldTransform& world);
+	void Initialize(const std::string& tag,const WorldTransform& world);
 
 	void Update();
 
@@ -27,8 +27,13 @@ public:
 	float GetScale() { return wide_; }
 
 	Vector3 GetTranslate() { return world_.translate_; }
+
+	std::string GetTag()const { return tag_; }
 private:
 
 	float wide_=1;
 
+	std::string tag_;
+
+	
 };
