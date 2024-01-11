@@ -20,7 +20,7 @@ void SphereCollider::Draw() {
 	InstancingModelManager::GetInstance()->SetWorld(tag_, world_);
 }
 
-bool SphereCollider::IsHit(const SphereCollider& sphere, Vector3 backVec) {
+bool SphereCollider::IsHit(const SphereCollider& sphere, Vector3& backVec) {
 	Vector3 pos = sphere.world_.GetMatWorldTranslate();
 	Vector3 myP = world_.GetMatWorldTranslate();
 

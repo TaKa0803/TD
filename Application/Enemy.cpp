@@ -214,7 +214,8 @@ void Enemy::Update() {
 
 void Enemy::Collision(const SphereCollider& collider) {
 
-	if (collider_->IsHit(collider)) {
+	Vector3 backVec;
+	if (collider_->IsHit(collider,backVec)) {
 
 		state_ = Hit;
 

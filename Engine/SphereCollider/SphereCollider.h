@@ -17,7 +17,7 @@ public:
 	/// <param name="sphere">基の円</param>
 	/// <param name="backVec">基の円の戻る量</param>
 	/// <returns></returns>
-	bool IsHit(const SphereCollider& sphere, Vector3 backVec = Vector3{ 0,0,0 });
+	bool IsHit(const SphereCollider& sphere, Vector3& backVec);
 
 
 	void SetScale(float wide) { wide_ = wide; }
