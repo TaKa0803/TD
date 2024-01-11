@@ -1,4 +1,5 @@
 #include "Instancing/InstancingGameObject.h"
+#include<cassert>
 
 InstancingGameObject::~InstancingGameObject() {
 }
@@ -10,6 +11,12 @@ void InstancingGameObject::Initialize(const std::string& tag) {
 	if (IMM_->SerchTag(tag)) {
 		tag_ = tag;
 	}
+	else {
+		assert(false);
+	}
+
+
+
 }
 
 void InstancingGameObject::Update() {
@@ -18,5 +25,6 @@ void InstancingGameObject::Update() {
 	//タグに対応したモデルにワールド追加
 	IMM_->SetWorld(tag_, world_);
 }
+
 
 

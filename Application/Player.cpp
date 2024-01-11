@@ -274,6 +274,8 @@ void Player::DebugWindow(const char* name) {
 	//model_->DebugParameter(name);
 	ImGui::End();
 
+	collider_->Debug("player C");
+
 	collider_->SetScale(cScale);
 }
 

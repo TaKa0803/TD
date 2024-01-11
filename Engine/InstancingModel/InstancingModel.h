@@ -94,6 +94,8 @@ public:
 	void SetTag(const std::string& tag) { tag_ = tag; }
 
 	void SetTexture(int tex) { setTexture_ = tex; }
+
+	void SetEnableTexture(bool isEnable) { materialData_->enableTexture = isEnable; }
 #pragma endregion
 
 	/// <summary>

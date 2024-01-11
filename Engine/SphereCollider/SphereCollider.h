@@ -4,6 +4,8 @@
 class SphereCollider : InstancingGameObject {
 
 public:
+	//
+	SphereCollider();
 
 	void Initialize(const std::string& tag,const WorldTransform& world);
 
@@ -19,6 +21,8 @@ public:
 	/// <returns></returns>
 	bool IsHit(const SphereCollider& sphere, Vector3& backVec);
 
+	//デバッグImGui
+	void Debug(const char* name);
 
 	void SetScale(float wide) { wide_ = wide; }
 
@@ -33,7 +37,8 @@ private:
 
 	float wide_=1;
 
-	std::string tag_;
+	std::string colliderTag_;
 
+	float alpha_ = 0.5f;
 	
 };

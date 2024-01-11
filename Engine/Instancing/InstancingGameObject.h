@@ -7,16 +7,20 @@
 class InstancingGameObject {
 
 protected:
-
+	//モデルのタグ
 	std::string tag_;
 
+	//ワールド
 	WorldTransform world_;
 
+	//インスタンシングモデルマネージャー
 	InstancingModelManager* IMM_;
 
 public:
+	//ワールド取得
 	const WorldTransform& GetWorld() { return world_; }
 
+	//開放処理
 	virtual ~InstancingGameObject();
 
 	/// <summary>
@@ -29,7 +33,6 @@ public:
 	/// 行列とワールド追加
 	/// </summary>
 	virtual void Update();
-
 
 };
 

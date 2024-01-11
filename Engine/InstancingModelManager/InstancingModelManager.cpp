@@ -136,3 +136,49 @@ void InstancingModelManager::SetTexture(const std::string& tag, int texture) {
 		}
 	}
 }
+
+void InstancingModelManager::SetBlendMode(const std::string& tag, BlendMode blend) {
+	//タグのモデルデータ探索
+	for (auto& model : modeldatas_) {
+		//タグを発見
+		if (model->GetTag() == tag) {
+			//ワールドを追加
+			model->SetBlendMode(blend);
+		}
+	}
+}
+
+void InstancingModelManager::SetFillMode(const std::string& tag, FillMode fillMode) {
+	//タグのモデルデータ探索
+	for (auto& model : modeldatas_) {
+		//タグを発見
+		if (model->GetTag() == tag) {
+			//ワールドを追加
+			model->SetFillMode(fillMode);
+		}
+	}
+}
+
+void InstancingModelManager::SetAlpha(const std::string& tag, float alpha) {
+
+	//タグのモデルデータ探索
+	for (auto& model : modeldatas_) {
+		//タグを発見
+		if (model->GetTag() == tag) {
+			//ワールドを追加
+			model->SetAlpha(alpha);
+		}
+	}
+
+}
+
+void InstancingModelManager::SetEnableTexture(const std::string& tag, bool isEnable) {
+	//タグのモデルデータ探索
+	for (auto& model : modeldatas_) {
+		//タグを発見
+		if (model->GetTag() == tag) {
+			//ワールドを追加
+			model->SetEnableTexture(isEnable);
+		}
+	}
+}

@@ -1,17 +1,29 @@
 #include "SphereCollider.h"
 #include"InstancingModelManager/InstancingModelManager.h"
+#include<imgui.h>
+
+SphereCollider::SphereCollider() {
+
+	world_.scale_ = { wide_,wide_,wide_ };
+
+
+}
 
 void SphereCollider::Initialize(const std::string& tag, const WorldTransform&world) {
 	InstancingGameObject::Initialize("sphere");
 
 	world_.SetParent(&world);
 
-	tag_ = tag;
+	colliderTag_ = tag;
+	
+	//IMM_->SetFillMode(tag_, FillMode::kWireFrame);
+	IMM_->SetAlpha(tag_, alpha_);
+	IMM_->SetEnableTexture(tag_,false);
 }
 
 
 void SphereCollider::Update() {
-	world_.scale_ = { wide_,wide_,wide_ };
+	
 	world_.UpdateMatrix();
 }
 
@@ -41,5 +53,27 @@ bool SphereCollider::IsHit(const SphereCollider& sphere, Vector3& backVec) {
 
 
 	return false;
+}
+
+void SphereCollider::Debug(const char* name) {
+
+	float alpha = alpha_;
+	float wide = wide_;
+
+#ifdef _DEBUG
+	ImGui::Begin(name);
+	ImGui::DragFloat("alpha",&alpha_,0.01f);
+	ImGui::DragFloat("wide", &wide_);
+	ImGui::End();
+#endif // _DEBUG
+
+	if (alpha != alpha_) {
+		IMM_->SetAlpha(tag_, alpha_);
+	}
+
+	if (wide != wide_) {
+		world_.scale_ = { wide_,wide_,wide_ };
+	}
+
 }
 
