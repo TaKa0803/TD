@@ -6,7 +6,7 @@
 
 #include"Input/Input.h"
 #include"Camera/Camera.h"
-#include"Plane.h"
+#include"Object/Objects.h"
 #include"Sprite/Sprite.h"
 
 class GameScene : public IScene {
@@ -40,5 +40,6 @@ private:
 	///以下ゲーム実装
 	std::unique_ptr<Plane>plane_;
 
+	std::unique_ptr<Player>player_;
 
 };

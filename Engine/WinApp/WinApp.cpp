@@ -51,7 +51,7 @@ void WindowApp::Initialize()
 
 	hwnd_ = CreateWindow(
 		wc.lpszClassName,
-		L"LE2A_07_キクチ_タカヤ",
+		L"2305_ゲームタイトル",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,

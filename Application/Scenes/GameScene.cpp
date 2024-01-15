@@ -12,6 +12,7 @@ GameScene::GameScene()
 
 	plane_ = std::make_unique<Plane>();
 
+	player_ = std::make_unique<Player>();
 }
 
 GameScene::~GameScene()
@@ -25,6 +26,8 @@ void GameScene::Initialize()
 	sceneNo = GAME;
 
 	plane_->Initialize();
+
+	player_->Initialize();
 
 	//初期化
 	camera_->Initialize();
@@ -58,6 +61,8 @@ void GameScene::Draw()
 	//地面
 	plane_->Draw(camera_->GetViewProjectionMatrix());
 
+	player_->Draw(camera_->GetViewProjectionMatrix());
+
 	//インスタンシングのモデルを全描画
 	InstancingModelManager::GetInstance()->DrawAllModel(camera_->GetViewProjectionMatrix());
 
@@ -71,6 +76,7 @@ void GameScene::DebugWindows()
 	//カメラのデバッグ表示
 	camera_->DrawDebugWindow("camera");
 
+	player_->DebagWindow();
 
 	plane_->DebagWindow();
 #endif // _DEBUG

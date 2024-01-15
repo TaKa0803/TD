@@ -1,5 +1,5 @@
 #pragma once
-#include"Scenes.h"
+#include"./Scenes/Scenes.h"
 
 
 //基底クラス

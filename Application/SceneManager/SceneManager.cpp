@@ -1,13 +1,13 @@
 #include"SceneManager/SceneManager.h"
 
-#include"Scenes.h"
+#include"./Scenes/Scenes.h"
 
 #include<imgui.h>
 
 
 #pragma region シーンのh
-#include"TitleScene.h"
-#include"GameScene.h"
+#include"./Scenes/TitleScene.h"
+#include"./Scenes/GameScene.h"
 #pragma endregion
 
 

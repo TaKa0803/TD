@@ -101,9 +101,6 @@
     <Filter Include="Engine\WorldTransform">
       <UniqueIdentifier>{26ff3ded-075d-40a8-8e97-ca1e28e99286}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Plane">
-      <UniqueIdentifier>{cf38c74b-f335-4658-9331-119369e98b58}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\SceneManager">
       <UniqueIdentifier>{36e89910-03a8-4e33-9e28-8e50b0fa7df7}</UniqueIdentifier>
     </Filter>
@@ -157,6 +154,15 @@
     </Filter>
     <Filter Include="Application\Scenes\Title">
       <UniqueIdentifier>{b26d77a8-0aa7-44f9-90bd-79d305597957}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Object">
+      <UniqueIdentifier>{e9034c1d-530f-46e7-b177-e72ad03a7fb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Object\Player">
+      <UniqueIdentifier>{2b812c56-008a-4cb5-922c-770ae51576e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Object\Plane">
+      <UniqueIdentifier>{cf38c74b-f335-4658-9331-119369e98b58}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -257,23 +263,8 @@
     <ClCompile Include="Engine\WorldTransform\WorldTransform.cpp">
       <Filter>Engine\WorldTransform</Filter>
     </ClCompile>
-    <ClCompile Include="Application\DebugScene.cpp">
-      <Filter>Application\Scenes\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\GameScene.cpp">
-      <Filter>Application\Scenes\GameScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\MT4Scene.cpp">
-      <Filter>Application\Scenes\MT4</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Plane.cpp">
-      <Filter>Application\Plane</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SceneManager\SceneManager.cpp">
       <Filter>Application\SceneManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\TitleScene.cpp">
-      <Filter>Application\Scenes\Title</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Math\Matirx.cpp">
       <Filter>Engine\Math\Matrix</Filter>
@@ -310,6 +301,24 @@
     </ClCompile>
     <ClCompile Include="Engine\IScene\IScene.cpp">
       <Filter>Application\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scenes\DebugScene.cpp">
+      <Filter>Application\Scenes\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scenes\GameScene.cpp">
+      <Filter>Application\Scenes\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scenes\MT4Scene.cpp">
+      <Filter>Application\Scenes\MT4</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Plane.cpp">
+      <Filter>Application\Object\Plane</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scenes\TitleScene.cpp">
+      <Filter>Application\Scenes\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Player.cpp">
+      <Filter>Application\Object\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -429,23 +438,8 @@
     <ClInclude Include="Engine\WorldTransform\WorldTransform.h">
       <Filter>Engine\WorldTransform</Filter>
     </ClInclude>
-    <ClInclude Include="Application\DebugScene.h">
-      <Filter>Application\Scenes\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\GameScene.h">
-      <Filter>Application\Scenes\GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\MT4Scene.h">
-      <Filter>Application\Scenes\MT4</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Plane.h">
-      <Filter>Application\Plane</Filter>
-    </ClInclude>
     <ClInclude Include="Application\SceneManager\SceneManager.h">
       <Filter>Application\SceneManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\TitleScene.h">
-      <Filter>Application\Scenes\Title</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Math\Vector4.h">
       <Filter>Engine\Math</Filter>
@@ -486,11 +480,32 @@
     <ClInclude Include="Engine\TextureManager\TextureManager.h">
       <Filter>Engine\TextureManager</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Scenes.h">
-      <Filter>Application\SceneManager</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\IScene\IScene.h">
       <Filter>Application\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scenes\DebugScene.h">
+      <Filter>Application\Scenes\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scenes\GameScene.h">
+      <Filter>Application\Scenes\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scenes\MT4Scene.h">
+      <Filter>Application\Scenes\MT4</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Plane.h">
+      <Filter>Application\Object\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scenes\TitleScene.h">
+      <Filter>Application\Scenes\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scenes\Scenes.h">
+      <Filter>Application\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Player.h">
+      <Filter>Application\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Objects.h">
+      <Filter>Application\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
