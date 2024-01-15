@@ -42,7 +42,7 @@ public:
 	static int LoadTex(const std::string& filePath);
 
 	/// <summary>
-	/// 
+	/// 初期化処理
 	/// </summary>
 	/// <param name="DXF_"></param>
 	void Initialize(DirectXFunc* DXF_);

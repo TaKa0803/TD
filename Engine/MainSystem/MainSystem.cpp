@@ -4,6 +4,7 @@
 #include"MT4Scene.h"
 #include"GlobalVariables/GlobalVariables.h"
 #include"RandomNum/RandomNum.h"
+#include"AudioManager/AudioManager.h"
 
 #include"Graphics/Graphics.h"
 
@@ -67,6 +68,11 @@ void MainSystem::Initializes() {
 	randomNumClass_ = RandomNumber::GetInstance();
 	randomNumClass_->RandomNumberProcessInitialize();
 	
+	//音声マネージャ
+	AudioManager *audioManager = AudioManager::GetInstance();
+	audioManager->Initialize();
+	audioManager->LoadAllSoundData();
+	
 }
 
 void MainSystem::MainRoop() {
@@ -104,7 +110,6 @@ GlobalVariables::GetInstance()->Update();
 
 #endif // _DEBUG
 
-		
 		sceneManager->Update();
 		//dScene->Update();
 		//mt4->Update();
