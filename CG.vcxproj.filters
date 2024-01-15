@@ -465,9 +465,6 @@
     <ClInclude Include="Engine\SRVManager\SRVManager.h">
       <Filter>Engine\SRVManager</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\TextureManager\TextureManager.h">
-      <Filter>Engine\TextureManager</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\WinApp\WinApp.h">
       <Filter>Engine\WinApp</Filter>
     </ClInclude>
@@ -548,6 +545,9 @@
     </ClInclude>
     <ClInclude Include="Engine\AudioManager\SoundData.h">
       <Filter>Engine\AudioManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\TextureManager\TextureManager.h">
+      <Filter>Engine\TextureManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
