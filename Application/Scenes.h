@@ -3,6 +3,6 @@
 //シーン
 enum SCENE {
 	TITLE,
-	STAGE,
+	GAME,
 	SceneCount	//使うな
 };

@@ -30,11 +30,11 @@ void TitleScene::Update() {
 	Debug();
 
 	if (input_->TriggerKey(DIK_SPACE)) {
-		sceneNo = STAGE;
+		sceneNo = GAME;
 	}
 
 	if (input_->IsControllerActive() && input_->IsTriggerButton(kButtonB)) {
-		sceneNo = STAGE;
+		sceneNo = GAME;
 	}
 }
 

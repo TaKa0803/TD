@@ -12,18 +12,23 @@
 
 
 
-void SceneManager::Initialize() {
+void SceneManager::Initialize()
+{
 
 	currentSceneNo_ = TITLE;
 	///初期シーン設定
-	
+
 	//シーンの数取得
 	sceneArr_.resize((size_t)SCENE::SceneCount);
-	
+
 	//各シーンの情報設定
 	sceneArr_[TITLE] = std::make_unique<TitleScene>();
-	sceneArr_[STAGE] = std::make_unique<GameScene>();
-	
+	sceneArr_[GAME] = std::make_unique<GameScene>();
+
+	sceneName_.clear();
+	sceneName_.push_back("TITLE");
+	sceneName_.push_back("GAME");
+
 	/*
 	sceneArr_[TITLE] = std::make_unique<TitleScene>();
 	sceneArr_[STAGE] = std::make_unique<PlayScene>();
@@ -31,7 +36,8 @@ void SceneManager::Initialize() {
 	*/
 }
 
-void SceneManager::Update() {
+void SceneManager::Update()
+{
 
 	//デバッグ表示
 	DebugWindow();
@@ -41,7 +47,8 @@ void SceneManager::Update() {
 	currentSceneNo_ = sceneArr_[currentSceneNo_]->GetSceneNo();
 
 	//シーン変更チェック
-	if (prevSceneNo_ != currentSceneNo_) {
+	if (prevSceneNo_ != currentSceneNo_)
+	{
 		//変更していたら		
 		//初期化処理
 		sceneArr_[currentSceneNo_]->Initialize();
@@ -51,33 +58,36 @@ void SceneManager::Update() {
 	sceneArr_[currentSceneNo_]->Update();
 }
 
-void SceneManager::Draw() {
+void SceneManager::Draw()
+{
 	//描画処理
 	sceneArr_[currentSceneNo_]->Draw();
 
 }
 
-void SceneManager::EndFrame() {
+void SceneManager::EndFrame()
+{
 
 }
 
-void SceneManager::Finalize() {
+void SceneManager::Finalize()
+{
 
 }
 
-void SceneManager::DebugWindow() {
+void SceneManager::DebugWindow()
+{
 #ifdef _DEBUG
-	if (!deleteWindow) {
-		ImGui::Begin("SceneManager");
-		ImGui::Text("SceneNo.%d", currentSceneNo_);
-		ImGui::Checkbox("deleteWindow", &deleteWindow);
-		ImGui::End();
-	}
+	ImGui::Begin("SceneManager");
+	ImGui::Text("SceneNo.%d", currentSceneNo_);
+	ImGui::Text("%s", sceneName_[currentSceneNo_].c_str());
+	ImGui::End();
 #endif // _DEBUG
 
 }
 
-SceneManager* SceneManager::GetInstance() {
+SceneManager* SceneManager::GetInstance()
+{
 	static SceneManager ins;
 	return &ins;
 }
