@@ -198,6 +198,7 @@ void Player::Initialize() {
 	ATKAnimationSetup_ = false;
 
 	collider_->SetScale(1.5f);
+	collider_->SetAlpha(0.5f);
 }
 
 void Player::Update() {

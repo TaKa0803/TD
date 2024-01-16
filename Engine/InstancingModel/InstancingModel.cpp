@@ -77,10 +77,6 @@ void InstancingModel::AddWorld(const WorldTransform& world) {
 
 void InstancingModel::Draw(const Matrix4x4& viewProjection, int texture) {
 
-	pso_->PreDraw(DXF_->GetCMDList());
-
-	uvWorld_.UpdateMatrix();
-	materialData_->uvTransform = uvWorld_.matWorld_;
 
 	int index = 0;
 	for (auto& world : worlds_) {
@@ -94,32 +90,42 @@ void InstancingModel::Draw(const Matrix4x4& viewProjection, int texture) {
 		index++;
 	}
 
-	DXF_->GetCMDList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
-	//形状を設定、PSOに設定しているものとはまた別、同じものを設定すると考えておけばいい
-	DXF_->GetCMDList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	
-	
-	//マテリアルCBufferの場所を設定
-	DXF_->GetCMDList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
-	//
-	DXF_->GetCMDList()->SetGraphicsRootConstantBufferView(3, directionalLightResource_->GetGPUVirtualAddress());
+	if (index > 0) {
+		pso_->PreDraw(DXF_->GetCMDList());
 
-	if (setTexture_ == -1) {
-		if (texture == -1) {
-			DXF_->GetCMDList()->SetGraphicsRootDescriptorTable(2, texture_);
+		uvWorld_.UpdateMatrix();
+		materialData_->uvTransform = uvWorld_.matWorld_;
+
+
+
+		DXF_->GetCMDList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
+		//形状を設定、PSOに設定しているものとはまた別、同じものを設定すると考えておけばいい
+		DXF_->GetCMDList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+
+		//マテリアルCBufferの場所を設定
+		DXF_->GetCMDList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+		//
+		DXF_->GetCMDList()->SetGraphicsRootConstantBufferView(3, directionalLightResource_->GetGPUVirtualAddress());
+
+		if (setTexture_ == -1) {
+			if (texture == -1) {
+				DXF_->GetCMDList()->SetGraphicsRootDescriptorTable(2, texture_);
+			}
+			else {
+				//SRVのDescriptorTableの先頭を設定。２はParameter[2]である。
+				DXF_->GetCMDList()->SetGraphicsRootDescriptorTable(2, SRVManager::GetInstance()->GetTextureDescriptorHandle(texture));
+			}
 		}
 		else {
-			//SRVのDescriptorTableの先頭を設定。２はParameter[2]である。
-			DXF_->GetCMDList()->SetGraphicsRootDescriptorTable(2, SRVManager::GetInstance()->GetTextureDescriptorHandle(texture));
+			DXF_->GetCMDList()->SetGraphicsRootDescriptorTable(2, SRVManager::GetInstance()->GetTextureDescriptorHandle(setTexture_));
 		}
-	}else{
-		DXF_->GetCMDList()->SetGraphicsRootDescriptorTable(2, SRVManager::GetInstance()->GetTextureDescriptorHandle(setTexture_));
+		DXF_->GetCMDList()->SetGraphicsRootDescriptorTable(1, instancingHandle_);
+
+		//描画！		
+		DXF_->GetCMDList()->DrawInstanced(point_, index, 0, 0);
+
 	}
-	DXF_->GetCMDList()->SetGraphicsRootDescriptorTable(1, instancingHandle_);
-
-	//描画！		
-	DXF_->GetCMDList()->DrawInstanced(point_,index , 0, 0);
-
 }
 
 void InstancingModel::Initialize(

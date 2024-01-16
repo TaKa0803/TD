@@ -15,7 +15,6 @@ InstancingModelManager* InstancingModelManager::GetInstance() {
 
 void InstancingModelManager::LoadAllModel() {
 
-
 	//読み込むjsonファイル
 	std::string filepath = modelPathFile_;
 	//読み込み用ファイルストリーム
@@ -130,7 +129,7 @@ float InstancingModelManager::GetAlpha(const std::string& tag)
 	//	}
 	//}
 
-	return modelDatas_[tag]->GetMaterialData()->color.w;
+	return modelDatas_[tag]->GetColor().w;
 
 	//タグ未発見
 	//assert(false);

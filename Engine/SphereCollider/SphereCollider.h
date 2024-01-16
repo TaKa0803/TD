@@ -24,6 +24,8 @@ public:
 	//デバッグImGui
 	void Debug(const char* name);
 
+	void SetAlpha(const float alpha);
+
 	void SetScale(float wide) { wide_ = wide; }
 
 	void SetTranslate(const Vector3& pos) { world_.translate_ = pos; }
@@ -39,7 +41,5 @@ private:
 
 	std::string colliderTag_;
 
-	const float alpha_ = 0.5f;
-	
 	bool isDraw_ = true;
 };
