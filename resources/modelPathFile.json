@@ -10,7 +10,7 @@
     "RFoot": [ "resources/Object", "RFoot" ]
   },
   "InstancingmodelPathFile": {
-    "sphere": [ "Engine/ResourceObject", "sphere", 500 ],
+    "sphere": [ "Engine/ResourceObject", "sphere", 1000 ],
     "ALPlayer": [ "resources", "ALPlayer", 1 ],
     "plane": [ "resources", "plane", 1 ],
     "player": [ "resources", "player", 100 ],

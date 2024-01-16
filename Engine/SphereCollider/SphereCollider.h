@@ -7,7 +7,7 @@ public:
 	//
 	SphereCollider();
 
-	void Initialize(const std::string& tag,const WorldTransform& world);
+	void Initialize(const std::string& tag,const WorldTransform& parent);
 
 	void Update();
 
@@ -39,6 +39,7 @@ private:
 
 	std::string colliderTag_;
 
-	float alpha_ = 0.5f;
+	const float alpha_ = 0.5f;
 	
+	bool isDraw_ = true;
 };

@@ -34,7 +34,22 @@ void SceneManager::Initialize() {
 void SceneManager::Update() {
 
 	//デバッグ表示
-	DebugWindow();
+#pragma region メニューバー表示
+
+	if (!ImGui::Begin("Scene", nullptr, ImGuiWindowFlags_MenuBar)) {
+		ImGui::End();
+		assert(false);
+	}
+	if (!ImGui::BeginMenuBar()) { assert(false); }
+
+	if (!deleteWindow) {	
+		ImGui::Text("SceneNo.%d", currentSceneNo_);
+		ImGui::Checkbox("deleteWindow", &deleteWindow);
+	}
+
+#pragma endregion
+
+	
 
 	//シーンチェック
 	prevSceneNo_ = currentSceneNo_;
@@ -49,6 +64,12 @@ void SceneManager::Update() {
 
 	//シーン更新処理
 	sceneArr_[currentSceneNo_]->Update();
+
+#pragma region メニューバー関係
+	ImGui::EndMenuBar();
+	ImGui::End();
+#pragma endregion
+
 }
 
 void SceneManager::Draw() {
@@ -65,17 +86,7 @@ void SceneManager::Finalize() {
 
 }
 
-void SceneManager::DebugWindow() {
-#ifdef _DEBUG
-	if (!deleteWindow) {
-		ImGui::Begin("SceneManager");
-		ImGui::Text("SceneNo.%d", currentSceneNo_);
-		ImGui::Checkbox("deleteWindow", &deleteWindow);
-		ImGui::End();
-	}
-#endif // _DEBUG
 
-}
 
 SceneManager* SceneManager::GetInstance() {
 	static SceneManager ins;

@@ -2,6 +2,7 @@
 
 #include<string>
 #include<vector>
+#include<map>
 #include<iostream>
 #include<InstancingModel/InstancingModel.h>
 
@@ -37,6 +38,13 @@ public:
 	/// </summary>
 	/// <param name="tag"></param>
 	bool SerchTag(const std::string& tag);
+
+	/// <summary>
+	/// タグのモデルのα値取得
+	/// </summary>
+	/// <param name="tag"></param>
+	/// <returns></returns>
+	float GetAlpha(const std::string& tag);
 
 	/// <summary>
 	/// タグのモデルにワールド追加
@@ -88,7 +96,10 @@ private:
 	const std::string groupName_ = "InstancingmodelPathFile";
 
 	//データ
-	std::vector<std::unique_ptr<InstancingModel>>modeldatas_;
+	//std::vector<std::unique_ptr<InstancingModel>>modeldatas_;
+
+	//
+	std::map<std::string, std::unique_ptr<InstancingModel>>modelDatas_;
 
 	//データの最大読み込み量
 	const int maxModelNum = 256;

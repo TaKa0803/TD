@@ -66,7 +66,7 @@ void InstancingModelManager::LoadAllModel() {
 				newModel.reset(InstancingModel::CreateFromOBJ(foldaPath, modelPath, instancingNum));
 				newModel->SetTag(itemName);
 				//送信
-				modeldatas_.push_back(std::move(newModel));
+				modelDatas_[itemName] = std::move(newModel);
 
 				//カウンター増加
 				modelNum++;
@@ -84,16 +84,18 @@ void InstancingModelManager::LoadAllModel() {
 void InstancingModelManager::PreUpdate() {
 
 	//すべてのモデルのワールドデータ初期化
-	for (auto& model : modeldatas_) {
-		model->PreUpdate();
+	for (auto& model : modelDatas_) {
+		model.second->PreUpdate();
 	}
+
+
 
 }
 
 void InstancingModelManager::DrawAllModel(const Matrix4x4& viewProjection) {
 
-	for (auto& model : modeldatas_) {
-		model->Draw(viewProjection);
+	for (auto& model : modelDatas_) {
+		model.second->Draw(viewProjection);
 	}
 
 }
@@ -101,84 +103,123 @@ void InstancingModelManager::DrawAllModel(const Matrix4x4& viewProjection) {
 bool InstancingModelManager::SerchTag(const std::string& tag) {
 
 	//タグ検索
-	for (auto& model : modeldatas_) {
-		//タグが一致した場合
-		if(model->GetTag() == tag){
-			return true;
-		}
+	//for (auto& model : modeldatas_) {
+	//	//タグが一致した場合
+	//	if(model->GetTag() == tag){
+	//		return true;
+	//	}
+	//}
+
+	if (modelDatas_[tag] != nullptr) {
+		return true;
 	}
 
 	//見つからないのでエラー
-	assert(false);
+	//assert(false);
 	return false;
+}
+
+float InstancingModelManager::GetAlpha(const std::string& tag)
+{
+	////タグのモデルデータ探索
+	//for (auto& model : modeldatas_) {
+	//	//タグを発見
+	//	if (model->GetTag() == tag) {
+	//		//ワールドを追加
+	//		return model->GetMaterialData()->color.w;
+	//	}
+	//}
+
+	return modelDatas_[tag]->GetMaterialData()->color.w;
+
+	//タグ未発見
+	//assert(false);
+	//return 0;
 }
 
 void InstancingModelManager::SetWorld(const std::string& tag, const WorldTransform& world) {
 
-	//タグのモデルデータ探索
-	for (auto& model : modeldatas_) {
-		//タグを発見
-		if (model->GetTag() == tag) {
-			//ワールドを追加
-			model->AddWorld(world);
-		}
-	}
+	////タグのモデルデータ探索
+	//for (auto& model : modeldatas_) {
+	//	//タグを発見
+	//	if (model->GetTag() == tag) {
+	//		//ワールドを追加
+	//		model->AddWorld(world);
+	//	}
+	//}
+
+	modelDatas_[tag]->AddWorld(world);
 
 }
 
 void InstancingModelManager::SetTexture(const std::string& tag, int texture) {
-	//タグのモデルデータ探索
-	for (auto& model : modeldatas_) {
-		//タグを発見
-		if (model->GetTag() == tag) {
-			//ワールドを追加
-			model->SetTexture(texture);
-		}
-	}
+	////タグのモデルデータ探索
+	//for (auto& model : modeldatas_) {
+	//	//タグを発見
+	//	if (model->GetTag() == tag) {
+	//		//ワールドを追加
+	//		model->SetTexture(texture);
+	//	}
+	//}
+
+	modelDatas_[tag]->SetTexture(texture);
+
 }
 
 void InstancingModelManager::SetBlendMode(const std::string& tag, BlendMode blend) {
-	//タグのモデルデータ探索
-	for (auto& model : modeldatas_) {
-		//タグを発見
-		if (model->GetTag() == tag) {
-			//ワールドを追加
-			model->SetBlendMode(blend);
-		}
-	}
+	////タグのモデルデータ探索
+	//for (auto& model : modeldatas_) {
+	//	//タグを発見
+	//	if (model->GetTag() == tag) {
+	//		//ワールドを追加
+	//		model->SetBlendMode(blend);
+	//	}
+	//}
+
+	modelDatas_[tag]->SetBlendMode(blend);
 }
 
 void InstancingModelManager::SetFillMode(const std::string& tag, FillMode fillMode) {
 	//タグのモデルデータ探索
-	for (auto& model : modeldatas_) {
-		//タグを発見
-		if (model->GetTag() == tag) {
-			//ワールドを追加
-			model->SetFillMode(fillMode);
-		}
-	}
+	//for (auto& model : modeldatas_) {
+	//	//タグを発見
+	//	if (model->GetTag() == tag) {
+	//		//ワールドを追加
+	//		model->SetFillMode(fillMode);
+	//	}
+	//}
+
+	modelDatas_[tag]->SetFillMode(fillMode);
+
 }
 
 void InstancingModelManager::SetAlpha(const std::string& tag, float alpha) {
 
-	//タグのモデルデータ探索
-	for (auto& model : modeldatas_) {
-		//タグを発見
-		if (model->GetTag() == tag) {
-			//ワールドを追加
-			model->SetAlpha(alpha);
-		}
-	}
+	////タグのモデルデータ探索
+	//for (auto& model : modeldatas_) {
+	//	//タグを発見
+	//	if (model->GetTag() == tag) {
+	//		//ワールドを追加
+	//		model->SetAlpha(alpha);
+	//	}
+	//}
 
+	modelDatas_[tag]->SetAlpha(alpha);
+
+	//タグ未発見
+	//assert(false);
 }
 
 void InstancingModelManager::SetEnableTexture(const std::string& tag, bool isEnable) {
-	//タグのモデルデータ探索
-	for (auto& model : modeldatas_) {
-		//タグを発見
-		if (model->GetTag() == tag) {
-			//ワールドを追加
-			model->SetEnableTexture(isEnable);
-		}
-	}
+	////タグのモデルデータ探索
+	//for (auto& model : modeldatas_) {
+	//	//タグを発見
+	//	if (model->GetTag() == tag) {
+	//		//ワールドを追加
+	//		model->SetEnableTexture(isEnable);
+	//	}
+	//}
+
+	modelDatas_[tag]->SetEnableTexture(isEnable);
+
 }

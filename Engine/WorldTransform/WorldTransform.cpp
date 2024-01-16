@@ -24,11 +24,12 @@ Matrix4x4 WorldTransform::UpdateMatrix() {
 void WorldTransform::DrawDebug(const char*name) {
 #ifdef _DEBUG
 
-	ImGui::Begin(name);
-	ImGui::DragFloat3("pos", &translate_.x, 0.01f);
-	ImGui::DragFloat3("rotate", &rotate_.x, 0.01f);
-	ImGui::DragFloat3("scale", &scale_.x, 0.01f);
-	ImGui::End();
+	if (ImGui::BeginMenu(name)) {
+		ImGui::DragFloat3("pos", &translate_.x, 0.01f);
+		ImGui::DragFloat3("rotate", &rotate_.x, 0.01f);
+		ImGui::DragFloat3("scale", &scale_.x, 0.01f);
+		ImGui::EndMenu();
+	}
 
 #endif // _DEBUG
 }

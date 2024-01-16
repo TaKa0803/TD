@@ -23,12 +23,16 @@ void SphereCollider::Initialize(const std::string& tag, const WorldTransform&wor
 
 
 void SphereCollider::Update() {
-	
 	world_.UpdateMatrix();
 }
 
 void SphereCollider::Draw() {
-	InstancingModelManager::GetInstance()->SetWorld("sphere", world_);
+#ifdef _DEBUG
+	if (isDraw_) {
+		InstancingModelManager::GetInstance()->SetWorld(tag_, world_);
+	}
+#endif // _DEBUG
+
 }
 
 bool SphereCollider::IsHit(const SphereCollider& sphere, Vector3& backVec) {
@@ -57,13 +61,19 @@ bool SphereCollider::IsHit(const SphereCollider& sphere, Vector3& backVec) {
 
 void SphereCollider::Debug(const char* name) {
 
-	float alpha = alpha_;
+	float alpha = IMM_->GetAlpha(tag_);
 	float wide = wide_;
 
+
+
 #ifdef _DEBUG
-	ImGui::Begin(name);
-	ImGui::DragFloat("alpha",&alpha_,0.01f);
-	ImGui::DragFloat("wide", &wide_);
+	std::string cName = name;
+	cName = cName + " collider";
+
+	ImGui::Begin(cName.c_str());
+	ImGui::DragFloat("alpha",&alpha,0.01f);
+	ImGui::DragFloat("wide", &wide_,0.1f);
+	ImGui::Checkbox("isDraw", &isDraw_);
 	ImGui::End();
 #endif // _DEBUG
 

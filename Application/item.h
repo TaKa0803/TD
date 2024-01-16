@@ -7,7 +7,7 @@ static const int modelNum_ = 5;
 
 
 struct ModelAnimeParts {
-	int RoopFrame;
+	int RoopFrame=0;
 	WorldTransform stPartsWorlds[modelNum_];
 	WorldTransform edPartsWorlds[modelNum_];
 };
