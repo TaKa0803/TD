@@ -43,10 +43,8 @@ public:
 	//全モデルの描画
 	void LoadAllSoundData();
 
-	
+	//音の再生
 	void PlaySoundData(const int dataNum);
-
-	
 
 private:
 

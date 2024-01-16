@@ -176,9 +176,6 @@
     <Filter Include="Engine\AudioManager">
       <UniqueIdentifier>{1a68df60-8927-489e-a68e-6fdce05a45ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Audio">
-      <UniqueIdentifier>{630c6cf7-8467-4d9b-b8fa-06a4fa2e6b9e}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\Imgui\imgui.cpp">
@@ -346,9 +343,6 @@
     </ClCompile>
     <ClCompile Include="Engine\AudioManager\AudioManager.cpp">
       <Filter>Engine\AudioManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Audio\Audio.cpp">
-      <Filter>Engine\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -539,9 +533,6 @@
     </ClInclude>
     <ClInclude Include="Engine\AudioManager\AudioManager.h">
       <Filter>Engine\AudioManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Audio\Audio.h">
-      <Filter>Engine\Audio</Filter>
     </ClInclude>
     <ClInclude Include="Engine\AudioManager\SoundData.h">
       <Filter>Engine\AudioManager</Filter>

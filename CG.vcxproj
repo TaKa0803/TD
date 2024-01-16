@@ -120,7 +120,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\TitleScene.cpp" />
     <ClCompile Include="Engine\AssimpManager\AssimpManager.cpp" />
     <ClCompile Include="Engine\AudioManager\AudioManager.cpp" />
-    <ClCompile Include="Engine\Audio\Audio.cpp" />
     <ClCompile Include="Engine\BoxCollider\BoxColider.cpp" />
     <ClCompile Include="Engine\Camera\Camera.cpp" />
     <ClCompile Include="Engine\DirectXFunc\DirectXFunc.cpp" />
@@ -207,7 +206,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\AssimpManager\AssimpManager.h" />
     <ClInclude Include="Engine\AudioManager\AudioManager.h" />
     <ClInclude Include="Engine\AudioManager\SoundData.h" />
-    <ClInclude Include="Engine\Audio\Audio.h" />
     <ClInclude Include="Engine\BoxCollider\BoxColider.h" />
     <ClInclude Include="Engine\Camera\Camera.h" />
     <ClInclude Include="Engine\DirectXFunc\DirectXFunc.h" />
