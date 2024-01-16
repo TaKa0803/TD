@@ -39,6 +39,10 @@ public:
 	friend Quaternion operator+(const Quaternion& q1, const Quaternion& q2) {
 		return { .x{q1.x + q2.x},.y{q1.y + q2.y},.z{q1.z + q2.z},.w{q1.w + q2.w} };
 	}
+
+	friend Quaternion operator*(const float scalar, const Quaternion& v) { return { v.x * scalar, v.y * scalar, v.z * scalar,v.w*scalar }; }
+	//friend Quaternion operator*(const Quaternion& q, const float scalar) { return { q.x * scalar, q.y * scalar, q.z * scalar,q.w * scalar }; }
+
 	Quaternion& operator*=(float s) { x *= s; y *= s; z *= s; w *= s; return *this; }
 #pragma endregion
 

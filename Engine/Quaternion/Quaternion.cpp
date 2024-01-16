@@ -63,8 +63,15 @@ Quaternion Slerp(const Quaternion& q, const Quaternion& qq, const float t)
 		dot*=-1;
 	}
 
+	float EPSILON = 0.0005f;
+
+	if (dot >= 1.0f - EPSILON) {
+		return (1.0f - t) * q0 + t * q1;
+	}
+
 	//なす角を求める
 	float theta = std::acos(dot);
+
 
 	q0 *= (std::sin((1 - t) * theta) / sin(theta));
 
