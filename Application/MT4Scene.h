@@ -1,15 +1,16 @@
 #pragma once
 #include"Quaternion/Quaternion.h"
+#include"IScene/IScene.h"
 
-class MT4Scene {
+
+class MT4Scene : public IScene {
 public:
-	void Initialize();
+	void Initialize() override;
 
-	void Update();
+	void Update() override;
 
-	void Draw();
+	void Draw()override;
 
-	void Finalize();
 
 private:
 

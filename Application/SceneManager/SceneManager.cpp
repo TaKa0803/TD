@@ -8,6 +8,7 @@
 #pragma region シーンのh
 #include"TitleScene.h"
 #include"GameScene.h"
+#include"MT4Scene.h"
 #pragma endregion
 
 
@@ -15,7 +16,6 @@
 void SceneManager::Initialize() {
 
 	currentSceneNo_ = TITLE;
-	///初期シーン設定
 	
 	//シーンの数取得
 	sceneArr_.resize((size_t)SCENE::SceneCount);
@@ -23,7 +23,7 @@ void SceneManager::Initialize() {
 	//各シーンの情報設定
 	sceneArr_[TITLE] = std::make_unique<TitleScene>();
 	sceneArr_[STAGE] = std::make_unique<GameScene>();
-	
+	sceneArr_[MT4] = std::make_unique<MT4Scene>();
 	/*
 	sceneArr_[TITLE] = std::make_unique<TitleScene>();
 	sceneArr_[STAGE] = std::make_unique<PlayScene>();

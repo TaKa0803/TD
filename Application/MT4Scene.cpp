@@ -38,6 +38,4 @@ void MT4Scene::Draw() {
 
 }
 
-void MT4Scene::Finalize() {
 
-}

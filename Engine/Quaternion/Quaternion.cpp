@@ -50,6 +50,19 @@ Quaternion Inverse(const Quaternion& que) {
 }
 
 
+Quaternion Slerp(const Quaternion& q, const Quaternion& q1, const float t)
+{
+	float dot;
+
+	Quaternion q0 = q;
+
+	if (dot < 0) {
+		q0 *= -1;
+		dot*=-1;
+	}
+
+}
+
 Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle) {
 
 	Quaternion ans;

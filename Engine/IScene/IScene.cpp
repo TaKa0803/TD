@@ -1,7 +1,7 @@
 #include "IScene.h"
 
 //初期シーンの設定
-int IScene::sceneNo = TITLE;
+int IScene::sceneNo = MT4;
 
 IScene::~IScene() {}
 

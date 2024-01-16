@@ -36,11 +36,15 @@ public:
 
 		return ans;
 	}
+
+
+	Quaternion& operator*=(float s) { x *= s; y *= s; z *= s; w *= s; return *this; }
 #pragma endregion
 
 
 };
 
+Quaternion Slerp(const Quaternion& q1, const Quaternion& q2, const float t);
 
 //任意軸回転を表すQuaternionの生成
 Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle);
