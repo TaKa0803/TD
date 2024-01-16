@@ -16,7 +16,7 @@
 
 class TextureManager {
 public://シングルトンパターン
-	static TextureManager *GetInstance();
+	static TextureManager* GetInstance();
 
 private:
 	TextureManager() = default;
@@ -46,9 +46,9 @@ public:
 	/// </summary>
 	/// <param name="DXF_"></param>
 	void Initialize(DirectXFunc* DXF_);
-	
+
 	void Finalize();
-		
+
 
 private://メンバ関数
 	/// <summary>
@@ -57,7 +57,7 @@ private://メンバ関数
 	/// <param name="filePath">ファイルパス</param>
 	/// <param name="mipImages"></param>
 	/// <returns></returns>
-	int CreateData(const std::string& filePath,const DirectX::ScratchImage& mipImages);
+	int CreateData(const std::string& filePath, const DirectX::ScratchImage& mipImages);
 
 	/// <summary>
 	/// 似たようなデータがないかチェック
@@ -77,8 +77,8 @@ private://メンバ変数
 	//
 	DirectXFunc* DXF;
 
-	
-	struct Texturedata{
+
+	struct Texturedata {
 		//パスに対応したイテレータ番号
 		int texManagementNumber;
 		//パス
@@ -88,6 +88,6 @@ private://メンバ変数
 	//データ群
 	std::vector<Texturedata*>datas_;
 
-	
+
 	//const size_t maxTexNum_ = 256;
 };

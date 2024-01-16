@@ -173,6 +173,12 @@
     <Filter Include="Application\Effect_BreakBody">
       <UniqueIdentifier>{b4a625f7-324e-47b6-9f18-86de619c933d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\AudioManager">
+      <UniqueIdentifier>{1a68df60-8927-489e-a68e-6fdce05a45ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Audio">
+      <UniqueIdentifier>{630c6cf7-8467-4d9b-b8fa-06a4fa2e6b9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\Imgui\imgui.cpp">
@@ -338,6 +344,12 @@
     <ClCompile Include="Application\BrokenBody.cpp">
       <Filter>Application\Effect_BreakBody</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\AudioManager\AudioManager.cpp">
+      <Filter>Engine\AudioManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\Audio.cpp">
+      <Filter>Engine\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\Object3d.PS.hlsl">
@@ -453,9 +465,6 @@
     <ClInclude Include="Engine\SRVManager\SRVManager.h">
       <Filter>Engine\SRVManager</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\TextureManager\TextureManager.h">
-      <Filter>Engine\TextureManager</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\WinApp\WinApp.h">
       <Filter>Engine\WinApp</Filter>
     </ClInclude>
@@ -528,6 +537,18 @@
     <ClInclude Include="Application\BrokenBody.h">
       <Filter>Application\Effect_BreakBody</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\AudioManager\AudioManager.h">
+      <Filter>Engine\AudioManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\Audio.h">
+      <Filter>Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\AudioManager\SoundData.h">
+      <Filter>Engine\AudioManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\TextureManager\TextureManager.h">
+      <Filter>Engine\TextureManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\Imgui\LICENSE.txt">
@@ -551,6 +572,9 @@
       <Filter>リソース ファイル\shaders\InstancingObject</Filter>
     </None>
     <None Include="resources\PlayerATKData.json">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="resources\jsonfile\resourcePath.json">
       <Filter>リソース ファイル</Filter>
     </None>
   </ItemGroup>
