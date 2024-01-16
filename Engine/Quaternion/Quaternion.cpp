@@ -50,13 +50,18 @@ Quaternion Inverse(const Quaternion& que) {
 }
 
 
+float Dot(const Quaternion& q0, const Quaternion& q1)
+{
+	return { q0.x * q1.x + q0.y * q1.y + q0.z * q1.z + q0.w * q1.w };
+}
+
 Quaternion Slerp(const Quaternion& q, const Quaternion& qq, const float t)
 {
 	Quaternion q0 = q;
 
 	Quaternion q1 = qq;
 
-	float dot = q0.x*q1.x+ q0.y * q1.y+ q0.z * q1.z+ q0.w * q1.w;
+	float dot = Dot(q0, q1);
 	
 	if (dot < 0) {
 		q0 *= -1;
