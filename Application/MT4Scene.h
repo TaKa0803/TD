@@ -15,7 +15,7 @@ public:
 private:
 
 	Quaternion ro1 = MakeRotateAxisAngleQuaternion({ 0.71f,0.71f,0.0f }, 0.3f);
-	Quaternion ro2 = MakeRotateAxisAngleQuaternion({ 0.71f,0.0f,0.71f }, 3.141592f);
+	Quaternion ro2 = { -ro1.x,-ro1.y,-ro1.z,-ro1.w };
 
 	Quaternion inter0 = Slerp(ro1, ro2, 0.0f);
 	Quaternion inter1 = Slerp(ro1, ro2, 0.3f);
