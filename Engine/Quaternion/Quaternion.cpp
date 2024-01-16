@@ -50,6 +50,41 @@ Quaternion Inverse(const Quaternion& que) {
 }
 
 
+float Dot(const Quaternion& q0, const Quaternion& q1)
+{
+	return { q0.x * q1.x + q0.y * q1.y + q0.z * q1.z + q0.w * q1.w };
+}
+
+Quaternion Slerp(const Quaternion& q, const Quaternion& qq, const float t)
+{
+	Quaternion q0 = q;
+
+	Quaternion q1 = qq;
+
+	float dot = Dot(q0, q1);
+	
+	if (dot < 0) {
+		q0 *= -1;
+		dot*=-1;
+	}
+
+	float EPSILON = 0.0005f;
+
+	if (dot >= 1.0f - EPSILON) {
+		return (1.0f - t) * q0 + t * q1;
+	}
+
+	//なす角を求める
+	float theta = std::acos(dot);
+
+
+	q0 *= (std::sin((1 - t) * theta) / sin(theta));
+
+	q1 *= (std::sin(t * theta) / std::sin(theta));
+
+	return q0+q1;
+}
+
 Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle) {
 
 	Quaternion ans;

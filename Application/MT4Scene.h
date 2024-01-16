@@ -1,28 +1,27 @@
 #pragma once
 #include"Quaternion/Quaternion.h"
+#include"IScene/IScene.h"
 
-class MT4Scene {
+
+class MT4Scene : public IScene {
 public:
-	void Initialize();
+	void Initialize() override;
 
-	void Update();
+	void Update() override;
 
-	void Draw();
+	void Draw()override;
 
-	void Finalize();
 
 private:
 
-	Quaternion rotation = MakeRotateAxisAngleQuaternion(Normalize(Vector3{ 1.0f,0.4f,-0.2f }), 0.45f);
+	Quaternion ro1 = MakeRotateAxisAngleQuaternion({ 0.71f,0.71f,0.0f }, 0.3f);
+	Quaternion ro2 = { -ro1.x,-ro1.y,-ro1.z,-ro1.w };
 
-	Vector3 pointY = { 2.1f,-0.9f,1.3f };
-
-	Matrix4x4 rotateMatrix = MakeRotateMatrix(rotation);
-
-	Vector3 rotateByQuaternion = RotateVector(pointY, rotation);
-
-	Vector3 rotateByMatrix = Transform(pointY, rotateMatrix);
-
+	Quaternion inter0 = Slerp(ro1, ro2, 0.0f);
+	Quaternion inter1 = Slerp(ro1, ro2, 0.3f);
+	Quaternion inter2 = Slerp(ro1, ro2, 0.5f);
+	Quaternion inter3 = Slerp(ro1, ro2, 0.7f);
+	Quaternion inter4 = Slerp(ro1, ro2, 1.0f);
 
 };
 

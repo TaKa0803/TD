@@ -18,8 +18,12 @@ public:
 	
 #pragma region オーバーロード
 
-	friend Quaternion operator*(const Quaternion& q, const float f) { return { q.x * f,q.y * f,q.z * f,q.w * f }; }
+	friend Quaternion operator-(const Quaternion& v) { return { -v.x,-v.y,-v.z,-v.w }; }
+	friend Quaternion operator+(const Quaternion& v) { return v; }
 
+
+	friend Quaternion operator*(const float scalar, const Quaternion& v) { return { v.x * scalar, v.y * scalar, v.z * scalar,v.w * scalar }; }
+	friend Quaternion operator*(const Quaternion& q, const float f) { return { q.x * f,q.y * f,q.z * f,q.w * f }; }
 	friend Quaternion operator*(const Quaternion& q, const Quaternion& r) {
 
 		Vector3 qv = Vector3{ q.x, q.y, q.z };
@@ -36,11 +40,20 @@ public:
 
 		return ans;
 	}
+	friend Quaternion operator+(const Quaternion& q1, const Quaternion& q2) {
+		return { .x{q1.x + q2.x},.y{q1.y + q2.y},.z{q1.z + q2.z},.w{q1.w + q2.w} };
+	}
+
+	
+	Quaternion& operator*=(float s) { x *= s; y *= s; z *= s; w *= s; return *this; }
 #pragma endregion
 
 
 };
 
+float Dot(const Quaternion& q1, const Quaternion& q2);
+
+Quaternion Slerp(const Quaternion& q1, const Quaternion& q2, const float t);
 
 //任意軸回転を表すQuaternionの生成
 Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle);

@@ -77,9 +77,6 @@
     <Filter Include="Engine\Particle\ParticlePSO">
       <UniqueIdentifier>{fab02006-19db-4a9f-9c7b-9f901fd730e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Quaternion">
-      <UniqueIdentifier>{77f2b147-65a7-4d3e-9f1f-45b32136345c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\RandomNum">
       <UniqueIdentifier>{9161b365-4df7-4d17-b119-1af68083b1cc}</UniqueIdentifier>
     </Filter>
@@ -176,6 +173,9 @@
     <Filter Include="Engine\AudioManager">
       <UniqueIdentifier>{1a68df60-8927-489e-a68e-6fdce05a45ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Math\Quaternion">
+      <UniqueIdentifier>{77f2b147-65a7-4d3e-9f1f-45b32136345c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\Imgui\imgui.cpp">
@@ -255,7 +255,7 @@
       <Filter>Engine\Particle\ParticlePSO</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Quaternion\Quaternion.cpp">
-      <Filter>Engine\Quaternion</Filter>
+      <Filter>Engine\Math\Quaternion</Filter>
     </ClCompile>
     <ClCompile Include="Engine\RandomNum\RandomNum.cpp">
       <Filter>Engine\RandomNum</Filter>
@@ -445,7 +445,7 @@
       <Filter>Engine\Particle\ParticlePSO</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Quaternion\Quaternion.h">
-      <Filter>Engine\Quaternion</Filter>
+      <Filter>Engine\Math\Quaternion</Filter>
     </ClInclude>
     <ClInclude Include="Engine\RandomNum\RandomNum.h">
       <Filter>Engine\RandomNum</Filter>
