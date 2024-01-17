@@ -2,7 +2,7 @@
 #include<string>
 #include<map>
 #include<wrl.h>
-
+#include<xaudio2.h>
 #include"AudioManager/SoundData.h"
 
 
@@ -35,20 +35,39 @@ private://シングルトンパターン
 
 public:
 
+	/// <summary>
+	/// タグから音声データ取得
+	/// </summary>
+	/// <param name="tag">タグ名</param>
+	/// <returns></returns>
+	static int LoadSoundNum(const std::string& tag);
+	
+	/// <summary>
+	/// 音の再生
+	/// </summary>
+	/// <param name="dataNum">音声データへのnum</param>
+	static void PlaySoundData(const int dataNum);
+
 	//初期化
 	void Initialize();
 
+	//解放処理
 	void Finalize();
 
 	//全モデルの描画
 	void LoadAllSoundData();
 
-	//音の再生
-	void PlaySoundData(const int dataNum);
+	
 
 private:
-
+	//データ読み込み
 	SoundData LoadSoundData(const char* name);
+
+	//タグの音データのnum取得
+	int LoadSoundNumFromTag(const std::string tag);
+
+	//再生
+	void Play(int num);
 
 private:
 
@@ -65,14 +84,14 @@ private:
 
 	IXAudio2MasteringVoice* masterVoice=nullptr;
 
-
-	
-
 	//音のデータの数
 	int soundNum_ = 0;
+
+	//音データ
+	const int maxAudioData_ = 256;
 
 	//要素の番号とタグ名の塊
 	std::map<std::string,int>tagDatas_;
 	//タグ名とデータの塊
-	std::map<int, SoundData*>soundDatas_;
+	std::map<int, SoundData>soundDatas_;
 };

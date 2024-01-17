@@ -1,6 +1,7 @@
 #pragma once
 #include<vector>
 #include<map>
+#include<list>
 #include<d3d12.h>
 #include"DirectXFunc/DirectXFunc.h"
 
@@ -75,7 +76,7 @@ private:
 
 	std::vector<ID3D12Resource*>textureResources_;
 
-	std::vector<ID3D12Resource*>intermediaResources_;
+	std::list<ID3D12Resource*>intermediaResources_;
 
 	//データ群
 	//std::vector<D3D12_GPU_DESCRIPTOR_HANDLE> datas_;

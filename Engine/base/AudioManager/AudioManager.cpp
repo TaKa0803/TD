@@ -33,12 +33,19 @@ void AudioManager::Finalize()
 
 	//音声データ解放
 	for (auto& data : soundDatas_) {
-		delete[] data.second->pBuffer;
+		delete[] data.second.pBuffer;
 
-		data.second->pBuffer = 0;
-		data.second->bufferSize = 0;
-		data.second->wfex = {};
+		data.second.pBuffer = 0;
+		data.second.bufferSize = 0;
+		data.second.wfex = {};
 	}
+}
+
+
+
+int AudioManager::LoadSoundNum(const std::string& tag)
+{
+	return AudioManager::GetInstance()->LoadSoundNumFromTag(tag);
 }
 
 void AudioManager::Initialize()
@@ -99,7 +106,7 @@ void AudioManager::LoadAllSoundData()
 
 				//タグに対応する要素番号取得
 				tagDatas_[itemName] = soundNum_;
-				soundDatas_[soundNum_] = &soundData;
+				soundDatas_[soundNum_] = soundData;
 
 				//カウンター増加
 				soundNum_++;
@@ -153,9 +160,20 @@ void AudioManager::LoadAllSoundData()
 
 
 	//
-	if (strncmp(data.id, "data", 4) != 0) {
-		//データなし
-		assert(0);
+	//if (strncmp(data.id, "data", 4) != 0) {
+	//	//データなし
+	//	assert(0);
+	//}
+
+	while (true) {
+		if (strncmp(data.id, "data", 4) != 0) {
+			fs.seekg(data.size, std::ios_base::cur);
+			//再読み込み
+			fs.read((char*)&data, sizeof(data));
+		}
+		else {
+			break;
+		}
 	}
 
 	//データチャンクのデータ部の読み込み
@@ -174,28 +192,39 @@ void AudioManager::LoadAllSoundData()
 	return soundData;
 }
 
+ int AudioManager::LoadSoundNumFromTag(const std::string tag)
+ {
+	 return tagDatas_[tag];
+ }
+
+ void AudioManager::Play(int num)
+ {
+	 //要素番号のタグからデータ取得
+	 SoundData data = soundDatas_[num];
+
+	 IXAudio2SourceVoice* pSourceVoice = nullptr;
+	 HRESULT hr = xAudio2->CreateSourceVoice(&pSourceVoice, &data.wfex);
+	 //作成失敗
+	 assert(SUCCEEDED(hr));
+
+	 XAUDIO2_BUFFER buf{};
+	 buf.pAudioData = data.pBuffer;
+	 buf.AudioBytes = data.bufferSize;
+	 buf.Flags = XAUDIO2_END_OF_STREAM;
+
+	 hr = pSourceVoice->SubmitSourceBuffer(&buf);
+	 hr = pSourceVoice->Start();
+
+ }
+
+
+
 void AudioManager::PlaySoundData(const int dataNum)
 {
-	//要素番号のタグからデータ取得
-	SoundData *data = soundDatas_[dataNum];
 
-	IXAudio2SourceVoice* pSourceVoice = nullptr;
+	AudioManager* AM = AudioManager::GetInstance();
 
-	HRESULT hr = xAudio2->CreateSourceVoice(&pSourceVoice, &data->wfex);
-
-	//作成失敗
-	assert(SUCCEEDED(hr));
-
-	XAUDIO2_BUFFER buf{};
-	buf.pAudioData = data->pBuffer;
-	buf.AudioBytes = data->bufferSize;
-	buf.Flags = XAUDIO2_END_OF_STREAM;
-
-	hr = pSourceVoice->SubmitSourceBuffer(&buf);
-	hr = pSourceVoice->Start();
-	
-	//再生失敗
-	assert(SUCCEEDED(hr));
+	AM->Play(dataNum);
 
 }
 
