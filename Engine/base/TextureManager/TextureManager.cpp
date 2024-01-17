@@ -96,7 +96,7 @@ void TextureManager::Initialize(DirectXFunc* DXF_)
 {	
 	DXF = DXF_;
 
-	uvChecker_ = TextureManager::LoadTex("Engine/TempData/uvChecker.png");
+	uvChecker_ = TextureManager::LoadTex(uvCheckerTex);
 
 	Log("Complete TextureManager Initialize\n");
 

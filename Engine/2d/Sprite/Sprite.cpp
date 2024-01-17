@@ -251,7 +251,7 @@ void Sprite::Initialize(int texture,
 ) {
 	DXF = DirectXFunc::GetInstance();
 
-	grarphics_ = new GraphicsSystem();
+	grarphics_ = new ObjectPSO();
 	grarphics_->Initialize(DXF->GetDevice());
 
 

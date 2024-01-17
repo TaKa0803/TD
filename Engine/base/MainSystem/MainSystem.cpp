@@ -6,7 +6,7 @@
 #include"RandomNum/RandomNum.h"
 #include"AudioManager/AudioManager.h"
 
-#include"Graphics/Graphics.h"
+#include"SingleGameObjects/ObjectPSO.h"
 
 MainSystem* MainSystem::GetInstance() {
 	static MainSystem instance;

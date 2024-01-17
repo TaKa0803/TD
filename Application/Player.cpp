@@ -94,7 +94,7 @@ Player::Player() {
 		Index++;
 	}
 
-	textureData = TextureManager::LoadTex("resources/Object/player.png");
+	textureData = TextureManager::LoadTex("resources/AppResource/Object/player.png");
 
 
 

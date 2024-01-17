@@ -6,6 +6,7 @@
 #include"struct.h"
 #include"WorldTransform/WorldTransform.h"
 #include"Camera/Camera.h"
+#include"SingleGameObjects/ObjectPSO.h"
 
 #include<vector>
 

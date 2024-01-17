@@ -75,7 +75,7 @@ private://メンバ関数
 private://メンバ変数
 
 	//
-	DirectXFunc* DXF;
+	DirectXFunc* DXF=nullptr;
 
 
 	struct Texturedata {
@@ -88,6 +88,8 @@ private://メンバ変数
 	//データ群
 	std::vector<Texturedata*>datas_;
 
+
+	std::string uvCheckerTex = "resources/SystemResources/uvChecker.png";
 
 	//const size_t maxTexNum_ = 256;
 };

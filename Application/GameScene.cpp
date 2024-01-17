@@ -28,42 +28,42 @@ GameScene::GameScene() {
 		"LFoot",
 		"RFoot"
 	};
-	int texture = TextureManager::LoadTex("resources/Object/enemy.png");
+	int texture = TextureManager::LoadTex("resources/AppResource/Object/enemy.png");
 	for (auto& tag : eModelparts) {
 		IMM->SetTexture(tag, texture);
 	}
 
 
-	texture = TextureManager::LoadTex("resources/UI/skill.png");
+	texture = TextureManager::LoadTex("resources/AppResource/UI/skill.png");
 	skillSp_.reset(Sprite::Create(texture, { 90,90 }, { 90,90 }, { 90,90 }, { 1000,600 }));
 
 
 
-	texture = TextureManager::LoadTex("resources/UI/B.png");
+	texture = TextureManager::LoadTex("resources/AppResource/UI/B.png");
 	BButton_.reset(Sprite::Create(texture, { 180,90 }, { 90,90 }, { 64,64 }, { 1045, 650 }));
 
 
-	texture = TextureManager::LoadTex("resources/UI/punch.png");
+	texture = TextureManager::LoadTex("resources/AppResource/UI/punch.png");
 	punchSp_.reset(Sprite::Create(texture, { 180,90 }, { 90,90 }, { 90,90 }, { 1070,650 }));
 
-	texture = TextureManager::LoadTex("resources/UI/kick.png");
+	texture = TextureManager::LoadTex("resources/AppResource/UI/kick.png");
 	kickSp_.reset(Sprite::Create(texture, { 180,90 }, { 90,90 }, { 90,90 }, { 1070,650 }));
 
 
-	texture = TextureManager::LoadTex("resources/UI/ult.png");
+	texture = TextureManager::LoadTex("resources/AppResource/UI/ult.png");
 	ultSp_.reset(Sprite::Create(texture, { 180,90 }, { 90,90 }, { 90,90 }, { 1070,650 }));
 
 
-	texture = TextureManager::LoadTex("resources/UI/number64x90.png");
+	texture = TextureManager::LoadTex("resources/AppResource/UI/number64x90.png");
 	num1_.reset(Sprite::Create(texture, { 640,90 }, { 64,90 }, { 90,90 }, { 680,90 }));
 	num10_.reset(Sprite::Create(texture, { 640,90 }, { 64,90 }, { 90,90 }, { 610,90 }));
 	num100_.reset(Sprite::Create(texture, { 640,90 }, { 64,90 }, { 90,90 }, { 540,90 }));
 
 
-	texture = TextureManager::LoadTex("resources/UI/black.png");
+	texture = TextureManager::LoadTex("resources/AppResource/UI/black.png");
 	backScreen_.reset(Sprite::Create(texture, { 64,64 }, { 64,64 }, { 1280,720 }));
 
-	texture = TextureManager::LoadTex("resources/UI/result.png");
+	texture = TextureManager::LoadTex("resources/AppResource/UI/result.png");
 	resultText_.reset(Sprite::Create(texture, { 320,90 }, { 320,90 }, { 830,290 }));
 
 
