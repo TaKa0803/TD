@@ -48,6 +48,12 @@ public:
 	/// <param name="dataNum">音声データへのnum</param>
 	static void PlaySoundData(const int dataNum);
 
+	/// <summary>
+	/// 音のストップ
+	/// </summary>
+	/// <param name="num">音の番号</param>
+	static void StopSound(const int num);
+
 	//初期化
 	void Initialize();
 
@@ -57,7 +63,7 @@ public:
 	//全モデルの描画
 	void LoadAllSoundData();
 
-	
+	void StopAllSounds();
 
 private:
 	//データ読み込み
@@ -69,6 +75,7 @@ private:
 	//再生
 	void Play(int num);
 
+	void Stop(int num);
 private:
 
 	//音楽の音声ファイル
@@ -94,4 +101,8 @@ private:
 	std::map<std::string,int>tagDatas_;
 	//タグ名とデータの塊
 	std::map<int, SoundData>soundDatas_;
+
+	//再生中のデータ保存エリア
+	std::map<int, IXAudio2SourceVoice*>playAudioDatas_;
+
 };

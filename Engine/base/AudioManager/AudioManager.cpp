@@ -39,6 +39,8 @@ void AudioManager::Finalize()
 		data.second.bufferSize = 0;
 		data.second.wfex = {};
 	}
+
+	CoUninitialize();
 }
 
 
@@ -46,6 +48,11 @@ void AudioManager::Finalize()
 int AudioManager::LoadSoundNum(const std::string& tag)
 {
 	return AudioManager::GetInstance()->LoadSoundNumFromTag(tag);
+}
+
+void AudioManager::StopSound(const int num)
+{
+	AudioManager::GetInstance()->Stop(num);
 }
 
 void AudioManager::Initialize()
@@ -112,6 +119,21 @@ void AudioManager::LoadAllSoundData()
 				soundNum_++;
 			}
 	}
+}
+
+void AudioManager::StopAllSounds()
+{
+	for (auto& playS : playAudioDatas_) {
+		playS.second->Stop();
+		playS.second->FlushSourceBuffers();
+		playS.second->DestroyVoice();
+
+		playS.second=nullptr;
+
+		
+	}
+
+	playAudioDatas_.clear();
 }
 
  SoundData AudioManager::LoadSoundData(const char* name)
@@ -215,6 +237,21 @@ void AudioManager::LoadAllSoundData()
 	 hr = pSourceVoice->SubmitSourceBuffer(&buf);
 	 hr = pSourceVoice->Start();
 
+	 assert(SUCCEEDED(hr));
+
+	 playAudioDatas_[num] = pSourceVoice;
+ }
+
+ void AudioManager::Stop(int num)
+ {
+	 playAudioDatas_[num]->Stop();
+	 playAudioDatas_[num]->FlushSourceBuffers();
+	 playAudioDatas_[num]->DestroyVoice();
+
+	 playAudioDatas_[num] = nullptr;
+
+	 //キーとデータ削除
+	 playAudioDatas_.erase(num);
  }
 
 

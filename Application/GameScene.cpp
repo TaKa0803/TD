@@ -119,6 +119,9 @@ void GameScene::Initialize() {
 
 	brokenBody_->Initialize();
 
+	//今流れているのを消す
+	AudioManager::GetInstance()->StopAllSounds();
+
 	//BGM再生
 	AudioManager::PlaySoundData(bgm_);
 }
