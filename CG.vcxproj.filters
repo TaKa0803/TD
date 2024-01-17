@@ -176,6 +176,9 @@
     <Filter Include="Engine\Math\Quaternion">
       <UniqueIdentifier>{77f2b147-65a7-4d3e-9f1f-45b32136345c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\FrameChecker">
+      <UniqueIdentifier>{96d22900-1a74-44d9-9741-a2dcfa4d0427}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\Imgui\imgui.cpp">
@@ -200,82 +203,82 @@
       <Filter>Externals\imgui</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Engine\AssimpManager\AssimpManager.cpp">
+    <ClCompile Include="Engine\base\AssimpManager\AssimpManager.cpp">
       <Filter>Engine\AssimpManager</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\BoxCollider\BoxColider.cpp">
+    <ClCompile Include="Engine\3d\BoxCollider\BoxColider.cpp">
       <Filter>Engine\BoxCollider</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Camera\Camera.cpp">
       <Filter>Engine\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\DirectXFunc\DirectXFunc.cpp">
+    <ClCompile Include="Engine\base\DirectXFunc\DirectXFunc.cpp">
       <Filter>Engine\DirectXFunc</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\functions\function.cpp">
+    <ClCompile Include="Engine\base\functions\function.cpp">
       <Filter>Engine\function</Filter>
     </ClCompile>
     <ClCompile Include="Engine\GlobalVariables\GlobalVariables.cpp">
       <Filter>Engine\GlobalVariables</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Graphics\Graphics.cpp">
+    <ClCompile Include="Engine\3d\SingleGameObjects\ObjectPSO.cpp">
       <Filter>Engine\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\IGameObject\GameObject.cpp">
+    <ClCompile Include="Engine\3d\SingleGameObjects\GameObject.cpp">
       <Filter>Engine\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\ImGuiManager\ImGuiManager.cpp">
+    <ClCompile Include="Engine\base\ImGuiManager\ImGuiManager.cpp">
       <Filter>Engine\ImGuiManager</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Input\Input.cpp">
+    <ClCompile Include="Engine\base\Input\Input.cpp">
       <Filter>Engine\Input</Filter>
     </ClCompile>
     <ClCompile Include="Engine\IScene\IScene.cpp">
       <Filter>Application\Scene\IScene</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Log\Log.cpp">
+    <ClCompile Include="Engine\base\Log\Log.cpp">
       <Filter>Engine\Log</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\MainSystem\MainSystem.cpp">
+    <ClCompile Include="Engine\base\MainSystem\MainSystem.cpp">
       <Filter>Engine\MainSystem</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Model\Model.cpp">
+    <ClCompile Include="Engine\3d\SingleGameObjects\Model.cpp">
       <Filter>Engine\Model</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\ModelManager\ModelManager.cpp">
+    <ClCompile Include="Engine\3d\SingleModelManager\ModelManager.cpp">
       <Filter>Engine\ModelManager</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\ParticleEmiter\ParticleEmiter.cpp">
+    <ClCompile Include="Engine\ParticleData\ParticleEmiter\ParticleEmiter.cpp">
       <Filter>Engine\Particle\ParticleEmiter</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Particle\Particle.cpp">
+    <ClCompile Include="Engine\ParticleData\Particle\Particle.cpp">
       <Filter>Engine\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\ParticlePSO\ParticleRootSignature.cpp">
+    <ClCompile Include="Engine\ParticleData\ParticlePSO\ParticleRootSignature.cpp">
       <Filter>Engine\Particle\ParticlePSO</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Quaternion\Quaternion.cpp">
+    <ClCompile Include="Engine\Math\Quaternion.cpp">
       <Filter>Engine\Math\Quaternion</Filter>
     </ClCompile>
     <ClCompile Include="Engine\RandomNum\RandomNum.cpp">
       <Filter>Engine\RandomNum</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Sprite\Sprite.cpp">
+    <ClCompile Include="Engine\2d\Sprite\Sprite.cpp">
       <Filter>Engine\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\SpCommon\SpCommon.cpp">
+    <ClCompile Include="Engine\2d\SpCommon\SpCommon.cpp">
       <Filter>Engine\Sprite\SpCommon</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\SRVManager\SRVManager.cpp">
+    <ClCompile Include="Engine\base\SRVManager\SRVManager.cpp">
       <Filter>Engine\SRVManager</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\TextureManager\TextureManager.cpp">
+    <ClCompile Include="Engine\base\TextureManager\TextureManager.cpp">
       <Filter>Engine\TextureManager</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\WinApp\WinApp.cpp">
+    <ClCompile Include="Engine\base\WinApp\WinApp.cpp">
       <Filter>Engine\WinApp</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\WorldTransform\WorldTransform.cpp">
+    <ClCompile Include="Engine\3d\WorldTransform\WorldTransform.cpp">
       <Filter>Engine\WorldTransform</Filter>
     </ClCompile>
     <ClCompile Include="Application\DebugScene.cpp">
@@ -320,19 +323,19 @@
     <ClCompile Include="Engine\Math\Vector3.cpp">
       <Filter>Engine\Math\Vector3</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\InstancingModel\InstancingModel.cpp">
+    <ClCompile Include="Engine\3d\InstancingGameObject\InstancingModel.cpp">
       <Filter>Engine\Instancing\InstancingModel</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\InstancingPSO\InstancingPSO.cpp">
+    <ClCompile Include="Engine\3d\InstancingGameObject\InstancingPSO.cpp">
       <Filter>Engine\Instancing\InstancingPSO</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\InstancingModelManager\InstancingModelManager.cpp">
+    <ClCompile Include="Engine\3d\InstancingModelManager\InstancingModelManager.cpp">
       <Filter>Engine\Instancing\InstancingModelManager</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Instancing\InstancingGameObject.cpp">
+    <ClCompile Include="Engine\3d\InstancingGameObject\InstancingGameObject.cpp">
       <Filter>Engine\Instancing\InstancingGameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\SphereCollider\SphereCollider.cpp">
+    <ClCompile Include="Engine\3d\SphereCollider\SphereCollider.cpp">
       <Filter>Engine\SphereCollider</Filter>
     </ClCompile>
     <ClCompile Include="Application\item.cpp">
@@ -341,8 +344,11 @@
     <ClCompile Include="Application\BrokenBody.cpp">
       <Filter>Application\Effect_BreakBody</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\AudioManager\AudioManager.cpp">
+    <ClCompile Include="Engine\base\AudioManager\AudioManager.cpp">
       <Filter>Engine\AudioManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\FrameChecker\FrameChecker.cpp">
+      <Filter>Engine\FrameChecker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -390,79 +396,79 @@
     <ClInclude Include="externals\Imgui\imstb_truetype.h">
       <Filter>Externals\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\AssimpManager\AssimpManager.h">
+    <ClInclude Include="Engine\base\AssimpManager\AssimpManager.h">
       <Filter>Engine\AssimpManager</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\BoxCollider\BoxColider.h">
+    <ClInclude Include="Engine\3d\BoxCollider\BoxColider.h">
       <Filter>Engine\BoxCollider</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Camera\Camera.h">
       <Filter>Engine\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\DirectXFunc\DirectXFunc.h">
+    <ClInclude Include="Engine\base\DirectXFunc\DirectXFunc.h">
       <Filter>Engine\DirectXFunc</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\functions\function.h">
+    <ClInclude Include="Engine\base\functions\function.h">
       <Filter>Engine\function</Filter>
     </ClInclude>
     <ClInclude Include="Engine\GlobalVariables\GlobalVariables.h">
       <Filter>Engine\GlobalVariables</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Graphics\Graphics.h">
+    <ClInclude Include="Engine\3d\SingleGameObjects\ObjectPSO.h">
       <Filter>Engine\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\IGameObject\GameObject.h">
+    <ClInclude Include="Engine\3d\SingleGameObjects\GameObject.h">
       <Filter>Engine\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\ImGuiManager\ImGuiManager.h">
+    <ClInclude Include="Engine\base\ImGuiManager\ImGuiManager.h">
       <Filter>Engine\ImGuiManager</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Input\Input.h">
+    <ClInclude Include="Engine\base\Input\Input.h">
       <Filter>Engine\Input</Filter>
     </ClInclude>
     <ClInclude Include="Engine\IScene\IScene.h">
       <Filter>Application\Scene\IScene</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Log\Log.h">
+    <ClInclude Include="Engine\base\Log\Log.h">
       <Filter>Engine\Log</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\MainSystem\MainSystem.h">
+    <ClInclude Include="Engine\base\MainSystem\MainSystem.h">
       <Filter>Engine\MainSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Model\Model.h">
+    <ClInclude Include="Engine\3d\SingleGameObjects\Model.h">
       <Filter>Engine\Model</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\ModelManager\ModelManager.h">
+    <ClInclude Include="Engine\3d\SingleModelManager\ModelManager.h">
       <Filter>Engine\ModelManager</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\ParticleEmiter\ParticleEmiter.h">
+    <ClInclude Include="Engine\ParticleData\ParticleEmiter\ParticleEmiter.h">
       <Filter>Engine\Particle\ParticleEmiter</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Particle\Particle.h">
+    <ClInclude Include="Engine\ParticleData\Particle\Particle.h">
       <Filter>Engine\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\ParticlePSO\ParticleRootSignature.h">
+    <ClInclude Include="Engine\ParticleData\ParticlePSO\ParticleRootSignature.h">
       <Filter>Engine\Particle\ParticlePSO</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Quaternion\Quaternion.h">
+    <ClInclude Include="Engine\Math\Quaternion.h">
       <Filter>Engine\Math\Quaternion</Filter>
     </ClInclude>
     <ClInclude Include="Engine\RandomNum\RandomNum.h">
       <Filter>Engine\RandomNum</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Sprite\Sprite.h">
+    <ClInclude Include="Engine\2d\Sprite\Sprite.h">
       <Filter>Engine\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\SpCommon\SpCommon.h">
+    <ClInclude Include="Engine\2d\SpCommon\SpCommon.h">
       <Filter>Engine\Sprite\SpCommon</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\SRVManager\SRVManager.h">
+    <ClInclude Include="Engine\base\SRVManager\SRVManager.h">
       <Filter>Engine\SRVManager</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\WinApp\WinApp.h">
+    <ClInclude Include="Engine\base\WinApp\WinApp.h">
       <Filter>Engine\WinApp</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\WorldTransform\WorldTransform.h">
+    <ClInclude Include="Engine\3d\WorldTransform\WorldTransform.h">
       <Filter>Engine\WorldTransform</Filter>
     </ClInclude>
     <ClInclude Include="Application\Scenes.h">
@@ -510,19 +516,19 @@
     <ClInclude Include="Engine\Math\Vector3.h">
       <Filter>Engine\Math\Vector3</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\InstancingModel\InstancingModel.h">
+    <ClInclude Include="Engine\3d\InstancingGameObject\InstancingModel.h">
       <Filter>Engine\Instancing\InstancingModel</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Instancing\InstancingGameObject.h">
+    <ClInclude Include="Engine\3d\InstancingGameObject\InstancingGameObject.h">
       <Filter>Engine\Instancing\InstancingGameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\InstancingPSO\InstancingPSO.h">
+    <ClInclude Include="Engine\3d\InstancingGameObject\InstancingPSO.h">
       <Filter>Engine\Instancing\InstancingPSO</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\InstancingModelManager\InstancingModelManager.h">
+    <ClInclude Include="Engine\3d\InstancingModelManager\InstancingModelManager.h">
       <Filter>Engine\Instancing\InstancingModelManager</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\SphereCollider\SphereCollider.h">
+    <ClInclude Include="Engine\3d\SphereCollider\SphereCollider.h">
       <Filter>Engine\SphereCollider</Filter>
     </ClInclude>
     <ClInclude Include="Application\item.h">
@@ -531,14 +537,17 @@
     <ClInclude Include="Application\BrokenBody.h">
       <Filter>Application\Effect_BreakBody</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\AudioManager\AudioManager.h">
+    <ClInclude Include="Engine\base\AudioManager\AudioManager.h">
       <Filter>Engine\AudioManager</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\AudioManager\SoundData.h">
+    <ClInclude Include="Engine\base\AudioManager\SoundData.h">
       <Filter>Engine\AudioManager</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\TextureManager\TextureManager.h">
+    <ClInclude Include="Engine\base\TextureManager\TextureManager.h">
       <Filter>Engine\TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\FrameChecker\FrameChecker.h">
+      <Filter>Engine\FrameChecker</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

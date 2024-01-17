@@ -1,5 +1,8 @@
 #include "GameScene.h"
+#ifdef _DEBUG
 #include<imgui.h>
+#endif // _DEBUG
+
 
 #include"InstancingModelManager/InstancingModelManager.h"
 #include"TextureManager/TextureManager.h"

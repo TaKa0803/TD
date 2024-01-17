@@ -2,7 +2,10 @@
 
 #include"Scenes.h"
 
+#ifdef _DEBUG
 #include<imgui.h>
+#endif // _DEBUG
+
 
 
 #pragma region シーンのh
@@ -35,7 +38,7 @@ void SceneManager::Update() {
 
 	//デバッグ表示
 #pragma region メニューバー表示
-
+#ifdef _DEBUG
 	if (!ImGui::Begin("Scene", nullptr, ImGuiWindowFlags_MenuBar)) {
 		ImGui::End();
 		assert(false);
@@ -46,7 +49,7 @@ void SceneManager::Update() {
 		ImGui::Text("SceneNo.%d", currentSceneNo_);
 		ImGui::Checkbox("deleteWindow", &deleteWindow);
 	}
-
+#endif // _DEBUG
 #pragma endregion
 
 	
@@ -66,8 +69,12 @@ void SceneManager::Update() {
 	sceneArr_[currentSceneNo_]->Update();
 
 #pragma region メニューバー関係
+#ifdef _DEBUG
 	ImGui::EndMenuBar();
 	ImGui::End();
+#endif // _DEBUG
+
+
 #pragma endregion
 
 }

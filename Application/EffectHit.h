@@ -1,5 +1,5 @@
 #pragma once
-#include"Model/Model.h"
+#include<SingleGameObjects/Model.h>
 #include"WorldTransform/WorldTransform.h"
 #include"Camera/Camera.h"
 #include<list>
