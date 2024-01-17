@@ -2,12 +2,16 @@
 
 #include"Scenes.h"
 
+#ifdef _DEBUG
 #include<imgui.h>
+#endif // _DEBUG
+
 
 
 #pragma region シーンのh
 #include"TitleScene.h"
 #include"GameScene.h"
+#include"MT4Scene.h"
 #pragma endregion
 
 
@@ -15,7 +19,6 @@
 void SceneManager::Initialize() {
 
 	currentSceneNo_ = TITLE;
-	///初期シーン設定
 	
 	//シーンの数取得
 	sceneArr_.resize((size_t)SCENE::SceneCount);
@@ -23,7 +26,7 @@ void SceneManager::Initialize() {
 	//各シーンの情報設定
 	sceneArr_[TITLE] = std::make_unique<TitleScene>();
 	sceneArr_[STAGE] = std::make_unique<GameScene>();
-	
+	sceneArr_[MT4] = std::make_unique<MT4Scene>();
 	/*
 	sceneArr_[TITLE] = std::make_unique<TitleScene>();
 	sceneArr_[STAGE] = std::make_unique<PlayScene>();
@@ -34,7 +37,22 @@ void SceneManager::Initialize() {
 void SceneManager::Update() {
 
 	//デバッグ表示
-	DebugWindow();
+#pragma region メニューバー表示
+#ifdef _DEBUG
+	if (!ImGui::Begin("Scene", nullptr, ImGuiWindowFlags_MenuBar)) {
+		ImGui::End();
+		assert(false);
+	}
+	if (!ImGui::BeginMenuBar()) { assert(false); }
+
+	if (!deleteWindow) {	
+		ImGui::Text("SceneNo.%d", currentSceneNo_);
+		ImGui::Checkbox("deleteWindow", &deleteWindow);
+	}
+#endif // _DEBUG
+#pragma endregion
+
+	
 
 	//シーンチェック
 	prevSceneNo_ = currentSceneNo_;
@@ -49,6 +67,16 @@ void SceneManager::Update() {
 
 	//シーン更新処理
 	sceneArr_[currentSceneNo_]->Update();
+
+#pragma region メニューバー関係
+#ifdef _DEBUG
+	ImGui::EndMenuBar();
+	ImGui::End();
+#endif // _DEBUG
+
+
+#pragma endregion
+
 }
 
 void SceneManager::Draw() {
@@ -65,17 +93,7 @@ void SceneManager::Finalize() {
 
 }
 
-void SceneManager::DebugWindow() {
-#ifdef _DEBUG
-	if (!deleteWindow) {
-		ImGui::Begin("SceneManager");
-		ImGui::Text("SceneNo.%d", currentSceneNo_);
-		ImGui::Checkbox("deleteWindow", &deleteWindow);
-		ImGui::End();
-	}
-#endif // _DEBUG
 
-}
 
 SceneManager* SceneManager::GetInstance() {
 	static SceneManager ins;

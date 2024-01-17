@@ -58,6 +58,9 @@ void Enemy::Initialize(const Vector3& position, const WorldTransform* playerWorl
 	stopData_.edPartsWorlds[RARM].rotate_ = { 0.0f,0.0f,-0.3f };
 	stopData_.edPartsWorlds[LFOOT].rotate_ = { -0.05f,0.0f,0.0f };
 	stopData_.edPartsWorlds[RFOOT].rotate_ = { -0.05f,0.0f,0.0f };
+
+
+	
 }
 
 void Enemy::Update() {

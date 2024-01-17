@@ -94,7 +94,7 @@ Player::Player() {
 		Index++;
 	}
 
-	textureData = TextureManager::LoadTex("resources/Object/player.png");
+	textureData = TextureManager::LoadTex("resources/AppResource/Object/player.png");
 
 
 
@@ -197,6 +197,8 @@ void Player::Initialize() {
 	ATKConboCount = 1;
 	ATKAnimationSetup_ = false;
 
+	collider_->SetScale(1.5f);
+	collider_->SetAlpha(0.5f);
 }
 
 void Player::Update() {
@@ -258,8 +260,7 @@ void Player::Draw(const Matrix4x4& viewprojection) {
 
 void Player::DebugWindow(const char* name) {
 
-	float cScale = collider_->GetScale();
-
+	
 	ImGui::Begin(name);
 	world_.DrawDebug(name);
 
@@ -268,13 +269,11 @@ void Player::DebugWindow(const char* name) {
 	mWorlds[RARM].DrawDebug("RA");
 	mWorlds[LFOOT].DrawDebug("LF");
 	mWorlds[RFOOT].DrawDebug("RF");
-
-	ImGui::DragFloat("collider scale", &cScale, 0.1f, 1, 10);
-
 	//model_->DebugParameter(name);
+	
+	collider_->Debug(name);
 	ImGui::End();
 
-	collider_->SetScale(cScale);
 }
 
 

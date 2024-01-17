@@ -1,5 +1,5 @@
 #pragma once
-#include"Instancing/InstancingGameObject.h"
+#include"InstancingGameObject/InstancingGameObject.h"
 #include"SphereCollider/SphereCollider.h"
 #include<iostream>
 #include"item.h"

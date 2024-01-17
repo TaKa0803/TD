@@ -44,11 +44,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)\externals\Imgui;$(ProjectDir)\externals\nlohmann;$(ProjectDir)\externals</IncludePath>
+    <IncludePath>$(ProjectDir)\externals\Imgui;$(ProjectDir)\externals\nlohmann;$(ProjectDir)\externals;$(ProjectDir)imgui</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)\externals\Imgui;$(ProjectDir)\externals\nlohmann;$(ProjectDir)\externals</IncludePath>
+    <IncludePath>$(ProjectDir)\externals\imgui;$(ProjectDir)\externals\nlohmann;$(ProjectDir)\externals</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -59,7 +59,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)\externals\assimp\include;$(ProjectDir)\Application;$(ProjectDir)\Engine;$(ProjectDi)r\externals</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\externals\assimp\include;$(ProjectDir)\Application;$(ProjectDir)\Engine;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\2d;$(ProjectDir)Engine\Math;$(ProjectDir)Engine\base;$(ProjectDir)Engine\ParticleData</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -87,7 +87,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)\externals\assimp\include;$(ProjectDir)\Application;$(ProjectDir)\Engine;$(ProjectDir\externals</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\externals\assimp\include;$(ProjectDir)\Application;$(ProjectDir)\Engine;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\2d;$(ProjectDir)Engine\Math;$(ProjectDir)Engine\base;$(ProjectDir)Engine\ParticleData</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -118,43 +120,43 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Player.cpp" />
     <ClCompile Include="Application\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Application\TitleScene.cpp" />
-    <ClCompile Include="Engine\AssimpManager\AssimpManager.cpp" />
-    <ClCompile Include="Engine\AudioManager\AudioManager.cpp" />
-    <ClCompile Include="Engine\Audio\Audio.cpp" />
-    <ClCompile Include="Engine\BoxCollider\BoxColider.cpp" />
+    <ClCompile Include="Engine\base\AssimpManager\AssimpManager.cpp" />
+    <ClCompile Include="Engine\base\AudioManager\AudioManager.cpp" />
+    <ClCompile Include="Engine\3d\BoxCollider\BoxColider.cpp" />
     <ClCompile Include="Engine\Camera\Camera.cpp" />
-    <ClCompile Include="Engine\DirectXFunc\DirectXFunc.cpp" />
-    <ClCompile Include="Engine\functions\function.cpp" />
+    <ClCompile Include="Engine\base\DirectXFunc\DirectXFunc.cpp" />
+    <ClCompile Include="Engine\FrameChecker\FrameChecker.cpp" />
+    <ClCompile Include="Engine\base\functions\function.cpp" />
     <ClCompile Include="Engine\GlobalVariables\GlobalVariables.cpp" />
-    <ClCompile Include="Engine\Graphics\Graphics.cpp" />
-    <ClCompile Include="Engine\IGameObject\GameObject.cpp" />
-    <ClCompile Include="Engine\ImGuiManager\ImGuiManager.cpp" />
-    <ClCompile Include="Engine\Input\Input.cpp" />
-    <ClCompile Include="Engine\InstancingModelManager\InstancingModelManager.cpp" />
-    <ClCompile Include="Engine\InstancingModel\InstancingModel.cpp" />
-    <ClCompile Include="Engine\InstancingPSO\InstancingPSO.cpp" />
-    <ClCompile Include="Engine\Instancing\InstancingGameObject.cpp" />
+    <ClCompile Include="Engine\3d\SingleGameObjects\ObjectPSO.cpp" />
+    <ClCompile Include="Engine\3d\SingleGameObjects\GameObject.cpp" />
+    <ClCompile Include="Engine\base\ImGuiManager\ImGuiManager.cpp" />
+    <ClCompile Include="Engine\base\Input\Input.cpp" />
+    <ClCompile Include="Engine\3d\InstancingModelManager\InstancingModelManager.cpp" />
+    <ClCompile Include="Engine\3d\InstancingGameObject\InstancingModel.cpp" />
+    <ClCompile Include="Engine\3d\InstancingGameObject\InstancingPSO.cpp" />
+    <ClCompile Include="Engine\3d\InstancingGameObject\InstancingGameObject.cpp" />
     <ClCompile Include="Engine\IScene\IScene.cpp" />
-    <ClCompile Include="Engine\Log\Log.cpp" />
-    <ClCompile Include="Engine\MainSystem\MainSystem.cpp" />
+    <ClCompile Include="Engine\base\Log\Log.cpp" />
+    <ClCompile Include="Engine\base\MainSystem\MainSystem.cpp" />
     <ClCompile Include="Engine\Math\Matirx.cpp" />
     <ClCompile Include="Engine\Math\Matrix.cpp" />
     <ClCompile Include="Engine\Math\Vector2.cpp" />
     <ClCompile Include="Engine\Math\Vector3.cpp" />
-    <ClCompile Include="Engine\ModelManager\ModelManager.cpp" />
-    <ClCompile Include="Engine\Model\Model.cpp" />
-    <ClCompile Include="Engine\ParticleEmiter\ParticleEmiter.cpp" />
-    <ClCompile Include="Engine\ParticlePSO\ParticleRootSignature.cpp" />
-    <ClCompile Include="Engine\Particle\Particle.cpp" />
-    <ClCompile Include="Engine\Quaternion\Quaternion.cpp" />
+    <ClCompile Include="Engine\3d\SingleModelManager\ModelManager.cpp" />
+    <ClCompile Include="Engine\3d\SingleGameObjects\Model.cpp" />
+    <ClCompile Include="Engine\ParticleData\ParticleEmiter\ParticleEmiter.cpp" />
+    <ClCompile Include="Engine\ParticleData\ParticlePSO\ParticleRootSignature.cpp" />
+    <ClCompile Include="Engine\ParticleData\Particle\Particle.cpp" />
+    <ClCompile Include="Engine\Math\Quaternion.cpp" />
     <ClCompile Include="Engine\RandomNum\RandomNum.cpp" />
-    <ClCompile Include="Engine\SpCommon\SpCommon.cpp" />
-    <ClCompile Include="Engine\SphereCollider\SphereCollider.cpp" />
-    <ClCompile Include="Engine\Sprite\Sprite.cpp" />
-    <ClCompile Include="Engine\SRVManager\SRVManager.cpp" />
-    <ClCompile Include="Engine\TextureManager\TextureManager.cpp" />
-    <ClCompile Include="Engine\WinApp\WinApp.cpp" />
-    <ClCompile Include="Engine\WorldTransform\WorldTransform.cpp" />
+    <ClCompile Include="Engine\2d\SpCommon\SpCommon.cpp" />
+    <ClCompile Include="Engine\3d\SphereCollider\SphereCollider.cpp" />
+    <ClCompile Include="Engine\2d\Sprite\Sprite.cpp" />
+    <ClCompile Include="Engine\base\SRVManager\SRVManager.cpp" />
+    <ClCompile Include="Engine\base\TextureManager\TextureManager.cpp" />
+    <ClCompile Include="Engine\base\WinApp\WinApp.cpp" />
+    <ClCompile Include="Engine\3d\WorldTransform\WorldTransform.cpp" />
     <ClCompile Include="externals\Imgui\imgui.cpp" />
     <ClCompile Include="externals\Imgui\imgui_demo.cpp" />
     <ClCompile Include="externals\Imgui\imgui_draw.cpp" />
@@ -204,44 +206,44 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\SceneManager\SceneManager.h" />
     <ClInclude Include="Application\Scenes.h" />
     <ClInclude Include="Application\TitleScene.h" />
-    <ClInclude Include="Engine\AssimpManager\AssimpManager.h" />
-    <ClInclude Include="Engine\AudioManager\AudioManager.h" />
-    <ClInclude Include="Engine\AudioManager\SoundData.h" />
-    <ClInclude Include="Engine\Audio\Audio.h" />
-    <ClInclude Include="Engine\BoxCollider\BoxColider.h" />
+    <ClInclude Include="Engine\base\AssimpManager\AssimpManager.h" />
+    <ClInclude Include="Engine\base\AudioManager\AudioManager.h" />
+    <ClInclude Include="Engine\base\AudioManager\SoundData.h" />
+    <ClInclude Include="Engine\3d\BoxCollider\BoxColider.h" />
     <ClInclude Include="Engine\Camera\Camera.h" />
-    <ClInclude Include="Engine\DirectXFunc\DirectXFunc.h" />
-    <ClInclude Include="Engine\functions\function.h" />
+    <ClInclude Include="Engine\base\DirectXFunc\DirectXFunc.h" />
+    <ClInclude Include="Engine\FrameChecker\FrameChecker.h" />
+    <ClInclude Include="Engine\base\functions\function.h" />
     <ClInclude Include="Engine\GlobalVariables\GlobalVariables.h" />
-    <ClInclude Include="Engine\Graphics\Graphics.h" />
-    <ClInclude Include="Engine\IGameObject\GameObject.h" />
-    <ClInclude Include="Engine\ImGuiManager\ImGuiManager.h" />
-    <ClInclude Include="Engine\Input\Input.h" />
-    <ClInclude Include="Engine\InstancingModelManager\InstancingModelManager.h" />
-    <ClInclude Include="Engine\InstancingModel\InstancingModel.h" />
-    <ClInclude Include="Engine\InstancingPSO\InstancingPSO.h" />
-    <ClInclude Include="Engine\Instancing\InstancingGameObject.h" />
+    <ClInclude Include="Engine\3d\SingleGameObjects\ObjectPSO.h" />
+    <ClInclude Include="Engine\3d\SingleGameObjects\GameObject.h" />
+    <ClInclude Include="Engine\base\ImGuiManager\ImGuiManager.h" />
+    <ClInclude Include="Engine\base\Input\Input.h" />
+    <ClInclude Include="Engine\3d\InstancingModelManager\InstancingModelManager.h" />
+    <ClInclude Include="Engine\3d\InstancingGameObject\InstancingModel.h" />
+    <ClInclude Include="Engine\3d\InstancingGameObject\InstancingPSO.h" />
+    <ClInclude Include="Engine\3d\InstancingGameObject\InstancingGameObject.h" />
     <ClInclude Include="Engine\IScene\IScene.h" />
-    <ClInclude Include="Engine\Log\Log.h" />
-    <ClInclude Include="Engine\MainSystem\MainSystem.h" />
+    <ClInclude Include="Engine\base\Log\Log.h" />
+    <ClInclude Include="Engine\base\MainSystem\MainSystem.h" />
     <ClInclude Include="Engine\Math\Matrix.h" />
     <ClInclude Include="Engine\Math\Vector2.h" />
     <ClInclude Include="Engine\Math\Vector3.h" />
     <ClInclude Include="Engine\Math\Vector4.h" />
-    <ClInclude Include="Engine\ModelManager\ModelManager.h" />
-    <ClInclude Include="Engine\Model\Model.h" />
-    <ClInclude Include="Engine\ParticleEmiter\ParticleEmiter.h" />
-    <ClInclude Include="Engine\ParticlePSO\ParticleRootSignature.h" />
-    <ClInclude Include="Engine\Particle\Particle.h" />
-    <ClInclude Include="Engine\Quaternion\Quaternion.h" />
+    <ClInclude Include="Engine\3d\SingleModelManager\ModelManager.h" />
+    <ClInclude Include="Engine\3d\SingleGameObjects\Model.h" />
+    <ClInclude Include="Engine\ParticleData\ParticleEmiter\ParticleEmiter.h" />
+    <ClInclude Include="Engine\ParticleData\ParticlePSO\ParticleRootSignature.h" />
+    <ClInclude Include="Engine\ParticleData\Particle\Particle.h" />
+    <ClInclude Include="Engine\Math\Quaternion.h" />
     <ClInclude Include="Engine\RandomNum\RandomNum.h" />
-    <ClInclude Include="Engine\SpCommon\SpCommon.h" />
-    <ClInclude Include="Engine\SphereCollider\SphereCollider.h" />
-    <ClInclude Include="Engine\Sprite\Sprite.h" />
-    <ClInclude Include="Engine\SRVManager\SRVManager.h" />
-    <ClInclude Include="Engine\TextureManager\TextureManager.h" />
-    <ClInclude Include="Engine\WinApp\WinApp.h" />
-    <ClInclude Include="Engine\WorldTransform\WorldTransform.h" />
+    <ClInclude Include="Engine\2d\SpCommon\SpCommon.h" />
+    <ClInclude Include="Engine\3d\SphereCollider\SphereCollider.h" />
+    <ClInclude Include="Engine\2d\Sprite\Sprite.h" />
+    <ClInclude Include="Engine\base\SRVManager\SRVManager.h" />
+    <ClInclude Include="Engine\base\TextureManager\TextureManager.h" />
+    <ClInclude Include="Engine\base\WinApp\WinApp.h" />
+    <ClInclude Include="Engine\3d\WorldTransform\WorldTransform.h" />
     <ClInclude Include="externals\Imgui\imconfig.h" />
     <ClInclude Include="externals\Imgui\imgui.h" />
     <ClInclude Include="externals\Imgui\imgui_impl_dx12.h" />
@@ -257,6 +259,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ProjectReference Include="externals\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
       <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
+    </ProjectReference>
+    <ProjectReference Include="externals\imgui\imgui.vcxproj">
+      <Project>{83e6d898-002f-4495-8ffd-40bb189340bd}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

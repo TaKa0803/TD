@@ -46,11 +46,7 @@ public:
 	void Finalize();
 private:
 
-	/// <summary>
-	/// デバッグウィンドウ表示
-	/// </summary>
-	void DebugWindow();
-
+	
 	bool deleteWindow = false;
 private:
 
