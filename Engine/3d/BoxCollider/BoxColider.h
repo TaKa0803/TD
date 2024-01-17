@@ -1,6 +1,6 @@
 #pragma once
 #include"WorldTransform/WorldTransform.h"
-#include"Model/Model.h"
+#include"SingleGameObjects/Model.h"
 
 
 enum class ColliderType {
