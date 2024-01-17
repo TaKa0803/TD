@@ -12,7 +12,7 @@
 #include"DirectXFunc/DirectXFunc.h"
 
 #include<wrl.h>
-
+#include<map>
 
 class TextureManager {
 public://シングルトンパターン
@@ -86,8 +86,11 @@ private://メンバ変数
 	};
 
 	//データ群
-	std::vector<Texturedata*>datas_;
+	//std::vector<Texturedata*>datas_;
 
+	std::map<std::string, int>tagNumDatas_;
+
+	std::map<int, Texturedata*>texDatas_;
 
 	std::string uvCheckerTex = "resources/SystemResources/uvChecker.png";
 

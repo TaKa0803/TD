@@ -26,17 +26,8 @@
     <Filter Include="Application">
       <UniqueIdentifier>{bc915592-d029-42cb-9dc1-2c59f827a485}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\AssimpManager">
-      <UniqueIdentifier>{ab8c53a0-f1a8-42c9-b7d6-fea95bfc7ef6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\BoxCollider">
-      <UniqueIdentifier>{09afeb45-81fe-410b-a976-bc1ba4f10bd5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Camera">
       <UniqueIdentifier>{27fd4482-54e1-45c4-9f6a-c5a7f94b7089}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\DirectXFunc">
-      <UniqueIdentifier>{1e47ab57-fc55-478e-aa6c-8e7968365d56}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\function">
       <UniqueIdentifier>{8efd4604-5691-42cd-aeb4-f626313b361c}</UniqueIdentifier>
@@ -44,29 +35,8 @@
     <Filter Include="Engine\GlobalVariables">
       <UniqueIdentifier>{2697f0e7-d541-45af-b14e-81ae313f4304}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Graphics">
-      <UniqueIdentifier>{27659dd4-f21a-4566-bcf0-1f33bcf0f727}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\ImGuiManager">
-      <UniqueIdentifier>{6ab900e7-aef5-49f0-afb8-2def601b9b94}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Input">
-      <UniqueIdentifier>{21cc0232-8675-4bf7-be83-79a6f2d067da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Log">
-      <UniqueIdentifier>{d9fb2fe6-daf0-424a-b91b-ded5c83c9fb2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\MainSystem">
-      <UniqueIdentifier>{904012f9-47d0-4b62-85e6-8091233b713a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Math">
       <UniqueIdentifier>{af88b2dd-e7a5-4454-8460-f169ea683235}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Model">
-      <UniqueIdentifier>{e4939527-b542-4ece-ae2c-264e977fb571}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\ModelManager">
-      <UniqueIdentifier>{e01612f9-7968-4a3f-b6dd-39c324512800}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Particle">
       <UniqueIdentifier>{84ae8f00-234e-47b7-a9a3-26d8bbe1b8bb}</UniqueIdentifier>
@@ -85,15 +55,6 @@
     </Filter>
     <Filter Include="Engine\Sprite\SpCommon">
       <UniqueIdentifier>{594f85b1-a40c-4314-9564-34e4e9c619bf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\SRVManager">
-      <UniqueIdentifier>{c208d6f3-ae11-4ce5-abbf-847c564acd33}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\TextureManager">
-      <UniqueIdentifier>{966485a2-d443-4bd9-9e50-38610e36c7ee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\WinApp">
-      <UniqueIdentifier>{2fc260e0-8786-4938-a048-814a7001aa8e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\WorldTransform">
       <UniqueIdentifier>{26ff3ded-075d-40a8-8e97-ca1e28e99286}</UniqueIdentifier>
@@ -140,29 +101,8 @@
     <Filter Include="Engine\Math\Vector3">
       <UniqueIdentifier>{64074c6b-79fd-4616-8143-cda99edd3856}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\GameObject">
-      <UniqueIdentifier>{fbdbd28c-a40f-4fd6-92d0-94fca2defce6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Instancing">
-      <UniqueIdentifier>{86e3345c-01af-455a-b4b1-e940f02cc09d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Instancing\InstancingModel">
-      <UniqueIdentifier>{29874223-963b-436e-8a73-6ce30dba9adb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Instancing\InstancingPSO">
-      <UniqueIdentifier>{e271f2d9-8ff8-4507-b95a-ef2dd4606f65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Instancing\InstancingGameObject">
-      <UniqueIdentifier>{74688762-b41c-4fef-b3c1-a624a0b3c10a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Instancing\InstancingModelManager">
-      <UniqueIdentifier>{5a2b32d6-3602-4ee4-82cd-5e993174b817}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Scene\IScene">
       <UniqueIdentifier>{78480750-f44d-4f35-bb5b-f1717e439f9b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\SphereCollider">
-      <UniqueIdentifier>{4c6856cb-787f-4abf-8283-d771d9687677}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\item">
       <UniqueIdentifier>{3be0ad49-44a3-41d3-8c28-6055f6dfcf71}</UniqueIdentifier>
@@ -170,14 +110,83 @@
     <Filter Include="Application\Effect_BreakBody">
       <UniqueIdentifier>{b4a625f7-324e-47b6-9f18-86de619c933d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\AudioManager">
-      <UniqueIdentifier>{1a68df60-8927-489e-a68e-6fdce05a45ac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Math\Quaternion">
       <UniqueIdentifier>{77f2b147-65a7-4d3e-9f1f-45b32136345c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\FrameChecker">
       <UniqueIdentifier>{96d22900-1a74-44d9-9741-a2dcfa4d0427}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3d">
+      <UniqueIdentifier>{ea9c0fe0-c2ff-4d18-8461-8a83d248e108}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3d\GameObject">
+      <UniqueIdentifier>{9fc52e81-c045-44fe-a391-b69899a45a46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3d\InstancingGameObject">
+      <UniqueIdentifier>{e7199a03-d9c2-46e9-9ac7-84be1b17b778}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3d\BoxCollider">
+      <UniqueIdentifier>{09afeb45-81fe-410b-a976-bc1ba4f10bd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3d\SphereCollider">
+      <UniqueIdentifier>{4c6856cb-787f-4abf-8283-d771d9687677}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3d\GameObject\GameObject">
+      <UniqueIdentifier>{fbdbd28c-a40f-4fd6-92d0-94fca2defce6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3d\GameObject\Graphics">
+      <UniqueIdentifier>{27659dd4-f21a-4566-bcf0-1f33bcf0f727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3d\GameObject\ModelManager">
+      <UniqueIdentifier>{e01612f9-7968-4a3f-b6dd-39c324512800}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3d\InstancingGameObject\InstancingGameObject">
+      <UniqueIdentifier>{74688762-b41c-4fef-b3c1-a624a0b3c10a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3d\InstancingGameObject\InstancingModel">
+      <UniqueIdentifier>{29874223-963b-436e-8a73-6ce30dba9adb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3d\InstancingGameObject\InstancingModelManager">
+      <UniqueIdentifier>{5a2b32d6-3602-4ee4-82cd-5e993174b817}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3d\InstancingGameObject\InstancingPSO">
+      <UniqueIdentifier>{e271f2d9-8ff8-4507-b95a-ef2dd4606f65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\base">
+      <UniqueIdentifier>{a7e893a1-b673-49a4-bfe0-4c3b8df70884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\base\AudioManager">
+      <UniqueIdentifier>{1a68df60-8927-489e-a68e-6fdce05a45ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\base\DirectXFunc">
+      <UniqueIdentifier>{1e47ab57-fc55-478e-aa6c-8e7968365d56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\base\ImGuiManager">
+      <UniqueIdentifier>{6ab900e7-aef5-49f0-afb8-2def601b9b94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\base\Input">
+      <UniqueIdentifier>{21cc0232-8675-4bf7-be83-79a6f2d067da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\base\Log">
+      <UniqueIdentifier>{d9fb2fe6-daf0-424a-b91b-ded5c83c9fb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\base\MainSystem">
+      <UniqueIdentifier>{904012f9-47d0-4b62-85e6-8091233b713a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3d\GameObject\Model">
+      <UniqueIdentifier>{e4939527-b542-4ece-ae2c-264e977fb571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\base\AssimpManager">
+      <UniqueIdentifier>{ab8c53a0-f1a8-42c9-b7d6-fea95bfc7ef6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\base\SRVManager">
+      <UniqueIdentifier>{c208d6f3-ae11-4ce5-abbf-847c564acd33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\base\TextureManager">
+      <UniqueIdentifier>{966485a2-d443-4bd9-9e50-38610e36c7ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\base\WinApp">
+      <UniqueIdentifier>{2fc260e0-8786-4938-a048-814a7001aa8e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -204,16 +213,16 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\base\AssimpManager\AssimpManager.cpp">
-      <Filter>Engine\AssimpManager</Filter>
+      <Filter>Engine\base\AssimpManager</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\BoxCollider\BoxColider.cpp">
-      <Filter>Engine\BoxCollider</Filter>
+      <Filter>Engine\3d\BoxCollider</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Camera\Camera.cpp">
       <Filter>Engine\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Engine\base\DirectXFunc\DirectXFunc.cpp">
-      <Filter>Engine\DirectXFunc</Filter>
+      <Filter>Engine\base\DirectXFunc</Filter>
     </ClCompile>
     <ClCompile Include="Engine\base\functions\function.cpp">
       <Filter>Engine\function</Filter>
@@ -222,31 +231,31 @@
       <Filter>Engine\GlobalVariables</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\SingleGameObjects\ObjectPSO.cpp">
-      <Filter>Engine\Graphics</Filter>
+      <Filter>Engine\3d\GameObject\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\SingleGameObjects\GameObject.cpp">
-      <Filter>Engine\GameObject</Filter>
+      <Filter>Engine\3d\GameObject\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Engine\base\ImGuiManager\ImGuiManager.cpp">
-      <Filter>Engine\ImGuiManager</Filter>
+      <Filter>Engine\base\ImGuiManager</Filter>
     </ClCompile>
     <ClCompile Include="Engine\base\Input\Input.cpp">
-      <Filter>Engine\Input</Filter>
+      <Filter>Engine\base\Input</Filter>
     </ClCompile>
     <ClCompile Include="Engine\IScene\IScene.cpp">
       <Filter>Application\Scene\IScene</Filter>
     </ClCompile>
     <ClCompile Include="Engine\base\Log\Log.cpp">
-      <Filter>Engine\Log</Filter>
+      <Filter>Engine\base\Log</Filter>
     </ClCompile>
     <ClCompile Include="Engine\base\MainSystem\MainSystem.cpp">
-      <Filter>Engine\MainSystem</Filter>
+      <Filter>Engine\base\MainSystem</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\SingleGameObjects\Model.cpp">
-      <Filter>Engine\Model</Filter>
+      <Filter>Engine\3d\GameObject\Model</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\SingleModelManager\ModelManager.cpp">
-      <Filter>Engine\ModelManager</Filter>
+      <Filter>Engine\3d\GameObject\ModelManager</Filter>
     </ClCompile>
     <ClCompile Include="Engine\ParticleData\ParticleEmiter\ParticleEmiter.cpp">
       <Filter>Engine\Particle\ParticleEmiter</Filter>
@@ -270,13 +279,13 @@
       <Filter>Engine\Sprite\SpCommon</Filter>
     </ClCompile>
     <ClCompile Include="Engine\base\SRVManager\SRVManager.cpp">
-      <Filter>Engine\SRVManager</Filter>
+      <Filter>Engine\base\SRVManager</Filter>
     </ClCompile>
     <ClCompile Include="Engine\base\TextureManager\TextureManager.cpp">
-      <Filter>Engine\TextureManager</Filter>
+      <Filter>Engine\base\TextureManager</Filter>
     </ClCompile>
     <ClCompile Include="Engine\base\WinApp\WinApp.cpp">
-      <Filter>Engine\WinApp</Filter>
+      <Filter>Engine\base\WinApp</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\WorldTransform\WorldTransform.cpp">
       <Filter>Engine\WorldTransform</Filter>
@@ -324,19 +333,19 @@
       <Filter>Engine\Math\Vector3</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\InstancingGameObject\InstancingModel.cpp">
-      <Filter>Engine\Instancing\InstancingModel</Filter>
+      <Filter>Engine\3d\InstancingGameObject\InstancingModel</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\InstancingGameObject\InstancingPSO.cpp">
-      <Filter>Engine\Instancing\InstancingPSO</Filter>
+      <Filter>Engine\3d\InstancingGameObject\InstancingPSO</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\InstancingModelManager\InstancingModelManager.cpp">
-      <Filter>Engine\Instancing\InstancingModelManager</Filter>
+      <Filter>Engine\3d\InstancingGameObject\InstancingModelManager</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\InstancingGameObject\InstancingGameObject.cpp">
-      <Filter>Engine\Instancing\InstancingGameObject</Filter>
+      <Filter>Engine\3d\InstancingGameObject\InstancingGameObject</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3d\SphereCollider\SphereCollider.cpp">
-      <Filter>Engine\SphereCollider</Filter>
+      <Filter>Engine\3d\SphereCollider</Filter>
     </ClCompile>
     <ClCompile Include="Application\item.cpp">
       <Filter>Application\item</Filter>
@@ -345,7 +354,7 @@
       <Filter>Application\Effect_BreakBody</Filter>
     </ClCompile>
     <ClCompile Include="Engine\base\AudioManager\AudioManager.cpp">
-      <Filter>Engine\AudioManager</Filter>
+      <Filter>Engine\base\AudioManager</Filter>
     </ClCompile>
     <ClCompile Include="Engine\FrameChecker\FrameChecker.cpp">
       <Filter>Engine\FrameChecker</Filter>
@@ -397,16 +406,16 @@
       <Filter>Externals\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\AssimpManager\AssimpManager.h">
-      <Filter>Engine\AssimpManager</Filter>
+      <Filter>Engine\base\AssimpManager</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3d\BoxCollider\BoxColider.h">
-      <Filter>Engine\BoxCollider</Filter>
+      <Filter>Engine\3d\BoxCollider</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Camera\Camera.h">
       <Filter>Engine\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\DirectXFunc\DirectXFunc.h">
-      <Filter>Engine\DirectXFunc</Filter>
+      <Filter>Engine\base\DirectXFunc</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\functions\function.h">
       <Filter>Engine\function</Filter>
@@ -415,31 +424,31 @@
       <Filter>Engine\GlobalVariables</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3d\SingleGameObjects\ObjectPSO.h">
-      <Filter>Engine\Graphics</Filter>
+      <Filter>Engine\3d\GameObject\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3d\SingleGameObjects\GameObject.h">
-      <Filter>Engine\GameObject</Filter>
+      <Filter>Engine\3d\GameObject\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\ImGuiManager\ImGuiManager.h">
-      <Filter>Engine\ImGuiManager</Filter>
+      <Filter>Engine\base\ImGuiManager</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\Input\Input.h">
-      <Filter>Engine\Input</Filter>
+      <Filter>Engine\base\Input</Filter>
     </ClInclude>
     <ClInclude Include="Engine\IScene\IScene.h">
       <Filter>Application\Scene\IScene</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\Log\Log.h">
-      <Filter>Engine\Log</Filter>
+      <Filter>Engine\base\Log</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\MainSystem\MainSystem.h">
-      <Filter>Engine\MainSystem</Filter>
+      <Filter>Engine\base\MainSystem</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3d\SingleGameObjects\Model.h">
-      <Filter>Engine\Model</Filter>
+      <Filter>Engine\3d\GameObject\Model</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3d\SingleModelManager\ModelManager.h">
-      <Filter>Engine\ModelManager</Filter>
+      <Filter>Engine\3d\GameObject\ModelManager</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ParticleData\ParticleEmiter\ParticleEmiter.h">
       <Filter>Engine\Particle\ParticleEmiter</Filter>
@@ -463,10 +472,10 @@
       <Filter>Engine\Sprite\SpCommon</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\SRVManager\SRVManager.h">
-      <Filter>Engine\SRVManager</Filter>
+      <Filter>Engine\base\SRVManager</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\WinApp\WinApp.h">
-      <Filter>Engine\WinApp</Filter>
+      <Filter>Engine\base\WinApp</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3d\WorldTransform\WorldTransform.h">
       <Filter>Engine\WorldTransform</Filter>
@@ -517,19 +526,19 @@
       <Filter>Engine\Math\Vector3</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3d\InstancingGameObject\InstancingModel.h">
-      <Filter>Engine\Instancing\InstancingModel</Filter>
+      <Filter>Engine\3d\InstancingGameObject\InstancingModel</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3d\InstancingGameObject\InstancingGameObject.h">
-      <Filter>Engine\Instancing\InstancingGameObject</Filter>
+      <Filter>Engine\3d\InstancingGameObject\InstancingGameObject</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3d\InstancingGameObject\InstancingPSO.h">
-      <Filter>Engine\Instancing\InstancingPSO</Filter>
+      <Filter>Engine\3d\InstancingGameObject\InstancingPSO</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3d\InstancingModelManager\InstancingModelManager.h">
-      <Filter>Engine\Instancing\InstancingModelManager</Filter>
+      <Filter>Engine\3d\InstancingGameObject\InstancingModelManager</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3d\SphereCollider\SphereCollider.h">
-      <Filter>Engine\SphereCollider</Filter>
+      <Filter>Engine\3d\SphereCollider</Filter>
     </ClInclude>
     <ClInclude Include="Application\item.h">
       <Filter>Application\item</Filter>
@@ -538,13 +547,13 @@
       <Filter>Application\Effect_BreakBody</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\AudioManager\AudioManager.h">
-      <Filter>Engine\AudioManager</Filter>
+      <Filter>Engine\base\AudioManager</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\AudioManager\SoundData.h">
-      <Filter>Engine\AudioManager</Filter>
+      <Filter>Engine\base\AudioManager</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\TextureManager\TextureManager.h">
-      <Filter>Engine\TextureManager</Filter>
+      <Filter>Engine\base\TextureManager</Filter>
     </ClInclude>
     <ClInclude Include="Engine\FrameChecker\FrameChecker.h">
       <Filter>Engine\FrameChecker</Filter>

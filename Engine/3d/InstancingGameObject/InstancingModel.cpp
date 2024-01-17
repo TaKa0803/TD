@@ -90,6 +90,11 @@ void InstancingModel::Draw(const Matrix4x4& viewProjection, int texture) {
 		index++;
 	}
 
+	if (index > instancingNum_) {
+		//indexが初期作成量よりおおい
+		assert(false);
+	}
+
 	if (index > 0) {
 		pso_->PreDraw(DXF_->GetCMDList());
 

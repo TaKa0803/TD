@@ -127,7 +127,6 @@ private:
 
 	InstancingPSO* pso_;
 
-
 	std::string tag_;
 
 	D3D12_GPU_DESCRIPTOR_HANDLE texture_;

@@ -20,6 +20,6 @@
     "LFoot": [ "resources/AppResource/Object", "LFoot", 1000 ],
     "RFoot": [ "resources/AppResource/Object", "RFoot", 1000 ],
     "Flag": [ "resources/AppResource/Object", "Flag", 10 ],
-    "EBox": [ "resources/AppResource/Particle", "EBox", 5000 ]
+    "EBox": [ "resources/AppResource/Particle", "EBox", 50000 ]
   }
 }

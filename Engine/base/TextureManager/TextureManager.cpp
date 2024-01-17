@@ -160,32 +160,48 @@ int TextureManager::CreateData(const std::string& filePath,const DirectX::Scratc
 	Texturedata texData = { texNum,filePath };
 
 	//データをプッシュ
-	datas_.emplace_back(&texData);
+	tagNumDatas_[filePath] = texNum;
+	texDatas_[texNum] = &texData;
 
 	return texNum;
 }
 
 bool TextureManager::CheckSameData(const std::string& filepath) {
 	//同じデータか確認
-	for (auto& data : datas_) {
+	/*for (auto& data : datas_) {
 		if (data->filePath == filepath) {
 			return true;
 		}
+	}*/
+
+	auto it = tagNumDatas_.find(filepath);
+
+	if (it != tagNumDatas_.end()) {
+		//見つかった場合
+		return true;
 	}
-	//無ければ
-	return false;
+	else {
+		//無ければ
+		return false;
+	}
+
+
 }
 
 int TextureManager::GetDataFromPath(const std::string& path) {
-	for (auto& data : datas_) {
-		if (data->filePath == path) {
-			return data->texManagementNumber;
-		}
-	}
+	auto it = tagNumDatas_.find(path);
 
+	if (it != tagNumDatas_.end()) {
+		//見つかった場合
+		return tagNumDatas_[path];
+	}
+	else {
 	//見つからないのはおかしいのでエラー
 	assert(false);
 	return-1;
+	}
+
+	
 }
 
 

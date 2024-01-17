@@ -1,5 +1,6 @@
 #pragma once
 #include<vector>
+#include<map>
 #include<d3d12.h>
 #include"DirectXFunc/DirectXFunc.h"
 
@@ -43,8 +44,9 @@ public:
 	ID3D12Resource* PushTextureResource(ID3D12Resource* resource);
 
 	int AddtextureNum(D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU) {
-		datas_.emplace_back(textureSrvHandleGPU);
-		return (int)datas_.size() - 1;
+		SRVsize_++;
+		hDatas_[SRVsize_] = textureSrvHandleGPU;
+		return SRVsize_;
 	}
 public:
 
@@ -52,7 +54,7 @@ public:
 
 	uint32_t GetSRVSize()const { return descriptorSizeSRV; }
 
-	int GetDataSize() { return (int)datas_.size(); }
+	int GetDataSize() { return (int)hDatas_.size(); }
 
 	//使ってないサイズを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPU_DES_HANDLE();
@@ -60,7 +62,7 @@ public:
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPU_DES_HANDLE();
 
 	D3D12_GPU_DESCRIPTOR_HANDLE GetTextureDescriptorHandle(int num) {
-		return datas_[num];
+		return hDatas_[num];
 	}
 private:
 
@@ -76,7 +78,11 @@ private:
 	std::vector<ID3D12Resource*>intermediaResources_;
 
 	//データ群
-	std::vector<D3D12_GPU_DESCRIPTOR_HANDLE> datas_;
+	//std::vector<D3D12_GPU_DESCRIPTOR_HANDLE> datas_;
+	std::map<int, D3D12_GPU_DESCRIPTOR_HANDLE>hDatas_;
+	
+	//SRV値初期値
+	int SRVsize_ = 3;
 
 	const size_t maxSRVSize_ = 256;
 };
