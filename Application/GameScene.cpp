@@ -71,7 +71,7 @@ GameScene::GameScene() {
 	
 	sound_ = AudioManager::LoadSoundNum("audio1");
 
-	bgm_ = AudioManager::LoadSoundNum("BGM");
+	bgm_ = AudioManager::LoadSoundNum("maou");
 }
 
 GameScene::~GameScene() {
