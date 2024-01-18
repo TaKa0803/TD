@@ -146,6 +146,12 @@
     <Filter Include="Engine\base\WinApp">
       <UniqueIdentifier>{2fc260e0-8786-4938-a048-814a7001aa8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Object">
+      <UniqueIdentifier>{f9696b11-9003-4fe1-8307-59b7210733dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Scene">
+      <UniqueIdentifier>{4c391d7d-8af6-4371-8dde-7bbdd8d08758}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\Imgui\imgui.cpp">
@@ -279,31 +285,37 @@
       <Filter>Engine\FrameChecker</Filter>
     </ClCompile>
     <ClCompile Include="Application\Object\Plane.cpp">
-      <Filter>Application</Filter>
+      <Filter>Application\Object</Filter>
     </ClCompile>
     <ClCompile Include="Application\Object\Player.cpp">
-      <Filter>Application</Filter>
+      <Filter>Application\Object</Filter>
     </ClCompile>
     <ClCompile Include="Application\Object\Stage.cpp">
-      <Filter>Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SceneManager\SceneManager.cpp">
-      <Filter>Application</Filter>
+      <Filter>Application\Object</Filter>
     </ClCompile>
     <ClCompile Include="Application\Scenes\DebugScene.cpp">
-      <Filter>Application</Filter>
+      <Filter>Application\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Application\Scenes\GameScene.cpp">
-      <Filter>Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Scenes\MT4Scene.cpp">
-      <Filter>Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Scenes\TitleScene.cpp">
-      <Filter>Application</Filter>
+      <Filter>Application\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Application\Scenes\IScene.cpp">
-      <Filter>Application</Filter>
+      <Filter>Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scenes\MT4Scene.cpp">
+      <Filter>Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SceneManager\SceneManager.cpp">
+      <Filter>Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scenes\TitleScene.cpp">
+      <Filter>Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\EchoBlast.cpp">
+      <Filter>Application\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\StageWall.cpp">
+      <Filter>Application\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -462,35 +474,41 @@
     <ClInclude Include="Engine\FrameChecker\FrameChecker.h">
       <Filter>Engine\FrameChecker</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\Objects.h">
-      <Filter>Application</Filter>
-    </ClInclude>
     <ClInclude Include="Application\Object\Plane.h">
-      <Filter>Application</Filter>
+      <Filter>Application\Object</Filter>
     </ClInclude>
     <ClInclude Include="Application\Object\Player.h">
-      <Filter>Application</Filter>
+      <Filter>Application\Object</Filter>
     </ClInclude>
     <ClInclude Include="Application\Object\Stage.h">
-      <Filter>Application</Filter>
+      <Filter>Application\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SceneManager\SceneManager.h">
-      <Filter>Application</Filter>
+    <ClInclude Include="Application\Object\Objects.h">
+      <Filter>Application\Object</Filter>
     </ClInclude>
     <ClInclude Include="Application\Scenes\DebugScene.h">
-      <Filter>Application</Filter>
+      <Filter>Application\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Application\Scenes\GameScene.h">
-      <Filter>Application</Filter>
+      <Filter>Application\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Application\Scenes\MT4Scene.h">
-      <Filter>Application</Filter>
+      <Filter>Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SceneManager\SceneManager.h">
+      <Filter>Application\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Application\Scenes\Scenes.h">
-      <Filter>Application</Filter>
+      <Filter>Application\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Application\Scenes\TitleScene.h">
-      <Filter>Application</Filter>
+      <Filter>Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\EchoBlast.h">
+      <Filter>Application\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\StageWall.h">
+      <Filter>Application\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -518,6 +536,9 @@
       <Filter>リソース ファイル</Filter>
     </None>
     <None Include="resources\jsonfile\resourcePath.json">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="resources\GlobalVariables\StageWall.json">
       <Filter>リソース ファイル</Filter>
     </None>
   </ItemGroup>

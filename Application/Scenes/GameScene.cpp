@@ -53,12 +53,12 @@ void GameScene::Update()
 	//デバッグウィンドウ表示
 	DebugWindows();
 
-	//カメラ更新
-	CameraUpdate();
-
 	stage_->Update();
 
 	player_->Update();
+
+	//カメラ更新
+	CameraUpdate();
 #pragma endregion
 
 
@@ -73,8 +73,6 @@ void GameScene::Draw()
 	plane_->Draw(camera_->GetViewProjectionMatrix());
 
 	//player_->Draw(camera_->GetViewProjectionMatrix());
-
-	stage_->Draw(camera_->GetViewProjectionMatrix());
 
 	//インスタンシングのモデルを全描画
 	InstancingModelManager::GetInstance()->DrawAllModel(camera_->GetViewProjectionMatrix());

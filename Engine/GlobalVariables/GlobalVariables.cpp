@@ -78,13 +78,13 @@ void GlobalVariables::Update() {
 
 			if (std::holds_alternative<int32_t>(item.value)) {
 				int32_t* ptr = std::get_if<int32_t>(&item.value);
-				ImGui::SliderInt(itemName.c_str(), ptr, 0, 100);
+				ImGui::SliderInt(itemName.c_str(), ptr, -100, 100);
 			} else if (std::holds_alternative<float>(item.value)) {
 				float* ptr = std::get_if<float>(&item.value);
-				ImGui::SliderFloat(itemName.c_str(), ptr, 0, 100);
+				ImGui::SliderFloat(itemName.c_str(), ptr, -100, 100);
 			} else if (std::holds_alternative<Vector3>(item.value)) {
 				Vector3* ptr = std::get_if<Vector3>(&item.value);
-				ImGui::SliderFloat3(itemName.c_str(), reinterpret_cast<float*>(ptr), 0, 100);
+				ImGui::SliderFloat3(itemName.c_str(), reinterpret_cast<float*>(ptr), -100, 100);
 			}
 		}
 

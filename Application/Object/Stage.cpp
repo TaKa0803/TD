@@ -1,46 +1,58 @@
 #include "Stage.h"
 #include <imgui.h>
 
+using Placement = StageWall::Placement;
+
 Stage::Stage()
 {
-	GameObject::Initialize("Stage");
+	for (size_t i = 0; i < Placement::_COUNT; i++)
+	{
+		walls_.emplace_back(new StageWall);
+	}
 }
 
 void Stage::Initialize()
 {
-	world_.Initialize();
-	world_.translate_.y = 1.0f;
-	world_.scale_.x = kMaxRadius_ * kTransformRadius_;
-	world_.scale_.z = kMaxRadius_ * kTransformRadius_;
-	//mode_ = None;
-	world_.UpdateMatrix();
-
-
+	for (size_t i = 0; i < Placement::_COUNT; i++)
+	{
+		walls_[i]->Initialize(i);
+	}
 }
 
 void Stage::Update()
 {
-	world_.UpdateMatrix();
+	for (size_t i = 0; i < Placement::_COUNT; i++)
+	{
+		walls_[i]->Update();
+	}
 }
 
 void Stage::DebagWindow()
 {
-	model_->DebugParameter("Stage");
-
 	ImGui::Begin("Stage");
 
-	ImGui::DragFloat("maxRadius", &kMaxRadius_, 0.1f);
+	ImGui::Text("Walls:%d", walls_.size());
 
-	ImGui::DragFloat("scale", &kTransformRadius_, 0.01f);
+	for (size_t i = 0; i < Placement::_COUNT; i++)
+	{
+		std::string tree = "wall:" + std::to_string(i);
+		if (ImGui::TreeNode(tree.c_str()))
+		{
+			walls_[i]->DebagWindow();
+
+			ImGui::TreePop();
+		}
+	}
+
+	if (ImGui::Button("SaveAllData"))
+	{
+		for (size_t i = 0; i < Placement::_COUNT; i++)
+		{
+			walls_[i]->SaveGlobalVariable();
+		}
+	}
 
 	ImGui::End();
 
-	world_.scale_.x = kMaxRadius_ * kTransformRadius_;
-	world_.scale_.z = kMaxRadius_ * kTransformRadius_;
 
-}
-
-void Stage::Draw(const Matrix4x4& viewp)
-{
-	GameObject::Draw(viewp);
 }
