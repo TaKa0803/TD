@@ -1,6 +1,7 @@
 #include"SceneManager/SceneManager.h"
 
 #include"Scenes.h"
+#include"AudioManager/AudioManager.h"
 
 #ifdef _DEBUG
 #include<imgui.h>
@@ -61,8 +62,12 @@ void SceneManager::Update() {
 	//シーン変更チェック
 	if (prevSceneNo_ != currentSceneNo_) {
 		//変更していたら		
+		//
+		
 		//初期化処理
 		sceneArr_[currentSceneNo_]->Initialize();
+
+	
 	}
 
 	//シーン更新処理

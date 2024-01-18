@@ -55,14 +55,9 @@ void MainSystem::Initializes() {
 	//入力
 	input = Input::GetInstance();
 	input->Initialize(winApp);
-
-
-	//モデルデータ関係
-	ModelManager::GetInstance()->LoadAllModels();
-
-	//
+	
+	//インスタンシングモデル
 	instancingMM_ = InstancingModelManager::GetInstance();
-	instancingMM_->LoadAllModel();
 
 	//乱数クラス
 	randomNumClass_ = RandomNumber::GetInstance();
@@ -72,6 +67,7 @@ void MainSystem::Initializes() {
 	AudioManager *audioManager = AudioManager::GetInstance();
 	audioManager->Initialize();
 	audioManager->LoadAllSoundData();
+
 	
 }
 
@@ -79,25 +75,21 @@ void MainSystem::MainRoop() {
 	//保存データ取得
 	GlobalVariables::GetInstance()->LoadFiles();
 
+	//モデルデータ関係読み込み
+	ModelManager::GetInstance()->LoadAllModels();
+	instancingMM_->LoadAllModel();
+
+	//音声データ読み込み
+	
 	//シーンマネージャ初期化
 	SceneManager* sceneManager = SceneManager::GetInstance();
 	sceneManager->Initialize();
 
-	//DebugScene* dScene = new DebugScene();
-	//dScene->Initialize();
-
-	//MT4Scene* mt4 = new MT4Scene();
-	//mt4->Initialize();
-
 	//読み込んだ画像をGPUに送信
 	SRVM_->PostInitialize();
 
-	auto processTime = 0.0f;
-
 	while (winApp->ProcessMessage()) {
-		//現時間取得
-		auto start = std::chrono::high_resolution_clock::now();
-
+		
 #pragma region 状態更新
 		///更新前処理
 		//ImGui
@@ -113,16 +105,17 @@ void MainSystem::MainRoop() {
 #ifdef _DEBUG
 		//GlobalVariableデータの更新処理
 		GlobalVariables::GetInstance()->Update();
+		auto delta = ImGui::GetIO().Framerate;
+
 		ImGui::Begin("Engine");
+		ImGui::Text("Frame %4.1f", delta);
 		ImGui::End();
 #endif // _DEBUG
 
 		sceneManager->Update();
-		//dScene->Update();
-		//mt4->Update();
-
 
 		//==更新終わり==//
+		// 
 		//更新終わり描画前処理
 		imguiManager->PostUpdate();
 #pragma endregion
@@ -134,12 +127,7 @@ void MainSystem::MainRoop() {
 		imguiManager->PreDraw();
 		
 		//==以下描画==//
-
-
 		sceneManager->Draw();
-		//dScene->Draw();
-		//mt4->Draw();
-
 		
 		//==描画終わり==//
 
@@ -151,10 +139,7 @@ void MainSystem::MainRoop() {
 #pragma endregion
 		///フレーム終了時処理
 		sceneManager->EndFrame();
-
-		auto end = std::chrono::high_resolution_clock::now();
 	}
-
 
 	sceneManager->Finalize();
 	//dScene->Finalize();

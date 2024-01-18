@@ -3,7 +3,7 @@
 #include<imgui.h>
 #endif // _DEBUG
 
-
+#include"AudioManager/AudioManager.h"
 #include"InstancingModelManager/InstancingModelManager.h"
 #include"TextureManager/TextureManager.h"
 
@@ -69,6 +69,9 @@ GameScene::GameScene() {
 
 	brokenBody_ = BrokenBody::GetInstance();
 	
+	sound_ = AudioManager::LoadSoundNum("audio1");
+
+	bgm_ = AudioManager::LoadSoundNum("maou");
 }
 
 GameScene::~GameScene() {
@@ -116,6 +119,11 @@ void GameScene::Initialize() {
 
 	brokenBody_->Initialize();
 
+	//今流れているのを消す
+	AudioManager::GetInstance()->StopAllSounds();
+
+	//BGM再生
+	AudioManager::PlaySoundData(bgm_);
 }
 
 
@@ -256,11 +264,15 @@ void GameScene::DebugWindows() {
 
 void GameScene::Collision() {
 
+	if (input_->TriggerKey(DIK_Z)) {
+		AudioManager::PlaySoundData(sound_);
+	}
 
 	if (player_->IsPlayerATK()) {
 		for (auto& enemy : enemies_) {
 			if (!enemy->GetDead()) {
 				enemy->Collision(*player_->GetCollider());
+				
 			}
 		}
 	}

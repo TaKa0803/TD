@@ -118,4 +118,8 @@ private:
 
 
 	BrokenBody* brokenBody_;
+
+	int sound_ = 0;
+
+	int bgm_ = 0;
 };

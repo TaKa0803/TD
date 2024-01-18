@@ -1,6 +1,7 @@
 {
 	"audios": {
-		"audio1": [ "se_soa03.wav" ]
-
+		"audio1": [ "se_soa03.wav" ],
+		"BGM": [ "c46nt-ifwwl.wav" ],
+		"maou": [ "s2ylj-qqrf5.wav" ]
 	}
 }
