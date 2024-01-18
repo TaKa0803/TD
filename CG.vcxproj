@@ -108,6 +108,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClCompile Include="Application\Object\Plane.cpp" />
     <ClCompile Include="Application\Object\Player.cpp" />
+    <ClCompile Include="Application\Object\Stage.cpp" />
     <ClCompile Include="Application\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Application\Scenes\DebugScene.cpp" />
     <ClCompile Include="Application\Scenes\GameScene.cpp" />
@@ -189,6 +190,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Objects.h" />
     <ClInclude Include="Application\Object\Plane.h" />
     <ClInclude Include="Application\Object\Player.h" />
+    <ClInclude Include="Application\Object\Stage.h" />
     <ClInclude Include="Application\SceneManager\SceneManager.h" />
     <ClInclude Include="Application\Scenes\DebugScene.h" />
     <ClInclude Include="Application\Scenes\GameScene.h" />

@@ -42,4 +42,6 @@ private:
 
 	std::unique_ptr<Player>player_;
 
+	std::unique_ptr<Stage>stage_;
+
 };

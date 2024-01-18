@@ -164,6 +164,9 @@
     <Filter Include="Application\Object\Plane">
       <UniqueIdentifier>{cf38c74b-f335-4658-9331-119369e98b58}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Object\Stage">
+      <UniqueIdentifier>{b0ced722-1bcd-4b7f-b6eb-3efa7a29f641}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\Imgui\imgui.cpp">
@@ -319,6 +322,9 @@
     </ClCompile>
     <ClCompile Include="Application\Object\Player.cpp">
       <Filter>Application\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Stage.cpp">
+      <Filter>Application\Object\Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -506,6 +512,9 @@
     </ClInclude>
     <ClInclude Include="Application\Object\Objects.h">
       <Filter>Application\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Stage.h">
+      <Filter>Application\Object\Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
