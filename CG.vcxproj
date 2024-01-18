@@ -117,6 +117,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Scenes\IScene.cpp" />
     <ClCompile Include="Application\Scenes\MT4Scene.cpp" />
     <ClCompile Include="Application\Scenes\TitleScene.cpp" />
+    <ClCompile Include="Engine\3d\ColliderOBB\OBBCollider.cpp" />
+    <ClCompile Include="Engine\3d\ColliderPlane\PlaneCollider.cpp" />
     <ClCompile Include="Engine\base\AssimpManager\AssimpManager.cpp" />
     <ClCompile Include="Engine\base\AudioManager\AudioManager.cpp" />
     <ClCompile Include="Engine\3d\BoxCollider\BoxColider.cpp" />
@@ -199,6 +201,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Scenes\MT4Scene.h" />
     <ClInclude Include="Application\Scenes\Scenes.h" />
     <ClInclude Include="Application\Scenes\TitleScene.h" />
+    <ClInclude Include="Engine\3d\ColliderOBB\OBBCollider.h" />
+    <ClInclude Include="Engine\3d\ColliderPlane\PlaneCollider.h" />
     <ClInclude Include="Engine\base\AssimpManager\AssimpManager.h" />
     <ClInclude Include="Engine\base\AudioManager\AudioManager.h" />
     <ClInclude Include="Engine\base\AudioManager\SoundData.h" />

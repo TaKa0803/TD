@@ -146,6 +146,15 @@
     <Filter Include="Engine\base\WinApp">
       <UniqueIdentifier>{2fc260e0-8786-4938-a048-814a7001aa8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\DebugScene">
+      <UniqueIdentifier>{ee00e926-2c72-455a-b30d-f58b6094feaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3d\PlaneCollider">
+      <UniqueIdentifier>{af88cfa6-af1d-47a8-897b-693d6ccfaeb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3d\OBBCollider">
+      <UniqueIdentifier>{972ded4f-7e88-412a-b62c-36ac04d73369}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\Imgui\imgui.cpp">
@@ -290,9 +299,6 @@
     <ClCompile Include="Application\SceneManager\SceneManager.cpp">
       <Filter>Application</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Scenes\DebugScene.cpp">
-      <Filter>Application</Filter>
-    </ClCompile>
     <ClCompile Include="Application\Scenes\GameScene.cpp">
       <Filter>Application</Filter>
     </ClCompile>
@@ -304,6 +310,15 @@
     </ClCompile>
     <ClCompile Include="Application\Scenes\IScene.cpp">
       <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scenes\DebugScene.cpp">
+      <Filter>Application\DebugScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\ColliderPlane\PlaneCollider.cpp">
+      <Filter>Engine\3d\PlaneCollider</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\ColliderOBB\OBBCollider.cpp">
+      <Filter>Engine\3d\OBBCollider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -477,9 +492,6 @@
     <ClInclude Include="Application\SceneManager\SceneManager.h">
       <Filter>Application</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Scenes\DebugScene.h">
-      <Filter>Application</Filter>
-    </ClInclude>
     <ClInclude Include="Application\Scenes\GameScene.h">
       <Filter>Application</Filter>
     </ClInclude>
@@ -491,6 +503,15 @@
     </ClInclude>
     <ClInclude Include="Application\Scenes\TitleScene.h">
       <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scenes\DebugScene.h">
+      <Filter>Application\DebugScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\ColliderPlane\PlaneCollider.h">
+      <Filter>Engine\3d\PlaneCollider</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\ColliderOBB\OBBCollider.h">
+      <Filter>Engine\3d\OBBCollider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

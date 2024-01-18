@@ -21,4 +21,5 @@ public:
 	/// <returns>シーン番号</returns>
 	int GetSceneNo();
 
+	
 };

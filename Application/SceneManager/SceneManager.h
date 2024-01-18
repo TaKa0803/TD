@@ -62,7 +62,7 @@ private:
 
 	///呼び出すステージの管理
 	//現在のシーン
-	int currentSceneNo_=-1;
+	int currentSceneNo_=0;
 	//1F前のシーン
 	int prevSceneNo_=-1;
 

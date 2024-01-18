@@ -1,13 +1,12 @@
 #include "SphereCollider.h"
 #include"InstancingModelManager/InstancingModelManager.h"
+#include"ColliderPlane/PlaneCollider.h"
 #include<imgui.h>
 
 SphereCollider::SphereCollider() {
-
 	world_.scale_ = { wide_,wide_,wide_ };
-
-
 }
+
 
 void SphereCollider::Initialize(const std::string& tag, const WorldTransform&world) {
 	InstancingGameObject::Initialize("sphere");
@@ -23,6 +22,8 @@ void SphereCollider::Initialize(const std::string& tag, const WorldTransform&wor
 
 
 void SphereCollider::Update() {
+	preWorld_ = world_;
+
 	world_.scale_ = { wide_,wide_,wide_ };
 	world_.UpdateMatrix();
 }
@@ -56,6 +57,13 @@ bool SphereCollider::IsHit(const SphereCollider& sphere, Vector3& backVec) {
 		return true;
 	}
 
+
+	return false;
+}
+
+bool SphereCollider::IsHit(const PlaneCollider& plane, Vector3& beckVec)
+{
+	
 
 	return false;
 }

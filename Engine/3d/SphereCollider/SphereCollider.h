@@ -1,6 +1,9 @@
 #pragma once
 #include"InstancingGameObject/InstancingGameObject.h"
 
+
+class PlaneCollider;
+
 class SphereCollider : InstancingGameObject {
 
 public:
@@ -20,6 +23,14 @@ public:
 	/// <param name="backVec">基の円の戻る量</param>
 	/// <returns></returns>
 	bool IsHit(const SphereCollider& sphere, Vector3& backVec);
+
+	/// <summary>
+	/// 当たったか否か
+	/// </summary>
+	/// <param name="plane">平面</param>
+	/// <param name="beckVec">押し出し量</param>
+	/// <returns></returns>
+	bool IsHit(const PlaneCollider& plane, Vector3& beckVec);
 
 	//デバッグImGui
 	void Debug(const char* name);
@@ -42,4 +53,7 @@ private:
 	std::string colliderTag_;
 
 	bool isDraw_ = true;
+
+	//過去の状態
+	WorldTransform preWorld_;
 };
