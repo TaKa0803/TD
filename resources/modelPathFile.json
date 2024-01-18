@@ -1,5 +1,6 @@
 {
   "modelPathFile": {
+    "Stage": [ "resources/AppResource", "Stage" ],
     "ALPlayer": [ "resources/AppResource", "ALPlayer" ],
     "plane": [ "resources/AppResource", "plane" ],
     "player": [ "resources/AppResource", "player" ],
