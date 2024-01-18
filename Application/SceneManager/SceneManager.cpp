@@ -15,9 +15,6 @@
 void SceneManager::Initialize()
 {
 
-	currentSceneNo_ = TITLE;
-	///初期シーン設定
-
 	//シーンの数取得
 	sceneArr_.resize((size_t)SCENE::SceneCount);
 
