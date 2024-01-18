@@ -1,7 +1,6 @@
 #include "MainSystem.h"
 #include"SceneManager/SceneManager.h"
-#include"DebugScene.h"
-#include"MT4Scene.h"
+
 #include"GlobalVariables/GlobalVariables.h"
 #include"RandomNum/RandomNum.h"
 #include"AudioManager/AudioManager.h"

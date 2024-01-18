@@ -1,33 +1,34 @@
 #include"SceneManager/SceneManager.h"
 
-#include"Scenes.h"
-#include"AudioManager/AudioManager.h"
+#include"./Scenes/Scenes.h"
 
-#ifdef _DEBUG
 #include<imgui.h>
-#endif // _DEBUG
-
 
 
 #pragma region シーンのh
-#include"TitleScene.h"
-#include"GameScene.h"
-#include"MT4Scene.h"
+#include"./Scenes/TitleScene.h"
+#include"./Scenes/GameScene.h"
 #pragma endregion
 
 
 
-void SceneManager::Initialize() {
+void SceneManager::Initialize()
+{
 
 	currentSceneNo_ = TITLE;
-	
+	///初期シーン設定
+
 	//シーンの数取得
 	sceneArr_.resize((size_t)SCENE::SceneCount);
-	
+
 	//各シーンの情報設定
 	sceneArr_[TITLE] = std::make_unique<TitleScene>();
-	sceneArr_[STAGE] = std::make_unique<GameScene>();
-	sceneArr_[MT4] = std::make_unique<MT4Scene>();
+	sceneArr_[GAME] = std::make_unique<GameScene>();
+
+	sceneName_.clear();
+	sceneName_.push_back("TITLE");
+	sceneName_.push_back("GAME");
+
 	/*
 	sceneArr_[TITLE] = std::make_unique<TitleScene>();
 	sceneArr_[STAGE] = std::make_unique<PlayScene>();
@@ -35,72 +36,58 @@ void SceneManager::Initialize() {
 	*/
 }
 
-void SceneManager::Update() {
+void SceneManager::Update()
+{
 
 	//デバッグ表示
-#pragma region メニューバー表示
-#ifdef _DEBUG
-	if (!ImGui::Begin("Scene", nullptr, ImGuiWindowFlags_MenuBar)) {
-		ImGui::End();
-		assert(false);
-	}
-	if (!ImGui::BeginMenuBar()) { assert(false); }
-
-	if (!deleteWindow) {	
-		ImGui::Text("SceneNo.%d", currentSceneNo_);
-		ImGui::Checkbox("deleteWindow", &deleteWindow);
-	}
-#endif // _DEBUG
-#pragma endregion
-
-	
+	DebugWindow();
 
 	//シーンチェック
 	prevSceneNo_ = currentSceneNo_;
 	currentSceneNo_ = sceneArr_[currentSceneNo_]->GetSceneNo();
 
 	//シーン変更チェック
-	if (prevSceneNo_ != currentSceneNo_) {
+	if (prevSceneNo_ != currentSceneNo_)
+	{
 		//変更していたら		
-		//
-		
 		//初期化処理
 		sceneArr_[currentSceneNo_]->Initialize();
-
-	
 	}
 
 	//シーン更新処理
 	sceneArr_[currentSceneNo_]->Update();
-
-#pragma region メニューバー関係
-#ifdef _DEBUG
-	ImGui::EndMenuBar();
-	ImGui::End();
-#endif // _DEBUG
-
-
-#pragma endregion
-
 }
 
-void SceneManager::Draw() {
+void SceneManager::Draw()
+{
 	//描画処理
 	sceneArr_[currentSceneNo_]->Draw();
 
 }
 
-void SceneManager::EndFrame() {
+void SceneManager::EndFrame()
+{
 
 }
 
-void SceneManager::Finalize() {
+void SceneManager::Finalize()
+{
 
 }
 
+void SceneManager::DebugWindow()
+{
+#ifdef _DEBUG
+	ImGui::Begin("SceneManager");
+	ImGui::Text("SceneNo.%d", currentSceneNo_);
+	ImGui::Text("%s", sceneName_[currentSceneNo_].c_str());
+	ImGui::End();
+#endif // _DEBUG
 
+}
 
-SceneManager* SceneManager::GetInstance() {
+SceneManager* SceneManager::GetInstance()
+{
 	static SceneManager ins;
 	return &ins;
 }

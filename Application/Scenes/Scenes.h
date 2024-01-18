@@ -1,9 +1,9 @@
 #pragma once
 
+
 //シーン
 enum SCENE {
 	TITLE,
-	STAGE,
-	MT4,
+	GAME,
 	SceneCount	//使うな
 };

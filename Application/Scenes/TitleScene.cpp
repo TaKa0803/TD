@@ -1,6 +1,7 @@
 #include "TitleScene.h"
 #include"TextureManager/TextureManager.h"
 #include<imgui.h>
+#include"Scenes.h"
 
 TitleScene::TitleScene() {
 	input_=Input::GetInstance();
@@ -30,11 +31,11 @@ void TitleScene::Update() {
 	Debug();
 
 	if (input_->TriggerKey(DIK_SPACE)) {
-		sceneNo = STAGE;
+		sceneNo = GAME;
 	}
 
 	if (input_->IsControllerActive() && input_->IsTriggerButton(kButtonB)) {
-		sceneNo = STAGE;
+		sceneNo = GAME;
 	}
 }
 

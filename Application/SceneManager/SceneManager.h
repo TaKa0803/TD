@@ -46,14 +46,19 @@ public:
 	void Finalize();
 private:
 
-	
-	bool deleteWindow = false;
+	/// <summary>
+	/// デバッグウィンドウ表示
+	/// </summary>
+	void DebugWindow();
+
 private:
 
 	/// <summary>
 	/// 各種シーン管理
 	/// </summary>
 	std::vector<std::unique_ptr<IScene>> sceneArr_;
+
+	std::vector<std::string> sceneName_;
 
 	///呼び出すステージの管理
 	//現在のシーン

@@ -108,18 +108,15 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Application\BrokenBody.cpp" />
-    <ClCompile Include="Application\DebugScene.cpp" />
-    <ClCompile Include="Application\EffectHit.cpp" />
-    <ClCompile Include="Application\Enemy.cpp" />
-    <ClCompile Include="Application\EnemyPopManager.cpp" />
-    <ClCompile Include="Application\GameScene.cpp" />
-    <ClCompile Include="Application\item.cpp" />
-    <ClCompile Include="Application\MT4Scene.cpp" />
-    <ClCompile Include="Application\Plane.cpp" />
-    <ClCompile Include="Application\Player.cpp" />
+    <ClCompile Include="Application\Object\Plane.cpp" />
+    <ClCompile Include="Application\Object\Player.cpp" />
+    <ClCompile Include="Application\Object\Stage.cpp" />
     <ClCompile Include="Application\SceneManager\SceneManager.cpp" />
-    <ClCompile Include="Application\TitleScene.cpp" />
+    <ClCompile Include="Application\Scenes\DebugScene.cpp" />
+    <ClCompile Include="Application\Scenes\GameScene.cpp" />
+    <ClCompile Include="Application\Scenes\IScene.cpp" />
+    <ClCompile Include="Application\Scenes\MT4Scene.cpp" />
+    <ClCompile Include="Application\Scenes\TitleScene.cpp" />
     <ClCompile Include="Engine\base\AssimpManager\AssimpManager.cpp" />
     <ClCompile Include="Engine\base\AudioManager\AudioManager.cpp" />
     <ClCompile Include="Engine\3d\BoxCollider\BoxColider.cpp" />
@@ -136,7 +133,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\3d\InstancingGameObject\InstancingModel.cpp" />
     <ClCompile Include="Engine\3d\InstancingGameObject\InstancingPSO.cpp" />
     <ClCompile Include="Engine\3d\InstancingGameObject\InstancingGameObject.cpp" />
-    <ClCompile Include="Engine\IScene\IScene.cpp" />
     <ClCompile Include="Engine\base\Log\Log.cpp" />
     <ClCompile Include="Engine\base\MainSystem\MainSystem.cpp" />
     <ClCompile Include="Engine\Math\Matirx.cpp" />
@@ -193,19 +189,16 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application\BrokenBody.h" />
-    <ClInclude Include="Application\DebugScene.h" />
-    <ClInclude Include="Application\EffectHit.h" />
-    <ClInclude Include="Application\Enemy.h" />
-    <ClInclude Include="Application\EnemyPopManager.h" />
-    <ClInclude Include="Application\GameScene.h" />
-    <ClInclude Include="Application\item.h" />
-    <ClInclude Include="Application\MT4Scene.h" />
-    <ClInclude Include="Application\Plane.h" />
-    <ClInclude Include="Application\Player.h" />
+    <ClInclude Include="Application\Object\Objects.h" />
+    <ClInclude Include="Application\Object\Plane.h" />
+    <ClInclude Include="Application\Object\Player.h" />
+    <ClInclude Include="Application\Object\Stage.h" />
     <ClInclude Include="Application\SceneManager\SceneManager.h" />
-    <ClInclude Include="Application\Scenes.h" />
-    <ClInclude Include="Application\TitleScene.h" />
+    <ClInclude Include="Application\Scenes\DebugScene.h" />
+    <ClInclude Include="Application\Scenes\GameScene.h" />
+    <ClInclude Include="Application\Scenes\MT4Scene.h" />
+    <ClInclude Include="Application\Scenes\Scenes.h" />
+    <ClInclude Include="Application\Scenes\TitleScene.h" />
     <ClInclude Include="Engine\base\AssimpManager\AssimpManager.h" />
     <ClInclude Include="Engine\base\AudioManager\AudioManager.h" />
     <ClInclude Include="Engine\base\AudioManager\SoundData.h" />
@@ -223,7 +216,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\3d\InstancingGameObject\InstancingModel.h" />
     <ClInclude Include="Engine\3d\InstancingGameObject\InstancingPSO.h" />
     <ClInclude Include="Engine\3d\InstancingGameObject\InstancingGameObject.h" />
-    <ClInclude Include="Engine\IScene\IScene.h" />
     <ClInclude Include="Engine\base\Log\Log.h" />
     <ClInclude Include="Engine\base\MainSystem\MainSystem.h" />
     <ClInclude Include="Engine\Math\Matrix.h" />
