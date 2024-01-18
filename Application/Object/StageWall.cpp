@@ -4,9 +4,9 @@
 void StageWall::SaveNewData()
 {
 	global_->CreateGroup(cGLOUP);
-	global_->SetValue(cGLOUP, cSIZE, vSize_);
-	global_->SetValue(cGLOUP, cMODELSCALE, vModelScale_);
-	global_->SetValue(cGLOUP, cMODIFIERSCALE, vModifierScale_);
+	//global_->SetValue(cGLOUP, cSIZE, vSize_);
+	//global_->SetValue(cGLOUP, cMODELSCALE, vModelScale_);
+	//global_->SetValue(cGLOUP, cMODIFIERSCALE, vModifierScale_);
 	//global_->SetValue(cGLOUP, cROTATE, world_.rotate_);
 	//global_->SetValue(cGLOUP, cNORMALPOSITION, vNormalPosition_);
 }
@@ -57,7 +57,7 @@ void StageWall::Initialize(size_t num)
 #ifdef _DEBUG
 
 	// デバッグ時の生成エラー回避
-	SaveNewData();
+	//SaveNewData();
 
 	isLoadAllTime_ = true;
 
@@ -77,12 +77,13 @@ void StageWall::Initialize(size_t num)
 
 void StageWall::Update()
 {
-
 	if (isLoadAllTime_)
 	{
 		LoadGlobalVariable();
 
 		CalculateInit();
+		global_->SetValue(cGLOUP, cNORMALPOSITION, vNormalPosition_);
+		SaveGlobalVariable();
 	}
 
 
@@ -104,6 +105,15 @@ void StageWall::DebagWindow()
 		LoadGlobalVariable();
 
 		CalculateInit();
+	}
+
+	if (ImGui::Button("SaveConfig"))
+	{
+		SaveGlobalVariable();
+	}
+	if (ImGui::Button("SaveNewConfig"))
+	{
+		SaveNewData();
 	}
 
 	//ImGui::End();

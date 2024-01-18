@@ -32,6 +32,7 @@ void Stage::DebagWindow()
 	ImGui::Begin("Stage");
 
 	ImGui::Text("Walls:%d", walls_.size());
+	ImGui::Separator();
 
 	for (size_t i = 0; i < Placement::_COUNT; i++)
 	{
@@ -42,6 +43,7 @@ void Stage::DebagWindow()
 
 			ImGui::TreePop();
 		}
+		ImGui::Separator();
 	}
 
 	if (ImGui::Button("SaveAllData"))
