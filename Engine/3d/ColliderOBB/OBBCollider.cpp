@@ -27,13 +27,16 @@ bool InCollision(const AABB& a, const Sphere& s) {
 
 void OBBCollider::Initialize(const std::string& tag, const WorldTransform& parent)
 {
+	//院スタン寝具の初期化
 	InstancingGameObject::Initialize("box");
-
+	//親子関係設定
 	world_.SetParent(&parent);
-
+	//コライダーのタグ設定
 	colliderTag_ = tag;
 
+	//画像を切る
 	IMM_->SetEnableTexture(tag_, false);
+	//ワイヤーフレーム表示
 	IMM_->SetFillMode(tag_, FillMode::kWireFrame);
 }
 
@@ -79,9 +82,8 @@ void OBBCollider::Debug(const char* name)
 	ImGui::DragFloat3("rotation", &world_.rotate_.x, 0.01f);
 	ImGui::DragFloat3("scale", &world_.scale_.x, 0.01f);
 
-	ImGui::Text("min %4.1f , %4.1f , %4.1f",aabb_.minV.x, aabb_.minV.y, aabb_.minV.z);
-	ImGui::Text("max %4.1f , %4.1f , %4.1f", aabb_.maxV.x, aabb_.maxV.y, aabb_.maxV.z);
-
+	ImGui::ColorEdit4("hit color", &hitColor.x);
+	ImGui::Checkbox("isDraw", &isDraw_);
 	ImGui::End();
 
 }

@@ -8,6 +8,11 @@ class SphereCollider;
 class OBBCollider : public InstancingGameObject {
 public:
 
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="tag">コライダーのタグ</param>
+	/// <param name="parent">親のワールド</param>
 	void Initialize(const std::string& tag, const WorldTransform& parent);
 
 	void Update();
@@ -16,9 +21,20 @@ public:
 
 	void Debug(const char* name);
 
-
+	//円コライダーとの判定
 	bool IsCollision(SphereCollider*collider);
 
+	/// <summary>
+	/// 色の設定
+	/// </summary>
+	/// <param name="color"></param>
+	void SetColor(const Vector4& color) { normalColor=color; }
+
+	/// <summary>
+	/// アルファ地の設定
+	/// </summary>
+	/// <param name="alpha"></param>
+	void SetAlpha(const float alpha) { normalColor.w = alpha; }
 private:
 	std::string colliderTag_;
 
@@ -28,7 +44,7 @@ private:
 
 	Vector4 normalColor = { 1,1,1,1 };
 
-	Vector4 hitColor = { 0,0,0,1 };
+	Vector4 hitColor = { 1,0,0,1 };
 
 	AABB aabb_;
 
