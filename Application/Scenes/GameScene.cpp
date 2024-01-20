@@ -7,7 +7,6 @@
 
 GameScene::GameScene()
 {
-	sceneNo = GAME;
 
 
 	input_ = Input::GetInstance();

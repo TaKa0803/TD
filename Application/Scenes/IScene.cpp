@@ -1,7 +1,7 @@
 #include"IScene/IScene.h"
 #include"Scenes/Scenes.h"
 
-int IScene::sceneNo = DEBUG;
+int IScene::sceneNo = TITLE;
 
 IScene::~IScene() {}
 

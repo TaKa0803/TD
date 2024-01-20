@@ -15,9 +15,8 @@
 
 void SceneManager::Initialize()
 {
-	currentSceneNo_ = TITLE;
+	currentSceneNo_ = 0;
 	//初期シーン設定
-	
 	//シーンの数取得
 	sceneArr_.resize((size_t)SCENE::SceneCount);
 
@@ -34,6 +33,8 @@ void SceneManager::Initialize()
 	sceneArr_[STAGE] = std::make_unique<PlayScene>();
 	sceneArr_[CLEAR] = std::make_unique<ClearScene>();
 	*/
+
+	int num=sceneArr_[GAME]->GetSceneNo();
 }
 
 void SceneManager::Update()

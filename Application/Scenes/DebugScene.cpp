@@ -7,7 +7,7 @@ DebugScene::DebugScene()
 	input_ = Input::GetInstance();
 
 	camera_ = std::make_unique<Camera>();
-	sceneNo = DEBUG;
+
 
 	sphere_ = std::make_unique<SphereCollider>();
 	plane_ = std::make_unique<PlaneCollider>();
