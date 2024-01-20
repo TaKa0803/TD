@@ -1,79 +1,60 @@
 #include "Stage.h"
 #include <imgui.h>
 
+using Placement = StageWall::Placement;
+
 Stage::Stage()
 {
-	GameObject::Initialize("player");
+	for (size_t i = 0; i < Placement::_COUNT; i++)
+	{
+		walls_.emplace_back(new StageWall);
+	}
 }
 
 void Stage::Initialize()
 {
-	world_.Initialize();
-	world_.translate_.y = 1.0f;
-	world_.scale_.x = radius_ * kTransformRadius_;
-	world_.scale_.z = radius_ * kTransformRadius_;
-	mode_ = None;
-	world_.UpdateMatrix();
+	for (size_t i = 0; i < Placement::_COUNT; i++)
+	{
+		walls_[i]->Initialize(i);
+	}
 }
 
 void Stage::Update()
 {
-	switch (mode_)
+	for (size_t i = 0; i < Placement::_COUNT; i++)
 	{
-	case Stage::None:
-		break;
-	case Stage::Shrink:
-		if (5.0f < radius_)
-		{
-			radius_ -= 0.03f;
-		}
-		else
-		{
-			radius_ = kMaxRadius_ * 0.5f;
-		}
-		break;
-	case Stage::Expand:
-		radius_ += 2.5f;
-		if (kMaxRadius_ < radius_)
-		{
-			radius_ = kMaxRadius_;
-		}
-		mode_ = Shrink;
-		break;
-	default:
-		break;
+		walls_[i]->Update();
 	}
-	world_.scale_.x = radius_ * kTransformRadius_;
-	world_.scale_.z = radius_ * kTransformRadius_;
-	world_.UpdateMatrix();
 }
 
 void Stage::DebagWindow()
 {
-	model_->DebugParameter("player");
-#ifdef _DEBUG
-
 	ImGui::Begin("Stage");
 
-	if (ImGui::RadioButton("None", mode_ == None))
-		mode_ = None;
-	if (ImGui::RadioButton("Shrink", mode_ == Shrink))
-		mode_ = Shrink;
-	if (ImGui::RadioButton("Expand", mode_ == Expand))
-		mode_ = Expand;
+	ImGui::Text("Walls:%d", walls_.size());
+	ImGui::Separator();
 
-	if (ImGui::GetIO().KeysDown[ImGuiKey_Space])
+	for (size_t i = 0; i < Placement::_COUNT; i++)
 	{
-		mode_ = Expand;
+		std::string tree = "wall:" + std::to_string(i);
+		if (ImGui::TreeNode(tree.c_str()))
+		{
+			walls_[i]->DebagWindow();
+
+			ImGui::TreePop();
+		}
+		ImGui::Separator();
+	}
+
+	if (ImGui::Button("SaveAllData"))
+	{
+		for (size_t i = 0; i < Placement::_COUNT; i++)
+		{
+			walls_[i]->SaveGlobalVariable();
+		}
 	}
 
 	ImGui::End();
 
-#endif // _DEBUG
 
-}
-
-void Stage::Draw(const Matrix4x4& viewp)
-{
-	GameObject::Draw(viewp);
 }

@@ -1,5 +1,6 @@
 {
   "modelPathFile": {
+    "wall": [ "resources/AppResource", "Stage" ],
     "ALPlayer": [ "resources/AppResource", "ALPlayer" ],
     "plane": [ "resources/AppResource", "plane" ],
     "player": [ "resources/AppResource", "player" ],
@@ -10,6 +11,7 @@
     "RFoot": [ "resources/AppResource/Object", "RFoot" ]
   },
   "InstancingmodelPathFile": {
+    "wall": [ "resources/AppResource", "Stage", 5 ],
     "sphere": [ "resources/SystemResources", "sphere", 1000 ],
     "z+Plane": [ "resources/SystemResources", "normalZ+Plane", 1000 ],
     "box": [ "resources/SystemResources", "ALPlayer", 1000 ],
