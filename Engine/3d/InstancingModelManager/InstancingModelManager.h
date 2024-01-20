@@ -82,6 +82,13 @@ public:
 	void SetAlpha(const std::string& tag, float alpha);
 
 	/// <summary>
+	/// 色設定
+	/// </summary>
+	/// <param name="tag"></param>
+	/// <param name="color"></param>
+	void SetColor(const std::string& tag, Vector4 color);
+
+	/// <summary>
 	/// 画像を有効にするか否か
 	/// </summary>
 	/// <param name="tag"></param>

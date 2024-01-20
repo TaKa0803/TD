@@ -35,6 +35,7 @@ void DebugScene::Initialize()
 	oWorld_.Initialize();
 	obb_ = std::make_unique<OBBCollider>();
 	obb_->Initialize("plane", oWorld_);
+
 }
 
 void DebugScene::Update()
@@ -52,6 +53,9 @@ void DebugScene::Update()
 	sphere_->Update();
 	plane_->Update();
 	obb_->Update();
+
+
+	obb_->IsCollision(sphere_.get());
 }
 
 void DebugScene::Draw()
@@ -66,5 +70,5 @@ void DebugScene::Debug()
 {
 	sphere_->Debug("sphere");
 	camera_->DrawDebugWindow("camera");
-	obb_->Draw();
+	obb_->Debug("box");
 }

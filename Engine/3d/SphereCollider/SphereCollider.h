@@ -43,9 +43,12 @@ public:
 
 	float GetScale() { return wide_; }
 
+
 	Vector3 GetTranslate() { return world_.translate_; }
 
 	std::string GetTag()const { return tag_; }
+
+	WorldTransform GetWorld()const { return world_; }
 private:
 
 	float wide_=1;

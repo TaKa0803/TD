@@ -20,6 +20,9 @@ public://変数
 	//ワールド行列
 	Matrix4x4 matWorld_ = MakeIdentity4x4();
 
+	//親
+	const WorldTransform* parent_ = nullptr;
+
 public:
 
 	void Initialize();
@@ -86,8 +89,6 @@ public://Getter
 
 private:
 
-	//親
-	const WorldTransform* parent_ = nullptr;
-
+	
 
 };
