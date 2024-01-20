@@ -4,6 +4,7 @@
 #include"Scenes.h"
 
 TitleScene::TitleScene() {
+
 	input_=Input::GetInstance();
 
 	int texture = TextureManager::LoadTex("resources/AppResource/Title/Title.png");

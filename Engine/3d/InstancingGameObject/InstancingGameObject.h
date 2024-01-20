@@ -11,14 +11,14 @@ protected:
 	std::string tag_;
 
 	//ワールド
-	WorldTransform world_;
+	WorldTransform world_{};
 
 	//インスタンシングモデルマネージャー
-	InstancingModelManager* IMM_;
+	InstancingModelManager* IMM_=nullptr;
 
 public:
 	//ワールド取得
-	const WorldTransform& GetWorld() { return world_; }
+	const WorldTransform& GetWorld()const  { return world_; }
 
 	//開放処理
 	virtual ~InstancingGameObject();

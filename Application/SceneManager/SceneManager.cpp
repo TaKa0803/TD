@@ -8,29 +8,33 @@
 #pragma region シーンのh
 #include"./Scenes/TitleScene.h"
 #include"./Scenes/GameScene.h"
+#include"Scenes/DebugScene.h"
 #pragma endregion
 
 
 
 void SceneManager::Initialize()
 {
-	currentSceneNo_ = TITLE;
+	currentSceneNo_ = 0;
+	//初期シーン設定
 	//シーンの数取得
 	sceneArr_.resize((size_t)SCENE::SceneCount);
 
 	//各シーンの情報設定
 	sceneArr_[TITLE] = std::make_unique<TitleScene>();
 	sceneArr_[GAME] = std::make_unique<GameScene>();
-
+	sceneArr_[DEBUG] = std::make_unique<DebugScene>();
 	sceneName_.clear();
 	sceneName_.push_back("TITLE");
 	sceneName_.push_back("GAME");
-
+	sceneName_.push_back("DEBUG");
 	/*
 	sceneArr_[TITLE] = std::make_unique<TitleScene>();
 	sceneArr_[STAGE] = std::make_unique<PlayScene>();
 	sceneArr_[CLEAR] = std::make_unique<ClearScene>();
 	*/
+
+	int num=sceneArr_[GAME]->GetSceneNo();
 }
 
 void SceneManager::Update()

@@ -1,77 +1,45 @@
 #pragma once
-#include"SingleGameObjects/Model.h"
-#include"WorldTransform/WorldTransform.h"
+
+#include "IScene/IScene.h"
+#include"Input/Input.h"
 #include"Camera/Camera.h"
-#include"Sprite/Sprite.h"
+#include<iostream>
+#include"SphereCollider/SphereCollider.h"
+#include"ColliderPlane/PlaneCollider.h"
+#include"ColliderOBB/OBBCollider.h"
 
-#include"Particle/Particle.h"
-#include"ParticleEmiter/ParticleEmiter.h"
+class DebugScene : public IScene {
 
-#include<memory>
-
-#include"AssimpManager/AssimpManager.h"
-
-
-
-class DebugScene {
 public:
-	void Initialize();
 
-	void Update();
+	DebugScene();
 
-	void Draw();
+	~DebugScene();
 
-	void Finalize();
+	void Initialize() override;
+
+	void Update() override;
+
+	void Draw() override;
 
 private:
 
-	Camera camera_;
+	void Debug();
 
-	Model* model_;
+private:
+	//キー入力
+	Input* input_ = nullptr;
 
-	Model* model2_;
+	WorldTransform cWorld_;
+	std::unique_ptr<Camera> camera_;
 
-	WorldTransform world_;
+	WorldTransform sWorld_;
+	std::unique_ptr<SphereCollider> sphere_;
 
-	WorldTransform world2_;
+	WorldTransform pWorld_;
+	std::unique_ptr<PlaneCollider>plane_;
 
-	int texture;
-
-	Sprite* sprite_;
-
-	static const int kNuminstancing = 30;
-
-	ParticleEmiter*pE_;
-
-	Particle insPos[kNuminstancing];
-
-	const float kDeltaTime = 1.0f / 60.0f;
-
-
-	Vector3 center = { 0, 0,0 };
-
-	Vector3 maxvelo = { 0.5f,0.5f,0 };
-
-	Vector3 minvelo = { -0.5f,-0.5f,0 };
-
-	MinMaxDataV3 velo = {
-		.minData{minvelo},
-		.maxData{maxvelo}
-	};
-
-	Vector4 colormax = { 1,1,1,1 };
-	Vector4 colormin = { 0,0,0,1 };
-
-	MinMaxDataV4 color = {
-		.minData{colormax},
-		.maxData{colormin}
-	};
-
-	
-
-	bool checkUpdate_ = false;
-
-
+	WorldTransform oWorld_;
+	std::unique_ptr<OBBCollider>obb_;
 
 };
-

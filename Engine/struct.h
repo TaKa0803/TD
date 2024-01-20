@@ -67,7 +67,10 @@ struct AABB {
 	Vector3 maxV;
 };
 
-
+struct Sphere {
+	Vector3 center;
+	float radius;
+};
 
 
 

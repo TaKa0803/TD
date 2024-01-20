@@ -81,7 +81,7 @@ void Camera::DrawDebugWindow(const char* name) {
 	if (ImGui::BeginMenu(name)) {
 		ImGui::Text("mainCamera");
 		ImGui::DragFloat3("mainC pos", &camerapos_.x, 0.01f);
-		ImGui::DragFloat("targetFar", &mainCamera_.translate_.z, 0.01f);
+		ImGui::DragFloat("targetFar", &mainCamera_.translate_.z);
 		ImGui::DragFloat3("mainC rotate", &mainCamera_.rotate_.x, 0.01f);
 		ImGui::DragFloat3("mainC scale", &mainCamera_.scale_.x, 0.01f);
 

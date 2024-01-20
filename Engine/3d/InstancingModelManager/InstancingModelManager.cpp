@@ -209,6 +209,11 @@ void InstancingModelManager::SetAlpha(const std::string& tag, float alpha) {
 	//assert(false);
 }
 
+void InstancingModelManager::SetColor(const std::string& tag, Vector4 color)
+{
+	modelDatas_[tag]->SetColor(color);
+}
+
 void InstancingModelManager::SetEnableTexture(const std::string& tag, bool isEnable) {
 	////タグのモデルデータ探索
 	//for (auto& model : modeldatas_) {
