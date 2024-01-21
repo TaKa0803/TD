@@ -48,6 +48,11 @@ void BossEnemy::Update()
 	default:
 		break;
 	}
+	std::list<std::unique_ptr<SomeEnemy>>::iterator itr = enemies_.begin();
+	for (; itr != enemies_.end(); ++itr)
+	{
+		itr->get()->Update();
+	}
 
 	world_.UpdateMatrix();
 	collider_->Update();
@@ -59,6 +64,8 @@ void BossEnemy::DebagWindow()
 	collider_->Debug("boss");
 	
 	ImGui::Begin("boss");
+
+	ImGui::DragFloat3("position", &world_.translate_.x, 0.01f);
 
 	switch (behavior_)
 	{
@@ -76,11 +83,22 @@ void BossEnemy::DebagWindow()
 		reqBehavior_ = SUMMON;
 	}
 
+	std::list<std::unique_ptr<SomeEnemy>>::iterator itr = enemies_.begin();
+	for (; itr != enemies_.end(); ++itr)
+	{
+		itr->get()->DebagWindow();
+	}
+
 	ImGui::End();
 }
 
 void BossEnemy::Draw(const Matrix4x4& viewp)
 {
+	std::list<std::unique_ptr<SomeEnemy>>::iterator itr = enemies_.begin();
+	for (; itr != enemies_.end(); ++itr)
+	{
+		itr->get()->Draw();
+	}
 	GameObject::Draw(viewp);
 	collider_->Draw();
 }
