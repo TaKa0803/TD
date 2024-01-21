@@ -2,20 +2,20 @@
 
 #include "SingleGameObjects/GameObject.h"
 #include "SphereCollider/SphereCollider.h"
-#include "Input/Input.h"
 
 #include <optional>
+#include <list>
 
-class Player :public GameObject
+class SomeEnemy;
+
+class BossEnemy :public GameObject
 {
 private:
 
 	enum BEHAVIOR
 	{
 		IDOL,	// なにもしてない
-		MOVE,	// 移動
-		ATTACK,	// 攻撃してる？
-		MOMENT,	// 後隙的な動けない時間
+		SUMMON,	// 雑魚敵召喚
 
 		_COUNT,	// カウント用
 	};
@@ -28,14 +28,15 @@ private:
 	// 今向いている方向
 	Vector2 direction_ = { 0.0f, 0.0f };
 
-	Input* input_ = nullptr;
 	BEHAVIOR behavior_ = IDOL;
 	std::optional<BEHAVIOR> reqBehavior_ = std::nullopt;
 
 	std::unique_ptr<SphereCollider> collider_;
 
+	std::list<std::unique_ptr<SomeEnemy>> enemies_;
+
 public:
-	Player();
+	BossEnemy();
 
 	// 値の初期化
 	void Initialize();
@@ -48,4 +49,7 @@ public:
 
 
 private:
+
+	void SummmonEnemy();
+
 };

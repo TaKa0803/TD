@@ -18,6 +18,8 @@ GameScene::GameScene()
 	player_ = std::make_unique<Player>();
 
 	stage_ = std::make_unique<Stage>();
+
+	boss_ = std::make_unique<BossEnemy>();
 }
 
 GameScene::~GameScene()
@@ -34,6 +36,8 @@ void GameScene::Initialize()
 	plane_->Initialize();
 
 	player_->Initialize();
+
+	boss_->Initialize();
 
 	//初期化
 	camera_->Initialize();
@@ -56,6 +60,8 @@ void GameScene::Update()
 
 	player_->Update();
 
+	boss_->Update();
+
 	//カメラ更新
 	CameraUpdate();
 #pragma endregion
@@ -70,6 +76,8 @@ void GameScene::Draw()
 	player_->Draw(camera_->GetViewProjectionMatrix());
 	//地面
 	plane_->Draw(camera_->GetViewProjectionMatrix());
+
+	boss_->Draw(camera_->GetViewProjectionMatrix());
 
 	//player_->Draw(camera_->GetViewProjectionMatrix());
 
@@ -91,6 +99,8 @@ void GameScene::DebugWindows()
 	plane_->DebagWindow();
 
 	stage_->DebagWindow();
+
+	boss_->DebagWindow();
 
 #endif // _DEBUG
 
