@@ -33,5 +33,6 @@ void SomeEnemy::DebagWindow()
 void SomeEnemy::Draw()
 {
 	collider_->Draw();
+	IMM_->SetWorld(tag_, world_);
 }
 
