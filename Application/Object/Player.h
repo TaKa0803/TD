@@ -3,11 +3,23 @@
 #include "SingleGameObjects/GameObject.h"
 #include "Input/Input.h"
 
+#include <optional>
+
 class Player :public GameObject
 {
 private:
-	// ワールド
-	WorldTransform transform_;
+
+	enum BEHAVIOR
+	{
+		IDOL,	// なにもしてない
+		MOVE,	// 移動
+		ATTACK,	// 攻撃してる？
+		MOMENT,	// 後隙的な動けない時間
+
+		_COUNT,	// カウント用
+	};
+
+private:
 
 	// 中心からの距離
 	float moveLength_ = 0.0f;
@@ -16,6 +28,8 @@ private:
 	Vector2 direction_ = { 0.0f, 0.0f };
 
 	Input* input_ = nullptr;
+	BEHAVIOR behavior = IDOL;
+	std::optional<BEHAVIOR> reqBehavior_ = std::nullopt;
 
 public:
 	Player();
