@@ -27,6 +27,8 @@ void StageWall::LoadGlobalVariable()
 	vModifierScale_ = global_->GetVector3value(cGLOUP, cMODIFIERSCALE);
 	world_.rotate_ = global_->GetVector3value(cGLOUP, cROTATE);
 	vNormalPosition_ = global_->GetVector3value(cGLOUP, cNORMALPOSITION);
+	// 回転を vNormalPosition と垂直にしてみた
+	world_.rotate_.y = std::atan2f(vNormalPosition_.x, vNormalPosition_.z);
 }
 
 void StageWall::CalculateInit()
