@@ -5,7 +5,7 @@
 
 BossEnemy::BossEnemy()
 {
-	GameObject::Initialize("player");
+	GameObject::Initialize("ALPlayer");
 }
 
 void BossEnemy::Initialize()
@@ -60,7 +60,7 @@ void BossEnemy::Update()
 
 void BossEnemy::DebagWindow()
 {
-	model_->DebugParameter("boss");
+	//model_->DebugParameter("boss");
 	collider_->Debug("boss");
 	
 	ImGui::Begin("boss");
@@ -84,9 +84,10 @@ void BossEnemy::DebagWindow()
 	}
 
 	std::list<std::unique_ptr<SomeEnemy>>::iterator itr = enemies_.begin();
+	int num = 0;
 	for (; itr != enemies_.end(); ++itr)
 	{
-		itr->get()->DebagWindow();
+		itr->get()->DebagWindow(num++);
 	}
 
 	ImGui::End();

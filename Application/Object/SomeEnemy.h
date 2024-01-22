@@ -35,7 +35,7 @@ public:
 
 	void Update();
 
-	void DebagWindow();
+	void DebagWindow(int num);
 
 	void Draw();
 

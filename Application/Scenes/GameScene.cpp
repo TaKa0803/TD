@@ -94,7 +94,7 @@ void GameScene::DebugWindows()
 	//カメラのデバッグ表示
 	camera_->DrawDebugWindow("camera");
 
-	//player_->DebagWindow();
+	player_->DebagWindow();
 
 	plane_->DebagWindow();
 
