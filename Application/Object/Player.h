@@ -5,6 +5,10 @@
 #include "Input/Input.h"
 
 #include <optional>
+#include <list>
+
+#include "EchoBlast.h"
+
 
 class Player :public GameObject
 {
@@ -26,13 +30,16 @@ private:
 	float moveLength_ = 0.0f;
 
 	// 今向いている方向
-	Vector2 direction_ = { 0.0f, 0.0f };
+	Vector2 direction_ = { 0.0f, 1.0f };
 
 	Input* input_ = nullptr;
 	BEHAVIOR behavior_ = IDOL;
 	std::optional<BEHAVIOR> reqBehavior_ = std::nullopt;
 
 	std::unique_ptr<SphereCollider> collider_;
+
+	// 衝撃波
+	std::list<std::unique_ptr<EchoBlast>> blasts_;
 
 public:
 	Player();
@@ -48,4 +55,7 @@ public:
 
 
 private:
+
+	void CreateEcho(const EchoBlast::Infomation& info);
+
 };
