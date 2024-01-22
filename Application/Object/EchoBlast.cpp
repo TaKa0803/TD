@@ -1,5 +1,6 @@
 #include "EchoBlast.h"
 
+#include "SphereCollider/SphereCollider.h"
 #include "ImGuiManager/ImGuiManager.h"
 
 void EchoBlast::Initialize(const std::string& tag, const Infomation& info)
@@ -20,6 +21,8 @@ void EchoBlast::Initialize(const std::string& tag, const Infomation& info)
 
 	collider_.reset(new OBBCollider);
 	collider_->Initialize(tag, colliderWorld_);
+	sCollider_.reset(new SphereCollider);
+	sCollider_->Initialize(tag, colliderWorld_);
 }
 
 void EchoBlast::Update()
@@ -38,6 +41,7 @@ void EchoBlast::Update()
 		world_.UpdateMatrix();
 		colliderWorld_.UpdateMatrix();
 		collider_->Update();
+		sCollider_->Update();
 		//タグに対応したモデルにワールド追加
 		IMM_->SetWorld(tag_, colliderWorld_);
 	}
@@ -48,11 +52,15 @@ void EchoBlast::Draw()
 	if (isActive_)
 	{
 		collider_->Draw();
+		sCollider_->Draw();
 	}
 }
 
 void EchoBlast::DebugWindow()
 {
+	collider_->Debug("echo");
+	sCollider_->Debug("echo");
+
 	ImGui::Begin(tag_.c_str());
 
 	ImGui::Text("tra : %.2f,%.2f", world_.translate_.x, world_.translate_.z);

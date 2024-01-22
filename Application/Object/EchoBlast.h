@@ -23,6 +23,7 @@ private:
 	// 当たり判定をたくさん取る
 	//std::vector<std::unique_ptr<SphereCollider>> spheres_;
 	std::unique_ptr<OBBCollider> collider_;
+	std::unique_ptr<SphereCollider> sCollider_;
 
 	Vector3 direct3_;
 
