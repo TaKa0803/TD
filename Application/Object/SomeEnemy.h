@@ -31,7 +31,7 @@ private:
 	std::unique_ptr<SphereCollider> collider_;
 
 	// 爆発までのフレーム
-	uint32_t toBurstFrame_ = 200;
+	uint32_t toBurstFrame_ = 600;
 
 	bool isActive_ = false;
 

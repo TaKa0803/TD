@@ -10,8 +10,11 @@ BossEnemy::BossEnemy()
 
 void BossEnemy::Initialize()
 {
+	world_.Initialize();
 	world_.scale_ = { 1.0f,1.0f,1.0f };
+	world_.translate_.z = 20.0f;
 	model_->SetUVScale({ 1.0f,1.0f,1.0f });
+
 	world_.UpdateMatrix();
 
 	collider_.reset(new SphereCollider);
