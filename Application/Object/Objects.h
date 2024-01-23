@@ -5,3 +5,4 @@
 #include "Stage.h"
 #include "BossEnemy.h"
 #include "SomeEnemy.h"
+#include "EchoBlast.h"

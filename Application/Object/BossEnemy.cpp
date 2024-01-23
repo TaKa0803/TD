@@ -5,7 +5,7 @@
 
 BossEnemy::BossEnemy()
 {
-	GameObject::Initialize("player");
+	GameObject::Initialize("ALPlayer");
 }
 
 void BossEnemy::Initialize()
@@ -22,6 +22,14 @@ void BossEnemy::Initialize()
 
 void BossEnemy::Update()
 {
+	enemies_.remove_if([](const std::unique_ptr<SomeEnemy>& some) {
+		if (some->GetIsActive())
+		{
+			return false;
+		}
+		return true;
+		});
+
 	if (reqBehavior_)
 	{
 		behavior_ = reqBehavior_.value();
@@ -48,6 +56,11 @@ void BossEnemy::Update()
 	default:
 		break;
 	}
+	std::list<std::unique_ptr<SomeEnemy>>::iterator itr = enemies_.begin();
+	for (; itr != enemies_.end(); ++itr)
+	{
+		itr->get()->Update();
+	}
 
 	world_.UpdateMatrix();
 	collider_->Update();
@@ -55,10 +68,12 @@ void BossEnemy::Update()
 
 void BossEnemy::DebagWindow()
 {
-	model_->DebugParameter("boss");
+	//model_->DebugParameter("boss");
 	collider_->Debug("boss");
 	
 	ImGui::Begin("boss");
+
+	ImGui::DragFloat3("position", &world_.translate_.x, 0.01f);
 
 	switch (behavior_)
 	{
@@ -76,13 +91,29 @@ void BossEnemy::DebagWindow()
 		reqBehavior_ = SUMMON;
 	}
 
+	std::list<std::unique_ptr<SomeEnemy>>::iterator itr = enemies_.begin();
+	int num = 0;
+	for (; itr != enemies_.end(); ++itr)
+	{
+		itr->get()->DebagWindow(num++);
+	}
+
 	ImGui::End();
 }
 
 void BossEnemy::Draw(const Matrix4x4& viewp)
 {
+	std::list<std::unique_ptr<SomeEnemy>>::iterator itr = enemies_.begin();
+	for (; itr != enemies_.end(); ++itr)
+	{
+		itr->get()->Draw();
+	}
 	GameObject::Draw(viewp);
 	collider_->Draw();
+}
+
+void BossEnemy::OnCollision()
+{
 }
 
 void BossEnemy::SummmonEnemy()

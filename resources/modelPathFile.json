@@ -11,6 +11,7 @@
     "RFoot": [ "resources/AppResource/Object", "RFoot" ]
   },
   "InstancingmodelPathFile": {
+    "weapon": [ "resources/AppResource", "Weapon", 64 ],
     "wall": [ "resources/AppResource", "Stage", 5 ],
     "sphere": [ "resources/SystemResources", "sphere", 1000 ],
     "z+Plane": [ "resources/SystemResources", "normalZ+Plane", 1000 ],
