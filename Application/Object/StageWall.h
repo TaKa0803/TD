@@ -1,7 +1,7 @@
 #pragma once
 #include "InstancingGameObject/InstancingGameObject.h"
 #include "GlobalVariables/GlobalVariables.h"
-#include "SphereCollider/SphereCollider.h"
+#include "ColliderOBB/OBBCollider.h"
 
 class StageWall : public InstancingGameObject
 {
@@ -45,7 +45,7 @@ private:
 	float vSize_ = 1.0f;
 
 
-	std::unique_ptr<SphereCollider> collider_;
+	std::unique_ptr<OBBCollider> collider_;
 
 private:
 
@@ -59,9 +59,17 @@ public:
 	// 値の初期化
 	void Initialize(size_t num);
 
-	void Update() override;
+	void Update();
+
+	void Draw();
 
 	void DebagWindow();
 
 	void SaveGlobalVariable();
+
+	void OnCollision();
+
+	OBBCollider* GetCollider() { return collider_.get(); }
+
+	Vector3 GetDirection() const { return -vNormalPosition_; }
 };

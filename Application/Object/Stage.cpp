@@ -27,6 +27,14 @@ void Stage::Update()
 	}
 }
 
+void Stage::Draw()
+{
+	for (size_t i = 0; i < Placement::_COUNT; i++)
+	{
+		walls_[i]->Draw();
+	}
+}
+
 void Stage::DebagWindow()
 {
 	ImGui::Begin("Stage");
