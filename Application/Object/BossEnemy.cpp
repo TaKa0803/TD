@@ -46,7 +46,7 @@ void BossEnemy::Update()
 		switch (behavior_)
 		{
 		case BossEnemy::IDOL:
-			momentFrame_ = 20;
+			momentFrame_ = 60;
 			break;
 		case BossEnemy::SUMMON:
 			break;
