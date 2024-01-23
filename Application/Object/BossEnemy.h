@@ -47,6 +47,11 @@ public:
 
 	void Draw(const Matrix4x4& viewp);
 
+	SphereCollider* GetCollider() { return collider_.get(); }
+
+	auto& GetEnemies() { return enemies_; }
+
+	void OnCollision();
 
 private:
 

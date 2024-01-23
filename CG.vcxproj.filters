@@ -68,6 +68,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Application\Object\BossEnemy.cpp" />
     <ClCompile Include="Application\Object\SomeEnemy.cpp" />
+    <ClCompile Include="Application\Effect\EffectExplosion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Object\EchoBlast.h" />
@@ -131,6 +132,7 @@
     <ClInclude Include="externals\Imgui\imstb_truetype.h" />
     <ClInclude Include="Application\Object\BossEnemy.h" />
     <ClInclude Include="Application\Object\SomeEnemy.h" />
+    <ClInclude Include="Application\Effect\EffectExplosion.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\enemyPopData.json" />

@@ -5,6 +5,8 @@
 #include"InstancingModelManager/InstancingModelManager.h"
 #include"TextureManager/TextureManager.h"
 
+#include "SphereCollider/SphereCollider.h"
+
 GameScene::GameScene()
 {
 
@@ -30,7 +32,7 @@ GameScene::~GameScene()
 void GameScene::Initialize()
 {
 
-	
+
 	stage_->Initialize();
 
 	plane_->Initialize();
@@ -66,7 +68,7 @@ void GameScene::Update()
 	CameraUpdate();
 #pragma endregion
 
-
+	CheckCollision();
 
 }
 
@@ -94,7 +96,7 @@ void GameScene::DebugWindows()
 	//カメラのデバッグ表示
 	camera_->DrawDebugWindow("camera");
 
-	//player_->DebagWindow();
+	player_->DebagWindow();
 
 	plane_->DebagWindow();
 
@@ -127,6 +129,59 @@ void GameScene::CameraUpdate()
 
 
 	camera_->Update();
+
+
+}
+
+void GameScene::CheckCollision()
+{
+	auto& enemies = boss_->GetEnemies();
+	auto itrE = enemies.begin();
+	std::list<SphereCollider*> eCollider;
+	for (; itrE != enemies.end(); ++itrE)
+	{
+		eCollider.push_back(itrE->get()->GetCollider());
+	}
+	auto& blasts = player_->GetEchoBlasts();
+	auto itrB = blasts.begin();
+	std::list<SphereCollider*> bCollider;
+	for (; itrB != blasts.end(); ++itrB)
+	{
+		bCollider.push_back(itrB->get()->GetCollider());
+	}
+
+	Vector3 temp{ 0.0f,0.0f,0.0f };
+	
+	itrB = blasts.begin();
+	for (; itrB != blasts.end(); ++itrB)
+	{
+		EchoBlast* echo = itrB->get();
+		itrE = enemies.begin();
+		for (; itrE != enemies.end(); ++itrE)
+		{
+			SomeEnemy* some = itrE->get();
+			if (echo->GetCollider()->IsHit(*some->GetCollider(), temp))
+			{
+				echo->OnCollision();
+				some->OnCollision(echo->GetDirection());
+			}
+		}
+	}
+
+	//std::list<SphereCollider*>::iterator blast = bCollider.begin();
+	//for (; blast != bCollider.end(); ++blast)
+	//{
+	//	SphereCollider* sb = (*blast);
+	//	std::list<SphereCollider*>::iterator enemy = eCollider.begin();
+	//	for (; enemy != eCollider.end(); enemy++)
+	//	{
+	//		SphereCollider& se = *(*enemy);
+	//		if (sb->IsHit(se, temp))
+	//		{
+	//			
+	//		}
+	//	}
+	//}
 
 
 }
