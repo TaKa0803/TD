@@ -20,6 +20,7 @@ void StageWall::SaveGlobalVariable()
 	global_->AddItem(cGLOUP, cNORMALPOSITION, vNormalPosition_);
 }
 
+
 void StageWall::LoadGlobalVariable()
 {
 	vSize_ = global_->GetFloatvalue(cGLOUP, cSIZE);
@@ -40,6 +41,7 @@ void StageWall::CalculateInit()
 	// 五角形のどの位置に配置するか
 	vNormalPosition_ = Normalize(vNormalPosition_);
 	world_.translate_ = vSize_ * vNormalPosition_;
+
 }
 
 void StageWall::Initialize(size_t num)
@@ -67,7 +69,7 @@ void StageWall::Initialize(size_t num)
 
 	LoadGlobalVariable();
 
-	collider_.reset(new SphereCollider);
+	collider_.reset(new OBBCollider);
 	collider_->Initialize(tag, world_);
 
 	world_.Initialize();
@@ -91,8 +93,14 @@ void StageWall::Update()
 
 	//行列更新
 	world_.UpdateMatrix();
+	collider_->Update();
 	//タグに対応したモデルにワールド追加
 	IMM_->SetWorld(tag_, world_);
+}
+
+void StageWall::Draw()
+{
+	collider_->Draw();
 }
 
 void StageWall::DebagWindow()
@@ -122,4 +130,9 @@ void StageWall::DebagWindow()
 	collider_->Debug("wall c");
 
 	world_.UpdateMatrix();
+	collider_->Debug("wall");
+}
+
+void StageWall::OnCollision()
+{
 }

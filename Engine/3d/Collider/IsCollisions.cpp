@@ -60,7 +60,7 @@ bool InCollision(const AABB& a, const Sphere& s, Vector3& v) {
 	Vector3 V = closestPoint - s.center;
 
 	//最近接点と球の中心との距離を求める
-	float dis = Length(V);
+ 	float dis = Length(V);
 	//距離が半径よりも小さければ衝突
 	if (dis <= s.radius) { 
 		//最近接点をわたす
