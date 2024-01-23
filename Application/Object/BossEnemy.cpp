@@ -22,6 +22,14 @@ void BossEnemy::Initialize()
 
 void BossEnemy::Update()
 {
+	enemies_.remove_if([](const std::unique_ptr<SomeEnemy>& some) {
+		if (some->GetIsActive())
+		{
+			return false;
+		}
+		return true;
+		});
+
 	if (reqBehavior_)
 	{
 		behavior_ = reqBehavior_.value();

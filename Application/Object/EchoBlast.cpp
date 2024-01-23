@@ -13,7 +13,7 @@ void EchoBlast::Initialize(const std::string& tag, const Infomation& info)
 	data_ = info;
 	direct3_ = { data_.direction_.x,0.0f,data_.direction_.y };
 	world_.translate_ = data_.popPosition_ + direct3_;
-	colliderWorld_.SetParent(&world_);
+	colliderWorld_.parent_ = &world_;
 
 	colliderWorld_.translate_.y = 2.0f;
 
@@ -23,6 +23,8 @@ void EchoBlast::Initialize(const std::string& tag, const Infomation& info)
 	collider_->Initialize(tag, colliderWorld_);
 	sCollider_.reset(new SphereCollider);
 	sCollider_->Initialize(tag, colliderWorld_);
+
+	collider_->SetColor({ 0.0f,0.0f,0.0f,1.0f });
 }
 
 void EchoBlast::Update()
@@ -35,13 +37,13 @@ void EchoBlast::Update()
 	{
 		aliveFrame_--;
 
-		world_.translate_ += direct3_ * (data_.power_ * 0.08f);
+		world_.translate_ += direct3_ * (data_.power_ * 0.1f);
 
 		//行列更新
 		world_.UpdateMatrix();
 		colliderWorld_.UpdateMatrix();
 		collider_->Update();
-		sCollider_->Update();
+		//sCollider_->Update();
 		//タグに対応したモデルにワールド追加
 		IMM_->SetWorld(tag_, colliderWorld_);
 	}
@@ -52,7 +54,7 @@ void EchoBlast::Draw()
 	if (isActive_)
 	{
 		collider_->Draw();
-		sCollider_->Draw();
+		//sCollider_->Draw();
 	}
 }
 
