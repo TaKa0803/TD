@@ -13,6 +13,9 @@ public:
 
 	void Initialize(const std::string& tag,const WorldTransform& parent);
 
+	void Initialize(const std::string& tag);
+
+
 	void Update();
 
 	void Draw();

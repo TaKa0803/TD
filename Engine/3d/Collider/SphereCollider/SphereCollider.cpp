@@ -27,6 +27,20 @@ void SphereCollider::Initialize(const std::string& tag, const WorldTransform&wor
 	IMM_->SetEnableShader(tag_, false);
 }
 
+void SphereCollider::Initialize(const std::string& tag)
+{
+	InstancingGameObject::Initialize("sphere");
+
+	colliderTag_ = tag;
+
+	world_.scale_ = { radius_,radius_,radius_ };
+
+	IMM_->SetFillMode(tag_, FillMode::kWireFrame);
+	IMM_->SetAlpha(tag_, alpha_);
+	IMM_->SetEnableTexture(tag_, false);
+	IMM_->SetEnableShader(tag_, false);
+}
+
 
 void SphereCollider::Update() {
 	preWorld_ = world_;
