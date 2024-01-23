@@ -298,7 +298,10 @@ Matrix4x4 Transpose(const Matrix4x4& m) {
 // 単位行列の生成
 Matrix4x4 MakeIdentity4x4() {
 	Matrix4x4 NEW = {
-		1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		0, 0, 0, 1,
 	};
 	return NEW;
 }

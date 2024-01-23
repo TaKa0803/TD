@@ -149,10 +149,10 @@ private:
 	ID3D12Resource* wvpResource_;
 	WorldTransformation* wvpData_ = nullptr;
 
-	ID3D12Resource* materialResource_;
+	ComPtr<ID3D12Resource> materialResource_;
 	Material* materialData_ = nullptr;
 
-	ID3D12Resource* directionalLightResource_;
+	ComPtr<ID3D12Resource> directionalLightResource_;
 	DirectionalLight* directionalLightData_ = nullptr;
 
 	//UVのワールド

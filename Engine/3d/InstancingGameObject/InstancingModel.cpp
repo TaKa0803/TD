@@ -18,8 +18,8 @@ InstancingModel::~InstancingModel() {
 
 	vertexData_->Release();
 	wvpResource_->Release();
-	materialResource_->Release();
-	directionalLightResource_->Release();
+	//materialResource_->Release();
+	//directionalLightResource_->Release();
 }
 
 InstancingModel* InstancingModel::CreateFromOBJ(const std::string& directory,const std::string& filePath, int instancingNum) {

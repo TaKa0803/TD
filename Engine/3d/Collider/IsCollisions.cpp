@@ -15,7 +15,7 @@ float GetAllRotateX(const WorldTransform& world) {
 //すべてのY回転量取得
 float GetAllRotateY(const WorldTransform& world) {
 	if (world.parent_ != nullptr) {
-		return world.rotate_.y + GetAllRotateX(*world.parent_);
+		return world.rotate_.y + GetAllRotateY(*world.parent_);
 	}
 	else {
 		return world.rotate_.y;
@@ -25,7 +25,7 @@ float GetAllRotateY(const WorldTransform& world) {
 //すべてのZ回転量取得
 float GetAllRotateZ(const WorldTransform& world) {
 	if (world.parent_ != nullptr) {
-		return world.rotate_.z + GetAllRotateX(*world.parent_);
+		return world.rotate_.z + GetAllRotateZ(*world.parent_);
 	}
 	else {
 		return world.rotate_.z;

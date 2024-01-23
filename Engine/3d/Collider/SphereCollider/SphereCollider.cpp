@@ -86,6 +86,40 @@ bool SphereCollider::IsCollision(const SphereCollider& sphere, Vector3& backVec)
 	return false;
 }
 
+float GetAllScaleX(const WorldTransform& world) {
+	if (world.parent_ != nullptr) {
+		return world.scale_.x * GetAllScaleX(*world.parent_);
+	}
+	else {
+		return world.scale_.x;
+	}
+}
+
+float GetAllScaleY(const WorldTransform& world) {
+	if (world.parent_ != nullptr) {
+		return world.scale_.y * GetAllScaleY(*world.parent_);
+	}
+	else {
+		return world.scale_.y;
+	}
+}
+
+float GetAllScaleZ(const WorldTransform& world) {
+	if (world.parent_ != nullptr) {
+		return world.scale_.z * GetAllScaleZ(*world.parent_);
+	}
+	else {
+		return world.scale_.z;
+	}
+}
+
+Vector3 GetAllScale(const WorldTransform& world) {
+	return{
+		GetAllScaleX(world),
+		GetAllScaleY(world),
+		GetAllScaleZ(world),
+	};
+}
 
 
 bool SphereCollider::IsCollision(const OBBCollider& obb, Vector3& backVec)
@@ -112,8 +146,8 @@ bool SphereCollider::IsCollision(const OBBCollider& obb, Vector3& backVec)
 	
 	//スフィアコライダーの座標をOBBのローカル空間に出る
 	Vector3 sphereLocal = Transform(world_.GetMatWorldTranslate(), inverseM);
-	//
-	Vector3 size = { obb.GetWorld().scale_.x,obb.GetWorld().scale_.y,obb.GetWorld().scale_.z};
+	//すべてのスケールからサイズ取得
+	Vector3 size = GetAllScale(obb.GetWorld());
 
 	//AABB取得
 	AABB aabb_ = { .minV = -size,.maxV = size };
