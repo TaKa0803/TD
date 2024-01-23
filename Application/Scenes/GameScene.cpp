@@ -46,6 +46,7 @@ void GameScene::Initialize()
 	//各種設定
 	camera_->SetTarget(&player_->GetWorld());
 
+	camera_->SetCameraDirection(-100);
 }
 
 
