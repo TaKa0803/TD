@@ -61,7 +61,7 @@ public:
 private:
 
 	//半径
-	float radius_=1;
+	float radius_=1.0f;
 	//コライダータグ
 	std::string colliderTag_;
 

@@ -8,7 +8,7 @@
 bool SphereCollider::isDraw_ = true;
 
 SphereCollider::SphereCollider() {
-	world_.scale_ = { radius_,radius_,radius_ };
+
 }
 
 
@@ -18,7 +18,9 @@ void SphereCollider::Initialize(const std::string& tag, const WorldTransform&wor
 	world_.parent_=(&world);
 
 	colliderTag_ = tag;
-	
+
+	world_.scale_ = { radius_,radius_,radius_ };
+
 	IMM_->SetFillMode(tag_, FillMode::kWireFrame);
 	IMM_->SetAlpha(tag_, alpha_);
 	IMM_->SetEnableTexture(tag_,false);
@@ -75,9 +77,11 @@ bool SphereCollider::IsCollision(const SphereCollider& sphere, Vector3& backVec)
 bool SphereCollider::IsCollision(const OBBCollider& obb, Vector3& backVec)
 {
 
+	
+#pragma region OBBのワールド行列をスケールなしで作成
+	//回転量取得
 	Vector3 rotate = GetAllRotate(obb.GetWorld());
 
-#pragma region OBBのワールド行列をスケールなしで作成
 	//回転行列
 	Matrix4x4 rotateM = MakeRotateXMatrix(rotate.x) * (MakeRotateYMatrix(rotate.y) * MakeRotateZMatrix(rotate.z));
 	//座標行列
@@ -108,9 +112,18 @@ bool SphereCollider::IsCollision(const OBBCollider& obb, Vector3& backVec)
 		//色の変更
 		IMM_->SetColor(tag_, hitColor);
 
-		//押し出しベクトルの計算
-
+		///押し出しベクトルを利用して計算
+		//最近接点から円の中心点への向きベクトルを算出
+		Vector3 velo = sphereLocal - saikin;
+		//正規化
+		velo.SetNormalize();
+		//半径分伸ばす
+		velo *= radius_;
 		//それをOBBローカル空間からワールド空間へ
+		velo = Transform(velo, OBBM);
+
+		//渡す
+		backVec = velo;
 
 		return true;
 	}

@@ -1,6 +1,7 @@
 #include"IsCollisions.h"
 #include <algorithm>
 
+#pragma region 回転量取得関数
 //すべてのX回転量取得
 float GetAllRotateX(const WorldTransform& world) {
 	if (world.parent_ != nullptr) {
@@ -39,6 +40,9 @@ Vector3 GetAllRotate(const WorldTransform& world) {
 		GetAllRotateZ(world)
 	};
 }
+#pragma endregion
+
+
 
 //AABBと円
 bool InCollision(const AABB& a, const Sphere& s, Vector3& v) {
@@ -52,15 +56,18 @@ bool InCollision(const AABB& a, const Sphere& s, Vector3& v) {
 		.radius = 0.01f,
 	};
 
-
+	//
 	Vector3 V = closestPoint - s.center;
 
-	//最近接点をわたす
-	v = V;
+	
 
 	//最近接点と球の中心との距離を求める
 	float dis = Length(V);
 	//距離が半径よりも小さければ衝突
-	if (dis <= s.radius) { return true; }
+	if (dis <= s.radius) { 
+		//最近接点をわたす
+		v = closestPoint;
+		return true;
+	}
 	return false;
 }
