@@ -8,6 +8,8 @@
 #include"ColliderPlane/PlaneCollider.h"
 #include"ColliderOBB/OBBCollider.h"
 
+#include"Effect/EffectExplosion.h"
+
 class DebugScene : public IScene {
 
 public:
@@ -42,4 +44,9 @@ private:
 	WorldTransform oWorld_;
 	std::unique_ptr<OBBCollider>obb_;
 
+	//エフェクト
+	EffectExplosion* EffectExp_;
+
+	//エフェクト
+	std::string eTag_ = "box";
 };
