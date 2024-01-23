@@ -138,6 +138,12 @@ void MainSystem::MainRoop() {
 #pragma endregion
 		///フレーム終了時処理
 		sceneManager->EndFrame();
+
+		//シーン終了フラグがtrueの時
+		if (IScene::GetLeaveScene()) {
+			//シーンを終わる
+			break;
+		}
 	}
 
 	sceneManager->Finalize();

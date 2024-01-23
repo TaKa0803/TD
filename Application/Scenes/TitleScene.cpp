@@ -7,7 +7,7 @@ TitleScene::TitleScene() {
 
 	input_=Input::GetInstance();
 
-	int texture = TextureManager::LoadTex("resources/AppResource/Title/Title.png");
+	/*int texture = TextureManager::LoadTex("resources/AppResource/Title/Title.png");
 	sprite_.reset(Sprite::Create(texture,{320,180},{320,180},{1280,720}));
 
 	texture = TextureManager::LoadTex("resources/AppResource/Title/Press.png");
@@ -17,7 +17,7 @@ TitleScene::TitleScene() {
 
 	texture = TextureManager::LoadTex("resources/AppResource/UI/B.png");
 	BButtonSp_.reset(Sprite::Create(texture, { 180,90 }, { 90,90 }, { 70,70 }));
-	BButtonSp_->SetPosition({ 750,500 });
+	BButtonSp_->SetPosition({ 750,500 });*/
 }
 
 TitleScene::~TitleScene() {
@@ -31,6 +31,29 @@ void TitleScene::Update() {
 	
 	Debug();
 
+	
+}
+
+void TitleScene::Draw() {
+
+}
+
+void TitleScene::Debug() {
+
+#ifdef _DEBUG
+	ImGui::Begin("TitleScene");
+	ImGui::Text("Space or B to GameScene");
+	ImGui::Text("ESC to leave game");
+	ImGui::End();
+#endif // _DEBUG
+
+
+}
+
+void TitleScene::SceneCahnge()
+{
+
+
 	if (input_->TriggerKey(DIK_SPACE)) {
 		sceneNo = GAME;
 	}
@@ -38,29 +61,8 @@ void TitleScene::Update() {
 	if (input_->IsControllerActive() && input_->IsTriggerButton(kButtonB)) {
 		sceneNo = GAME;
 	}
-}
 
-void TitleScene::Draw() {
-	sprite_->Draw();
-
-	pressSp_->Draw();
-
-	BButtonSp_->Draw();
-}
-
-void TitleScene::Debug() {
-
-	Vector3 pos = pressSp_->GetPosition();
-	Vector3 scale = pressSp_->GetScale();
-
-#ifdef _DEBUG
-	ImGui::Begin("sprite");
-	ImGui::DragFloat3("pos", &pos.x);
-	ImGui::DragFloat3("scale", &scale.x);
-	ImGui::End();
-#endif // _DEBUG
-
-	pressSp_->SetPosition(pos);
-	pressSp_->SetScale(scale);
-
+	if (input_->TriggerKey(DIK_ESCAPE)) {
+		leaveGame = true;
+	}
 }

@@ -7,6 +7,7 @@ protected:
 	//シーン番号
 	static int sceneNo;
 
+	static bool leaveGame;
 public:
 
 	virtual void Initialize() = 0;
@@ -21,5 +22,10 @@ public:
 	/// <returns>シーン番号</returns>
 	int GetSceneNo();
 
-	
+	//シーンセット
+	void SetSceneNo(int scene);
+
+	//ゲーム終了フラグがONになっているか
+	static bool GetLeaveScene() { return leaveGame; };
+
 };

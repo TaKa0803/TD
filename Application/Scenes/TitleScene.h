@@ -19,16 +19,15 @@ public:
 
 private:
 
+	//デバッグ
 	void Debug();
 
+	//シーンチェンジ
+	void SceneCahnge();
 private:
 	//キー入力
 	Input* input_=nullptr;
 
-	std::unique_ptr<Sprite> sprite_;
 
-	std::unique_ptr<Sprite>pressSp_;
-
-	std::unique_ptr<Sprite>BButtonSp_;
 };
 
