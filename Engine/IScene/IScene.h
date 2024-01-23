@@ -20,10 +20,10 @@ public:
 	/// シーン番号取得
 	/// </summary>
 	/// <returns>シーン番号</returns>
-	int GetSceneNo();
+	static int GetSceneNo();
 
 	//シーンセット
-	void SetSceneNo(int scene);
+	static void SetSceneNo(int scene);
 
 	//ゲーム終了フラグがONになっているか
 	static bool GetLeaveScene() { return leaveGame; };

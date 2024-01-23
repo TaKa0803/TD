@@ -22,6 +22,21 @@ void DirectXFunc::Initialize(WindowApp* winApp)
 	assert(winApp);
 	winApp_ = winApp;
 
+#pragma region DebugLayer
+
+#ifdef _DEBUG
+
+	//ID3D12Debug1* debugController = nullptr;
+	//if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
+	//	//デバッグレイヤーを有効化
+	//	debugController->EnableDebugLayer();
+	//	//さらにGPU側でもチェックを行うようにする
+	//	debugController->SetEnableGPUBasedValidation(TRUE);
+	//}
+#endif
+
+#pragma endregion
+
 	D3D12Devicenitialize();
 	CommandInitialize();
 	SwapChainInitialize();
@@ -64,6 +79,7 @@ void DirectXFunc::D3D12Devicenitialize()
 #pragma region DXGIFactoryの生成
 	//DXGIファクトリーの生成
 	HRESULT hr = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory));
+
 	assert(SUCCEEDED(hr));
 #pragma endregion
 #pragma region 使用するアダプタを決定する

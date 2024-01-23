@@ -31,7 +31,7 @@ void TitleScene::Update() {
 	
 	Debug();
 
-	
+	SceneCahnge();
 }
 
 void TitleScene::Draw() {

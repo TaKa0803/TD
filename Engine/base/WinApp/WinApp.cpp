@@ -35,6 +35,8 @@ LRESULT CALLBACK WindowApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARA
 
 void WindowApp::Initialize(LPCWSTR windowName,int clientwidth,int clientHeight)
 {
+
+
 #pragma region ウィンドウ生成 
 	
 	kClientWidth = clientwidth;
@@ -66,19 +68,6 @@ void WindowApp::Initialize(LPCWSTR windowName,int clientwidth,int clientHeight)
 		wc.hInstance,
 		nullptr);
 
-#pragma region DebugLayer
-	
-#ifdef _DEBUG
-	ID3D12Debug1* debugController = nullptr;
-	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
-		//デバッグレイヤーを有効化
-		debugController->EnableDebugLayer();
-		//さらにGPU側でもチェックを行うようにする
-		debugController->SetEnableGPUBasedValidation(TRUE);
-	}
-#endif
-
-#pragma endregion
 	
 
 	ShowWindow(hwnd_, SW_SHOW);
