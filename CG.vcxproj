@@ -59,7 +59,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)\externals\assimp\include;$(ProjectDir)\Application;$(ProjectDir)\Engine;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\2d;$(ProjectDir)Engine\Math;$(ProjectDir)Engine\base;$(ProjectDir)Engine\ParticleData</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\externals\assimp\include;$(ProjectDir)\Application;$(ProjectDir)\Engine;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\2d;$(ProjectDir)Engine\Math;$(ProjectDir)Engine\base;$(ProjectDir)Engine\ParticleData;$(ProjectDir)Engine\3d\Collider</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -87,7 +87,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)\externals\assimp\include;$(ProjectDir)\Application;$(ProjectDir)\Engine;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\2d;$(ProjectDir)Engine\Math;$(ProjectDir)Engine\base;$(ProjectDir)Engine\ParticleData</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\externals\assimp\include;$(ProjectDir)\Application;$(ProjectDir)\Engine;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\2d;$(ProjectDir)Engine\Math;$(ProjectDir)Engine\base;$(ProjectDir)Engine\ParticleData;$(ProjectDir)Engine\3d\Collider</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -122,11 +122,13 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Scenes\IScene.cpp" />
     <ClCompile Include="Application\Scenes\MT4Scene.cpp" />
     <ClCompile Include="Application\Scenes\TitleScene.cpp" />
-    <ClCompile Include="Engine\3d\ColliderOBB\OBBCollider.cpp" />
-    <ClCompile Include="Engine\3d\ColliderPlane\PlaneCollider.cpp" />
+    <ClCompile Include="Application\Scenes\ClearScene\ClearScene.cpp" />
+    <ClCompile Include="Engine\3d\Collider\ColliderOBB\OBBCollider.cpp" />
+    <ClCompile Include="Engine\3d\Collider\ColliderPlane\PlaneCollider.cpp" />
+    <ClCompile Include="Engine\3d\Collider\IsCollisions.cpp" />
     <ClCompile Include="Engine\base\AssimpManager\AssimpManager.cpp" />
     <ClCompile Include="Engine\base\AudioManager\AudioManager.cpp" />
-    <ClCompile Include="Engine\3d\BoxCollider\BoxColider.cpp" />
+    <ClCompile Include="Engine\3d\Collider\BoxCollider\BoxColider.cpp" />
     <ClCompile Include="Engine\Camera\Camera.cpp" />
     <ClCompile Include="Engine\base\DirectXFunc\DirectXFunc.cpp" />
     <ClCompile Include="Engine\FrameChecker\FrameChecker.cpp" />
@@ -154,7 +156,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\Math\Quaternion.cpp" />
     <ClCompile Include="Engine\RandomNum\RandomNum.cpp" />
     <ClCompile Include="Engine\2d\SpCommon\SpCommon.cpp" />
-    <ClCompile Include="Engine\3d\SphereCollider\SphereCollider.cpp" />
+    <ClCompile Include="Engine\3d\Collider\SphereCollider\SphereCollider.cpp" />
     <ClCompile Include="Engine\2d\Sprite\Sprite.cpp" />
     <ClCompile Include="Engine\base\SRVManager\SRVManager.cpp" />
     <ClCompile Include="Engine\base\TextureManager\TextureManager.cpp" />
@@ -167,6 +169,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="externals\Imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="externals\Imgui\imgui_tables.cpp" />
     <ClCompile Include="externals\Imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Application\Scenes\FailScene\FailScene.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -211,12 +214,14 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Scenes\MT4Scene.h" />
     <ClInclude Include="Application\Scenes\Scenes.h" />
     <ClInclude Include="Application\Scenes\TitleScene.h" />
-    <ClInclude Include="Engine\3d\ColliderOBB\OBBCollider.h" />
-    <ClInclude Include="Engine\3d\ColliderPlane\PlaneCollider.h" />
+    <ClInclude Include="Application\Scenes\ClearScene\ClearScene.h" />
+    <ClInclude Include="Engine\3d\Collider\ColliderOBB\OBBCollider.h" />
+    <ClInclude Include="Engine\3d\Collider\ColliderPlane\PlaneCollider.h" />
+    <ClInclude Include="Engine\3d\Collider\IsCollisions.h" />
     <ClInclude Include="Engine\base\AssimpManager\AssimpManager.h" />
     <ClInclude Include="Engine\base\AudioManager\AudioManager.h" />
     <ClInclude Include="Engine\base\AudioManager\SoundData.h" />
-    <ClInclude Include="Engine\3d\BoxCollider\BoxColider.h" />
+    <ClInclude Include="Engine\3d\Collider\BoxCollider\BoxColider.h" />
     <ClInclude Include="Engine\Camera\Camera.h" />
     <ClInclude Include="Engine\base\DirectXFunc\DirectXFunc.h" />
     <ClInclude Include="Engine\FrameChecker\FrameChecker.h" />
@@ -244,7 +249,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\Math\Quaternion.h" />
     <ClInclude Include="Engine\RandomNum\RandomNum.h" />
     <ClInclude Include="Engine\2d\SpCommon\SpCommon.h" />
-    <ClInclude Include="Engine\3d\SphereCollider\SphereCollider.h" />
+    <ClInclude Include="Engine\3d\Collider\SphereCollider\SphereCollider.h" />
     <ClInclude Include="Engine\2d\Sprite\Sprite.h" />
     <ClInclude Include="Engine\base\SRVManager\SRVManager.h" />
     <ClInclude Include="Engine\base\TextureManager\TextureManager.h" />
@@ -258,6 +263,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="externals\Imgui\imstb_rectpack.h" />
     <ClInclude Include="externals\Imgui\imstb_textedit.h" />
     <ClInclude Include="externals\Imgui\imstb_truetype.h" />
+    <ClInclude Include="Application\Scenes\FailScene\FailScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\Imgui\LICENSE.txt" />

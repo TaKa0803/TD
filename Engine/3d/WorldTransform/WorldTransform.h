@@ -72,23 +72,7 @@ public://Getter
 		return matTranslation;
 	}
 
-	const WorldTransform& GetParent()const { return *parent_; }
 #pragma endregion
 
-#pragma region セッター
-	/// <summary>
-	/// 親子関係設定
-	/// </summary>
-	/// <param name="parent">親とするWorldTransform</param>
-	void SetParent(const WorldTransform* parent = nullptr) { parent_ = parent; }
-
-#pragma endregion
-
-
-
-
-private:
-
-	
 
 };

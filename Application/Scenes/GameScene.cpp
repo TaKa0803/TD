@@ -81,6 +81,7 @@ void GameScene::Draw()
 
 	boss_->Draw(camera_->GetViewProjectionMatrix());
 
+	stage_->Draw();
 	//player_->Draw(camera_->GetViewProjectionMatrix());
 
 	//インスタンシングのモデルを全描画
@@ -144,28 +145,42 @@ void GameScene::CheckCollision()
 	}
 	auto& blasts = player_->GetEchoBlasts();
 	auto itrB = blasts.begin();
-	std::list<SphereCollider*> bCollider;
+	std::list<OBBCollider*> bCollider;
 	for (; itrB != blasts.end(); ++itrB)
 	{
 		bCollider.push_back(itrB->get()->GetCollider());
 	}
 
+	auto& walls = stage_->GetWalls();
+	auto itrW = walls.begin();
+
 	Vector3 temp{ 0.0f,0.0f,0.0f };
-	
-	itrB = blasts.begin();
-	for (; itrB != blasts.end(); ++itrB)
+
+	itrE = enemies.begin();
+	for (; itrE != enemies.end(); ++itrE)
 	{
-		EchoBlast* echo = itrB->get();
-		itrE = enemies.begin();
-		for (; itrE != enemies.end(); ++itrE)
+		SomeEnemy* some = itrE->get();
+		itrB = blasts.begin();
+		for (; itrB != blasts.end(); ++itrB)
 		{
-			SomeEnemy* some = itrE->get();
-			if (echo->GetCollider()->IsHit(*some->GetCollider(), temp))
+			EchoBlast* echo = itrB->get();
+			if (some->GetCollider()->IsCollision(*echo->GetCollider(), temp))
 			{
 				echo->OnCollision();
 				some->OnCollision(echo->GetDirection());
 			}
 		}
+		itrW = walls.begin();
+		for (; itrW != walls.end(); ++itrW)
+		{
+			StageWall* wall = itrW->get();
+			if (some->GetCollider()->IsCollision(*wall->GetCollider(), temp))
+			{
+				wall->OnCollision();
+				some->OnCollision(wall->GetDirection());
+			}
+		}
+
 	}
 
 	//std::list<SphereCollider*>::iterator blast = bCollider.begin();

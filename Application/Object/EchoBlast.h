@@ -28,7 +28,7 @@ private:
 	Vector3 direct3_;
 
 	// 生きているフレーム
-	uint32_t aliveFrame_ = 100;
+	uint32_t aliveFrame_ = 80;
 
 	bool isActive_ = false;
 
@@ -44,7 +44,7 @@ public:
 
 	bool GetIsActive()const { return isActive_; }
 
-	SphereCollider* GetCollider() { return sCollider_.get(); }
+	OBBCollider* GetCollider() { return collider_.get(); }
 
 	void OnCollision();
 

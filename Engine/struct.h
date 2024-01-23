@@ -62,15 +62,7 @@ struct ModelData {
 
 
 
-struct AABB {
-	Vector3 minV;
-	Vector3 maxV;
-};
 
-struct Sphere {
-	Vector3 center;
-	float radius;
-};
 
 
 

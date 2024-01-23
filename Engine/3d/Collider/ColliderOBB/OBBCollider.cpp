@@ -1,36 +1,17 @@
 #include "OBBCollider.h"
 #include<imgui.h>
 #include"SphereCollider/SphereCollider.h"
-#include <algorithm>
 
-//AABBと円
-bool InCollision(const AABB& a, const Sphere& s) {
-	//最近接点を求める
-	Vector3 closestPoint{ std::clamp(s.center.x,a.minV.x,a.maxV.x),
-	std::clamp(s.center.y,a.minV.y,a.maxV.y),
-	std::clamp(s.center.z,a.minV.z,a.maxV.z)
-	};
-	Sphere S{
-		.center = closestPoint,
-		.radius = 0.01f,
-	};
+#include"IsCollisions.h"
 
-
-	Vector3 V = closestPoint- s.center;
-
-	//最近接点と球の中心との距離を求める
-	float dis = Length(V);
-	//距離が半径よりも小さければ衝突
-	if (dis <= s.radius) { return true; }
-	return false;
-}
+bool OBBCollider::isDraw_ = true;
 
 void OBBCollider::Initialize(const std::string& tag, const WorldTransform& parent)
 {
 	//院スタン寝具の初期化
 	InstancingGameObject::Initialize("box");
 	//親子関係設定
-	world_.SetParent(&parent);
+	world_.parent_=(&parent);
 	//コライダーのタグ設定
 	colliderTag_ = tag;
 
@@ -38,11 +19,33 @@ void OBBCollider::Initialize(const std::string& tag, const WorldTransform& paren
 	IMM_->SetEnableTexture(tag_, false);
 	//ワイヤーフレーム表示
 	IMM_->SetFillMode(tag_, FillMode::kWireFrame);
+	//影の削除
+	IMM_->SetEnableShader(tag_, false);
+	//透明度設定
+	IMM_->SetAlpha(tag_, alpha_);
+}
+
+void OBBCollider::Initialize(const std::string& tag)
+{
+	//院スタン寝具の初期化
+	InstancingGameObject::Initialize("box");
+
+	//コライダーのタグ設定
+	colliderTag_ = tag;
+
+	//画像を切る
+	IMM_->SetEnableTexture(tag_, false);
+	//ワイヤーフレーム表示
+	IMM_->SetFillMode(tag_, FillMode::kWireFrame);
+	//影の削除
+	IMM_->SetEnableShader(tag_, false);
+	//透明度設定
+	IMM_->SetAlpha(tag_, alpha_);
 }
 
 void OBBCollider::Update()
 {
-
+	preWorld_ = world_;
 	/*Matrix4x4 rotateXM = MakeRotateAxisAngle({ 1,0,0 }, rotation_.x);
 	Matrix4x4 rotateYM = MakeRotateAxisAngle({ 0,1,0 }, rotation_.y);
 	Matrix4x4 rotateZM = MakeRotateAxisAngle({ 0,0,1 }, rotation_.z);
@@ -93,7 +96,7 @@ bool OBBCollider::IsCollision(SphereCollider* collider)
 	//回転行列
 	Matrix4x4 rotateM = MakeRotateXMatrix(world_.rotate_.x) * (MakeRotateYMatrix(world_.rotate_.y)*MakeRotateZMatrix(world_.rotate_.z));
 	//座標行列
-	Matrix4x4 translateM = MakeTranslateMatrix(world_.translate_);
+	Matrix4x4 translateM = MakeTranslateMatrix(world_.GetMatWorldTranslate());
 	//スケールは使わない（sizeで使う
 	Matrix4x4 scaleM = MakeIdentity4x4();
 	//OBBのworld行列生成
@@ -107,20 +110,36 @@ bool OBBCollider::IsCollision(SphereCollider* collider)
 	//
 	Vector3 size = { world_.scale_.x,world_.scale_.y,world_.scale_.z };
 
-	aabb_ = { .minV = -size,.maxV = size };
-	Sphere sphere={ sphereLocal,collider->GetScale() };
+	//AABB取得
+	AABB aabb_ = { .minV = -size,.maxV = size };
+	//Sphere取得
+	Sphere sphere={ sphereLocal,collider->GetRadius() };
 
-	if (InCollision(aabb_, sphere)) {
-
+	//当たり判定
+	Vector3 saikin{};
+	if (InCollision(aabb_, sphere,saikin)) {
+		//色の変更
 		IMM_->SetColor(tag_,hitColor);
+
+		//押し出しベクトルの計算
+
 
 		return true;
 	}
 	else {
+		//色の変更
 		IMM_->SetColor(tag_, normalColor);
-
-
 		return false;
 	}
 	 
+}
+
+void OBBCollider::SetColor(bool hit)
+{
+	if (hit) {
+		IMM_->SetColor(tag_, hitColor);
+	}
+	else {
+		IMM_->SetColor(tag_, normalColor);
+	}
 }

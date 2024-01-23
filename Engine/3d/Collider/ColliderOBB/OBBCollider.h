@@ -15,6 +15,12 @@ public:
 	/// <param name="parent">親のワールド</param>
 	void Initialize(const std::string& tag, const WorldTransform& parent);
 
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="tag">コライダーのタグ</param>
+	void Initialize(const std::string& tag);
+
 	void Update();
 
 	void Draw();
@@ -35,19 +41,26 @@ public:
 	/// </summary>
 	/// <param name="alpha"></param>
 	void SetAlpha(const float alpha) { normalColor.w = alpha; }
+
+	void SetColor(bool hit);
 private:
+	//コライダータグ
 	std::string colliderTag_;
 
-	bool isDraw_ = true;
+	//すべての描画フラグ
+	static bool isDraw_;
 
 	Quaternion rotation_ = {};
 
-	Vector4 normalColor = { 1,1,1,1 };
+	//透明度
+	float alpha_ = 0.5f;
 
-	Vector4 hitColor = { 1,0,0,1 };
+	//通常時色
+	Vector4 normalColor = { 1,1,1,alpha_ };
+	//ヒット時色
+	Vector4 hitColor = { 1,0,0,alpha_ };
 
-	AABB aabb_;
-
+	
 
 	struct OBB {
 		Vector3 center;
@@ -56,4 +69,7 @@ private:
 	};
 
 	OBB obb_;
+
+	//過去情報
+	WorldTransform preWorld_;
 };

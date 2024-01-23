@@ -32,19 +32,23 @@ public:
 	/// </summary>
 	void DrawAllModel(const Matrix4x4& viewProjection);
 
-	
+
 	/// <summary>
 	/// タグの検索
 	/// </summary>
 	/// <param name="tag"></param>
 	bool SerchTag(const std::string& tag);
 
+
+public:
 	/// <summary>
 	/// タグのモデルのα値取得
 	/// </summary>
 	/// <param name="tag"></param>
 	/// <returns></returns>
 	float GetAlpha(const std::string& tag);
+
+public:
 
 	/// <summary>
 	/// タグのモデルにワールド追加
@@ -94,6 +98,13 @@ public:
 	/// <param name="tag"></param>
 	/// <param name="isEnable"></param>
 	void SetEnableTexture(const std::string& tag, bool isEnable);
+
+	/// <summary>
+	/// シェーダーのONOFF
+	/// </summary>
+	/// <param name="tag">モデルタグ</param>
+	/// <param name="isEnable">正否</param>
+	void SetEnableShader(const std::string& tag, bool isEnable);
 private:
 
 	//jsonのパス

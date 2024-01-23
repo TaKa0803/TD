@@ -1,15 +1,15 @@
 #pragma once
 #include "IScene/IScene.h"
+
 #include"Input/Input.h"
-#include"Sprite/Sprite.h"
 
-class TitleScene : public IScene {
-
+class ClearScene :public IScene
+{
 public:
 
-	TitleScene();
+	ClearScene();
 
-	~TitleScene();
+	~ClearScene();
 
 	void Initialize() override;
 
@@ -26,7 +26,7 @@ private:
 	void SceneCahnge();
 private:
 	//キー入力
-	Input* input_=nullptr;
+	Input* input_ = nullptr;
 
 
 };

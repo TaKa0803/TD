@@ -11,7 +11,7 @@ void SomeEnemy::Initialize()
 	world_.UpdateMatrix();
 
 	collider_.reset(new SphereCollider);
-	collider_->Initialize("enemy", world_);
+	collider_->Initialize("enemy");
 
 	isActive_ = true;
 }
@@ -56,6 +56,7 @@ void SomeEnemy::Update()
 	}
 
 	world_.UpdateMatrix();
+	collider_->SetTranslate(world_.translate_);
 	collider_->Update();
 }
 

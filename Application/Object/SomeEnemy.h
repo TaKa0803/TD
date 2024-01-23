@@ -49,5 +49,6 @@ public:
 
 	void OnCollision(const Vector3& direction);
 
+	bool GetIsActive() const { return isActive_; }
 private:
 };

@@ -227,3 +227,8 @@ void InstancingModelManager::SetEnableTexture(const std::string& tag, bool isEna
 	modelDatas_[tag]->SetEnableTexture(isEnable);
 
 }
+
+void InstancingModelManager::SetEnableShader(const std::string& tag, bool isEnable)
+{
+	modelDatas_[tag]->SetEnableShader(isEnable);
+}

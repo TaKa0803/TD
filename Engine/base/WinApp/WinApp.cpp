@@ -67,6 +67,7 @@ void WindowApp::Initialize(LPCWSTR windowName,int clientwidth,int clientHeight)
 		nullptr);
 
 #pragma region DebugLayer
+	
 #ifdef _DEBUG
 	ID3D12Debug1* debugController = nullptr;
 	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
@@ -76,6 +77,7 @@ void WindowApp::Initialize(LPCWSTR windowName,int clientwidth,int clientHeight)
 		debugController->SetEnableGPUBasedValidation(TRUE);
 	}
 #endif
+
 #pragma endregion
 	
 

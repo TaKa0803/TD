@@ -16,5 +16,9 @@ public:
 
 	void Update();
 
+	void Draw();
+
 	void DebagWindow();
+
+	auto& GetWalls() { return walls_; }
 };
