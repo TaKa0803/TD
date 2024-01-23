@@ -119,6 +119,7 @@ void StageWall::DebagWindow()
 	}
 
 	//ImGui::End();
+	collider_->Debug("wall c");
 
 	world_.UpdateMatrix();
 }

@@ -80,6 +80,8 @@ void OBBCollider::Draw()
 
 void OBBCollider::Debug(const char* name)
 {
+
+#ifdef _DEBUG
 	ImGui::Begin(name);
 	ImGui::DragFloat3("trans", &world_.translate_.x, 0.10f);
 	ImGui::DragFloat3("rotation", &world_.rotate_.x, 0.01f);
@@ -88,6 +90,8 @@ void OBBCollider::Debug(const char* name)
 	ImGui::ColorEdit4("hit color", &hitColor.x);
 	ImGui::Checkbox("isDraw", &isDraw_);
 	ImGui::End();
+#endif // _DEBUG
+
 
 }
 
