@@ -104,6 +104,10 @@ void BossEnemy::Draw(const Matrix4x4& viewp)
 	collider_->Draw();
 }
 
+void BossEnemy::OnCollision()
+{
+}
+
 void BossEnemy::SummmonEnemy()
 {
 	SomeEnemy* data = new SomeEnemy;

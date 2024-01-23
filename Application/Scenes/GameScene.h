@@ -28,6 +28,8 @@ private:
 
 	void CameraUpdate();
 
+	void CheckCollision();
+
 private:
 	//キー入力
 	Input* input_ = nullptr;

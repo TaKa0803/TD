@@ -95,6 +95,10 @@ void Player::Draw(const Matrix4x4& viewp)
 	}
 }
 
+void Player::OnCollision()
+{
+}
+
 void Player::CreateEcho(const EchoBlast::Infomation& info)
 {
 	EchoBlast* echo = new EchoBlast;
