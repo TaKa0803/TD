@@ -8,7 +8,10 @@
 #pragma region シーンのh
 #include"./Scenes/TitleScene.h"
 #include"./Scenes/GameScene.h"
+#include"Scenes/ClearScene/ClearScene.h"
+#include"Scenes/FailScene/FailScene.h"
 #include"Scenes/DebugScene.h"
+
 #pragma endregion
 
 
@@ -25,6 +28,8 @@ void SceneManager::Initialize()
 	//各シーンの情報設定
 	sceneArr_[TITLE] = std::make_unique<TitleScene>();
 	sceneArr_[GAME] = std::make_unique<GameScene>();
+	sceneArr_[CLEAR] = std::make_unique<ClearScene>();
+	sceneArr_[FAIL] = std::make_unique<FailScene>();
 	sceneArr_[DEBUG] = std::make_unique<DebugScene>();
 	sceneName_.clear();
 	sceneName_.push_back("TITLE");
@@ -84,6 +89,7 @@ void SceneManager::DebugWindow()
 	ImGui::Begin("SceneManager");
 	ImGui::Text("SceneNo.%d", currentSceneNo_);
 	ImGui::Text("%s", sceneName_[currentSceneNo_].c_str());
+	ImGui::DragInt("sceneNo", &currentSceneNo_, 0.1f, TITLE, DEBUG);
 	ImGui::End();
 #endif // _DEBUG
 

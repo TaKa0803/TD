@@ -70,6 +70,8 @@
     <ClCompile Include="Application\Object\SomeEnemy.cpp" />
     <ClCompile Include="Application\Effect\EffectExplosion.cpp" />
     <ClCompile Include="Engine\3d\Collider\IsCollisions.cpp" />
+    <ClCompile Include="Application\Scenes\ClearScene\ClearScene.cpp" />
+    <ClCompile Include="Application\Scenes\FailScene\FailScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Object\EchoBlast.h" />
@@ -135,6 +137,8 @@
     <ClInclude Include="Application\Object\SomeEnemy.h" />
     <ClInclude Include="Application\Effect\EffectExplosion.h" />
     <ClInclude Include="Engine\3d\Collider\IsCollisions.h" />
+    <ClInclude Include="Application\Scenes\ClearScene\ClearScene.h" />
+    <ClInclude Include="Application\Scenes\FailScene\FailScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\enemyPopData.json" />
