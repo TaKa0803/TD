@@ -43,4 +43,10 @@ public:
 	void DebugWindow();
 
 	bool GetIsActive()const { return isActive_; }
+
+	SphereCollider* GetCollider() { return sCollider_.get(); }
+
+	void OnCollision();
+
+	const Vector3& GetDirection() const { return direct3_; }
 };

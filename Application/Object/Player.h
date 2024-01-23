@@ -53,6 +53,9 @@ public:
 
 	void Draw(const Matrix4x4& viewp);
 
+	auto& GetEchoBlasts() { return blasts_; }
+
+	void OnCollision();
 
 private:
 

@@ -69,3 +69,7 @@ void EchoBlast::DebugWindow()
 
 	ImGui::End();
 }
+
+void EchoBlast::OnCollision()
+{
+}
