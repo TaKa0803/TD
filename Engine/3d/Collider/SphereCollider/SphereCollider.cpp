@@ -99,7 +99,7 @@ bool SphereCollider::IsCollision(const OBBCollider& obb, Vector3& backVec)
 	//回転行列
 	Matrix4x4 rotateM = MakeRotateXMatrix(rotate.x) * (MakeRotateYMatrix(rotate.y) * MakeRotateZMatrix(rotate.z));
 	//座標行列
-	Matrix4x4 translateM = MakeTranslateMatrix(obb.GetWorld().translate_);
+	Matrix4x4 translateM = MakeTranslateMatrix(obb.GetWorld().GetMatWorldTranslate());
 	//スケールは使わない（sizeで使う
 	Matrix4x4 scaleM = MakeIdentity4x4();
 	//OBBのworld行列生成

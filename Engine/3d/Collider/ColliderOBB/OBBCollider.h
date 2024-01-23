@@ -15,6 +15,12 @@ public:
 	/// <param name="parent">親のワールド</param>
 	void Initialize(const std::string& tag, const WorldTransform& parent);
 
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="tag">コライダーのタグ</param>
+	void Initialize(const std::string& tag);
+
 	void Update();
 
 	void Draw();

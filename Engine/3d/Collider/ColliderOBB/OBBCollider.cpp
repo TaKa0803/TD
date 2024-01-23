@@ -25,6 +25,24 @@ void OBBCollider::Initialize(const std::string& tag, const WorldTransform& paren
 	IMM_->SetAlpha(tag_, alpha_);
 }
 
+void OBBCollider::Initialize(const std::string& tag)
+{
+	//院スタン寝具の初期化
+	InstancingGameObject::Initialize("box");
+
+	//コライダーのタグ設定
+	colliderTag_ = tag;
+
+	//画像を切る
+	IMM_->SetEnableTexture(tag_, false);
+	//ワイヤーフレーム表示
+	IMM_->SetFillMode(tag_, FillMode::kWireFrame);
+	//影の削除
+	IMM_->SetEnableShader(tag_, false);
+	//透明度設定
+	IMM_->SetAlpha(tag_, alpha_);
+}
+
 void OBBCollider::Update()
 {
 	preWorld_ = world_;
@@ -78,7 +96,7 @@ bool OBBCollider::IsCollision(SphereCollider* collider)
 	//回転行列
 	Matrix4x4 rotateM = MakeRotateXMatrix(world_.rotate_.x) * (MakeRotateYMatrix(world_.rotate_.y)*MakeRotateZMatrix(world_.rotate_.z));
 	//座標行列
-	Matrix4x4 translateM = MakeTranslateMatrix(world_.translate_);
+	Matrix4x4 translateM = MakeTranslateMatrix(world_.GetMatWorldTranslate());
 	//スケールは使わない（sizeで使う
 	Matrix4x4 scaleM = MakeIdentity4x4();
 	//OBBのworld行列生成
