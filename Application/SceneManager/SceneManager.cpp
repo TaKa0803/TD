@@ -19,7 +19,7 @@
 void SceneManager::Initialize()
 {
 	currentSceneNo_ = 0;
-	
+
 	//シーンの数取得
 	sceneArr_.resize((size_t)SCENE::SceneCount);
 
@@ -33,28 +33,29 @@ void SceneManager::Initialize()
 	sceneName_.push_back("TITLE");
 	sceneName_.push_back("GAME");
 	sceneName_.push_back("CLEAR");
-	sceneName_.push_back("Fail");
+	sceneName_.push_back("FAIL");
 	sceneName_.push_back("DEBUG");
+
+	//初期シーン設定
+	sceneArr_[0]->SetSceneNo(GAME);
 	/*
 	sceneArr_[TITLE] = std::make_unique<TitleScene>();
 	sceneArr_[STAGE] = std::make_unique<PlayScene>();
 	sceneArr_[CLEAR] = std::make_unique<ClearScene>();
 	*/
 
-
-	//初期シーン設定
-	IScene::SetSceneNo(TITLE);
-
+	int num=sceneArr_[GAME]->GetSceneNo();
 }
 
 void SceneManager::Update()
 {
-	//デバッグ表示
-	DebugWindow();
 
 	//シーンチェック
 	prevSceneNo_ = currentSceneNo_;
-	currentSceneNo_ = IScene::GetSceneNo();
+	currentSceneNo_ = sceneArr_[currentSceneNo_]->GetSceneNo();
+
+	//デバッグ表示
+	DebugWindow();
 
 	//シーン変更チェック
 	if (prevSceneNo_ != currentSceneNo_)
@@ -66,8 +67,6 @@ void SceneManager::Update()
 
 	//シーン更新処理
 	sceneArr_[currentSceneNo_]->Update();
-
-
 }
 
 void SceneManager::Draw()
@@ -90,16 +89,11 @@ void SceneManager::Finalize()
 void SceneManager::DebugWindow()
 {
 #ifdef _DEBUG
-
-	int num = IScene::GetSceneNo();
-
 	ImGui::Begin("SceneManager");
 	ImGui::Text("SceneNo.%d", currentSceneNo_);
 	ImGui::Text("%s", sceneName_[currentSceneNo_].c_str());
-	ImGui::SliderInt("sceneNo", &num,TITLE, DEBUG);
+	ImGui::DragInt("sceneNo", &currentSceneNo_, 0.1f, TITLE, DEBUG);
 	ImGui::End();
-
-	IScene::SetSceneNo(num);
 #endif // _DEBUG
 
 }
