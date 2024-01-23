@@ -55,9 +55,13 @@ void StageWall::Initialize(size_t num)
 	tag = tag + std::to_string(num);
 	//cMODELSCALE = tag + ":" + cMODELSCALE;
 	//cMODIFIERSCALE = tag + ":" + cMODIFIERSCALE;
-	cROTATE = tag + ":" + cROTATE;
-	cNORMALPOSITION = tag + ":" + cNORMALPOSITION;
-
+	static int isInit_ = 0;
+	if (isInit_ < _COUNT)
+	{
+		isInit_++;
+		cROTATE = tag + ":" + cROTATE;
+		cNORMALPOSITION = tag + ":" + cNORMALPOSITION;
+	}
 #ifdef _DEBUG
 
 	// デバッグ時の生成エラー回避

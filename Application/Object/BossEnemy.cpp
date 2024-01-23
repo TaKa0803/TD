@@ -13,6 +13,7 @@ void BossEnemy::Initialize()
 	world_.Initialize();
 	world_.scale_ = { 1.0f,1.0f,1.0f };
 	world_.translate_.z = 20.0f;
+	world_.translate_.y = 2.0f;
 	model_->SetUVScale({ 1.0f,1.0f,1.0f });
 
 	world_.UpdateMatrix();
@@ -21,10 +22,16 @@ void BossEnemy::Initialize()
 	collider_->Initialize("boss", world_);
 
 	enemies_.clear();
+	reqBehavior_ = IDOL;
+	isActive_ = true;
 }
 
 void BossEnemy::Update()
 {
+	if (!isActive_)
+	{
+		return;
+	}
 	enemies_.remove_if([](const std::unique_ptr<SomeEnemy>& some) {
 		if (some->GetIsActive())
 		{
@@ -39,8 +46,12 @@ void BossEnemy::Update()
 		switch (behavior_)
 		{
 		case BossEnemy::IDOL:
+			momentFrame_ = 20;
 			break;
 		case BossEnemy::SUMMON:
+			break;
+		case BossEnemy::CRUSH:
+			momentFrame_ = 20;
 			break;
 		default:
 			break;
@@ -51,10 +62,24 @@ void BossEnemy::Update()
 	switch (behavior_)
 	{
 	case BossEnemy::IDOL:
-
+		if (enemies_.size() < 5)
+		{
+			momentFrame_--;
+			if (momentFrame_ <= 0)
+			{
+				reqBehavior_ = SUMMON;
+			}
+		}
 		break;
 	case BossEnemy::SUMMON:
 		SummmonEnemy();
+		break;
+	case BossEnemy::CRUSH:
+		momentFrame_--;
+		if (momentFrame_ <= 0)
+		{
+			isActive_ = false;
+		}
 		break;
 	default:
 		break;
@@ -106,6 +131,10 @@ void BossEnemy::DebagWindow()
 
 void BossEnemy::Draw(const Matrix4x4& viewp)
 {
+	if (!isActive_)
+	{
+		return;
+	}
 	std::list<std::unique_ptr<SomeEnemy>>::iterator itr = enemies_.begin();
 	for (; itr != enemies_.end(); ++itr)
 	{
@@ -117,6 +146,7 @@ void BossEnemy::Draw(const Matrix4x4& viewp)
 
 void BossEnemy::OnCollision()
 {
+	reqBehavior_ = CRUSH;
 }
 
 void BossEnemy::SummmonEnemy()

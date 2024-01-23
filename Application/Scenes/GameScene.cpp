@@ -33,7 +33,7 @@ void GameScene::Initialize()
 {
 
 
-	stage_->Initialize();
+ 	stage_->Initialize();
 
 	plane_->Initialize();
 
@@ -54,6 +54,10 @@ void GameScene::Initialize()
 void GameScene::Update()
 {
 
+	if (!boss_->GetIsActive())
+	{
+		sceneNo = SCENE::CLEAR;
+	}
 
 #pragma region ゲームシーン
 	//デバッグウィンドウ表示
@@ -161,6 +165,14 @@ void GameScene::CheckCollision()
 	for (; itrE != enemies.end(); ++itrE)
 	{
 		SomeEnemy* some = itrE->get();
+	
+		BossEnemy* boss = boss_.get();
+		if (some->GetCollider()->IsCollision(*boss->GetCollider(), temp))
+		{
+			some->OnCollision();
+			boss->OnCollision();
+		}
+
 		itrB = blasts.begin();
 		for (; itrB != blasts.end(); ++itrB)
 		{
