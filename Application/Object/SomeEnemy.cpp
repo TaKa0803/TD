@@ -83,7 +83,7 @@ void SomeEnemy::Draw()
 
 void SomeEnemy::OnCollision(const Vector3& direction)
 {
-	if (behavior_ != BURST)
+	//if (behavior_ != BURST)
 	{
 		direct3_ = direction;
 		reqBehavior_ = BURST;
