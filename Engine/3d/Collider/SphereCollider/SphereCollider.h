@@ -48,6 +48,8 @@ public:
 	//座標設定
 	void SetTranslate(const Vector3& pos) { world_.translate_ = pos; }
 
+	//
+	void SetColor(bool hit);
 public:
 
 	//半径取得

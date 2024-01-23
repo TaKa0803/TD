@@ -170,5 +170,15 @@ void SphereCollider::Debug(const char* name) {
 
 }
 
+void SphereCollider::SetColor(bool hit)
+{
+	if (hit) {
+		IMM_->SetColor(tag_, hitColor);
+	}
+	else {
+		IMM_->SetColor(tag_, normalColor);
+	}
+}
+
 
 

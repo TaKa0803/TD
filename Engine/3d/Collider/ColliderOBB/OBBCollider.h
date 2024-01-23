@@ -41,6 +41,8 @@ public:
 	/// </summary>
 	/// <param name="alpha"></param>
 	void SetAlpha(const float alpha) { normalColor.w = alpha; }
+
+	void SetColor(bool hit);
 private:
 	//コライダータグ
 	std::string colliderTag_;

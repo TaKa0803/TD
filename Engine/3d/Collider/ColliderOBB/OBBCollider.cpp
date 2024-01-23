@@ -133,3 +133,13 @@ bool OBBCollider::IsCollision(SphereCollider* collider)
 	}
 	 
 }
+
+void OBBCollider::SetColor(bool hit)
+{
+	if (hit) {
+		IMM_->SetColor(tag_, hitColor);
+	}
+	else {
+		IMM_->SetColor(tag_, normalColor);
+	}
+}
