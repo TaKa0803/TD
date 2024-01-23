@@ -31,10 +31,11 @@ void SceneManager::Initialize()
 	sceneName_.clear();
 	sceneName_.push_back("TITLE");
 	sceneName_.push_back("GAME");
+	sceneName_.push_back("CLEAR");
+	sceneName_.push_back("FAIL");
 	sceneName_.push_back("DEBUG");
 
-	//初期シーン設定
-	sceneArr_[0]->SetSceneNo(GAME);
+
 	/*
 	sceneArr_[TITLE] = std::make_unique<TitleScene>();
 	sceneArr_[STAGE] = std::make_unique<PlayScene>();

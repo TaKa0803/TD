@@ -8,7 +8,7 @@ bool OBBCollider::isDraw_ = true;
 
 void OBBCollider::Initialize(const std::string& tag, const WorldTransform& parent)
 {
-	//院スタン寝具の初期化
+	//インスタンシングの初期化
 	InstancingGameObject::Initialize("box");
 	//親子関係設定
 	world_.parent_=(&parent);
@@ -18,7 +18,7 @@ void OBBCollider::Initialize(const std::string& tag, const WorldTransform& paren
 	//画像を切る
 	IMM_->SetEnableTexture(tag_, false);
 	//ワイヤーフレーム表示
-	IMM_->SetFillMode(tag_, FillMode::kWireFrame);
+	//IMM_->SetFillMode(tag_, FillMode::kWireFrame);
 	//影の削除
 	IMM_->SetEnableShader(tag_, false);
 	//透明度設定
