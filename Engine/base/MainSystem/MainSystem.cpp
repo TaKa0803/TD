@@ -155,7 +155,7 @@ void MainSystem::MainRoop() {
 
 void MainSystem::Finalize() {
 	///開放処理
-	
+	instancingMM_->Finalize();
 	SRVM_->Finalize();
 	textureManager->Finalize();
 	imguiManager->Finalize();

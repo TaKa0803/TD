@@ -80,6 +80,13 @@ void InstancingModelManager::LoadAllModel() {
 
 }
 
+void InstancingModelManager::Finalize()
+{
+	for (auto& data : modelDatas_) {
+		data.second.release();
+	}
+}
+
 void InstancingModelManager::PreUpdate() {
 
 	//すべてのモデルのワールドデータ初期化

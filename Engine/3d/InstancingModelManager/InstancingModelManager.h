@@ -23,6 +23,11 @@ public:
 	void LoadAllModel();
 
 	/// <summary>
+	/// 終了処理
+	/// </summary>
+	void Finalize();
+
+	/// <summary>
 	/// 更新前処理
 	/// </summary>
 	void PreUpdate();
