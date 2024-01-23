@@ -60,7 +60,7 @@ public:
 	/// シェーダー処理の切り替え
 	/// </summary>
 	/// <param name="ans">影をつけるか</param>
-	//void IsEnableShader(bool ans) { materialData_->enableLighting = ans; }
+	void SetEnableShader(bool ans) { materialData_->enableLighting = ans; }
 
 	/// <summary>
 	/// 画像を使用するか

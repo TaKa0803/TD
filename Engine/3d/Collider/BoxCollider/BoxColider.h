@@ -1,7 +1,7 @@
 #pragma once
 #include"WorldTransform/WorldTransform.h"
 #include"SingleGameObjects/Model.h"
-
+#include"IsCollisions.h"
 
 enum class ColliderType {
 	Sphere,

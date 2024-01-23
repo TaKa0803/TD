@@ -43,7 +43,7 @@ Collider::~Collider() {
 void Collider::Initialize(const WorldTransform* world) {
 
 
-	world_.SetParent(world);
+	world_.parent_=(world);
 
 	model_ = Model::CreateFromOBJ("ALPlayer");
 

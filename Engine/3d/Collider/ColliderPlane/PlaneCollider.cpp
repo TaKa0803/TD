@@ -27,7 +27,7 @@ void PlaneCollider::Initialize(const std::string& tag, const WorldTransform& par
 {
 	InstancingGameObject::Initialize("z+Plane");
 
-	world_.SetParent(&parent);
+	world_.parent_=(&parent);
 
 	colliderTag_ = tag;
 

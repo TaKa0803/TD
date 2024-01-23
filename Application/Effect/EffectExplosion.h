@@ -39,7 +39,7 @@ public:
 		//モデルのタグ
 		std::string tag;
 
-		//データ軍
+		//動きのデータ群
 		std::list<moveData*>mData;
 
 		//データすべて死んだか否か
@@ -56,10 +56,10 @@ public:
 	void Draw();
 
 private:
+	//Instancingモデルのマネージャ
+	InstancingModelManager* IMM_=nullptr;
 
-	InstancingModelManager* IMM_;
-
-	//データ
+	//データ群
 	std::list<EffectData*>datas_;
 
 };
