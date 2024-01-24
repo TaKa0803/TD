@@ -9,6 +9,7 @@
 
 #include "EchoBlast.h"
 
+class Camera;
 
 class Player :public GameObject
 {
@@ -17,7 +18,7 @@ private:
 	enum BEHAVIOR
 	{
 		IDOL,	// なにもしてない
-		MOVE,	// 移動
+		//MOVE,	// 移動
 		ATTACK,	// 攻撃してる？
 		MOMENT,	// 後隙的な動けない時間
 
@@ -25,6 +26,8 @@ private:
 	};
 
 private:
+
+	Camera* camera_ = nullptr;
 
 	// 中心からの距離
 	float moveLength_ = 0.0f;
@@ -40,6 +43,8 @@ private:
 
 	// 衝撃波
 	std::list<std::unique_ptr<EchoBlast>> blasts_;
+
+	uint32_t momentFrame_ = 20;
 
 public:
 	Player();
@@ -57,7 +62,18 @@ public:
 
 	void OnCollision();
 
+	// 押し出しを反映
+	void BackVector(const Vector3& vector) { world_.translate_ += vector; }
+
+	SphereCollider* GetCollider() { return collider_.get(); }
+
+	void SetCamera(Camera* camera) { camera_ = camera; }
+
 private:
+
+	void UpdateMove();
+
+	void UpdateATTACK();
 
 	void CreateEcho(const EchoBlast::Infomation& info);
 

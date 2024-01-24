@@ -36,7 +36,7 @@ void GameScene::Initialize()
 {
 
 
-	stage_->Initialize();
+ 	stage_->Initialize();
 
 	plane_->Initialize();
 
@@ -48,7 +48,9 @@ void GameScene::Initialize()
 	camera_->Initialize();
 	//各種設定
 	camera_->SetTarget(&player_->GetWorld());
+	player_->SetCamera(camera_.get());
 
+	camera_->SetCameraDirection(-100);
 	skydome_->Initialize();
 
 }
@@ -58,6 +60,10 @@ void GameScene::Initialize()
 void GameScene::Update()
 {
 
+	if (!boss_->GetIsActive())
+	{
+		sceneNo = SCENE::CLEAR;
+	}
 
 #pragma region ゲームシーン
 	//デバッグウィンドウ表示
@@ -165,10 +171,28 @@ void GameScene::CheckCollision()
 
 	Vector3 temp{ 0.0f,0.0f,0.0f };
 
+	itrW = walls.begin();
+	for (; itrW != walls.end(); ++itrW)
+	{
+		StageWall* wall = itrW->get();
+		if (player_->GetCollider()->IsCollision(*wall->GetCollider(), temp))
+		{
+			wall->OnCollision();
+			player_->BackVector(temp);
+		}
+	}
 	itrE = enemies.begin();
 	for (; itrE != enemies.end(); ++itrE)
 	{
 		SomeEnemy* some = itrE->get();
+	
+		BossEnemy* boss = boss_.get();
+		if (some->GetCollider()->IsCollision(*boss->GetCollider(), temp))
+		{
+			some->OnCollision();
+			boss->OnCollision();
+		}
+
 		itrB = blasts.begin();
 		for (; itrB != blasts.end(); ++itrB)
 		{

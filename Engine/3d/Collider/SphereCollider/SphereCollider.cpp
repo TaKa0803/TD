@@ -12,10 +12,10 @@ SphereCollider::SphereCollider() {
 }
 
 
-void SphereCollider::Initialize(const std::string& tag, const WorldTransform&world) {
+void SphereCollider::Initialize(const std::string& tag, const WorldTransform& world) {
 	InstancingGameObject::Initialize("sphere");
 
-	world_.parent_=(&world);
+	world_.parent_ = (&world);
 
 	colliderTag_ = tag;
 
@@ -23,7 +23,7 @@ void SphereCollider::Initialize(const std::string& tag, const WorldTransform&wor
 
 	IMM_->SetFillMode(tag_, FillMode::kWireFrame);
 	IMM_->SetAlpha(tag_, alpha_);
-	IMM_->SetEnableTexture(tag_,false);
+	IMM_->SetEnableTexture(tag_, false);
 	IMM_->SetEnableShader(tag_, false);
 }
 
@@ -86,46 +86,12 @@ bool SphereCollider::IsCollision(const SphereCollider& sphere, Vector3& backVec)
 	return false;
 }
 
-float GetAllScaleX(const WorldTransform& world) {
-	if (world.parent_ != nullptr) {
-		return world.scale_.x * GetAllScaleX(*world.parent_);
-	}
-	else {
-		return world.scale_.x;
-	}
-}
-
-float GetAllScaleY(const WorldTransform& world) {
-	if (world.parent_ != nullptr) {
-		return world.scale_.y * GetAllScaleY(*world.parent_);
-	}
-	else {
-		return world.scale_.y;
-	}
-}
-
-float GetAllScaleZ(const WorldTransform& world) {
-	if (world.parent_ != nullptr) {
-		return world.scale_.z * GetAllScaleZ(*world.parent_);
-	}
-	else {
-		return world.scale_.z;
-	}
-}
-
-Vector3 GetAllScale(const WorldTransform& world) {
-	return{
-		GetAllScaleX(world),
-		GetAllScaleY(world),
-		GetAllScaleZ(world),
-	};
-}
 
 
-bool SphereCollider::IsCollision(const OBBCollider& obb, Vector3& backVec)
+bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec)
 {
 
-	
+
 #pragma region OBBのワールド行列をスケールなしで作成
 	//回転量取得
 	Vector3 rotate = GetAllRotate(obb.GetWorld());
@@ -143,7 +109,7 @@ bool SphereCollider::IsCollision(const OBBCollider& obb, Vector3& backVec)
 	Matrix4x4 inverseM = Inverse(OBBM);
 #pragma endregion
 
-	
+
 	//スフィアコライダーの座標をOBBのローカル空間に出る
 	Vector3 sphereLocal = Transform(world_.GetMatWorldTranslate(), inverseM);
 	//すべてのスケールからサイズ取得
@@ -157,27 +123,77 @@ bool SphereCollider::IsCollision(const OBBCollider& obb, Vector3& backVec)
 	//当たり判定
 	Vector3 saikin{};
 	if (InCollision(aabb_, sphere, saikin)) {
+
+		
+		//OBBLocalPosCange
+		saikin = Transform(saikin, OBBM);
+
+		//mosionajiiti
+		if (world_.GetMatWorldTranslate() == saikin) {
+			//スフィアコライダーの座標をOBBのローカル空間に出る
+			sphereLocal = Transform(preWorld_.GetMatWorldTranslate(), inverseM);
+			//Sphere取得
+			sphere = { sphereLocal,radius_ };
+			InCollision(aabb_, sphere, saikin);
+
+			saikin = Transform(saikin, OBBM);
+
+			Vector3 velo = preWorld_.GetMatWorldTranslate() - saikin;
+			velo.SetNormalize();
+			velo *= radius_;
+
+			backVec = velo;
+
+		}
+		else {
+			///押し出しベクトルを利用して計算
+			//最近接点から円の中心点への向きベクトルを算出
+			Vector3 velo = world_.GetMatWorldTranslate() - saikin;
+			//正規化
+			
+			Vector3 norVe = velo;
+			norVe.SetNormalize();
+			//半径分伸ばす
+			norVe *= radius_;
+
+			//渡す
+			backVec = norVe-velo;
+
+
+		}
+
+
+		////最近接点描画
+		WorldTransform sWo;
+		sWo.translate_ = saikin;
+		sWo.scale_ = { 0.1f,0.1f,0.1f };
+		sWo.UpdateMatrix();
+		IMM_->SetWorld("sphere", sWo);
+
+		obb.SetColor(true);
+
 		//色の変更
 		IMM_->SetColor(tag_, hitColor);
 
-		///押し出しベクトルを利用して計算
-		//最近接点から円の中心点への向きベクトルを算出
-		Vector3 velo = sphereLocal - saikin;
-		//正規化
-		velo.SetNormalize();
-		//半径分伸ばす
-		velo *= radius_;
-		//それをOBBローカル空間からワールド空間へ
-		velo = Transform(velo, OBBM);
-
-		//渡す
-		backVec = velo;
 
 		return true;
+
+
+
 	}
 	else {
+		//最近接点描画
+		WorldTransform sWo;
+		sWo.translate_ = Transform(saikin, OBBM);
+		sWo.scale_ = { 0.1f,0.1f,0.1f };
+		sWo.UpdateMatrix();
+		IMM_->SetWorld("sphere", sWo);
+
+
 		//色の変更
 		IMM_->SetColor(tag_, normalColor);
+		obb.SetColor(false);
+
 		return false;
 	}
 }
@@ -199,8 +215,8 @@ void SphereCollider::Debug(const char* name) {
 
 #endif // _DEBUG
 
-	
-	
+
+
 
 }
 
@@ -212,6 +228,11 @@ void SphereCollider::SetColor(bool hit)
 	else {
 		IMM_->SetColor(tag_, normalColor);
 	}
+}
+
+void SphereCollider::UpdateMatrix()
+{
+	world_.UpdateMatrix();
 }
 
 

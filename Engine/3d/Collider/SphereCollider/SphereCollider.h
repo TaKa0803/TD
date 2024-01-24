@@ -34,7 +34,7 @@ public:
 	/// <param name="obb">元となるコライダー</param>
 	/// <param name="backVec">押し出しベクトル</param>
 	/// <returns>引数の押し出しベクトルに値を渡して成否チェック</returns>
-	bool IsCollision(const OBBCollider& obb, Vector3& backVec);
+	bool IsCollision(OBBCollider& obb, Vector3& backVec);
 
 	//デバッグImGui
 	void Debug(const char* name);
@@ -48,8 +48,11 @@ public:
 	//座標設定
 	void SetTranslate(const Vector3& pos) { world_.translate_ = pos; }
 
-	//
+	//フラグに併せて色変更
 	void SetColor(bool hit);
+
+	//当たった時に行列更新するといい
+	void UpdateMatrix();
 public:
 
 	//半径取得

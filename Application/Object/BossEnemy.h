@@ -17,6 +17,8 @@ private:
 		IDOL,	// なにもしてない
 		SUMMON,	// 雑魚敵召喚
 
+		CRUSH,	// 撃破
+
 		_COUNT,	// カウント用
 	};
 
@@ -35,6 +37,10 @@ private:
 
 	std::list<std::unique_ptr<SomeEnemy>> enemies_;
 
+	uint32_t momentFrame_ = 20;
+
+	bool isActive_ = false;
+
 public:
 	BossEnemy();
 
@@ -52,6 +58,8 @@ public:
 	auto& GetEnemies() { return enemies_; }
 
 	void OnCollision();
+
+	bool GetIsActive() const { return isActive_; }
 
 private:
 

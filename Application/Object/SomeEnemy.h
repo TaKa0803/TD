@@ -47,6 +47,7 @@ public:
 
 	SphereCollider* GetCollider() { return collider_.get(); }
 
+	void OnCollision() { isActive_ = false; }
 	void OnCollision(const Vector3& direction);
 
 	bool GetIsActive() const { return isActive_; }

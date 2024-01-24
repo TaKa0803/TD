@@ -20,9 +20,6 @@ public:
 
 
 private:
-	
-	bool isLoadAllTime_ = false;
-
 	GlobalVariables* global_ = nullptr;
 
 	// 一つしかないもの
@@ -66,6 +63,13 @@ public:
 	void DebagWindow();
 
 	void SaveGlobalVariable();
+
+#ifdef _DEBUG
+
+	void Load() { LoadGlobalVariable(); CalculateInit(); }
+
+#endif // _DEBUG
+
 
 	void OnCollision();
 

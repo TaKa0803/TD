@@ -34,6 +34,7 @@ void Stage::Draw()
 		walls_[i]->Draw();
 	}
 }
+#include <numbers>
 
 void Stage::DebagWindow()
 {
@@ -54,12 +55,32 @@ void Stage::DebagWindow()
 		ImGui::Separator();
 	}
 
+	if (ImGui::Button("LoadAllData"))
+	{
+		for (size_t i = 0; i < Placement::_COUNT; i++)
+		{
+			walls_[i]->Load();
+		}
+	}
 	if (ImGui::Button("SaveAllData"))
 	{
 		for (size_t i = 0; i < Placement::_COUNT; i++)
 		{
 			walls_[i]->SaveGlobalVariable();
 		}
+	}
+
+	ImGui::Separator();
+
+	for (size_t i = 0; i < Placement::_COUNT; i++)
+	{
+		float pi = static_cast<float>(std::numbers::pi);
+		float theta = (2 * pi) / (float)Placement::_COUNT;
+		theta *= i;
+		Vector3 pos = { std::cosf(theta),0.0f,std::sinf(theta) };
+		ImGui::Text("pos : %.2f, %.2f, %.2f", pos.x, pos.y, pos.z);
+		ImGui::Text("%d  : %f", i, theta);
+		ImGui::Separator();
 	}
 
 	ImGui::End();
