@@ -1,5 +1,6 @@
 #include "Player.h"
 
+#include <cmath>
 #include "Camera/Camera.h"
 
 Player::Player()
@@ -129,8 +130,6 @@ void Player::UpdateMove()
 	float speed = 0.3f;
 
 	move.SetNormalize();
-	direction_.x = move.x;
-	direction_.y = move.z;
 	move *= speed;
 
 	move = TransformNormal(move, camera_->GetMainCamera().matWorld_);
@@ -140,6 +139,7 @@ void Player::UpdateMove()
 	if (move != Vector3(0, 0, 0))
 	{
 		world_.rotate_.y = GetYRotate({ move.x,move.z });
+		direction_ = { std::sinf(world_.rotate_.y),std::cosf(world_.rotate_.y) };
 		//reqBehavior_ = MOVE;
 	}
 	//加算

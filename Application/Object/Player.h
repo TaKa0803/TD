@@ -63,7 +63,7 @@ public:
 	void OnCollision();
 
 	// 押し出しを反映
-	void BackVector(const Vector3& vector) { world_.translate_ += world_.translate_ - vector; }
+	void BackVector(const Vector3& vector) { world_.translate_ += vector; }
 
 	SphereCollider* GetCollider() { return collider_.get(); }
 
