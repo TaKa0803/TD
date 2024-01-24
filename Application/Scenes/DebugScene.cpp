@@ -60,7 +60,11 @@ void DebugScene::Update()
 	obb_->Update();
 
 	
-	obb_->IsCollision(sphere_.get());
+	Vector3 backV;
+	if (sphere_->IsCollision(*obb_.get(),backV)) {
+		sWorld_.translate_ += backV;
+		sWorld_.UpdateMatrix();
+	}
 
 
 	if (input_->TriggerKey(DIK_SPACE)) {
