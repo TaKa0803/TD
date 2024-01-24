@@ -48,8 +48,11 @@ public:
 	//座標設定
 	void SetTranslate(const Vector3& pos) { world_.translate_ = pos; }
 
-	//
+	//フラグに併せて色変更
 	void SetColor(bool hit);
+
+	//当たった時に行列更新するといい
+	void UpdateMatrix();
 public:
 
 	//半径取得

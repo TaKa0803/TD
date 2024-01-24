@@ -43,6 +43,8 @@ public:
 	void SetAlpha(const float alpha) { normalColor.w = alpha; }
 
 	void SetColor(bool hit);
+
+	void UpdateMatrix();
 private:
 	//コライダータグ
 	std::string colliderTag_;

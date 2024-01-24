@@ -147,3 +147,8 @@ void OBBCollider::SetColor(bool hit)
 		IMM_->SetColor(tag_, normalColor);
 	}
 }
+
+void OBBCollider::UpdateMatrix()
+{
+	world_.UpdateMatrix();
+}

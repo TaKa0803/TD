@@ -86,40 +86,6 @@ bool SphereCollider::IsCollision(const SphereCollider& sphere, Vector3& backVec)
 	return false;
 }
 
-float GetAllScaleX(const WorldTransform& world) {
-	if (world.parent_ != nullptr) {
-		return world.scale_.x * GetAllScaleX(*world.parent_);
-	}
-	else {
-		return world.scale_.x;
-	}
-}
-
-float GetAllScaleY(const WorldTransform& world) {
-	if (world.parent_ != nullptr) {
-		return world.scale_.y * GetAllScaleY(*world.parent_);
-	}
-	else {
-		return world.scale_.y;
-	}
-}
-
-float GetAllScaleZ(const WorldTransform& world) {
-	if (world.parent_ != nullptr) {
-		return world.scale_.z * GetAllScaleZ(*world.parent_);
-	}
-	else {
-		return world.scale_.z;
-	}
-}
-
-Vector3 GetAllScale(const WorldTransform& world) {
-	return{
-		GetAllScaleX(world),
-		GetAllScaleY(world),
-		GetAllScaleZ(world),
-	};
-}
 
 
 bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec)
@@ -262,6 +228,11 @@ void SphereCollider::SetColor(bool hit)
 	else {
 		IMM_->SetColor(tag_, normalColor);
 	}
+}
+
+void SphereCollider::UpdateMatrix()
+{
+	world_.UpdateMatrix();
 }
 
 
