@@ -72,7 +72,7 @@ public://Getter
 		return matTranslation;
 	}
 
-private:
+public:
 
 	void SetScale(float radius) { scale_ = { radius,radius,radius }; }
 
