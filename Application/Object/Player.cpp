@@ -1,5 +1,7 @@
 #include "Player.h"
 
+#include "Camera/Camera.h"
+
 Player::Player()
 {
 	GameObject::Initialize("player");
@@ -8,6 +10,7 @@ Player::Player()
 
 void Player::Initialize()
 {
+	world_.Initialize();
 	world_.scale_ = { 1.0f,1.0f,1.0f };
 	model_->SetUVScale({ 1.0f,1.0f,1.0f });
 	world_.UpdateMatrix();
@@ -28,38 +31,55 @@ void Player::Update()
 		return true;
 		});
 
-
-	float speed = 0.3f;
-	if (input_->PushKey(DIK_W))
+	if (reqBehavior_)
 	{
-		world_.translate_.z += speed;
-		direction_.y = 1.0f;
-		direction_ = Normalize(direction_);
-	}if (input_->PushKey(DIK_S))
-	{
-		world_.translate_.z -= speed;
-		direction_.y = -1.0f;
-		direction_ = Normalize(direction_);
-	}if (input_->PushKey(DIK_A))
-	{
-		world_.translate_.x -= speed;
-		direction_.x = -1.0f;
-		direction_ = Normalize(direction_);
-	}if (input_->PushKey(DIK_D))
-	{
-		world_.translate_.x += speed;
-		direction_.x = 1.0f;
-		direction_ = Normalize(direction_);
+		behavior_ = reqBehavior_.value();
+		switch (behavior_)
+		{
+		case Player::IDOL:
+			break;
+		case Player::ATTACK:
+		{
+			EchoBlast::Infomation info;
+			info.direction_ = direction_;
+			info.popPosition_ = world_.translate_;
+			info.power_ = 1.0f;
+			CreateEcho(info);
+		}
+		momentFrame_ = 5;
+		break;
+		case Player::MOMENT:
+			momentFrame_ = 5;
+			break;
+		default:
+			break;
+		}
+		reqBehavior_ = std::nullopt;
 	}
-
-	if (input_->TriggerKey(DIK_SPACE))
+	switch (behavior_)
 	{
-		reqBehavior_ = ATTACK;
-		EchoBlast::Infomation info;
-		info.direction_ = direction_;
-		info.popPosition_ = world_.translate_;
-		info.power_ = 1.0f;
-		CreateEcho(info);
+	case Player::IDOL:
+		UpdateMove();
+
+		if (input_->TriggerKey(DIK_SPACE))
+		{
+			reqBehavior_ = ATTACK;
+		}
+		break;
+	case Player::ATTACK:
+		UpdateATTACK();
+		break;
+	case Player::MOMENT:
+		momentFrame_--;
+		if (momentFrame_ <= 0)
+		{
+			reqBehavior_ = IDOL;
+		}
+		break;
+	case Player::_COUNT:
+		break;
+	default:
+		break;
 	}
 
 	world_.UpdateMatrix();
@@ -97,6 +117,42 @@ void Player::Draw(const Matrix4x4& viewp)
 
 void Player::OnCollision()
 {
+}
+
+void Player::UpdateMove()
+{
+	Vector3 move = input_->GetWASD();
+	if (input_->IsControllerActive())
+	{
+		move = input_->GetjoyStickLV3();
+	}
+	float speed = 0.3f;
+
+	move.SetNormalize();
+	direction_.x = move.x;
+	direction_.y = move.z;
+	move *= speed;
+
+	move = TransformNormal(move, camera_->GetMainCamera().matWorld_);
+
+	move.y = 0;
+
+	if (move != Vector3(0, 0, 0))
+	{
+		world_.rotate_.y = GetYRotate({ move.x,move.z });
+		//reqBehavior_ = MOVE;
+	}
+	//加算
+	world_.translate_ += move;
+}
+
+void Player::UpdateATTACK()
+{
+	momentFrame_--;
+	if (momentFrame_ <= 0)
+	{
+		reqBehavior_ = MOMENT;
+	}
 }
 
 void Player::CreateEcho(const EchoBlast::Infomation& info)

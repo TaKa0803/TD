@@ -45,6 +45,7 @@ void GameScene::Initialize()
 	camera_->Initialize();
 	//各種設定
 	camera_->SetTarget(&player_->GetWorld());
+	player_->SetCamera(camera_.get());
 
 	camera_->SetCameraDirection(-100);
 }
@@ -161,6 +162,16 @@ void GameScene::CheckCollision()
 
 	Vector3 temp{ 0.0f,0.0f,0.0f };
 
+	itrW = walls.begin();
+	for (; itrW != walls.end(); ++itrW)
+	{
+		StageWall* wall = itrW->get();
+		if (player_->GetCollider()->IsCollision(*wall->GetCollider(), temp))
+		{
+			wall->OnCollision();
+			player_->BackVector(temp);
+		}
+	}
 	itrE = enemies.begin();
 	for (; itrE != enemies.end(); ++itrE)
 	{

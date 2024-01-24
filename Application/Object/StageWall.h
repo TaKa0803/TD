@@ -64,6 +64,13 @@ public:
 
 	void SaveGlobalVariable();
 
+#ifdef _DEBUG
+
+	void Load() { LoadGlobalVariable(); CalculateInit(); }
+
+#endif // _DEBUG
+
+
 	void OnCollision();
 
 	OBBCollider* GetCollider() { return collider_.get(); }
