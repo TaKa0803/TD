@@ -122,7 +122,7 @@ Vector3 GetAllScale(const WorldTransform& world) {
 }
 
 
-bool SphereCollider::IsCollision(const OBBCollider& obb, Vector3& backVec)
+bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec)
 {
 
 
@@ -158,9 +158,7 @@ bool SphereCollider::IsCollision(const OBBCollider& obb, Vector3& backVec)
 	Vector3 saikin{};
 	if (InCollision(aabb_, sphere, saikin)) {
 
-		//色の変更
-		IMM_->SetColor(tag_, hitColor);
-
+		
 		//OBBLocalPosCange
 		saikin = Transform(saikin, OBBM);
 
@@ -206,6 +204,10 @@ bool SphereCollider::IsCollision(const OBBCollider& obb, Vector3& backVec)
 		sWo.UpdateMatrix();
 		IMM_->SetWorld("sphere", sWo);
 
+		obb.SetColor(true);
+
+		//色の変更
+		IMM_->SetColor(tag_, hitColor);
 
 
 		return true;
@@ -224,6 +226,8 @@ bool SphereCollider::IsCollision(const OBBCollider& obb, Vector3& backVec)
 
 		//色の変更
 		IMM_->SetColor(tag_, normalColor);
+		obb.SetColor(false);
+
 		return false;
 	}
 }
