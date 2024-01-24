@@ -3,6 +3,9 @@
 
 #include"Input/Input.h"
 
+#include"Sprite/Sprite.h"
+#include<string>
+
 class ClearScene :public IScene
 {
 public:
@@ -28,6 +31,8 @@ private:
 	//キー入力
 	Input* input_ = nullptr;
 
+	std::string space = "resources/AppResource/space.png";
+	std::unique_ptr<Sprite>space_;
 
 };
 

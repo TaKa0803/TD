@@ -38,6 +38,10 @@ void Stage::Draw()
 
 void Stage::DebagWindow()
 {
+
+#ifdef _DEBUG
+
+
 	ImGui::Begin("Stage");
 
 	ImGui::Text("Walls:%d", walls_.size());
@@ -85,5 +89,6 @@ void Stage::DebagWindow()
 
 	ImGui::End();
 
+#endif // _DEBUG
 
 }

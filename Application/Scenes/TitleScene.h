@@ -28,6 +28,18 @@ private:
 	//キー入力
 	Input* input_=nullptr;
 
+	std::unique_ptr<Sprite>title_;
+
+
+
+	//シーンチェンジ用
+	std::string white = "resources/SystemResources/white.png";
+	std::unique_ptr<Sprite>sceneC_;
+	float alpha = 0;
+	bool isSceneChange = false;
+
+	std::string space = "resources/AppResource/space.png";
+	std::unique_ptr<Sprite>space_;
 
 };
 

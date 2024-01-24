@@ -5,7 +5,7 @@
 
 TitleScene::TitleScene() {
 
-	input_=Input::GetInstance();
+	input_ = Input::GetInstance();
 
 	/*int texture = TextureManager::LoadTex("resources/AppResource/Title/Title.png");
 	sprite_.reset(Sprite::Create(texture,{320,180},{320,180},{1280,720}));
@@ -18,12 +18,26 @@ TitleScene::TitleScene() {
 	texture = TextureManager::LoadTex("resources/AppResource/UI/B.png");
 	BButtonSp_.reset(Sprite::Create(texture, { 180,90 }, { 90,90 }, { 70,70 }));
 	BButtonSp_->SetPosition({ 750,500 });*/
+
+	int tex = TextureManager::LoadTex("resources/AppResource/Title/Title.png");
+	title_.reset(Sprite::Create(tex, { 800,600 }, { 800,600 }, { 1280, 720 }));
+
+	tex = TextureManager::LoadTex(white);
+	sceneC_.reset(Sprite::Create(tex, { 1,1 }, { 1,1 }, { 1280,720 }));
+	sceneC_->SetMaterialDataColor({ 0,0,0,1 });
+
+	tex = TextureManager::LoadTex(space);
+	space_.reset(Sprite::Create(tex, { 1,1 }, { 1,1 }, { 300,100 },{640,600}));
+
 }
 
 TitleScene::~TitleScene() {
 }
 
 void TitleScene::Initialize() {
+	sceneC_->SetColorAlpha(0.0f);
+	alpha = 0;
+	isSceneChange = false;
 }
 
 void TitleScene::Update() {
@@ -36,6 +50,11 @@ void TitleScene::Update() {
 
 void TitleScene::Draw() {
 
+	title_->Draw();
+
+	space_->Draw();
+
+	sceneC_->Draw();
 }
 
 void TitleScene::Debug() {
@@ -55,14 +74,24 @@ void TitleScene::SceneCahnge()
 
 
 	if (input_->TriggerKey(DIK_SPACE)) {
-		sceneNo = GAME;
+		isSceneChange = true;
 	}
 
 	if (input_->IsControllerActive() && input_->IsTriggerButton(kButtonB)) {
-		sceneNo = GAME;
+		isSceneChange = true;
 	}
 
 	if (input_->TriggerKey(DIK_ESCAPE)) {
 		leaveGame = true;
+	}
+
+
+	if (isSceneChange) {
+		alpha += 1.0f / 60.0f;
+
+		sceneC_->SetColorAlpha(alpha);
+		if (alpha >= 1.0f) {
+			sceneNo = GAME;
+		}
 	}
 }

@@ -1,10 +1,14 @@
 #include "ClearScene.h"
 #include<imgui.h>
 #include"Scenes/Scenes.h"
+#include"TextureManager/TextureManager.h"
 
 ClearScene::ClearScene()
 {
 	input_ = Input::GetInstance();
+
+	int tex = TextureManager::LoadTex(space);
+	space_.reset(Sprite::Create(tex, { 1,1 }, { 1,1 }, { 300,100 }, { 640,600 }));
 }
 
 ClearScene::~ClearScene()
@@ -24,6 +28,7 @@ void ClearScene::Update()
 
 void ClearScene::Draw()
 {
+	space_->Draw();
 }
 
 void ClearScene::Debug()

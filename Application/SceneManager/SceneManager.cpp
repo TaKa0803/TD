@@ -18,7 +18,7 @@
 
 void SceneManager::Initialize()
 {
-	currentSceneNo_ = 0;
+	currentSceneNo_ = -1;
 	//シーンの数取得
 	sceneArr_.resize((size_t)SCENE::SceneCount);
 
@@ -50,12 +50,13 @@ void SceneManager::Initialize()
 
 void SceneManager::Update()
 {
-	//デバッグ表示
-	DebugWindow();
-
+	
 	//シーンチェック
 	prevSceneNo_ = currentSceneNo_;
 	currentSceneNo_ = IScene::GetSceneNo();
+	
+	//デバッグ表示
+	DebugWindow();
 
 	//シーン変更チェック
 	if (prevSceneNo_ != currentSceneNo_)
@@ -65,6 +66,7 @@ void SceneManager::Update()
 		sceneArr_[currentSceneNo_]->Initialize();
 	}
 
+	
 	//シーン更新処理
 	sceneArr_[currentSceneNo_]->Update();
 
