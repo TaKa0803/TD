@@ -73,9 +73,6 @@ void ModelManager::LoadAllModels() {
 
 		}
 	}
-
-
-
 }
 
 ModelData ModelManager::GetModelData(const std::string& filename) {

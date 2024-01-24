@@ -4,7 +4,7 @@
 
 void SomeEnemy::Initialize()
 {
-	InstancingGameObject::Initialize("sphere");
+	InstancingGameObject::Initialize("parrot");
 	world_.Initialize();
 	world_.scale_ = { 1.0f,1.0f,1.0f };
 	world_.translate_.y = 2.0f;

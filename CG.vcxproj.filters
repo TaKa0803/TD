@@ -72,6 +72,7 @@
     <ClCompile Include="Engine\3d\Collider\IsCollisions.cpp" />
     <ClCompile Include="Application\Scenes\ClearScene\ClearScene.cpp" />
     <ClCompile Include="Application\Scenes\FailScene\FailScene.cpp" />
+    <ClCompile Include="Application\Object\Skydome\Skydome.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Object\EchoBlast.h" />
@@ -139,6 +140,7 @@
     <ClInclude Include="Engine\3d\Collider\IsCollisions.h" />
     <ClInclude Include="Application\Scenes\ClearScene\ClearScene.h" />
     <ClInclude Include="Application\Scenes\FailScene\FailScene.h" />
+    <ClInclude Include="Application\Object\Skydome\Skydome.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\enemyPopData.json" />

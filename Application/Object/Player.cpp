@@ -2,7 +2,7 @@
 
 Player::Player()
 {
-	GameObject::Initialize("player");
+	GameObject::Initialize("talker");
 	input_ = Input::GetInstance();
 }
 

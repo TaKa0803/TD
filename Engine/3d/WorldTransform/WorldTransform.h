@@ -72,6 +72,11 @@ public://Getter
 		return matTranslation;
 	}
 
+private:
+
+	void SetScale(float radius) { scale_ = { radius,radius,radius }; }
+
+	void SetScale(Vector3 scale) { scale_ = scale; }
 #pragma endregion
 
 

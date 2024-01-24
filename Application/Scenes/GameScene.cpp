@@ -22,6 +22,9 @@ GameScene::GameScene()
 	stage_ = std::make_unique<Stage>();
 
 	boss_ = std::make_unique<BossEnemy>();
+
+	skydome_ = std::make_unique<Skydome>();
+
 }
 
 GameScene::~GameScene()
@@ -46,6 +49,8 @@ void GameScene::Initialize()
 	//各種設定
 	camera_->SetTarget(&player_->GetWorld());
 
+	skydome_->Initialize();
+
 }
 
 
@@ -57,6 +62,8 @@ void GameScene::Update()
 #pragma region ゲームシーン
 	//デバッグウィンドウ表示
 	DebugWindows();
+
+	skydome_->Update();
 
 	stage_->Update();
 
@@ -74,6 +81,8 @@ void GameScene::Update()
 
 void GameScene::Draw()
 {
+	
+	skydome_->Draw();
 
 	player_->Draw(camera_->GetViewProjectionMatrix());
 	//地面

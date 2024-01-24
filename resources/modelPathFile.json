@@ -8,7 +8,8 @@
     "LArm": [ "resources/AppResource/Object", "LArm" ],
     "RArm": [ "resources/AppResource/Object", "RArm" ],
     "LFoot": [ "resources/AppResource/Object", "LFoot" ],
-    "RFoot": [ "resources/AppResource/Object", "RFoot" ]
+    "RFoot": [ "resources/AppResource/Object", "RFoot" ],
+    "talker": [ "resources/AppResource", "tolker"]
   },
   "InstancingmodelPathFile": {
     "weapon": [ "resources/AppResource", "Weapon", 64 ],
@@ -25,6 +26,10 @@
     "LFoot": [ "resources/AppResource/Object", "LFoot", 1000 ],
     "RFoot": [ "resources/AppResource/Object", "RFoot", 1000 ],
     "Flag": [ "resources/AppResource/Object", "Flag", 10 ],
-    "EBox": [ "resources/AppResource/Particle", "EBox", 50000 ]
+    "EBox": [ "resources/AppResource/Particle", "EBox", 50000 ],
+    "SkyDome": [ "resources/AppResource", "Skydome", 5 ],
+    "talker": [ "resources/AppResource", "tolker", 5 ],
+    "parrot": [ "resources/AppResource", "parrot", 1000 ]
+
   }
 }

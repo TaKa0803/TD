@@ -47,4 +47,6 @@ private:
 	std::unique_ptr<Stage>stage_;
 
 	std::unique_ptr<BossEnemy> boss_;
+
+	std::unique_ptr<Skydome>skydome_;
 };

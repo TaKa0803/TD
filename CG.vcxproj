@@ -113,6 +113,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\EchoBlast.cpp" />
     <ClCompile Include="Application\Object\Plane.cpp" />
     <ClCompile Include="Application\Object\Player.cpp" />
+    <ClCompile Include="Application\Object\Skydome\Skydome.cpp" />
     <ClCompile Include="Application\Object\SomeEnemy.cpp" />
     <ClCompile Include="Application\Object\Stage.cpp" />
     <ClCompile Include="Application\Object\StageWall.cpp" />
@@ -205,6 +206,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Objects.h" />
     <ClInclude Include="Application\Object\Plane.h" />
     <ClInclude Include="Application\Object\Player.h" />
+    <ClInclude Include="Application\Object\Skydome\Skydome.h" />
     <ClInclude Include="Application\Object\SomeEnemy.h" />
     <ClInclude Include="Application\Object\Stage.h" />
     <ClInclude Include="Application\Object\StageWall.h" />
