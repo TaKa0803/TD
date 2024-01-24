@@ -20,9 +20,6 @@ public:
 
 
 private:
-
-	bool isLoadAllTime_ = false;
-
 	GlobalVariables* global_ = nullptr;
 
 	// 一つしかないもの

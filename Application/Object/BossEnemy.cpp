@@ -111,6 +111,9 @@ void BossEnemy::DebagWindow()
 	case BossEnemy::SUMMON:
 		ImGui::Text("SUMMON");
 		break;
+	case BossEnemy::CRUSH:
+		ImGui::Text("CRUSH");
+		break;
 	default:
 		break;
 	}
