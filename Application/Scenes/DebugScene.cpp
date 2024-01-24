@@ -64,6 +64,7 @@ void DebugScene::Update()
 	if (sphere_->IsCollision(*obb_.get(),backV)) {
 		sWorld_.translate_ += backV;
 		sWorld_.UpdateMatrix();
+		sphere_->Update();
 	}
 
 
