@@ -3,11 +3,12 @@
 Skydome::Skydome()
 {
 	InstancingGameObject::Initialize("SkyDome");
+	IMM_->SetEnableShader(tag_, false);
 }
 
 void Skydome::Initialize()
 {
-	world_.SetScale(500.0f);
+	world_.SetScale(100.0f);
 
 }
 
