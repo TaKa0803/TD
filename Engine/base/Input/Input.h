@@ -92,5 +92,5 @@ private:
 	XINPUT_STATE preJoyState_;
 
 	//デッドライン
-	float deadLine_ = 0.1f;
+	float deadLine_ = 0.2f;
 };
