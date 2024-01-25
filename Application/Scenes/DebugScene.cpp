@@ -61,10 +61,10 @@ void DebugScene::Update()
 
 	
 	Vector3 backV;
-	if (sphere_->IsCollision(*obb_.get(),backV)) {
-		sWorld_.translate_ += backV;
-		sWorld_.UpdateMatrix();
-		sphere_->Update();
+	if (obb_->IsCollision(sphere_.get(),backV)) {
+		oWorld_.translate_ += backV;
+		oWorld_.UpdateMatrix();
+		obb_->Update();
 	}
 
 
@@ -116,6 +116,7 @@ void DebugScene::Draw()
 
 void DebugScene::Debug()
 {
+	sWorld_.DrawDebug("sphere");
 	sphere_->Debug("sphere");
 	camera_->DrawDebugWindow("camera");
 	obb_->Debug("box");

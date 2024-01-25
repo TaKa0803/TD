@@ -95,44 +95,110 @@ void OBBCollider::Debug(const char* name)
 
 }
 
-bool OBBCollider::IsCollision(SphereCollider* collider)
+bool OBBCollider::IsCollision(SphereCollider* collider,Vector3& backVec)
 {
+
+#pragma region OBBのワールド行列をスケールなしで作成
+	//回転量取得
+	Vector3 rotate = GetAllRotate(world_);
+
 	//回転行列
-	Matrix4x4 rotateM = MakeRotateXMatrix(world_.rotate_.x) * (MakeRotateYMatrix(world_.rotate_.y)*MakeRotateZMatrix(world_.rotate_.z));
+	Matrix4x4 rotateM = MakeRotateXMatrix(rotate.x) * (MakeRotateYMatrix(rotate.y) * MakeRotateZMatrix(rotate.z));
 	//座標行列
 	Matrix4x4 translateM = MakeTranslateMatrix(world_.GetMatWorldTranslate());
 	//スケールは使わない（sizeで使う
 	Matrix4x4 scaleM = MakeIdentity4x4();
 	//OBBのworld行列生成
 	Matrix4x4 OBBM = scaleM * (rotateM * translateM);
-	
+
 	//逆行列
 	Matrix4x4 inverseM = Inverse(OBBM);
+#pragma endregion
+
 
 	//スフィアコライダーの座標をOBBのローカル空間に出る
 	Vector3 sphereLocal = Transform(collider->GetWorld().GetMatWorldTranslate(), inverseM);
-	//
-	Vector3 size = { world_.scale_.x,world_.scale_.y,world_.scale_.z };
+	//すべてのスケールからサイズ取得
+	Vector3 size = GetAllScale(world_);
 
 	//AABB取得
 	AABB aabb_ = { .minV = -size,.maxV = size };
 	//Sphere取得
-	Sphere sphere={ sphereLocal,collider->GetRadius() };
+	Sphere sphere = { sphereLocal,collider->GetRadius()};
 
 	//当たり判定
 	Vector3 saikin{};
-	if (InCollision(aabb_, sphere,saikin)) {
-		//色の変更
-		IMM_->SetColor(tag_,hitColor);
-
-		//押し出しベクトルの計算
+	if (InCollision(aabb_, sphere, saikin)) {
 
 
+		//OBBLocalPosCange
+		saikin = Transform(saikin, OBBM);
+
+		//mosionajiiti
+		if (world_.GetMatWorldTranslate() == saikin) {
+			//スフィアコライダーの座標をOBBのローカル空間に出る
+			sphereLocal = Transform(preWorld_.GetMatWorldTranslate(), inverseM);
+			//Sphere取得
+			sphere = { sphereLocal,collider->GetRadius()};
+			InCollision(aabb_, sphere, saikin);
+
+			saikin = Transform(saikin, OBBM);
+
+			Vector3 velo = preWorld_.GetMatWorldTranslate() - saikin;
+			velo.SetNormalize();
+			velo *= collider->GetRadius();
+
+			backVec = velo;
+
+		}
+		else {
+			///押し出しベクトルを利用して計算
+			//最近接点から円の中心点への向きベクトルを算出
+			Vector3 velo = collider->GetWorld().GetMatWorldTranslate() - saikin;
+			//正規化
+
+			Vector3 norVe = velo;
+			norVe.SetNormalize();
+			//半径分伸ばす
+			norVe *= collider->GetRadius();
+
+			//渡す
+			backVec = norVe - velo;
+
+			
+		}
+
+
+		////最近接点描画
+		WorldTransform sWo;
+		sWo.translate_ = saikin;
+		sWo.scale_ = { 0.1f,0.1f,0.1f };
+		sWo.UpdateMatrix();
+		IMM_->SetWorld("sphere", sWo);
+
+		SetColor(true);
+
+		collider->SetColor(true);
+
+		backVec *= -1;
 		return true;
+
+
+
 	}
 	else {
+		//最近接点描画
+		WorldTransform sWo;
+		sWo.translate_ = Transform(saikin, OBBM);
+		sWo.scale_ = { 0.1f,0.1f,0.1f };
+		sWo.UpdateMatrix();
+		IMM_->SetWorld("sphere", sWo);
+
+
 		//色の変更
-		IMM_->SetColor(tag_, normalColor);
+		SetColor(true);
+		collider->SetColor(true);
+
 		return false;
 	}
 	 

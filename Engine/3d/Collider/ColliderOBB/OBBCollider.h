@@ -28,7 +28,7 @@ public:
 	void Debug(const char* name);
 
 	//円コライダーとの判定
-	bool IsCollision(SphereCollider*collider);
+	bool IsCollision(SphereCollider*collider,Vector3&backVec);
 
 	/// <summary>
 	/// 色の設定

@@ -69,6 +69,7 @@ bool SphereCollider::IsCollision(const SphereCollider& sphere, Vector3& backVec)
 	//距離計算
 	Vector3 sub = myP - pos;
 
+	Vector3 leng = sub;
 	//ヒットチェック
 	if (Length(sub) < wide + myW) {
 
@@ -77,6 +78,9 @@ bool SphereCollider::IsCollision(const SphereCollider& sphere, Vector3& backVec)
 
 		//基コライダーから自分への向きベクトル作成
 		backVec = sub * (wide, myW);
+
+		//押し出し量求める
+		backVec = sub - leng;
 
 		//返却
 		return true;
