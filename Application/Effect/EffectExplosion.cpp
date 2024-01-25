@@ -9,6 +9,9 @@ EffectExplosion* EffectExplosion::GetInstance()
 void EffectExplosion::Initialize()
 {
 	IMM_ = InstancingModelManager::GetInstance();
+
+	//現存分削除
+	datas_.clear();
 }
 
 void EffectExplosion::AddEffectData(const EffectData& eData)
@@ -78,6 +81,8 @@ void EffectExplosion::Draw()
 		for (auto& worldData : data.mData) {
 			//ワールド取り出し
 			WorldTransform world = worldData.world;
+
+			world.UpdateMatrix();
 
 			//モデルにワールド送信
 			IMM_->SetWorld(data.tag, world);

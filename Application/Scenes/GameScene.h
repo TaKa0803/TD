@@ -9,6 +9,8 @@
 #include"Object/Objects.h"
 #include"Sprite/Sprite.h"
 
+#include"Effect/EffectExplosion.h"
+
 class GameScene : public IScene {
 
 public:
@@ -49,4 +51,9 @@ private:
 	std::unique_ptr<BossEnemy> boss_;
 
 	std::unique_ptr<Skydome>skydome_;
+
+	//エフェクト
+	EffectExplosion* EffectExp_;
+	//エフェクト
+	std::string eTag_ = "box";
 };

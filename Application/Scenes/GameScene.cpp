@@ -5,7 +5,8 @@
 #include"InstancingModelManager/InstancingModelManager.h"
 #include"TextureManager/TextureManager.h"
 
-#include "SphereCollider/SphereCollider.h"
+//#include "SphereCollider/SphereCollider.h"
+#include"RandomNum/RandomNum.h"
 
 GameScene::GameScene()
 {
@@ -25,6 +26,7 @@ GameScene::GameScene()
 
 	skydome_ = std::make_unique<Skydome>();
 
+	EffectExp_ = EffectExplosion::GetInstance();
 }
 
 GameScene::~GameScene()
@@ -53,6 +55,7 @@ void GameScene::Initialize()
 	camera_->SetCameraDirection(-100);
 	skydome_->Initialize();
 
+	EffectExp_->Initialize();
 }
 
 
@@ -83,6 +86,7 @@ void GameScene::Update()
 
 	CheckCollision();
 
+	EffectExp_->Update();
 }
 
 void GameScene::Draw()
@@ -98,6 +102,8 @@ void GameScene::Draw()
 
 	stage_->Draw();
 	//player_->Draw(camera_->GetViewProjectionMatrix());
+
+	EffectExp_->Draw();
 
 	//インスタンシングのモデルを全描画
 	InstancingModelManager::GetInstance()->DrawAllModel(camera_->GetViewProjectionMatrix());
@@ -191,6 +197,36 @@ void GameScene::CheckCollision()
 		{
 			some->OnCollision();
 			boss->OnCollision();
+
+#pragma region エフェクト出現
+			EffectData newData;
+
+			newData.tag = eTag_;
+
+			for (int i = 0; i < 10; ++i) {
+
+				moveData movedata;
+
+				movedata.world = { 0,2,0 };
+				movedata.world.scale_ = { 0.2f,0.2f ,0.2f };
+				movedata.velo = {
+					RandomNumber::Get(-1,1),
+					RandomNumber::Get(-1,1),
+					RandomNumber::Get(-1,1)
+				};
+
+				movedata.velo.SetNormalize();
+				movedata.velo *= 1.0f;
+
+				movedata.acce = { 0,-0.1f,0 };
+
+				movedata.maxDeadCount = 60;
+
+				newData.mData.push_back(movedata);
+
+			}
+			EffectExp_->AddEffectData(newData);
+#pragma endregion
 		}
 
 		itrB = blasts.begin();
@@ -201,6 +237,9 @@ void GameScene::CheckCollision()
 			{
 				echo->OnCollision();
 				some->OnCollision(echo->GetDirection());
+
+
+
 			}
 		}
 		itrW = walls.begin();
