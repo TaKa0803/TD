@@ -73,6 +73,7 @@
     <ClCompile Include="Application\Scenes\ClearScene\ClearScene.cpp" />
     <ClCompile Include="Application\Scenes\FailScene\FailScene.cpp" />
     <ClCompile Include="Application\Object\Skydome\Skydome.cpp" />
+    <ClCompile Include="Engine\base\DXC\DXCManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Object\EchoBlast.h" />
@@ -141,6 +142,7 @@
     <ClInclude Include="Application\Scenes\ClearScene\ClearScene.h" />
     <ClInclude Include="Application\Scenes\FailScene\FailScene.h" />
     <ClInclude Include="Application\Object\Skydome\Skydome.h" />
+    <ClInclude Include="Engine\base\DXC\DXCManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\enemyPopData.json" />

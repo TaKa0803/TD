@@ -5,6 +5,7 @@
 
 #include<cassert>
 
+#include"DXC/DXCManager.h"
 
 InstancingPSO::InstancingPSO() {
 }
@@ -19,20 +20,7 @@ InstancingPSO::~InstancingPSO() {
 
 void InstancingPSO::Initialize(ID3D12Device* device) {
 
-#pragma region DXCの初期化
-	//dxcCompilerを初期化
-	IDxcUtils* dxcUtils = nullptr;
-	IDxcCompiler3* dxcCompiler = nullptr;
-	HRESULT hr = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&dxcUtils));
-	assert(SUCCEEDED(hr));
-	hr = DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(&dxcCompiler));
-	assert(SUCCEEDED(hr));
 
-	//現時点でincludeはしないが、includeに対応するための設定
-	IDxcIncludeHandler* includeHandler = nullptr;
-	hr = dxcUtils->CreateDefaultIncludeHandler(&includeHandler);
-	assert(SUCCEEDED(hr));
-#pragma endregion
 #pragma region RootSignatureを生成する
 
 	//RootSignatureの作成
@@ -108,7 +96,7 @@ void InstancingPSO::Initialize(ID3D12Device* device) {
 	//シリアライズしてバイナリにする
 	ID3DBlob* signatureBlob = nullptr;
 	ID3DBlob* errorBlob = nullptr;
-	hr = D3D12SerializeRootSignature(&descriptionRootSignature, D3D_ROOT_SIGNATURE_VERSION_1, &signatureBlob, &errorBlob);
+	HRESULT hr = D3D12SerializeRootSignature(&descriptionRootSignature, D3D_ROOT_SIGNATURE_VERSION_1, &signatureBlob, &errorBlob);
 	if (FAILED(hr)) {
 		Log(reinterpret_cast<char*>(errorBlob->GetBufferPointer()));
 		assert(false);
@@ -143,11 +131,20 @@ void InstancingPSO::Initialize(ID3D12Device* device) {
 	inputLayoutDesc.NumElements = _countof(inputElementDescs);
 #pragma endregion
 #pragma region ShaderをCompileする
+
+	DXCManager* DXC = DXCManager::GetInstance();
+
 	//Shaderをコンパイルする
-	IDxcBlob* vertexShaderBlob = CompileShader(vsPass, L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
+	/*IDxcBlob* vertexShaderBlob = CompileShader(vsPass, L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(vertexShaderBlob != nullptr);
 
 	IDxcBlob* pixelShaderBlob = CompileShader(psPass, L"ps_6_0", dxcUtils, dxcCompiler, includeHandler);
+	assert(pixelShaderBlob != nullptr);*/
+	
+	IDxcBlob* vertexShaderBlob = CompileShader(vsPass, L"vs_6_0", DXC->GetDxcUtils(), DXC->GetDxcCompiler(), DXC->GetIncludeHandler());
+	assert(vertexShaderBlob != nullptr);
+
+	IDxcBlob* pixelShaderBlob = CompileShader(psPass, L"ps_6_0", DXC->GetDxcUtils(), DXC->GetDxcCompiler(), DXC->GetIncludeHandler());
 	assert(pixelShaderBlob != nullptr);
 #pragma endregion
 #pragma region DepthStencilStateの設定を行う

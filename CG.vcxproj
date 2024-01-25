@@ -130,6 +130,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\base\AssimpManager\AssimpManager.cpp" />
     <ClCompile Include="Engine\base\AudioManager\AudioManager.cpp" />
     <ClCompile Include="Engine\3d\Collider\BoxCollider\BoxColider.cpp" />
+    <ClCompile Include="Engine\base\DXC\DXCManager.cpp" />
     <ClCompile Include="Engine\Camera\Camera.cpp" />
     <ClCompile Include="Engine\base\DirectXFunc\DirectXFunc.cpp" />
     <ClCompile Include="Engine\FrameChecker\FrameChecker.cpp" />
@@ -224,6 +225,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\base\AudioManager\AudioManager.h" />
     <ClInclude Include="Engine\base\AudioManager\SoundData.h" />
     <ClInclude Include="Engine\3d\Collider\BoxCollider\BoxColider.h" />
+    <ClInclude Include="Engine\base\DXC\DXCManager.h" />
     <ClInclude Include="Engine\Camera\Camera.h" />
     <ClInclude Include="Engine\base\DirectXFunc\DirectXFunc.h" />
     <ClInclude Include="Engine\FrameChecker\FrameChecker.h" />

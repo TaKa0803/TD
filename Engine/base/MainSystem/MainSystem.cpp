@@ -6,6 +6,7 @@
 #include"AudioManager/AudioManager.h"
 
 #include"SingleGameObjects/ObjectPSO.h"
+#include"DXC/DXCManager.h"
 
 MainSystem* MainSystem::GetInstance() {
 	static MainSystem instance;
@@ -37,7 +38,10 @@ void MainSystem::Initializes() {
 	DXF = DirectXFunc::GetInstance();
 	DXF->Initialize(winApp);
 
-	
+	//
+	DXCManager*DXC= DXCManager::GetInstance();
+	DXC->Initialize();
+
 	//SRV
 	SRVM_ = SRVManager::GetInstance();
 	SRVM_->Initialize(DXF);

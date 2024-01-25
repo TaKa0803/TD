@@ -52,7 +52,7 @@ void DebugScene::Update()
 
 	Vector3 move = input_->GetAllArrowKey();
 
-	sWorld_.translate_ += move;
+	sWorld_.translate_ += move.SetNormalize();
 	sWorld_.UpdateMatrix();
 
 	sphere_->Update();
