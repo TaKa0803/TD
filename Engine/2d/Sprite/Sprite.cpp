@@ -24,30 +24,31 @@ void Sprite::DrawDebugImGui(const char* name) {
 	
 #ifdef _DEBUG
 	Vector4 color = materialData_->color;
-	ImGui::Begin(name);
-	ImGui::DragFloat3("pos", &world_.translate_.x, 0.1f);
-	ImGui::DragFloat("rotate", &world_.rotate_.z);
-	ImGui::DragFloat2("scale", &world_.scale_.x, 0.01f);
+	if (ImGui::BeginMenu(name)) {
+		ImGui::DragFloat3("pos", &world_.translate_.x, 0.1f);
+		ImGui::DragFloat("rotate", &world_.rotate_.z);
+		ImGui::DragFloat2("scale", &world_.scale_.x, 0.1f);
 
-	ImGui::Text("UV");
-	ImGui::DragFloat2("uv pos", &uvpos.x, 0.1f);
-	ImGui::DragFloat("uv rotate", &uvrotate.z, 0.1f);
-	ImGui::DragFloat2("uv scale", &uvscale.x, 0.1f);
+		ImGui::Text("UV");
+		ImGui::DragFloat2("uv pos", &uvpos.x, 0.1f);
+		ImGui::DragFloat("uv rotate", &uvrotate.z, 0.1f);
+		ImGui::DragFloat2("uv scale", &uvscale.x, 0.1f);
 
 
 
-	BlendMode blend = grarphics_->GetBlendMode();
-	const char* items[] = { "None","Normal","Add","Subtract","Multiply","Screen" };
-	int currentItem = static_cast<int>(blend);
+		BlendMode blend = grarphics_->GetBlendMode();
+		const char* items[] = { "None","Normal","Add","Subtract","Multiply","Screen" };
+		int currentItem = static_cast<int>(blend);
 
-	if (ImGui::Combo("blendmode", &currentItem, items, IM_ARRAYSIZE(items))) {
-		blend = static_cast<BlendMode>(currentItem);
+		if (ImGui::Combo("blendmode", &currentItem, items, IM_ARRAYSIZE(items))) {
+			blend = static_cast<BlendMode>(currentItem);
+		}
+
+		grarphics_->SetBlendMode(blend);
+
+
+		ImGui::EndMenu();
 	}
-
-	grarphics_->SetBlendMode(blend);
-
-
-	ImGui::End();
 #endif // _DEBUG
 
 }

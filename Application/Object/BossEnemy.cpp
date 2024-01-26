@@ -6,6 +6,26 @@
 BossEnemy::BossEnemy()
 {
 	GameObject::Initialize("ALPlayer");
+
+#pragma region HPゲージ関連
+	//HPバー
+	int tex = TextureManager::LoadTex(hpTex_);
+	Vector2 pos = {
+		958.4f,
+		60
+	};
+	hpBar_.reset(Sprite::Create(tex, { 962,58 }, { 962,58 }, { 962,58 }, pos, { 1.0f,0.5f }));
+
+	//HPバー背景
+	tex = TextureManager::LoadTex(hpBackTex_);
+	hpBarBack_.reset(Sprite::Create(tex, { 962,58 }, { 962,58 }, { 962,58 },{640,60}));
+
+	//フレーム画像
+	tex = TextureManager::LoadTex(hpFrameTex_);
+	hpBarFrame_.reset(Sprite::Create(tex, { 962,58 }, { 962,58 }, { 962,58 }, { 640,60 }));
+#pragma endregion
+
+	
 }
 
 void BossEnemy::Initialize()
@@ -24,6 +44,13 @@ void BossEnemy::Initialize()
 	enemies_.clear();
 	reqBehavior_ = IDOL;
 	isActive_ = true;
+
+#pragma region HP関連初期化
+	//HPの初期化
+	HP_ = maxHP_;
+	hpBar_->SetScale(hpBarScale);
+#pragma endregion
+
 }
 
 void BossEnemy::Update()
@@ -92,6 +119,8 @@ void BossEnemy::Update()
 
 	world_.UpdateMatrix();
 	collider_->Update();
+
+	HPBarUpdate();
 }
 
 void BossEnemy::DebagWindow()
@@ -100,6 +129,8 @@ void BossEnemy::DebagWindow()
 	collider_->Debug("boss");
 	
 	ImGui::Begin("boss");
+
+	ImGui::DragInt("HP", &HP_);
 
 	ImGui::DragFloat3("position", &world_.translate_.x, 0.01f);
 
@@ -129,6 +160,10 @@ void BossEnemy::DebagWindow()
 		itr->get()->DebagWindow(num++);
 	}
 
+	hpBar_->DrawDebugImGui("HPBar");
+	hpBarBack_->DrawDebugImGui("HPBarBack");
+	hpBarFrame_->DrawDebugImGui("HPBarFrame");
+
 	ImGui::End();
 }
 
@@ -145,6 +180,11 @@ void BossEnemy::Draw(const Matrix4x4& viewp)
 	}
 	GameObject::Draw(viewp);
 	collider_->Draw();
+
+	
+	hpBarBack_->Draw();
+	hpBar_->Draw();
+	hpBarFrame_->Draw();
 }
 
 void BossEnemy::OnCollision()
@@ -158,4 +198,23 @@ void BossEnemy::SummmonEnemy()
 	data->Initialize();
 	enemies_.emplace_back(data);
 	reqBehavior_ = IDOL;
+}
+
+void BossEnemy::HPBarUpdate()
+{
+	//生きているときに処理
+	if (isActive_) {
+		//最大HPと現HPの比率計算
+		float hphiritu = (float)HP_ / (float)maxHP_;
+
+		//テクスチャのスケールを計算
+		float scaleX = hpBarScale.x * hphiritu;
+
+		//スケール計算
+		Vector3 nowScale = hpBarScale;
+		nowScale.x = scaleX;
+
+		//変更
+		hpBar_->SetScale(nowScale);
+	}
 }

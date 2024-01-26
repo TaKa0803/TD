@@ -3,6 +3,8 @@
 #include "SingleGameObjects/GameObject.h"
 #include "SphereCollider/SphereCollider.h"
 
+#include"Sprite/Sprite.h"
+
 #include <optional>
 #include <list>
 
@@ -41,6 +43,30 @@ private:
 
 	bool isActive_ = false;
 
+private:
+
+#pragma region ボスのHPと表示
+	//最大HP
+	const int maxHP_ = 10;
+	//現HP
+	int HP_ = 10;
+
+	//ボスのHPバー
+	std::unique_ptr<Sprite>hpBar_;
+	std::unique_ptr<Sprite>hpBarBack_;
+	std::unique_ptr<Sprite>hpBarFrame_;
+
+	//画像へのパス
+	std::string hpTex_ = "resources/AppResource/UI/BOSSGage.png";
+	std::string hpBackTex_ = "resources/AppResource/UI/BOSSGage_Back.png";
+	std::string hpFrameTex_ = "resources/AppResource/UI/BOSSGage_frame.png";
+
+	//HPバーの初期スケール
+	Vector3 hpBarScale = { 962,56,1 };
+
+#pragma endregion
+
+
 public:
 	BossEnemy();
 
@@ -65,4 +91,6 @@ private:
 
 	void SummmonEnemy();
 
+	//HPバーの更新
+	void HPBarUpdate();
 };
