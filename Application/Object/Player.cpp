@@ -62,7 +62,8 @@ void Player::Update()
 	case Player::IDOL:
 		UpdateMove();
 
-		if (input_->TriggerKey(DIK_SPACE))
+		if (input_->TriggerKey(DIK_SPACE) ||
+			input_->IsTriggerButton(kButtonB))
 		{
 			reqBehavior_ = ATTACK;
 		}
@@ -125,7 +126,10 @@ void Player::UpdateMove()
 	Vector3 move = input_->GetWASD();
 	if (input_->IsControllerActive())
 	{
-		move = input_->GetjoyStickLV3();
+		if (move.GetLength() == 0.0f)
+		{
+			move = input_->GetjoyStickLV3();
+		}
 	}
 	float speed = 0.3f;
 
