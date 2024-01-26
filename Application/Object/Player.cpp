@@ -13,6 +13,7 @@ void Player::Initialize()
 {
 	world_.Initialize();
 	world_.scale_ = { 1.0f,1.0f,1.0f };
+	world_.translate_.y = 1.0f;
 	model_->SetUVScale({ 1.0f,1.0f,1.0f });
 	world_.UpdateMatrix();
 

@@ -51,5 +51,6 @@ public:
 	void OnCollision(const Vector3& direction);
 
 	bool GetIsActive() const { return isActive_; }
+	bool GetIsBurst() const { return behavior_ == BURST; }
 private:
 };
