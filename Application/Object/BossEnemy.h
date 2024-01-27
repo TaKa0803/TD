@@ -65,6 +65,12 @@ private:
 	std::string hpBackTex_ = "resources/AppResource/UI/BOSSGage_Back.png";
 	std::string hpFrameTex_ = "resources/AppResource/UI/BOSSGage_frame.png";
 
+	//UI全体のワールド
+	WorldTransform uiWorld_;
+	//UI全体初期位置
+	Vector3 uiPos_ = { 580,6,0 };
+	Vector3 UIScale_ = { 0.6f,0.7f,1.0f };
+
 	//HPバーの初期スケール
 	Vector3 hpBarScale = { 962,56,1 };
 

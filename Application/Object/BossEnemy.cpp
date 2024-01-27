@@ -23,6 +23,12 @@ BossEnemy::BossEnemy()
 	//フレーム画像
 	tex = TextureManager::LoadTex(hpFrameTex_);
 	hpBarFrame_.reset(Sprite::Create(tex, { 962,58 }, { 962,58 }, { 962,58 }, { 640,60 }));
+
+
+	hpBar_->SetParent(uiWorld_);
+	hpBarBack_->SetParent(uiWorld_);
+	hpBarFrame_->SetParent(uiWorld_);
+
 #pragma endregion
 
 
@@ -52,6 +58,9 @@ void BossEnemy::Initialize()
 	//HPの初期化
 	HP_ = maxHP_;
 	hpBar_->SetScale(hpBarScale);
+
+	uiWorld_.translate_ = uiPos_;
+	uiWorld_.scale_ = UIScale_;
 #pragma endregion
 
 }
@@ -183,6 +192,11 @@ void BossEnemy::DebagWindow()
 		itr->get()->DebagWindow(num++);
 	}
 
+	ImGui::Begin("Boss UI");
+	ImGui::DragFloat3("ui pos", &uiWorld_.translate_.x);
+	ImGui::DragFloat3("ui scale", &uiWorld_.scale_.x,0.01f);
+	ImGui::End();
+
 	hpBar_->DrawDebugImGui("HPBar");
 	hpBarBack_->DrawDebugImGui("HPBarBack");
 	hpBarFrame_->DrawDebugImGui("HPBarFrame");
@@ -231,6 +245,9 @@ void BossEnemy::HPBarUpdate()
 	//生きているときに処理
 	if (isActive_)
 	{
+		uiWorld_.UpdateMatrix();
+
+
 		//最大HPと現HPの比率計算
 		float hphiritu = (float)HP_ / (float)maxHP_;
 
