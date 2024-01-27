@@ -30,9 +30,9 @@ void Sprite::DrawDebugImGui(const char* name) {
 		ImGui::DragFloat2("scale", &world_.scale_.x, 0.1f);
 
 		ImGui::Text("UV");
-		ImGui::DragFloat2("uv pos", &uvpos.x, 0.1f);
-		ImGui::DragFloat("uv rotate", &uvrotate.z, 0.1f);
-		ImGui::DragFloat2("uv scale", &uvscale.x, 0.1f);
+		ImGui::DragFloat2("uv pos", &uvWorld_.translate_.x, 0.1f);
+		ImGui::DragFloat("uv rotate", &uvWorld_.rotate_.z, 0.1f);
+		ImGui::DragFloat2("uv scale", &uvWorld_.scale_.x, 0.1f);
 
 
 
@@ -302,16 +302,17 @@ void Sprite::Initialize(int texture,
 
 void Sprite::Draw(int texture) {
 
+	//PSO
 	grarphics_->PreDraw(DXF->GetCMDList());
 
+	//uv更新
+	uvWorld_.UpdateMatrix();
 	//uvTransform更新
-	materialData_->uvTransform = MakeAffineMatrix(uvscale, uvrotate, uvpos);
-
+	materialData_->uvTransform = uvWorld_.matWorld_;
 
 	//ワールド更新
 	world_.UpdateMatrix();
 	Matrix4x4 World = world_.matWorld_;
-
 
 	//スプライト用データ
 	Matrix4x4 projectionMatrixSprite = MakeOrthographicMatrix(0.0f, 0.0f, float(WindowApp::kClientWidth), float(WindowApp::kClientHeight), 0.0f, 100.0f);

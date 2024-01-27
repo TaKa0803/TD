@@ -27,6 +27,23 @@ GameScene::GameScene()
 	skydome_ = std::make_unique<Skydome>();
 
 	EffectExp_ = EffectExplosion::GetInstance();
+
+
+#pragma region UI関係
+	for (int i = 0; i < kNumSprite; ++i) {
+		int tex = TextureManager::LoadTex(gageSpritePath[i]);
+		gageSprite_[i].reset(Sprite::Create(tex, { 842,117 }, { 842,117 }, { 842,117 }, { 0,0 }, { 0,0.5f }));
+		gageSprite_[i]->SetParent(UIWorld_);
+	}
+
+	gageSprite_[Good]->SetPosition({ 163,0,0 });
+	gageSprite_[Bad]->SetPosition({ 163,0,0 });
+
+	UIWorld_.translate_ = UIPosition_;
+	UIWorld_.scale_ = UIScale_;
+#pragma endregion
+
+	
 }
 
 GameScene::~GameScene()
@@ -109,6 +126,13 @@ void GameScene::Draw()
 	InstancingModelManager::GetInstance()->DrawAllModel(camera_->GetViewProjectionMatrix());
 
 
+#pragma region ゲームUI
+	UIWorld_.UpdateMatrix();
+	for (auto& sprite : gageSprite_) {
+		sprite->Draw();
+	}
+#pragma endregion
+
 }
 
 void GameScene::DebugWindows()
@@ -125,6 +149,28 @@ void GameScene::DebugWindows()
 	stage_->DebagWindow();
 
 	boss_->DebagWindow();
+
+#pragma region ゲームUI
+	/*
+	if (!ImGui::Begin("Sprite", nullptr, ImGuiWindowFlags_MenuBar)) {
+		ImGui::End();
+	}
+	if (ImGui::BeginMenuBar())return;
+	*/
+
+	ImGui::Begin("sprite");
+	ImGui::DragFloat3("all Pos", &UIWorld_.translate_.x);
+	ImGui::DragFloat3("all scale", &UIWorld_.scale_.x,0.01f);
+	int Index = 0;
+	for (auto& sprite : gageSprite_) {
+		sprite->DrawDebugImGui(gageSpritePath[Index].c_str());
+		Index++;
+	}
+	ImGui::End();
+	//ImGui::EndMenuBar();
+	//ImGui::End();
+#pragma endregion
+
 
 #endif // _DEBUG
 

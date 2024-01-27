@@ -56,4 +56,39 @@ private:
 	EffectExplosion* EffectExp_;
 	//エフェクト
 	std::string eTag_ = "box";
+
+
+#pragma region ゲームルール関連
+
+	//画像の名前
+	enum SpriteName {
+		Frame,
+		Back,
+		Good,
+		Bad,
+		kNumSprite
+	};
+
+
+	//ゲージのスプライト
+	std::unique_ptr<Sprite>gageSprite_[SpriteName::kNumSprite];
+	
+	//スプライトのパス
+	std::string gageSpritePath[SpriteName::kNumSprite] = {
+		"resources/AppResource/UI/Gage_Frame.png",
+		"resources/AppResource/UI/Gage_BACK.png",
+		"resources/AppResource/UI/Gage_BAD.png",
+		"resources/AppResource/UI/Gage_GOOD.png"
+	};
+
+	//ゲージのUIの全体の位置
+	WorldTransform UIWorld_ ;
+
+	//UI全体の座標
+	Vector3 UIPosition_ = { 7.8f,71.0f,0 };
+	//UIのサイズ
+	Vector3 UIScale_ = { 0.7f,0.76f,1.0f };
+#pragma endregion
+
+
 };

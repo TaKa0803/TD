@@ -20,14 +20,7 @@ public:
 
 	template<class T>using ComPtr = Microsoft::WRL::ComPtr<T>;
 	
-	/// <summary>
-	/// スプライト作成
-	/// </summary>
-	/// <param name="texture">画像の要素番号</param>
-	/// <param name="anchor">アンカー</param>
-	/// <returns>データ返却</returns>
-	//static Sprite* Create(int texture,const Vector2 translate={640,360}, const float rotate=0, const Vector2 scale={1,1}, const Vector2 anchor = {0.5f,0.5f});
-
+	
 	/// <summary>
 	/// 画像データ生成
 	/// </summary>
@@ -83,7 +76,7 @@ public:///セッター
 	/// uvの平行移動代入
 	/// </summary>
 	/// <param name="uvPos">代入する</param>
-	void SetTVTranslate(const Vector2 uvPos) { uvpos.x = uvPos.x; uvpos.y = uvPos.y; }
+	void SetTVTranslate(const Vector2 uvPos) { uvWorld_.translate_.x = uvPos.x; uvWorld_.translate_.y = uvPos.y; }
 
 
 	/// <summary>
@@ -100,15 +93,32 @@ public:///セッター
 	/// <param name="ans">正否</param>
 	void IsEnableTexture(const bool ans) { materialData_->enableTexture = ans; }
 
+	//親子関係取得
+	void SetParent(const WorldTransform& parent) { world_.parent_ = &parent; }
+public:
 	/// <summary>
 	/// マテリアルデータ構造体取得
 	/// </summary>
 	/// <returns>マテリアルデータ</returns>
 	Material GetMaterialData() { return *materialData_; }
 	
+	/// <summary>
+	/// スケール取得
+	/// </summary>
+	/// <returns></returns>
 	Vector3 GetScale()const { return world_.scale_; }
 
+	/// <summary>
+	/// 座標取得
+	/// </summary>
+	/// <returns></returns>
 	Vector3 GetPosition() { return world_.translate_; }
+
+	/// <summary>
+	/// ワールド行列取得
+	/// </summary>
+	/// <returns></returns>
+	const WorldTransform& GetWorld()const { return world_; }
 private:
 
 	struct WorldTransformation {
@@ -169,10 +179,11 @@ private:
 	Matrix4x4 viewMatrixSprite = MakeIdentity4x4();
 
 	
-
+	//スプライトのワールドデータ
 	WorldTransform world_;
 
-	Vector3 uvpos{};
-	Vector3 uvscale{ 1.0f,1.0f,1.0f };
-	Vector3 uvrotate{};
+	//uvのWorld
+	WorldTransform uvWorld_{};
+
+	
 };
