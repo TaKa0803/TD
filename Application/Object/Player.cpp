@@ -13,6 +13,7 @@ void Player::Initialize()
 {
 	world_.Initialize();
 	world_.scale_ = { 1.0f,1.0f,1.0f };
+	world_.translate_.y = 1.0f;
 	model_->SetUVScale({ 1.0f,1.0f,1.0f });
 	world_.UpdateMatrix();
 
@@ -62,7 +63,8 @@ void Player::Update()
 	case Player::IDOL:
 		UpdateMove();
 
-		if (input_->TriggerKey(DIK_SPACE))
+		if (input_->TriggerKey(DIK_SPACE) ||
+			input_->IsTriggerButton(kButtonB))
 		{
 			reqBehavior_ = ATTACK;
 		}
@@ -125,7 +127,10 @@ void Player::UpdateMove()
 	Vector3 move = input_->GetWASD();
 	if (input_->IsControllerActive())
 	{
-		move = input_->GetjoyStickLV3();
+		if (move.GetLength() == 0.0f)
+		{
+			move = input_->GetjoyStickLV3();
+		}
 	}
 	float speed = 0.3f;
 

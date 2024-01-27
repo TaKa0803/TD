@@ -19,6 +19,7 @@ private:
 		IDOL,	// なにもしてない
 		SUMMON,	// 雑魚敵召喚
 
+		DAMAGE,	// 被弾
 		CRUSH,	// 撃破
 
 		_COUNT,	// カウント用
@@ -42,6 +43,9 @@ private:
 	uint32_t momentFrame_ = 20;
 
 	bool isActive_ = false;
+
+	uint32_t invisibleFrame_ = 60;
+	bool isInvisible_ = false;
 
 private:
 
@@ -93,4 +97,9 @@ private:
 
 	//HPバーの更新
 	void HPBarUpdate();
+
+	void UpdateIDOL();
+	void UpdateSUMMON();
+	void UpdateDAMAGE();
+	void UpdateCRUSH();
 };

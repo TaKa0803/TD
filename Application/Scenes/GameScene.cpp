@@ -55,7 +55,7 @@ void GameScene::Initialize()
 {
 
 
- 	stage_->Initialize();
+	stage_->Initialize();
 
 	plane_->Initialize();
 
@@ -108,7 +108,7 @@ void GameScene::Update()
 
 void GameScene::Draw()
 {
-	
+
 	skydome_->Draw();
 
 	player_->Draw(camera_->GetViewProjectionMatrix());
@@ -237,65 +237,77 @@ void GameScene::CheckCollision()
 	for (; itrE != enemies.end(); ++itrE)
 	{
 		SomeEnemy* some = itrE->get();
-	
-		BossEnemy* boss = boss_.get();
-		if (some->GetCollider()->IsCollision(*boss->GetCollider(), temp))
+
+		// 弾かれてる間の判定
+		if (itrE->get()->GetIsBurst())
 		{
-			some->OnCollision();
-			boss->OnCollision();
+			BossEnemy* boss = boss_.get();
+			// ボスとの接触
+			if (some->GetCollider()->IsCollision(*boss->GetCollider(), temp))
+			{
+				some->OnCollision();
+				boss->OnCollision();
 
 #pragma region エフェクト出現
-			EffectData newData;
+				EffectData newData;
 
-			newData.tag = eTag_;
+				newData.tag = eTag_;
 
-			for (int i = 0; i < 10; ++i) {
+				for (int i = 0; i < 10; ++i)
+				{
 
-				moveData movedata;
+					moveData movedata;
 
-				movedata.world = { 0,2,0 };
-				movedata.world.scale_ = { 0.2f,0.2f ,0.2f };
-				movedata.velo = {
-					RandomNumber::Get(-1,1),
-					RandomNumber::Get(-1,1),
-					RandomNumber::Get(-1,1)
-				};
+					movedata.world = { 0,2,0 };
+					movedata.world.scale_ = { 0.2f,0.2f ,0.2f };
+					movedata.velo = {
+						RandomNumber::Get(-1,1),
+						RandomNumber::Get(-1,1),
+						RandomNumber::Get(-1,1)
+					};
 
-				movedata.velo.SetNormalize();
-				movedata.velo *= 1.0f;
+					movedata.velo.SetNormalize();
+					movedata.velo *= 1.0f;
 
-				movedata.acce = { 0,-0.1f,0 };
+					movedata.acce = { 0,-0.1f,0 };
 
-				movedata.maxDeadCount = 60;
+					movedata.maxDeadCount = 60;
 
-				newData.mData.push_back(movedata);
+					newData.mData.push_back(movedata);
 
-			}
-			EffectExp_->AddEffectData(newData);
+				}
+				EffectExp_->AddEffectData(newData);
 #pragma endregion
-		}
+			}
 
-		itrB = blasts.begin();
-		for (; itrB != blasts.end(); ++itrB)
-		{
-			EchoBlast* echo = itrB->get();
-			if (some->GetCollider()->IsCollision(*echo->GetCollider(), temp))
+			// 壁との接触
+			itrW = walls.begin();
+			for (; itrW != walls.end(); ++itrW)
 			{
-				echo->OnCollision();
-				some->OnCollision(echo->GetDirection());
-
-
-
+				StageWall* wall = itrW->get();
+				if (some->GetCollider()->IsCollision(*wall->GetCollider(), temp))
+				{
+					wall->OnCollision();
+					some->OnCollision(wall->GetDirection());
+				}
 			}
 		}
-		itrW = walls.begin();
-		for (; itrW != walls.end(); ++itrW)
+		// 弾かれてない時
+		else
 		{
-			StageWall* wall = itrW->get();
-			if (some->GetCollider()->IsCollision(*wall->GetCollider(), temp))
+			// 攻撃との接触
+			itrB = blasts.begin();
+			for (; itrB != blasts.end(); ++itrB)
 			{
-				wall->OnCollision();
-				some->OnCollision(wall->GetDirection());
+				EchoBlast* echo = itrB->get();
+				if (some->GetCollider()->IsCollision(*echo->GetCollider(), temp))
+				{
+					echo->OnCollision();
+					some->OnCollision(echo->GetDirection());
+
+
+
+				}
 			}
 		}
 
