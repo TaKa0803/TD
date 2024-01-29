@@ -59,6 +59,7 @@ void BossEnemy::Initialize()
 
 	// 範囲取得
 	moveLength_ = GlobalVariables::GetInstance()->GetFloatvalue("StageWall", "Size");
+	moveCount_ = 0;
 
 #pragma region HP関連初期化
 	//HPの初期化
@@ -105,9 +106,12 @@ void BossEnemy::Update()
 			nextPosition_ = { (float)rnd1,(float)rnd2 };
 		}
 		momentFrame_ = cMOVEFRAME_;
+		moveCount_++;
 		break;
 		case BossEnemy::SUMMON:
-			momentFrame_ = 30;
+			momentFrame_ = 60;
+			// 移動期待値 0
+			moveCount_ = 0;
 			break;
 		case BossEnemy::DAMAGE:
 			momentFrame_ = 30;
@@ -292,13 +296,29 @@ void BossEnemy::UpdateIDOL()
 		int rnd = rand() % 2;
 		if (rnd == 0)
 		{
-			reqBehavior_ = MOVE;
+			rnd = rand() % (1 + moveCount_);
+			if (rnd == 0)
+			{
+				reqBehavior_ = MOVE;
+			}
+			else if (enemies_.size() < 5)
+			{
+				reqBehavior_ = SUMMON;
+			}
+			else
+			{
+				reqBehavior_ = IDOL;
+			}
 		}
 		else if (rnd == 1)
 		{
 			if (enemies_.size() < 5)
 			{
 				reqBehavior_ = SUMMON;
+			}
+			else
+			{
+				reqBehavior_ = IDOL;
 			}
 		}
 	}

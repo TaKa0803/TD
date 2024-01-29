@@ -32,7 +32,9 @@ private:
 	// 中心からの距離
 	float moveLength_ = 0.0f;
 
-	int32_t cMOVEFRAME_ = 200;
+	int32_t cMOVEFRAME_ = 120;
+	// 移動の回数とか期待値
+	int moveCount_ = 0;
 
 	// 次に向かう場所
 	Vector2 nextPosition_ = { 0.0f,0.0f };

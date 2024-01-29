@@ -145,6 +145,7 @@ void Player::UpdateMove()
 	{
 		world_.rotate_.y = GetYRotate({ move.x,move.z });
 		direction_ = { std::sinf(world_.rotate_.y),std::cosf(world_.rotate_.y) };
+		world_.rotate_.y += 3.14f / 2.0f;
 		//reqBehavior_ = MOVE;
 	}
 	//加算
