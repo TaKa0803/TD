@@ -1,5 +1,8 @@
 #include "BossEnemy.h"
+#include <random>
+#include <time.h>
 
+#include "GlobalVariables/GlobalVariables.h"
 #include "ImGuiManager/ImGuiManager.h"
 #include "SomeEnemy.h"
 
@@ -31,7 +34,7 @@ BossEnemy::BossEnemy()
 
 #pragma endregion
 
-
+	srand((unsigned int)time(nullptr));
 }
 
 void BossEnemy::Initialize()
@@ -53,6 +56,9 @@ void BossEnemy::Initialize()
 
 	invisibleFrame_ = 60;
 	isInvisible_ = false;
+
+	// 範囲取得
+	moveLength_ = GlobalVariables::GetInstance()->GetFloatvalue("StageWall", "Size");
 
 #pragma region HP関連初期化
 	//HPの初期化
@@ -91,6 +97,15 @@ void BossEnemy::Update()
 		case BossEnemy::IDOL:
 			momentFrame_ = 60;
 			break;
+		case BossEnemy::MOVE:
+		{
+			int length = (int)moveLength_;
+			int rnd1 = length / 2 - rand() % length;
+			int rnd2 = length / 2 - rand() % length;
+			nextPosition_ = { (float)rnd1,(float)rnd2 };
+		}
+		momentFrame_ = cMOVEFRAME_;
+		break;
 		case BossEnemy::SUMMON:
 			momentFrame_ = 30;
 			break;
@@ -114,6 +129,9 @@ void BossEnemy::Update()
 	{
 	case BossEnemy::IDOL:
 		UpdateIDOL();
+		break;
+	case BossEnemy::MOVE:
+		UpdateMOVE();
 		break;
 	case BossEnemy::SUMMON:
 		UpdateSUMMON();
@@ -168,6 +186,9 @@ void BossEnemy::DebagWindow()
 	case BossEnemy::IDOL:
 		ImGui::Text("IDOL");
 		break;
+	case BossEnemy::MOVE:
+		ImGui::Text("MOVE");
+		break;
 	case BossEnemy::SUMMON:
 		ImGui::Text("SUMMON");
 		break;
@@ -194,7 +215,7 @@ void BossEnemy::DebagWindow()
 
 	ImGui::Begin("Boss UI");
 	ImGui::DragFloat3("ui pos", &uiWorld_.translate_.x);
-	ImGui::DragFloat3("ui scale", &uiWorld_.scale_.x,0.01f);
+	ImGui::DragFloat3("ui scale", &uiWorld_.scale_.x, 0.01f);
 	ImGui::End();
 
 	hpBar_->DrawDebugImGui("HPBar");
@@ -265,13 +286,35 @@ void BossEnemy::HPBarUpdate()
 
 void BossEnemy::UpdateIDOL()
 {
-	if (enemies_.size() < 5)
+	momentFrame_--;
+	if (momentFrame_ <= 0)
 	{
-		momentFrame_--;
-		if (momentFrame_ <= 0)
+		int rnd = rand() % 2;
+		if (rnd == 0)
 		{
-			reqBehavior_ = SUMMON;
+			reqBehavior_ = MOVE;
 		}
+		else if (rnd == 1)
+		{
+			if (enemies_.size() < 5)
+			{
+				reqBehavior_ = SUMMON;
+			}
+		}
+	}
+}
+
+void BossEnemy::UpdateMOVE()
+{
+	momentFrame_--;
+	if (momentFrame_ == cMOVEFRAME_ / 2)
+	{
+		world_.translate_.x = nextPosition_.x;
+		world_.translate_.z = nextPosition_.y;
+	}
+	else if (momentFrame_ <= 0)
+	{
+		reqBehavior_ = IDOL;
 	}
 }
 

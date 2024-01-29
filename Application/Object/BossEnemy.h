@@ -17,6 +17,7 @@ private:
 	enum BEHAVIOR
 	{
 		IDOL,	// なにもしてない
+		MOVE,	// 移動
 		SUMMON,	// 雑魚敵召喚
 
 		DAMAGE,	// 被弾
@@ -27,8 +28,14 @@ private:
 
 private:
 
+	// 移動範囲
 	// 中心からの距離
 	float moveLength_ = 0.0f;
+
+	int32_t cMOVEFRAME_ = 200;
+
+	// 次に向かう場所
+	Vector2 nextPosition_ = { 0.0f,0.0f };
 
 	// 今向いている方向
 	Vector2 direction_ = { 0.0f, 0.0f };
@@ -46,6 +53,7 @@ private:
 
 	uint32_t invisibleFrame_ = 60;
 	bool isInvisible_ = false;
+
 
 private:
 
@@ -105,6 +113,7 @@ private:
 	void HPBarUpdate();
 
 	void UpdateIDOL();
+	void UpdateMOVE();
 	void UpdateSUMMON();
 	void UpdateDAMAGE();
 	void UpdateCRUSH();
