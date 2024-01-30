@@ -35,3 +35,5 @@ Vector3 GetAllScale(const WorldTransform& world);
 
 //AABBと円
 bool InCollision(const AABB& a, const Sphere& s, Vector3& v);
+
+bool InCollision(const AABB& AA, const Segment& S);

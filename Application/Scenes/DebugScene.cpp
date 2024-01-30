@@ -72,6 +72,11 @@ void DebugScene::Update()
 		obb_->Update();
 	}
 
+	if (obb2_->IsCollision(camera_->GetSegment())) {
+		obb2_->SetColor(true);
+
+	}
+
 
 	if (input_->TriggerKey(DIK_SPACE)) {
 

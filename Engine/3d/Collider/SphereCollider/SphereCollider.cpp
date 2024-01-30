@@ -51,7 +51,7 @@ void SphereCollider::Update() {
 void SphereCollider::Draw() {
 #ifdef _DEBUG
 	if (isDraw_) {
-		InstancingModelManager::GetInstance()->SetData(tag_, world_,color);
+		InstancingModelManager::GetInstance()->SetData(tag_, world_, color);
 	}
 #endif // _DEBUG
 
@@ -97,20 +97,12 @@ bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec)
 
 
 #pragma region OBBのワールド行列をスケールなしで作成
-	//回転量取得
-	Vector3 rotate = GetAllRotate(obb.GetWorld());
 
-	//回転行列
-	Matrix4x4 rotateM = MakeRotateXMatrix(rotate.x) * (MakeRotateYMatrix(rotate.y) * MakeRotateZMatrix(rotate.z));
-	//座標行列
-	Matrix4x4 translateM = MakeTranslateMatrix(obb.GetWorld().GetMatWorldTranslate());
-	//スケールは使わない（sizeで使う
-	Matrix4x4 scaleM = MakeIdentity4x4();
 	//OBBのworld行列生成
-	Matrix4x4 OBBM = scaleM * (rotateM * translateM);
+	Matrix4x4 OBBM = obb.GetWorldM();
 
 	//逆行列
-	Matrix4x4 inverseM = Inverse(OBBM);
+	Matrix4x4 inverseM = obb.GetInverseWorldM();
 #pragma endregion
 
 
@@ -128,7 +120,7 @@ bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec)
 	Vector3 saikin{};
 	if (InCollision(aabb_, sphere, saikin)) {
 
-		
+
 		//OBBLocalPosCange
 		saikin = Transform(saikin, OBBM);
 
@@ -154,43 +146,41 @@ bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec)
 			//最近接点から円の中心点への向きベクトルを算出
 			Vector3 velo = world_.GetMatWorldTranslate() - saikin;
 			//正規化
-			
+
 			Vector3 norVe = velo;
 			norVe.SetNormalize();
 			//半径分伸ばす
 			norVe *= radius_;
 
 			//渡す
-			backVec = norVe-velo;
+			backVec = norVe - velo;
 
 
 		}
 
-
+#ifdef _DEBUG
 		////最近接点描画
 		WorldTransform sWo;
 		sWo.translate_ = saikin;
 		sWo.scale_ = { 0.1f,0.1f,0.1f };
 		sWo.UpdateMatrix();
 		IMM_->SetData("sphere", sWo);
-
+#endif // _DEBUG
 		obb.SetColor(true);
-
 		//色の変更
 		SetColor(true);
 		return true;
-
-
-
 	}
 	else {
+
+#ifdef _DEBUG
 		//最近接点描画
 		WorldTransform sWo;
 		sWo.translate_ = Transform(saikin, OBBM);
 		sWo.scale_ = { 0.1f,0.1f,0.1f };
 		sWo.UpdateMatrix();
 		IMM_->SetData("sphere", sWo);
-
+#endif // _DEBUG
 
 		//色の変更
 		SetColor(false);
@@ -225,10 +215,10 @@ void SphereCollider::Debug(const char* name) {
 void SphereCollider::SetColor(bool hit)
 {
 	if (hit) {
-		color= hitColor;
+		color = hitColor;
 	}
 	else {
-		color= normalColor;
+		color = normalColor;
 	}
 }
 

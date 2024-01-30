@@ -2,7 +2,6 @@
 #include<imgui.h>
 #include"SphereCollider/SphereCollider.h"
 
-#include"IsCollisions.h"
 
 bool OBBCollider::isDraw_ = true;
 
@@ -67,6 +66,31 @@ void OBBCollider::Update()
 	}*/
 
 	world_.UpdateMatrix();
+
+
+#pragma region OBBのワールド行列をスケールなしで作成
+	//回転量取得
+	Vector3 rotate = GetAllRotate(world_);
+
+	//回転行列
+	Matrix4x4 rotateM = MakeRotateXMatrix(rotate.x) * (MakeRotateYMatrix(rotate.y) * MakeRotateZMatrix(rotate.z));
+	//座標行列
+	Matrix4x4 translateM = MakeTranslateMatrix(world_.GetMatWorldTranslate());
+	//スケールは使わない（sizeで使う
+	Matrix4x4 scaleM = MakeIdentity4x4();
+	//OBBのworld行列生成
+	OBBM_ = scaleM * (rotateM * translateM);
+
+	//逆行列
+	inverseM_ = Inverse(OBBM_);
+
+	//すべてのスケールからサイズ取得
+	Vector3 size = GetAllScale(world_);
+
+	//AABB取得
+	aabb_ = { .minV = -size,.maxV = size };
+#pragma endregion
+
 }
 
 void OBBCollider::Draw()
@@ -98,31 +122,10 @@ void OBBCollider::Debug(const char* name)
 bool OBBCollider::IsCollision(SphereCollider* collider,Vector3& backVec)
 {
 
-#pragma region OBBのワールド行列をスケールなしで作成
-	//回転量取得
-	Vector3 rotate = GetAllRotate(world_);
-
-	//回転行列
-	Matrix4x4 rotateM = MakeRotateXMatrix(rotate.x) * (MakeRotateYMatrix(rotate.y) * MakeRotateZMatrix(rotate.z));
-	//座標行列
-	Matrix4x4 translateM = MakeTranslateMatrix(world_.GetMatWorldTranslate());
-	//スケールは使わない（sizeで使う
-	Matrix4x4 scaleM = MakeIdentity4x4();
-	//OBBのworld行列生成
-	Matrix4x4 OBBM = scaleM * (rotateM * translateM);
-
-	//逆行列
-	Matrix4x4 inverseM = Inverse(OBBM);
-#pragma endregion
-
-
 	//スフィアコライダーの座標をOBBのローカル空間に出る
-	Vector3 sphereLocal = Transform(collider->GetWorld().GetMatWorldTranslate(), inverseM);
-	//すべてのスケールからサイズ取得
-	Vector3 size = GetAllScale(world_);
-
-	//AABB取得
-	AABB aabb_ = { .minV = -size,.maxV = size };
+	Vector3 sphereLocal = Transform(collider->GetWorld().GetMatWorldTranslate(), inverseM_);
+	
+	
 	//Sphere取得
 	Sphere sphere = { sphereLocal,collider->GetRadius()};
 
@@ -132,17 +135,17 @@ bool OBBCollider::IsCollision(SphereCollider* collider,Vector3& backVec)
 
 
 		//OBBLocalPosCange
-		saikin = Transform(saikin, OBBM);
+		saikin = Transform(saikin, OBBM_);
 
 		//mosionajiiti
 		if (world_.GetMatWorldTranslate() == saikin) {
 			//スフィアコライダーの座標をOBBのローカル空間に出る
-			sphereLocal = Transform(preWorld_.GetMatWorldTranslate(), inverseM);
+			sphereLocal = Transform(preWorld_.GetMatWorldTranslate(), inverseM_);
 			//Sphere取得
 			sphere = { sphereLocal,collider->GetRadius()};
 			InCollision(aabb_, sphere, saikin);
 
-			saikin = Transform(saikin, OBBM);
+			saikin = Transform(saikin, OBBM_);
 
 			Vector3 velo = preWorld_.GetMatWorldTranslate() - saikin;
 			velo.SetNormalize();
@@ -189,7 +192,7 @@ bool OBBCollider::IsCollision(SphereCollider* collider,Vector3& backVec)
 	else {
 		//最近接点描画
 		WorldTransform sWo;
-		sWo.translate_ = Transform(saikin, OBBM);
+		sWo.translate_ = Transform(saikin, OBBM_);
 		sWo.scale_ = { 0.1f,0.1f,0.1f };
 		sWo.UpdateMatrix();
 		IMM_->SetData("sphere", sWo);
@@ -204,6 +207,21 @@ bool OBBCollider::IsCollision(SphereCollider* collider,Vector3& backVec)
 	 
 }
 
+bool OBBCollider::IsCollision(const Segment& seg) {
+
+
+
+	//各OBBローカル上に作成
+	Vector3 localOri = Transform(seg.origin, inverseM_);
+	Vector3 localEnd = Transform(seg.origin+seg.diff, inverseM_);
+
+	//セグメント取得
+	Segment lSeg = { localOri,localEnd - localOri };
+
+	return InCollision(aabb_, seg);
+}
+
+
 void OBBCollider::SetColor(bool hit)
 {
 	if (hit) {
@@ -217,4 +235,27 @@ void OBBCollider::SetColor(bool hit)
 void OBBCollider::UpdateMatrix()
 {
 	world_.UpdateMatrix();
+
+#pragma region OBBのワールド行列をスケールなしで作成
+	//回転量取得
+	Vector3 rotate = GetAllRotate(world_);
+
+	//回転行列
+	Matrix4x4 rotateM = MakeRotateXMatrix(rotate.x) * (MakeRotateYMatrix(rotate.y) * MakeRotateZMatrix(rotate.z));
+	//座標行列
+	Matrix4x4 translateM = MakeTranslateMatrix(world_.GetMatWorldTranslate());
+	//スケールは使わない（sizeで使う
+	Matrix4x4 scaleM = MakeIdentity4x4();
+	//OBBのworld行列生成
+	OBBM_ = scaleM * (rotateM * translateM);
+
+	//逆行列
+	inverseM_ = Inverse(OBBM_);
+
+	//すべてのスケールからサイズ取得
+	Vector3 size = GetAllScale(world_);
+
+	//AABB取得
+	aabb_ = { .minV = -size,.maxV = size };
+#pragma endregion
 }

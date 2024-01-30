@@ -73,6 +73,17 @@ void Camera::Update() {
 	view_ = Inverse(mainCamera_.matWorld_);
 	projection_ = MakePerspectiveFovMatrix(0.45f, (float)WindowApp::kClientWidth / (float)WindowApp::kClientHeight, 0.1f, FarZ);
 	viewProjection_ = view_* projection_;
+
+#pragma region Segment設定
+	//カメラ位置計算
+	segment_.origin = mainCamera_.GetMatWorldTranslate();
+	//距離計算
+	segment_.diff = TransformNormal({ 0,0,1 },mainCamera_.matWorld_);
+	segment_.diff.SetNormalize();
+	segment_.diff *= mainCamera_.translate_.z*-1.0f;
+#pragma endregion
+
+	
 }
 
 void Camera::DrawDebugWindow(const char* name) {

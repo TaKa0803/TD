@@ -44,6 +44,8 @@ private:
 
 	std::unique_ptr<OBBCollider> collider_;
 
+	Vector4 baseColor = { 1,1,1,1 };
+	Vector4 hitColor = { 1,1,1,0.5f };
 private:
 
 	void SaveNewData();
@@ -76,4 +78,9 @@ public:
 	OBBCollider* GetCollider() { return collider_.get(); }
 
 	Vector3 GetDirection() const { return -vNormalPosition_; }
+
+public:
+
+	void SetColor(bool hit);
+
 };

@@ -88,4 +88,6 @@ private:
 	//ヒット時色
 	Vector4 hitColor = { 1,0,0,alpha_ };
 
+
+
 };

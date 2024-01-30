@@ -1,5 +1,6 @@
 #pragma once
 #include"InstancingGameObject/InstancingGameObject.h"
+#include"IsCollisions.h"
 
 #include"Quaternion.h"
 
@@ -21,14 +22,37 @@ public:
 	/// <param name="tag">コライダーのタグ</param>
 	void Initialize(const std::string& tag);
 
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update();
 
+	/// <summary>
+	/// 描画（Releaseでは描画されない
+	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// デバッグImGui表示
+	/// </summary>
+	/// <param name="name">window名</param>
 	void Debug(const char* name);
 
-	//円コライダーとの判定
+	/// <summary>
+	/// 行列のみ更新(押し込み処理後に呼び出し
+	/// </summary>
+	void UpdateMatrix();
+
+	/// <summary>
+	/// Sphereコライダーとの判定
+	/// </summary>
+	/// <param name="collider">コライダーのポインタ</param>
+	/// <param name="backVec">押し出し量</param>
+	/// <returns>押し出し量を渡し、当たったか否か判定</returns>
 	bool IsCollision(SphereCollider*collider,Vector3&backVec);
+
+	//線との当たり判定
+	bool IsCollision(const Segment& seg);
 
 	/// <summary>
 	/// 色の設定
@@ -42,9 +66,25 @@ public:
 	/// <param name="alpha"></param>
 	void SetAlpha(const float alpha) { normalColor.w = alpha; }
 
+	/// <summary>
+	/// 正否に合わせた色に変更
+	/// </summary>
+	/// <param name="hit"></param>
 	void SetColor(bool hit);
 
-	void UpdateMatrix();
+public:
+
+	/// <summary>
+	/// OBBのworldmatrix取得
+	/// </summary>
+	/// <returns></returns>
+	const Matrix4x4& GetWorldM()const { return OBBM_; }
+
+	/// <summary>
+	/// worldmatrixの逆行列取得
+	/// </summary>
+	/// <returns></returns>
+	const Matrix4x4& GetInverseWorldM()const { return inverseM_; }
 private:
 	//コライダータグ
 	std::string colliderTag_;
@@ -74,4 +114,10 @@ private:
 
 	//過去情報
 	WorldTransform preWorld_;
+
+	//world行列
+	Matrix4x4 OBBM_;
+	//worldの逆行列
+	Matrix4x4 inverseM_;
+	AABB aabb_;
 };

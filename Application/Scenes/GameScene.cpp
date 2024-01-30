@@ -238,6 +238,16 @@ void GameScene::CheckCollision()
 			wall->OnCollision();
 			player_->BackVector(temp);
 		}
+		/*
+		//透明化処理
+		OBBCollider* obbc = wall->GetCollider();
+		if (obbc->IsCollision(camera_->GetSegment())) {
+			wall->SetColor(true);
+		}
+		else {
+			wall->SetColor(false);
+		}
+		*/
 	}
 	itrE = enemies.begin();
 	for (; itrE != enemies.end(); ++itrE)
@@ -257,15 +267,17 @@ void GameScene::CheckCollision()
 #pragma region エフェクト出現
 				EffectData newData;
 
+				//エフェクトに使うモデルのタグ設定
 				newData.tag = eTag_;
 
+				//数分生成
 				for (int i = 0; i < 10; ++i)
 				{
-
 					moveData movedata;
-
-					movedata.world = { 0,2,0 };
+					//データ設定
+					movedata.world = some->GetWorld();
 					movedata.world.scale_ = { 0.2f,0.2f ,0.2f };
+					//初期速度ランダム
 					movedata.velo = {
 						RandomNumber::Get(-1,1),
 						RandomNumber::Get(-1,1),
@@ -274,14 +286,16 @@ void GameScene::CheckCollision()
 
 					movedata.velo.SetNormalize();
 					movedata.velo *= 1.0f;
-
+					//加速度設定
 					movedata.acce = { 0,-0.1f,0 };
-
+					//死亡までのカウント
 					movedata.maxDeadCount = 60;
 
-					newData.mData.push_back(movedata);
+					//データ設定
+					newData.mData.emplace_back(movedata);
 
 				}
+				//各粒データを含めた総合データ送信
 				EffectExp_->AddEffectData(newData);
 #pragma endregion
 			}
@@ -296,6 +310,7 @@ void GameScene::CheckCollision()
 					wall->OnCollision();
 					some->OnCollision(wall->GetDirection());
 				}
+
 			}
 		}
 		// 弾かれてない時

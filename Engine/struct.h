@@ -95,7 +95,10 @@ struct DirectionalLight {
 };
 
 
-
+struct Segment {
+	Vector3 origin;
+	Vector3 diff;
+};
 
 
 #pragma endregion

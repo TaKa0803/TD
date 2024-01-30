@@ -1,5 +1,7 @@
 #pragma once
 #include"WorldTransform/WorldTransform.h"
+#include"struct.h"
+
 
 class Camera {
 
@@ -53,6 +55,12 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	float GetPCameraR_Y() { return CameraMotionSupport_.rotate_.y; }
+
+	/// <summary>
+	/// カメラの視線取得
+	/// </summary>
+	/// <returns></returns>
+	const Segment GetSegment() { return segment_; }
 public:
 	//ターゲット設定
 	void SetTarget(const WorldTransform* parent);
@@ -105,4 +113,7 @@ private:
 
 	//VP
 	Matrix4x4 viewProjection_ = MakeIdentity4x4();
+
+	//カメラの視線
+	Segment segment_;
 };

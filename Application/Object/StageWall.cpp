@@ -81,7 +81,7 @@ void StageWall::Update()
 	world_.UpdateMatrix();
 	collider_->Update();
 	//タグに対応したモデルにワールド追加
-	IMM_->SetData(tag_, world_);
+	IMM_->SetData(tag_, world_,color);
 }
 
 void StageWall::Draw()
@@ -112,4 +112,14 @@ void StageWall::DebagWindow()
 
 void StageWall::OnCollision()
 {
+}
+
+void StageWall::SetColor(bool hit)
+{
+	if (hit) {
+		color = hitColor;
+	}
+	else {
+		color = baseColor;
+	}
 }
