@@ -1,6 +1,7 @@
 #include "SomeEnemy.h"
 
 #include "ImGuiManager/ImGuiManager.h"
+#include "RandomNum/RandomNum.h"
 
 void SomeEnemy::Initialize(const WorldTransform& world)
 {
@@ -15,6 +16,7 @@ void SomeEnemy::Initialize(const WorldTransform& world)
 
 	isActive_ = true;
 	isHit_ = false;
+	isFactor_ = false;
 
 	playerW_ = &world;
 
@@ -24,12 +26,12 @@ void SomeEnemy::Initialize(const WorldTransform& world)
 
 void SomeEnemy::Update()
 {
-	//死んでいたら終わる
+	//����ł�����I���
 	if (!isActive_){
 		return;
 	}
 
-	//各タイプによる行動処理
+	//�e�^�C�v�ɂ��s������
 	switch (eType_)
 	{
 	case SomeEnemy::Move:
@@ -79,12 +81,12 @@ void SomeEnemy::OnCollision(const Vector3& direction)
 		direct3_ = direction;
 	}
 	
-	//動くタイプの時
+	//�����^�C�v�̎�
 	if (eType_==Move)
 	{
 		direct3_ = direction;
 		reqBehavior_ = BURST;
-	}//即爆タイプの時
+	}//�����^�C�v�̎�
 	else if (eType_==Explo)
 	{
 		reqBehavior_ = DESTROY;
@@ -93,14 +95,14 @@ void SomeEnemy::OnCollision(const Vector3& direction)
 
 void SomeEnemy::MoveEnemyUpdate()
 {
-#pragma region 移動する敵
+#pragma region �ړ�����G
 	if (reqBehavior_)
 	{
 		behavior_ = reqBehavior_.value();
 		switch (behavior_)
 		{
 		case SomeEnemy::IDOL:
-			momentFrame_ = cALIVEFRAME_;
+			momentFrame_ = cALIVEFRAME_ + (int)RandomNumber::Get(0.0f,10.0f);
 			break;
 		case SomeEnemy::MOVE:
 			momentFrame_ = cALIVEFRAME_;
@@ -159,7 +161,7 @@ void SomeEnemy::MoveEnemyUpdate()
 
 void SomeEnemy::ExpEnemyUpdate()
 {
-#pragma region 爆発する敵
+#pragma region ��������G
 	if (reqBehavior_)
 	{
 		behavior_ = reqBehavior_.value();
@@ -216,5 +218,20 @@ void SomeEnemy::ExpEnemyUpdate()
 
 #pragma endregion
 
+}
+
+void SomeEnemy::OnEnemy(const Vector3& direction)
+{
+	if (behavior_ == IDOL)
+	{
+		isFactor_ = true;
+		reqBehavior_ = DESTROY;
+	}
+	else if(behavior_ == MOVE)
+	{
+		isFactor_ = true;
+		direct3_ = Normalize(direction);
+		reqBehavior_ = BURST;
+	}
 }
 

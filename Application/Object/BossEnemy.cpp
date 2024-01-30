@@ -40,7 +40,7 @@ BossEnemy::BossEnemy()
 void BossEnemy::Initialize(const WorldTransform& player)
 {
 	world_.Initialize();
-	world_.scale_ = { 1.0f,1.0f,1.0f };
+	world_.scale_ = { cSIZE_,cSIZE_,cSIZE_ };
 	world_.translate_.z = 20.0f;
 	world_.translate_.y = 2.0f;
 	model_->SetUVScale({ 1.0f,1.0f,1.0f });
@@ -49,6 +49,7 @@ void BossEnemy::Initialize(const WorldTransform& player)
 
 	collider_.reset(new SphereCollider);
 	collider_->Initialize("boss", world_);
+	collider_->SetRadius(cSIZE_);
 
 	enemies_.clear();
 	reqBehavior_ = IDOL;
@@ -56,6 +57,8 @@ void BossEnemy::Initialize(const WorldTransform& player)
 
 	invisibleFrame_ = 60;
 	isInvisible_ = false;
+
+	damage_ = 0.0f;
 
 	// 範囲取得
 	moveLength_ = GlobalVariables::GetInstance()->GetFloatvalue("StageWall", "Size");
@@ -111,7 +114,7 @@ void BossEnemy::Update()
 		moveCount_++;
 		break;
 		case BossEnemy::SUMMON:
-			momentFrame_ = 60;
+			momentFrame_ = cSUMMONFRAME_;
 			// 移動期待値 0
 			moveCount_ = 0;
 			break;
@@ -119,7 +122,8 @@ void BossEnemy::Update()
 			momentFrame_ = 30;
 			invisibleFrame_ = 60;
 			isInvisible_ = true;
-			HP_--;
+			HP_ -= (int)damage_;
+			damage_ = 0.0f;
 			break;
 		case BossEnemy::CRUSH:
 			momentFrame_ = 120;
@@ -251,10 +255,11 @@ void BossEnemy::Draw(const Matrix4x4& viewp)
 	hpBarFrame_->Draw();
 }
 
-void BossEnemy::OnCollision()
+void BossEnemy::OnCollision(float damage)
 {
 	if (!isInvisible_)
 	{
+		damage_ = damage;
 		reqBehavior_ = DAMAGE;
 	}
 }
@@ -307,10 +312,11 @@ void BossEnemy::UpdateIDOL()
 	momentFrame_--;
 	if (momentFrame_ <= 0)
 	{
-		int rnd = rand() % 3;
+		int rnd = rand() % 5;
+		// 移動
 		if (rnd == 0)
 		{
-			rnd = rand() % (1 + moveCount_);
+			rnd = rand() % (2 + moveCount_);
 			if (rnd == 0)
 			{
 				reqBehavior_ = MOVE;
@@ -324,6 +330,7 @@ void BossEnemy::UpdateIDOL()
 				reqBehavior_ = IDOL;
 			}
 		}
+		// 雑魚敵生成
 		else //if (rnd == 1)
 		{
 			if (enemies_.size() < 10)
@@ -355,9 +362,14 @@ void BossEnemy::UpdateMOVE()
 void BossEnemy::UpdateSUMMON()
 {
 	momentFrame_--;
-	if (momentFrame_ <= 0)
+	if (momentFrame_ == cSUMMONFRAME_ / 2)
 	{
 		SummmonEnemy();
+		SummmonEnemy();
+		SummmonEnemy();
+	}
+	if (momentFrame_ <= 0)
+	{
 		reqBehavior_ = IDOL;
 	}
 }
