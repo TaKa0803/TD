@@ -118,6 +118,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Stage.cpp" />
     <ClCompile Include="Application\Object\StageWall.cpp" />
     <ClCompile Include="Application\SceneManager\SceneManager.cpp" />
+    <ClCompile Include="Application\Scenes\ALScene\ALGameScene.cpp" />
+    <ClCompile Include="Application\Scenes\ALScene\ALTitleScene.cpp" />
     <ClCompile Include="Application\Scenes\DebugScene.cpp" />
     <ClCompile Include="Application\Scenes\GameScene.cpp" />
     <ClCompile Include="Application\Scenes\IScene.cpp" />
@@ -212,6 +214,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Stage.h" />
     <ClInclude Include="Application\Object\StageWall.h" />
     <ClInclude Include="Application\SceneManager\SceneManager.h" />
+    <ClInclude Include="Application\Scenes\ALScene\ALGameScene.h" />
+    <ClInclude Include="Application\Scenes\ALScene\ALTitleScene.h" />
     <ClInclude Include="Application\Scenes\DebugScene.h" />
     <ClInclude Include="Application\Scenes\GameScene.h" />
     <ClInclude Include="Application\Scenes\MT4Scene.h" />

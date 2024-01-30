@@ -8,5 +8,7 @@ enum SCENE {
 	CLEAR,
 	FAIL,
 	DEBUG,
+	ALTITLE,
+	ALGAME,
 	SceneCount	//使うな
 };
