@@ -211,18 +211,21 @@ void GameScene::CheckCollision()
 {
 	auto& enemies = boss_->GetEnemies();
 	auto itrE = enemies.begin();
-	std::list<SphereCollider*> eCollider;
+	
+	/*std::list<SphereCollider*> eCollider;
 	for (; itrE != enemies.end(); ++itrE)
 	{
 		eCollider.push_back(itrE->get()->GetCollider());
-	}
+	}*/
+
 	auto& blasts = player_->GetEchoBlasts();
 	auto itrB = blasts.begin();
-	std::list<OBBCollider*> bCollider;
-	for (; itrB != blasts.end(); ++itrB)
-	{
-		bCollider.push_back(itrB->get()->GetCollider());
-	}
+
+	//std::list<OBBCollider*> bCollider;
+	//for (; itrB != blasts.end(); ++itrB)
+	//{
+	//	bCollider.push_back(itrB->get()->GetCollider());
+	//}
 
 	auto& walls = stage_->GetWalls();
 	auto itrW = walls.begin();
@@ -253,7 +256,55 @@ void GameScene::CheckCollision()
 	for (; itrE != enemies.end(); ++itrE)
 	{
 		SomeEnemy* some = itrE->get();
+		/*
+		// こわれている時
+		if (itrE->get()->GetIsDestroy())
+		{
 
+			BossEnemy* boss = boss_.get();
+			// ボスとの接触
+			if (some->GetCollider()->IsCollision(*boss->GetCollider(), temp))
+			{
+				some->OnCollision();
+				boss->OnCollision();
+
+#pragma region エフェクト出現
+				EffectData newData;
+
+				//エフェクトに使うモデルのタグ設定
+				newData.tag = eTag_;
+
+				//数分生成
+				for (int i = 0; i < 10; ++i)
+				{
+					moveData movedata;
+					//データ設定
+					movedata.world = some->GetWorld();
+					movedata.world.scale_ = { 0.2f,0.2f ,0.2f };
+					//初期速度ランダム
+					movedata.velo = {
+						RandomNumber::Get(-1,1),
+						RandomNumber::Get(-1,1),
+						RandomNumber::Get(-1,1)
+					};
+
+					movedata.velo.SetNormalize();
+					movedata.velo *= 1.0f;
+					//加速度設定
+					movedata.acce = { 0,-0.1f,0 };
+					//死亡までのカウント
+					movedata.maxDeadCount = 60;
+
+					//データ設定
+					newData.mData.emplace_back(movedata);
+
+				}
+				//各粒データを含めた総合データ送信
+				EffectExp_->AddEffectData(newData);
+#pragma endregion
+			}
+		}
+		*/
 		// 弾かれてる間の判定
 		if (itrE->get()->GetIsBurst())
 		{

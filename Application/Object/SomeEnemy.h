@@ -7,17 +7,21 @@
 
 class SomeEnemy :public InstancingGameObject
 {
-private:
+public:
 
 	enum BEHAVIOR
 	{
 		IDOL,	// なにもしてない
+		MOVE,	// 移動
 		BURST,	// 弾かれ中
+		DESTROY,// 爆発
 
 		_COUNT,	// カウント用
 	};
 
 private:
+
+	int32_t cBURSTFRAME_ = 600;
 
 	// 中心からの距離
 	float moveLength_ = 0.0f;
@@ -31,7 +35,7 @@ private:
 	std::unique_ptr<SphereCollider> collider_;
 
 	// 爆発までのフレーム
-	uint32_t toBurstFrame_ = 600;
+	uint32_t momentFrame_ = cBURSTFRAME_;
 
 	bool isActive_ = false;
 
@@ -47,10 +51,16 @@ public:
 
 	SphereCollider* GetCollider() { return collider_.get(); }
 
-	void OnCollision() { isActive_ = false; }
+	// ボスとぶつかった時
+	void OnCollision() { reqBehavior_ = DESTROY; }
+	// 壁、攻撃の時
 	void OnCollision(const Vector3& direction);
 
 	bool GetIsActive() const { return isActive_; }
 	bool GetIsBurst() const { return behavior_ == BURST; }
+	bool GetIsDestroy() const { return behavior_ == DESTROY; }
+
+	void SetBehavior(BEHAVIOR b) { reqBehavior_ = b; }
+	void SetPosition(const Vector3& pos) { world_.translate_ = pos; }
 private:
 };

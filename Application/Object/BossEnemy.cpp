@@ -261,6 +261,18 @@ void BossEnemy::SummmonEnemy()
 {
 	SomeEnemy* data = new SomeEnemy;
 	data->Initialize();
+	if (rand() % 3 == 0)
+	{
+		data->SetBehavior(SomeEnemy::IDOL);
+	}
+	else
+	{
+		data->SetBehavior(SomeEnemy::MOVE);
+	}
+	int length = (int)moveLength_;
+	int rnd1 = length / 2 - rand() % length;
+	int rnd2 = length / 2 - rand() % length;
+	data->SetPosition({ (float)rnd1,world_.translate_.y,(float)rnd2 });
 	enemies_.emplace_back(data);
 	reqBehavior_ = IDOL;
 }
@@ -293,7 +305,7 @@ void BossEnemy::UpdateIDOL()
 	momentFrame_--;
 	if (momentFrame_ <= 0)
 	{
-		int rnd = rand() % 2;
+		int rnd = rand() % 3;
 		if (rnd == 0)
 		{
 			rnd = rand() % (1 + moveCount_);
@@ -301,7 +313,7 @@ void BossEnemy::UpdateIDOL()
 			{
 				reqBehavior_ = MOVE;
 			}
-			else if (enemies_.size() < 5)
+			else if (enemies_.size() < 10)
 			{
 				reqBehavior_ = SUMMON;
 			}
@@ -310,9 +322,9 @@ void BossEnemy::UpdateIDOL()
 				reqBehavior_ = IDOL;
 			}
 		}
-		else if (rnd == 1)
+		else //if (rnd == 1)
 		{
-			if (enemies_.size() < 5)
+			if (enemies_.size() < 10)
 			{
 				reqBehavior_ = SUMMON;
 			}

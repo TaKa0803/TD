@@ -30,12 +30,19 @@ void SomeEnemy::Update()
 		case SomeEnemy::IDOL:
 
 			break;
+		case SomeEnemy::MOVE:
+
+			break;
 		case SomeEnemy::BURST:
-			
+			momentFrame_ = cBURSTFRAME_;
+			break;
+		case SomeEnemy::DESTROY:
+			momentFrame_ = 60;
 			break;
 		default:
 			break;
 		}
+		reqBehavior_ = std::nullopt;
 	}
 
 	switch (behavior_)
@@ -43,13 +50,24 @@ void SomeEnemy::Update()
 	case SomeEnemy::IDOL:
 
 		break;
+	case SomeEnemy::MOVE:
+
+		break;
 	case SomeEnemy::BURST:
-		toBurstFrame_--;
-		if (toBurstFrame_ <= 0)
+		momentFrame_--;
+		if (momentFrame_ <= 0)
+		{
+			reqBehavior_ = DESTROY;
+		}
+		world_.translate_ += direct3_ * 0.5f;
+		break;
+	case SomeEnemy::DESTROY:
+		momentFrame_--;
+		if (momentFrame_ <= 0)
 		{
 			isActive_ = false;
 		}
-		world_.translate_ += direct3_ * 0.5f;
+		collider_->SetRadius(1.5f + (1.0f - momentFrame_ / 60.0f));
 		break;
 	default:
 		break;
@@ -83,10 +101,18 @@ void SomeEnemy::Draw()
 
 void SomeEnemy::OnCollision(const Vector3& direction)
 {
-	//if (behavior_ != BURST)
+	if (behavior_ == BURST)
+	{
+		direct3_ = direction;
+	}
+	else if (behavior_ == MOVE)
 	{
 		direct3_ = direction;
 		reqBehavior_ = BURST;
+	}
+	else if (behavior_ == IDOL)
+	{
+		reqBehavior_ = DESTROY;
 	}
 }
 
