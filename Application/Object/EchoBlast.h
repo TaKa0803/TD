@@ -6,9 +6,18 @@
 class EchoBlast : public InstancingGameObject
 {
 public:
+	//static const std::string kSPOTNAME_ = "PAmmo";
+	//static const std::string kARCNAME_ = "SRS";
+
+	enum ATTACKMODE
+	{
+		aSPOT,
+		aARC,
+	};
 
 	struct Infomation
 	{
+		ATTACKMODE mode_;
 		Vector3 popPosition_;
 		Vector2	direction_;
 		float power_;
@@ -34,7 +43,7 @@ private:
 
 public:
 
-	void Initialize(const std::string& tag, const Infomation& info);
+	void Initialize(const Infomation& info);
 
 	void Update();
 

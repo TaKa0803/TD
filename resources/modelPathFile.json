@@ -30,6 +30,7 @@
     "SkyDome": [ "resources/AppResource", "Skydome", 5 ],
     "talker": [ "resources/AppResource", "tolker", 5 ],
     "parrot": [ "resources/AppResource", "parrot", 1000 ],
-    "PAmmo": [ "resources/AppResource", "LongRangeSound", 50 ]
+    "PAmmo": [ "resources/AppResource", "LongRangeSound", 50 ],
+    "SRS": [ "resources/AppResource", "ShortRangeSound", 50 ]
   }
 }

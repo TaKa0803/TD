@@ -27,6 +27,8 @@ private:
 
 private:
 
+	using ATTACKMODE = EchoBlast::ATTACKMODE;
+
 	Camera* camera_ = nullptr;
 
 	// 中心からの距離
@@ -38,6 +40,9 @@ private:
 	Input* input_ = nullptr;
 	BEHAVIOR behavior_ = IDOL;
 	std::optional<BEHAVIOR> reqBehavior_ = std::nullopt;
+
+	// 攻撃の種類
+	ATTACKMODE mode_ = ATTACKMODE::aSPOT;
 
 	std::unique_ptr<SphereCollider> collider_;
 
@@ -71,6 +76,7 @@ public:
 
 private:
 
+	void UpdateIDOL();
 	void UpdateMove();
 
 	void UpdateATTACK();

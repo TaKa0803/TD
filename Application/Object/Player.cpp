@@ -43,6 +43,7 @@ void Player::Update()
 		case Player::ATTACK:
 		{
 			EchoBlast::Infomation info;
+			info.mode_ = mode_;
 			info.direction_ = direction_;
 			info.popPosition_ = world_.translate_;
 			info.power_ = 1.0f;
@@ -61,13 +62,7 @@ void Player::Update()
 	switch (behavior_)
 	{
 	case Player::IDOL:
-		UpdateMove();
-
-		if (input_->TriggerKey(DIK_SPACE) ||
-			input_->IsTriggerButton(kButtonB))
-		{
-			reqBehavior_ = ATTACK;
-		}
+		UpdateIDOL();
 		break;
 	case Player::ATTACK:
 		UpdateATTACK();
@@ -122,6 +117,41 @@ void Player::OnCollision()
 {
 }
 
+void Player::UpdateIDOL()
+{
+	UpdateMove();
+
+	// モード切替
+	if (input_->TriggerKey(DIK_Q))
+	{
+		mode_ = ATTACKMODE::aSPOT;
+	}
+	else if (input_->TriggerKey(DIK_E))
+	{
+		mode_ = ATTACKMODE::aARC;
+	}
+	if (input_->IsTriggerButton(kRightTrigger))
+	{
+		switch (mode_)
+		{
+		case ATTACKMODE::aSPOT:
+			mode_ = ATTACKMODE::aARC;
+			break;
+		case ATTACKMODE::aARC:
+			mode_ = ATTACKMODE::aSPOT;
+			break;
+		default:
+			break;
+		}
+	}
+	// 音発射
+	if (input_->TriggerKey(DIK_SPACE) ||
+		input_->IsTriggerButton(kLeftTrigger))
+	{
+		reqBehavior_ = ATTACK;
+	}
+}
+
 void Player::UpdateMove()
 {
 	Vector3 move = input_->GetWASD();
@@ -164,6 +194,6 @@ void Player::UpdateATTACK()
 void Player::CreateEcho(const EchoBlast::Infomation& info)
 {
 	EchoBlast* echo = new EchoBlast;
-	echo->Initialize("PAmmo", info);
+	echo->Initialize(info);
 	blasts_.emplace_back(echo);
 }
