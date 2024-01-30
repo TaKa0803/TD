@@ -39,6 +39,9 @@ private:
 
 	bool isActive_ = false;
 
+	// 既にボスに当たっているか
+	bool isHit_ = false;
+
 public:
 	// 値の初期化
 	void Initialize();
@@ -52,7 +55,13 @@ public:
 	SphereCollider* GetCollider() { return collider_.get(); }
 
 	// ボスとぶつかった時
-	void OnCollision() { reqBehavior_ = DESTROY; }
+	bool OnCollision()
+	{
+		if (isHit_) { return false; }
+		reqBehavior_ = DESTROY;
+		isHit_ = true;
+		return true;
+	}
 	// 壁、攻撃の時
 	void OnCollision(const Vector3& direction);
 

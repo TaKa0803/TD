@@ -14,6 +14,7 @@ void SomeEnemy::Initialize()
 	collider_->Initialize("enemy");
 
 	isActive_ = true;
+	isHit_ = false;
 }
 
 void SomeEnemy::Update()

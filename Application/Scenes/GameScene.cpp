@@ -256,7 +256,7 @@ void GameScene::CheckCollision()
 	for (; itrE != enemies.end(); ++itrE)
 	{
 		SomeEnemy* some = itrE->get();
-		/*
+		
 		// こわれている時
 		if (itrE->get()->GetIsDestroy())
 		{
@@ -265,7 +265,10 @@ void GameScene::CheckCollision()
 			// ボスとの接触
 			if (some->GetCollider()->IsCollision(*boss->GetCollider(), temp))
 			{
-				some->OnCollision();
+				if (!some->OnCollision())
+				{
+					break;
+				}
 				boss->OnCollision();
 
 #pragma region エフェクト出現
@@ -304,7 +307,7 @@ void GameScene::CheckCollision()
 #pragma endregion
 			}
 		}
-		*/
+		
 		// 弾かれてる間の判定
 		if (itrE->get()->GetIsBurst())
 		{
