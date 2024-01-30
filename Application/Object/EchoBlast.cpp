@@ -3,27 +3,36 @@
 #include "SphereCollider/SphereCollider.h"
 #include "ImGuiManager/ImGuiManager.h"
 
-void EchoBlast::Initialize(const std::string& tag, const Infomation& info)
+void EchoBlast::Initialize(const Infomation& info)
 {
-	InstancingGameObject::Initialize(tag);
-
 	world_.Initialize();
 	colliderWorld_.Initialize();
 
+
+	collider_.reset(new OBBCollider);
+	collider_->Initialize("echo", colliderWorld_);
+	sCollider_.reset(new SphereCollider);
+	sCollider_->Initialize("echo", colliderWorld_);
+
+	switch (info.mode_)
+	{
+	case ATTACKMODE::aSPOT:
+		InstancingGameObject::Initialize("PAmmo");
+		break;
+	case ATTACKMODE::aARC:
+		InstancingGameObject::Initialize("SRS");
+		break;
+	}
+
 	data_ = info;
 	direct3_ = { data_.direction_.x,0.0f,data_.direction_.y };
-	world_.translate_ = data_.popPosition_ + direct3_;
+	world_.translate_ = data_.popPosition_ + direct3_ * 0.3f;
+	world_.rotate_.y = GetYRotate(info.direction_);
 	colliderWorld_.parent_ = &world_;
 
 	colliderWorld_.translate_.y = 2.0f;
 
 	isActive_ = true;
-
-	collider_.reset(new OBBCollider);
-	collider_->Initialize(tag, colliderWorld_);
-	sCollider_.reset(new SphereCollider);
-	sCollider_->Initialize(tag, colliderWorld_);
-
 	collider_->SetColor({ 0.0f,0.0f,0.0f,1.0f });
 }
 
