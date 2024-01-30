@@ -120,4 +120,18 @@ private:
 
 
 	BrokenBody* brokenBody_;
+
+	//シーンチェンジ用
+	std::string white = "resources/SystemResources/white.png";
+	std::unique_ptr<Sprite>sceneC_;
+
+	//シーン転換後の処置
+	bool preSceneChange_ = false;
+
+	//シーン転換処理をするか否か
+	bool isSceneChange_ = false;
+
+	const float maxSceneChangeCount_ = 60;
+
+	float sceneXhangeCount_ = 0;
 };

@@ -68,6 +68,9 @@ ALGameScene::ALGameScene() {
 
 	brokenBody_ = BrokenBody::GetInstance();
 
+	texture = TextureManager::LoadTex(white);
+	sceneC_.reset(Sprite::Create(texture, { 1,1 }, { 1,1 }, { 1280,720 }));
+	sceneC_->SetMaterialDataColor({ 0,0,0,1 });
 }
 
 ALGameScene::~ALGameScene() {
@@ -114,6 +117,10 @@ void ALGameScene::Initialize() {
 
 	brokenBody_->Initialize();
 
+	sceneXhangeCount_ = maxSceneChangeCount_;
+	isSceneChange_ = false;
+	preSceneChange_ = false;
+	sceneC_->SetColorAlpha(1);
 }
 
 
@@ -224,6 +231,7 @@ void ALGameScene::Draw() {
 		break;
 	}
 
+	sceneC_->Draw();
 
 	//インスタンシングのモデルを全描画
 	InstancingModelManager::GetInstance()->DrawAllModel(camera_->GetViewProjectionMatrix());
@@ -284,7 +292,7 @@ void ALGameScene::SceneChange() {
 		break;
 	case ALGameScene::Clear:
 		if (input_->TriggerKey(DIK_SPACE) || input_->IsTriggerButton(kButtonA)) {
-			sceneNo = ALTITLE;
+			isSceneChange_ = true;
 		}
 		break;
 	default:
@@ -293,6 +301,34 @@ void ALGameScene::SceneChange() {
 
 	if (input_->TriggerKey(DIK_ESCAPE)) {
 		leaveGame = true;
+	}
+
+	if (isSceneChange_) {
+
+		float alpha = float(sceneXhangeCount_ / maxSceneChangeCount_);
+
+		sceneC_->SetColorAlpha(alpha);
+
+		if (sceneXhangeCount_++ >= maxSceneChangeCount_) {
+			sceneC_->SetColorAlpha(1);
+			sceneNo = ALTITLE;
+		}
+	}
+	else {
+
+		if (!preSceneChange_) {
+
+			float alpha = float(sceneXhangeCount_ / maxSceneChangeCount_);
+
+			sceneC_->SetColorAlpha(alpha);
+
+			if (sceneXhangeCount_-- <= 0) {
+				sceneXhangeCount_ = 0;
+				sceneC_->SetColorAlpha(0);
+				preSceneChange_ = true;
+			}
+
+		}
 	}
 }
 

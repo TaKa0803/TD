@@ -18,6 +18,10 @@ ALTitleScene::ALTitleScene() {
 	texture = TextureManager::LoadTex("resources/AppResource/AL/B.png");
 	BButtonSp_.reset(Sprite::Create(texture, { 180,90 }, { 90,90 }, { 70,70 }));
 	BButtonSp_->SetPosition({ 750,500 });
+
+	texture = TextureManager::LoadTex(white);
+	sceneC_.reset(Sprite::Create(texture, { 1,1 }, { 1,1 }, { 1280,720 }));
+	sceneC_->SetMaterialDataColor({ 0,0,0,1 });
 }
 
 
@@ -25,6 +29,11 @@ ALTitleScene::ALTitleScene() {
 ALTitleScene::~ALTitleScene() {}
 
 void ALTitleScene::Initialize() {
+	sceneXhangeCount_ = maxSceneChangeCount_;
+	isSceneChange_ = false;
+	preSceneChange_ = false;
+	sceneC_->SetColorAlpha(1);
+
 }
 
 void ALTitleScene::Update() {
@@ -32,17 +41,8 @@ void ALTitleScene::Update() {
 
 	Debug();
 
-	if (input_->TriggerKey(DIK_SPACE)) {
-		sceneNo = ALGAME;
-	}
-
-	if (input_->IsControllerActive() && input_->IsTriggerButton(kButtonB)) {
-		sceneNo = ALGAME;
-	}
-
-	if (input_->TriggerKey(DIK_ESCAPE)) {
-		leaveGame = true;
-	}
+	SceneChange();
+	
 }
 
 void ALTitleScene::Draw() {
@@ -51,6 +51,8 @@ void ALTitleScene::Draw() {
 	pressSp_->Draw();
 
 	BButtonSp_->Draw();
+
+	sceneC_->Draw();
 }
 
 void ALTitleScene::Debug() {
@@ -68,4 +70,48 @@ void ALTitleScene::Debug() {
 	pressSp_->SetPosition(pos);
 	pressSp_->SetScale(scale);
 
+}
+
+void ALTitleScene::SceneChange()
+{
+	if (input_->TriggerKey(DIK_SPACE)) {
+		isSceneChange_ = true;
+	}
+
+	if (input_->IsControllerActive() && input_->IsTriggerButton(kButtonB)) {
+		isSceneChange_ = true;
+	}
+
+	if (input_->TriggerKey(DIK_ESCAPE)) {
+		leaveGame = true;
+	}
+
+
+	if (isSceneChange_) {
+
+		float alpha = float(sceneXhangeCount_ / maxSceneChangeCount_);
+
+		sceneC_->SetColorAlpha(alpha);
+
+		if (sceneXhangeCount_++ >= maxSceneChangeCount_) {
+			sceneC_->SetColorAlpha(1);
+			sceneNo = ALGAME;
+		}
+	}
+	else {
+
+		if (!preSceneChange_) {
+
+			float alpha = float(sceneXhangeCount_ / maxSceneChangeCount_);
+
+			sceneC_->SetColorAlpha(alpha);
+
+			if (sceneXhangeCount_-- <= 0) {
+				sceneXhangeCount_ = 0;
+				sceneC_->SetColorAlpha(0);
+				preSceneChange_ = true;
+			}
+
+		}
+	}
 }
