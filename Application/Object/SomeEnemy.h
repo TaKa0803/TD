@@ -21,7 +21,8 @@ public:
 
 private:
 
-	int32_t cBURSTFRAME_ = 600;
+	int32_t cBURSTFRAME_ = 300;
+	int32_t cALIVEFRAME_ = 600;
 
 	// 中心からの距離
 	float moveLength_ = 0.0f;

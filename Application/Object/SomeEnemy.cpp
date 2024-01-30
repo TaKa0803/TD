@@ -29,10 +29,10 @@ void SomeEnemy::Update()
 		switch (behavior_)
 		{
 		case SomeEnemy::IDOL:
-
+			momentFrame_ = cALIVEFRAME_;
 			break;
 		case SomeEnemy::MOVE:
-
+			momentFrame_ = cALIVEFRAME_;
 			break;
 		case SomeEnemy::BURST:
 			momentFrame_ = cBURSTFRAME_;
@@ -49,10 +49,18 @@ void SomeEnemy::Update()
 	switch (behavior_)
 	{
 	case SomeEnemy::IDOL:
-
+		momentFrame_--;
+		if (momentFrame_ <= 0)
+		{
+			isActive_ = false;
+		}
 		break;
 	case SomeEnemy::MOVE:
-
+		momentFrame_--;
+		if (momentFrame_ <= 0)
+		{
+			isActive_ = false;
+		}
 		break;
 	case SomeEnemy::BURST:
 		momentFrame_--;
