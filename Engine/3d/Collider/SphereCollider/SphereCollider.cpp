@@ -114,7 +114,7 @@ bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec)
 	//AABB取得
 	AABB aabb_ = { .minV = -size,.maxV = size };
 	//Sphere取得
-	Sphere sphere = { sphereLocal,radius_ };
+	Sphere sphere = { sphereLocal,GetAllScaleX(world_)};
 
 	//当たり判定
 	Vector3 saikin{};
