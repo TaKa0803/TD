@@ -40,7 +40,7 @@ BossEnemy::BossEnemy()
 void BossEnemy::Initialize()
 {
 	world_.Initialize();
-	world_.scale_ = { 3.0f,3.0f,3.0f };
+	world_.scale_ = { cSIZE_,cSIZE_,cSIZE_ };
 	world_.translate_.z = 20.0f;
 	world_.translate_.y = 2.0f;
 	model_->SetUVScale({ 1.0f,1.0f,1.0f });
@@ -49,7 +49,7 @@ void BossEnemy::Initialize()
 
 	collider_.reset(new SphereCollider);
 	collider_->Initialize("boss", world_);
-	collider_->SetRadius(3.0f);
+	collider_->SetRadius(cSIZE_);
 
 	enemies_.clear();
 	reqBehavior_ = IDOL;

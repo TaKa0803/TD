@@ -35,6 +35,7 @@ private:
 	// 召喚時間
 	int32_t cSUMMONFRAME_ = 60;
 
+	float cSIZE_ = 3.0f;
 
 	// 移動にかかる時間
 	int32_t cMOVEFRAME_ = 120;
