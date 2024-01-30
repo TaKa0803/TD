@@ -37,19 +37,19 @@ private:
 private:
 #pragma region 基板初期化
 	//windowsアプリケーション
-	WindowApp* winApp;
+	WindowApp* winApp_;
 
 	//DirectX
-	DirectXFunc* DXF;
+	DirectXFunc* DXF_;
 
 	//ImGui
-	ImGuiManager* imguiManager;
+	ImGuiManager* imguiManager_;
 
 	//texture
-	TextureManager* textureManager;
+	TextureManager* textureManager_;
 
 	//入力
-	Input* input;
+	Input* input_;
 
 	//SRV
 	SRVManager* SRVM_;
@@ -57,6 +57,7 @@ private:
 	//インスタンシングモデル
 	InstancingModelManager* instancingMM_;
 
+	//乱数クラス
 	RandomNumber* randomNumClass_;
 #pragma endregion
 };

@@ -31,33 +31,33 @@ void MainSystem::Run() {
 
 void MainSystem::Initializes() {
 	//windowsアプリケーション
-	winApp = WindowApp::GetInstance();
-	winApp->Initialize(L"LE2A_07_キクチ",1280,720);
+	winApp_ = WindowApp::GetInstance();
+	winApp_->Initialize(L"LE2A_07_キクチ",1280,720);
 
 	//DirectX
-	DXF = DirectXFunc::GetInstance();
-	DXF->Initialize(winApp);
+	DXF_ = DirectXFunc::GetInstance();
+	DXF_->Initialize(winApp_);
 
-	//
+	//DXCマネージャ
 	DXCManager*DXC= DXCManager::GetInstance();
 	DXC->Initialize();
 
 	//SRV
 	SRVM_ = SRVManager::GetInstance();
-	SRVM_->Initialize(DXF);
+	SRVM_->Initialize(DXF_);
 	
 	//画像関係
-	textureManager= TextureManager::GetInstance();
-	textureManager->Initialize(DXF);
+	textureManager_= TextureManager::GetInstance();
+	textureManager_->Initialize(DXF_);
 
 	
 	//imgui
-	imguiManager = ImGuiManager::GetInstance();
-	imguiManager->Initialize(winApp, DXF);
+	imguiManager_ = ImGuiManager::GetInstance();
+	imguiManager_->Initialize(winApp_, DXF_);
 
 	//入力
-	input = Input::GetInstance();
-	input->Initialize(winApp);
+	input_ = Input::GetInstance();
+	input_->Initialize(winApp_);
 	
 	//インスタンシングモデル
 	instancingMM_ = InstancingModelManager::GetInstance();
@@ -91,18 +91,18 @@ void MainSystem::MainRoop() {
 	//読み込んだ画像をGPUに送信
 	SRVM_->PostInitialize();
 
-	while (winApp->ProcessMessage()) {
+	while (winApp_->ProcessMessage()) {
 		
 #pragma region 状態更新
 		///更新前処理
 		//ImGui
-		imguiManager->PreUpdate();
+		imguiManager_->PreUpdate();
 
 		//インスタンシングの更新前処理
 		instancingMM_->PreUpdate();
 
 		//キー入力
-		input->Update();
+		input_->Update();
 		///=以下更新=//
 
 #ifdef _DEBUG
@@ -120,14 +120,14 @@ void MainSystem::MainRoop() {
 		//==更新終わり==//
 		// 
 		//更新終わり描画前処理
-		imguiManager->PostUpdate();
+		imguiManager_->PostUpdate();
 #pragma endregion
 #pragma region 描画		
 		///描画前処理
 		//DirectX
-		DXF->PreDraw();
+		DXF_->PreDraw();
 		//ImGui
-		imguiManager->PreDraw();
+		imguiManager_->PreDraw();
 		
 		//==以下描画==//
 		sceneManager->Draw();
@@ -136,9 +136,9 @@ void MainSystem::MainRoop() {
 
 		///描画あと処理
 		//imGui
-		imguiManager->PostDraw();
+		imguiManager_->PostDraw();
 		//DirectX
-		DXF->PostDraw();
+		DXF_->PostDraw();
 #pragma endregion
 		///フレーム終了時処理
 		sceneManager->EndFrame();
@@ -161,9 +161,9 @@ void MainSystem::Finalize() {
 	///開放処理
 	instancingMM_->Finalize();
 	SRVM_->Finalize();
-	textureManager->Finalize();
-	imguiManager->Finalize();
-	DXF->Finalize();
-	winApp->Finalize();
+	textureManager_->Finalize();
+	imguiManager_->Finalize();
+	DXF_->Finalize();
+	winApp_->Finalize();
 
 }
