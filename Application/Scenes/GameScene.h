@@ -32,6 +32,10 @@ private:
 
 	void CheckCollision();
 
+	/// <summary>
+	/// UI更新
+	/// </summary>
+	void UIUpdate();
 private:
 	//キー入力
 	Input* input_ = nullptr;
@@ -59,6 +63,19 @@ private:
 
 
 #pragma region ゲームルール関連
+
+	//GOODゲージ最大数
+	const int maxGoodGage_ = 100;
+
+	//GOODゲージ現カウント
+	int goodGage_ = 0;
+
+	//GOODゲージ最大数
+	const int maxBadGage_ = 100;
+
+	//GOODゲージ現カウント
+	int badGage_ = 0;
+
 
 	//画像の名前
 	enum SpriteName {
@@ -88,6 +105,9 @@ private:
 	Vector3 UIPosition_ = { 7.8f,71.0f,0 };
 	//UIのサイズ
 	Vector3 UIScale_ = { 0.7f,0.76f,1.0f };
+
+	//各バーのサイズ
+	Vector3 barScale_ = { 842,117,1 };
 #pragma endregion
 
 

@@ -73,6 +73,10 @@ void GameScene::Initialize()
 	skydome_->Initialize();
 
 	EffectExp_->Initialize();
+
+	//ゲージ初期化
+	goodGage_ = 0;
+	badGage_ = 0;
 }
 
 
@@ -104,6 +108,8 @@ void GameScene::Update()
 	CheckCollision();
 
 	EffectExp_->Update();
+
+	UIUpdate();
 }
 
 void GameScene::Draw()
@@ -327,6 +333,28 @@ void GameScene::CheckCollision()
 	//		}
 	//	}
 	//}
+
+
+}
+
+void GameScene::UIUpdate()
+{
+	float scaleX = float(goodGage_ / maxGoodGage_);
+
+	scaleX *= barScale_.x;
+
+	Vector3 scale = barScale_;
+	scale.x = scaleX;
+
+	gageSprite_[Good]->SetScale(scale);
+
+	scaleX = float(badGage_ / maxBadGage_);
+
+	scaleX *= barScale_.x;
+
+	scale.x = scaleX;
+
+	gageSprite_[Bad]->SetScale(scale);
 
 
 }
