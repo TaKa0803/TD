@@ -46,6 +46,7 @@ void Player::Update()
 			info.mode_ = mode_;
 			info.direction_ = direction_;
 			info.popPosition_ = world_.translate_;
+			// クラス内で定義
 			info.power_ = 1.0f;
 			CreateEcho(info);
 		}

@@ -14,17 +14,22 @@ void EchoBlast::Initialize(const Infomation& info)
 	sCollider_.reset(new SphereCollider);
 	sCollider_->Initialize("echo", colliderWorld_);
 
+	data_ = info;
 	switch (info.mode_)
 	{
 	case ATTACKMODE::aSPOT:
 		InstancingGameObject::Initialize("PAmmo");
+		data_.power_ = 2.0f;
+		aliveFrame_ = 40;
 		break;
 	case ATTACKMODE::aARC:
 		InstancingGameObject::Initialize("SRS");
+		collider_->SetScale({ 5.0f,1.0f,1.0f });
+		data_.power_ = 1.0f;
+		aliveFrame_ = 20;
 		break;
 	}
 
-	data_ = info;
 	direct3_ = { data_.direction_.x,0.0f,data_.direction_.y };
 	world_.translate_ = data_.popPosition_ + direct3_ * 0.3f;
 	world_.rotate_.y = GetYRotate(info.direction_);
