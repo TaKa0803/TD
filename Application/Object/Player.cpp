@@ -164,6 +164,6 @@ void Player::UpdateATTACK()
 void Player::CreateEcho(const EchoBlast::Infomation& info)
 {
 	EchoBlast* echo = new EchoBlast;
-	echo->Initialize("weapon", info);
+	echo->Initialize("PAmmo", info);
 	blasts_.emplace_back(echo);
 }

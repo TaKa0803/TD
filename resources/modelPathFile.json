@@ -29,7 +29,7 @@
     "EBox": [ "resources/AppResource/Particle", "EBox", 50000 ],
     "SkyDome": [ "resources/AppResource", "Skydome", 5 ],
     "talker": [ "resources/AppResource", "tolker", 5 ],
-    "parrot": [ "resources/AppResource", "parrot", 1000 ]
-
+    "parrot": [ "resources/AppResource", "parrot", 1000 ],
+    "PAmmo": [ "resources/AppResource", "LongRangeSound", 50 ]
   }
 }
