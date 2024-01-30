@@ -51,7 +51,7 @@ void SphereCollider::Update() {
 void SphereCollider::Draw() {
 #ifdef _DEBUG
 	if (isDraw_) {
-		InstancingModelManager::GetInstance()->SetWorld(tag_, world_);
+		InstancingModelManager::GetInstance()->SetData(tag_, world_,color);
 	}
 #endif // _DEBUG
 
@@ -172,14 +172,12 @@ bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec)
 		sWo.translate_ = saikin;
 		sWo.scale_ = { 0.1f,0.1f,0.1f };
 		sWo.UpdateMatrix();
-		IMM_->SetWorld("sphere", sWo);
+		IMM_->SetData("sphere", sWo);
 
 		obb.SetColor(true);
 
 		//色の変更
-		IMM_->SetColor(tag_, hitColor);
-
-
+		SetColor(true);
 		return true;
 
 
@@ -191,11 +189,11 @@ bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec)
 		sWo.translate_ = Transform(saikin, OBBM);
 		sWo.scale_ = { 0.1f,0.1f,0.1f };
 		sWo.UpdateMatrix();
-		IMM_->SetWorld("sphere", sWo);
+		IMM_->SetData("sphere", sWo);
 
 
 		//色の変更
-		IMM_->SetColor(tag_, normalColor);
+		SetColor(false);
 		obb.SetColor(false);
 
 		return false;
@@ -227,10 +225,10 @@ void SphereCollider::Debug(const char* name) {
 void SphereCollider::SetColor(bool hit)
 {
 	if (hit) {
-		IMM_->SetColor(tag_, hitColor);
+		color= hitColor;
 	}
 	else {
-		IMM_->SetColor(tag_, normalColor);
+		color= normalColor;
 	}
 }
 

@@ -40,7 +40,7 @@ public:
 	/// ワールドを追加
 	/// </summary>
 	/// <param name="world"></param>
-	void AddWorld(const WorldTransform& world);
+	void AddWorld(const WorldTransform& world,const Vector4&color={1,1,1,1});
 
 	/// <summary>
 	/// 描画
@@ -158,6 +158,11 @@ private:
 	//UVのワールド
 	WorldTransform uvWorld_;
 
+	//インスタンシングで利用するデータ
+	struct InstancingData {
+		WorldTransform world;
+		Vector4 color;
+	};
 	//ワールド軍
-	std::vector<std::unique_ptr<WorldTransform>>worlds_;
+	std::vector<std::unique_ptr<InstancingData>>worlds_;
 };

@@ -41,6 +41,7 @@ enum class FillMode {
 struct WorldTransformation {
 	Matrix4x4 WVP;
 	Matrix4x4 World;
+	Vector4 color;
 };
 
 struct VertexData {

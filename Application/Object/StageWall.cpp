@@ -81,7 +81,7 @@ void StageWall::Update()
 	world_.UpdateMatrix();
 	collider_->Update();
 	//タグに対応したモデルにワールド追加
-	IMM_->SetWorld(tag_, world_);
+	IMM_->SetData(tag_, world_);
 }
 
 void StageWall::Draw()

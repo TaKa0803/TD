@@ -23,7 +23,7 @@ void InstancingGameObject::Update() {
 	//行列更新
 	world_.UpdateMatrix();
 	//タグに対応したモデルにワールド追加
-	IMM_->SetWorld(tag_, world_);
+	IMM_->SetData(tag_, world_,color);
 }
 
 

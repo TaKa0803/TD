@@ -65,11 +65,11 @@ void InstancingModel::PreUpdate() {
 	worlds_.clear();
 }
 
-void InstancingModel::AddWorld(const WorldTransform& world) {
+void InstancingModel::AddWorld(const WorldTransform& world, const Vector4& color) {
 	//データをコピー
-	WorldTransform worl = world;
+	InstancingData worl = { world,color };
 
-	std::unique_ptr<WorldTransform>newWorld = std::make_unique<WorldTransform>(worl);
+	std::unique_ptr<InstancingData>newWorld = std::make_unique<InstancingData>(worl);
 	//追加
 	worlds_.push_back(std::move(newWorld));
 	
@@ -80,12 +80,13 @@ void InstancingModel::Draw(const Matrix4x4& viewProjection, int texture) {
 
 	int index = 0;
 	for (auto& world : worlds_) {
-		Matrix4x4 worldM = world.get()->matWorld_;
+		Matrix4x4 worldM = world->world.matWorld_;
 
 		Matrix4x4 WVP = worldM * viewProjection;
 
 		wvpData_[index].WVP = WVP;
 		wvpData_[index].World = worldM;
+		wvpData_[index].color = world->color;
 
 		index++;
 	}
@@ -160,6 +161,7 @@ void InstancingModel::Initialize(
 	for (uint32_t index = 0; index < (uint32_t)instancingNum; ++index) {
 		wvpData_[index].WVP = MakeIdentity4x4();
 		wvpData_[index].World = MakeIdentity4x4();
+		wvpData_[index].color = { 1,1,1,1 };
 	}
 
 #pragma region マテリアル

@@ -40,6 +40,11 @@ void DebugScene::Initialize()
 	obb_ = std::make_unique<OBBCollider>();
 	obb_->Initialize("plane", oWorld_);
 
+	oWorld2_.Initialize();
+	obb2_ = std::make_unique<OBBCollider>();
+	obb2_->Initialize("plane", oWorld2_);
+
+
 	EffectExp_->Initialize();
 }
 
@@ -52,13 +57,13 @@ void DebugScene::Update()
 
 	Vector3 move = input_->GetAllArrowKey();
 
-	sWorld_.translate_ += move.SetNormalize();
-	sWorld_.UpdateMatrix();
+	oWorld_.translate_ += move.SetNormalize() * 0.1f;
+	oWorld_.UpdateMatrix();
 
 	sphere_->Update();
 	plane_->Update();
 	obb_->Update();
-
+	obb2_->Update();
 	
 	Vector3 backV;
 	if (obb_->IsCollision(sphere_.get(),backV)) {
@@ -108,6 +113,7 @@ void DebugScene::Draw()
 	sphere_->Draw();
 	plane_->Draw();
 	obb_->Draw();
+	obb2_->Draw();
 
 	EffectExp_->Draw();
 
@@ -120,4 +126,6 @@ void DebugScene::Debug()
 	sphere_->Debug("sphere");
 	camera_->DrawDebugWindow("camera");
 	obb_->Debug("box");
+	obb2_->Debug("box2");
+
 }

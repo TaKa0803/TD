@@ -143,7 +143,7 @@ float InstancingModelManager::GetAlpha(const std::string& tag)
 	//return 0;
 }
 
-void InstancingModelManager::SetWorld(const std::string& tag, const WorldTransform& world) {
+void InstancingModelManager::SetData(const std::string& tag, const WorldTransform& world,const Vector4&color ) {
 
 	////タグのモデルデータ探索
 	//for (auto& model : modeldatas_) {
@@ -154,7 +154,7 @@ void InstancingModelManager::SetWorld(const std::string& tag, const WorldTransfo
 	//	}
 	//}
 
-	modelDatas_[tag]->AddWorld(world);
+	modelDatas_[tag]->AddWorld(world,color);
 
 }
 
@@ -216,10 +216,7 @@ void InstancingModelManager::SetAlpha(const std::string& tag, float alpha) {
 	//assert(false);
 }
 
-void InstancingModelManager::SetColor(const std::string& tag, Vector4 color)
-{
-	modelDatas_[tag]->SetColor(color);
-}
+
 
 void InstancingModelManager::SetEnableTexture(const std::string& tag, bool isEnable) {
 	////タグのモデルデータ探索

@@ -78,7 +78,7 @@ void SomeEnemy::Draw()
 		return;
 	}
 	collider_->Draw();
-	IMM_->SetWorld(tag_, world_);
+	IMM_->SetData(tag_, world_);
 }
 
 void SomeEnemy::OnCollision(const Vector3& direction)

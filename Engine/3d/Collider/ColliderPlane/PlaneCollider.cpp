@@ -50,7 +50,7 @@ void PlaneCollider::Draw()
 {
 #ifdef _DEBUG
 	if (isDraw_) {
-		InstancingModelManager::GetInstance()->SetWorld(tag_, world_);
+		InstancingModelManager::GetInstance()->SetData(tag_, world_,color);
 	}
 #endif // _DEBUG
 }

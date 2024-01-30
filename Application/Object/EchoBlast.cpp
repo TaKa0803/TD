@@ -45,7 +45,7 @@ void EchoBlast::Update()
 		collider_->Update();
 		//sCollider_->Update();
 		//タグに対応したモデルにワールド追加
-		IMM_->SetWorld(tag_, colliderWorld_);
+		IMM_->SetData(tag_, colliderWorld_);
 	}
 }
 

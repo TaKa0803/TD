@@ -44,7 +44,7 @@ PixelShaderOutput main(VertexShaderOutput input) {
     if (gMaterial.enableTexture != 0) {
     }
     else {
-        textureColor = gMaterial.color;
+        textureColor = input.color;
     }
     
     PixelShaderOutput output;
@@ -65,11 +65,11 @@ PixelShaderOutput main(VertexShaderOutput input) {
         //計算
         //output.color = gMaterial.color * textureColor * gDirectionalLight.color * cos * gDirectionalLight.intensity;
     
-        output.color.rgb = gMaterial.color.rgb * textureColor.rgb * gDirectionalLight.color.rgb * cos * gDirectionalLight.intensity;
-        output.color.a = gMaterial.color.a * textureColor.a;
+        output.color.rgb =input.color.rgb * textureColor.rgb * gDirectionalLight.color.rgb * cos * gDirectionalLight.intensity;
+        output.color.a = input.color.a * textureColor.a;
     }
     else {
-        output.color = gMaterial.color * textureColor;
+        output.color =input.color * textureColor;
     }
     
     

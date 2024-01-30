@@ -44,6 +44,10 @@ private:
 	WorldTransform oWorld_;
 	std::unique_ptr<OBBCollider>obb_;
 
+	WorldTransform oWorld2_;
+	std::unique_ptr<OBBCollider>obb2_;
+
+
 	//エフェクト
 	EffectExplosion* EffectExp_;
 

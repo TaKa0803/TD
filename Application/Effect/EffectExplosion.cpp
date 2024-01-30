@@ -85,7 +85,7 @@ void EffectExplosion::Draw()
 			world.UpdateMatrix();
 
 			//モデルにワールド送信
-			IMM_->SetWorld(data.tag, world);
+			IMM_->SetData(data.tag, world);
 		}
 
 	}

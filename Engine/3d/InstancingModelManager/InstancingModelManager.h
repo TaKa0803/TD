@@ -60,7 +60,7 @@ public:
 	/// </summary>
 	/// <param name="tag">モデルタグ名</param>
 	/// <param name="world">ワールドトランスフォーム</param>
-	void SetWorld(const std::string& tag, const WorldTransform& world);
+	void SetData(const std::string& tag, const WorldTransform& world,const Vector4&color={1,1,1,1});
 
 	/// <summary>
 	/// タグのモデルに画像を設定
@@ -89,13 +89,6 @@ public:
 	/// <param name="tag"></param>
 	/// <param name="alpha"></param>
 	void SetAlpha(const std::string& tag, float alpha);
-
-	/// <summary>
-	/// 色設定
-	/// </summary>
-	/// <param name="tag"></param>
-	/// <param name="color"></param>
-	void SetColor(const std::string& tag, Vector4 color);
 
 	/// <summary>
 	/// 画像を有効にするか否か

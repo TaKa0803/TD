@@ -16,6 +16,8 @@ protected:
 	//インスタンシングモデルマネージャー
 	InstancingModelManager* IMM_=nullptr;
 
+	//色
+	Vector4 color = { 1,1,1,1 };
 public:
 	//ワールド取得
 	const WorldTransform& GetWorld()const  { return world_; }
