@@ -63,8 +63,8 @@ bool SphereCollider::IsCollision(const SphereCollider& sphere, Vector3& backVec)
 	Vector3 myP = world_.GetMatWorldTranslate();
 
 	//各半径取得
-	float wide = sphere.radius_;
-	float myW = radius_;
+	float wide = GetAllScaleX(sphere.GetWorld());
+	float myW = GetAllScaleX(world_);
 
 	//距離計算
 	Vector3 sub = myP - pos;
@@ -226,6 +226,7 @@ void SphereCollider::UpdateMatrix()
 {
 	world_.UpdateMatrix();
 }
+
 
 
 

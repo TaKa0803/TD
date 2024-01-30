@@ -22,6 +22,8 @@ void SomeEnemy::Initialize(const WorldTransform& world)
 
 	//初期化
 	reqBehavior_ = IDOL;
+
+	momentFrame_ = cALIVEFRAME_ + (int)RandomNumber::Get(0.0f, 10.0f);
 }
 
 void SomeEnemy::Update()
@@ -102,7 +104,7 @@ void SomeEnemy::MoveEnemyUpdate()
 		switch (behavior_)
 		{
 		case SomeEnemy::IDOL:
-			momentFrame_ = cALIVEFRAME_ + (int)RandomNumber::Get(0.0f,10.0f);
+			
 			break;
 		case SomeEnemy::MOVE:
 			momentFrame_ = cALIVEFRAME_;
@@ -222,12 +224,12 @@ void SomeEnemy::ExpEnemyUpdate()
 
 void SomeEnemy::OnEnemy(const Vector3& direction)
 {
-	if (behavior_ == IDOL)
+	if (eType_ == Explo)
 	{
 		isFactor_ = true;
 		reqBehavior_ = DESTROY;
 	}
-	else if(behavior_ == MOVE)
+	else if(eType_==Move)
 	{
 		isFactor_ = true;
 		direct3_ = Normalize(direction);

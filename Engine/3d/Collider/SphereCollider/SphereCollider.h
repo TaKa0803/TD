@@ -66,6 +66,8 @@ public:
 
 	//ワールド取得
 	WorldTransform GetWorld()const { return world_; }
+
+	
 private:
 
 	//半径
