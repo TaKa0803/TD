@@ -23,6 +23,10 @@ private:
 
 	int32_t cBURSTFRAME_ = 300;
 	int32_t cALIVEFRAME_ = 600;
+	// 攻撃力
+	int32_t cATTACKPOWER_ = 2;
+	// 倍率
+	float cATTACKFACTOR_ = 2.0f;
 
 	// 中心からの距離
 	float moveLength_ = 0.0f;
@@ -38,7 +42,11 @@ private:
 	// 爆発までのフレーム
 	uint32_t momentFrame_ = cBURSTFRAME_;
 
+	// 処理するか
 	bool isActive_ = false;
+
+	// 倍率を掛けるか
+	bool isFactor_ = false;
 
 	// 既にボスに当たっているか
 	bool isHit_ = false;
@@ -65,10 +73,15 @@ public:
 	}
 	// 壁、攻撃の時
 	void OnCollision(const Vector3& direction);
+	// 敵同士の衝突用
+	void OnEnemy(const Vector3& direction);
 
 	bool GetIsActive() const { return isActive_; }
+	bool GetCanEnemy() const { return behavior_ == IDOL || behavior_ == MOVE; }
 	bool GetIsBurst() const { return behavior_ == BURST; }
 	bool GetIsDestroy() const { return behavior_ == DESTROY; }
+	float GetAttackPower() const { return cATTACKPOWER_ * (isFactor_ ? cATTACKFACTOR_ : 1.0f); }
+	const Vector3& GetDirection() const { return direct3_; }
 
 	void SetBehavior(BEHAVIOR b) { reqBehavior_ = b; }
 	void SetPosition(const Vector3& pos) { world_.translate_ = pos; }

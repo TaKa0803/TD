@@ -31,10 +31,16 @@ private:
 	// 移動範囲
 	// 中心からの距離
 	float moveLength_ = 0.0f;
+	
+	// 召喚時間
+	int32_t cSUMMONFRAME_ = 60;
 
+
+	// 移動にかかる時間
 	int32_t cMOVEFRAME_ = 120;
 	// 移動の回数とか期待値
 	int moveCount_ = 0;
+
 
 	// 次に向かう場所
 	Vector2 nextPosition_ = { 0.0f,0.0f };
@@ -56,14 +62,16 @@ private:
 	uint32_t invisibleFrame_ = 60;
 	bool isInvisible_ = false;
 
+	// 被ダメージ
+	float damage_ = 0.0f;
 
 private:
 
 #pragma region ボスのHPと表示
 	//最大HP
-	const int maxHP_ = 10;
+	const int maxHP_ = 20;
 	//現HP
-	int HP_ = 10;
+	int HP_ = maxHP_;
 
 	//ボスのHPバー
 	std::unique_ptr<Sprite>hpBar_;
@@ -103,7 +111,7 @@ public:
 
 	auto& GetEnemies() { return enemies_; }
 
-	void OnCollision();
+	void OnCollision(float damage);
 
 	bool GetIsActive() const { return isActive_; }
 

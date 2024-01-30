@@ -1,6 +1,7 @@
 #include "SomeEnemy.h"
 
 #include "ImGuiManager/ImGuiManager.h"
+#include "RandomNum/RandomNum.h"
 
 void SomeEnemy::Initialize()
 {
@@ -15,6 +16,7 @@ void SomeEnemy::Initialize()
 
 	isActive_ = true;
 	isHit_ = false;
+	isFactor_ = false;
 }
 
 void SomeEnemy::Update()
@@ -29,7 +31,7 @@ void SomeEnemy::Update()
 		switch (behavior_)
 		{
 		case SomeEnemy::IDOL:
-			momentFrame_ = cALIVEFRAME_;
+			momentFrame_ = cALIVEFRAME_ + (int)RandomNumber::Get(0.0f,10.0f);
 			break;
 		case SomeEnemy::MOVE:
 			momentFrame_ = cALIVEFRAME_;
@@ -122,6 +124,21 @@ void SomeEnemy::OnCollision(const Vector3& direction)
 	else if (behavior_ == IDOL)
 	{
 		reqBehavior_ = DESTROY;
+	}
+}
+
+void SomeEnemy::OnEnemy(const Vector3& direction)
+{
+	if (behavior_ == IDOL)
+	{
+		isFactor_ = true;
+		reqBehavior_ = DESTROY;
+	}
+	else if(behavior_ == MOVE)
+	{
+		isFactor_ = true;
+		direct3_ = Normalize(direction);
+		reqBehavior_ = BURST;
 	}
 }
 

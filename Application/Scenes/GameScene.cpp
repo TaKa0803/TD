@@ -30,7 +30,8 @@ GameScene::GameScene()
 
 
 #pragma region UI関係
-	for (int i = 0; i < kNumSprite; ++i) {
+	for (int i = 0; i < kNumSprite; ++i)
+	{
 		int tex = TextureManager::LoadTex(gageSpritePath[i]);
 		gageSprite_[i].reset(Sprite::Create(tex, { 842,117 }, { 842,117 }, { 842,117 }, { 0,0 }, { 0,0.5f }));
 		gageSprite_[i]->SetParent(UIWorld_);
@@ -43,7 +44,7 @@ GameScene::GameScene()
 	UIWorld_.scale_ = UIScale_;
 #pragma endregion
 
-	
+
 }
 
 GameScene::~GameScene()
@@ -134,7 +135,8 @@ void GameScene::Draw()
 
 #pragma region ゲームUI
 	UIWorld_.UpdateMatrix();
-	for (auto& sprite : gageSprite_) {
+	for (auto& sprite : gageSprite_)
+	{
 		sprite->Draw();
 	}
 #pragma endregion
@@ -166,9 +168,10 @@ void GameScene::DebugWindows()
 
 	ImGui::Begin("sprite");
 	ImGui::DragFloat3("all Pos", &UIWorld_.translate_.x);
-	ImGui::DragFloat3("all scale", &UIWorld_.scale_.x,0.01f);
+	ImGui::DragFloat3("all scale", &UIWorld_.scale_.x, 0.01f);
 	int Index = 0;
-	for (auto& sprite : gageSprite_) {
+	for (auto& sprite : gageSprite_)
+	{
 		sprite->DrawDebugImGui(gageSpritePath[Index].c_str());
 		Index++;
 	}
@@ -211,7 +214,7 @@ void GameScene::CheckCollision()
 {
 	auto& enemies = boss_->GetEnemies();
 	auto itrE = enemies.begin();
-	
+
 	/*std::list<SphereCollider*> eCollider;
 	for (; itrE != enemies.end(); ++itrE)
 	{
@@ -256,7 +259,7 @@ void GameScene::CheckCollision()
 	for (; itrE != enemies.end(); ++itrE)
 	{
 		SomeEnemy* some = itrE->get();
-		
+
 		// こわれている時
 		if (itrE->get()->GetIsDestroy())
 		{
@@ -269,7 +272,7 @@ void GameScene::CheckCollision()
 				{
 					break;
 				}
-				boss->OnCollision();
+				boss->OnCollision(some->GetAttackPower());
 
 #pragma region エフェクト出現
 				EffectData newData;
@@ -307,7 +310,7 @@ void GameScene::CheckCollision()
 #pragma endregion
 			}
 		}
-		
+
 		// 弾かれてる間の判定
 		if (itrE->get()->GetIsBurst())
 		{
@@ -316,7 +319,7 @@ void GameScene::CheckCollision()
 			if (some->GetCollider()->IsCollision(*boss->GetCollider(), temp))
 			{
 				some->OnCollision();
-				boss->OnCollision();
+				boss->OnCollision(some->GetAttackPower());
 
 #pragma region エフェクト出現
 				EffectData newData;
@@ -366,6 +369,26 @@ void GameScene::CheckCollision()
 				}
 
 			}
+
+			// 敵同士の衝突
+			auto itrE2 = enemies.begin();
+			for (; itrE2 != enemies.end(); ++itrE2)
+			{
+				SomeEnemy* some2 = itrE2->get();
+				if (!some2->GetCanEnemy())
+				{
+					continue;
+				}
+				if (some->GetCollider()->IsCollision(*some2->GetCollider(), temp))
+				{
+					Vector3 direct = some->GetDirection();
+					direct.x += RandomNumber::Get(-0.6f, 0.6f);
+					direct.z += RandomNumber::Get(-0.6f, 0.6f);
+					some2->OnEnemy(direct);
+				}
+			}
+
+
 		}
 		// 弾かれてない時
 		else
@@ -379,8 +402,6 @@ void GameScene::CheckCollision()
 				{
 					echo->OnCollision();
 					some->OnCollision(echo->GetDirection());
-
-
 
 				}
 			}
