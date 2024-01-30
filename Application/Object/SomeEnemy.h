@@ -9,6 +9,12 @@ class SomeEnemy :public InstancingGameObject
 {
 public:
 
+	//敵のタイプ
+	enum SomeType {
+		Move,
+		Explo
+	};
+
 	enum BEHAVIOR
 	{
 		IDOL,	// なにもしてない
@@ -33,6 +39,9 @@ private:
 	BEHAVIOR behavior_ = IDOL;
 	std::optional<BEHAVIOR> reqBehavior_ = std::nullopt;
 
+	//敵のタイプ
+	SomeType eType_=Move;
+
 	std::unique_ptr<SphereCollider> collider_;
 
 	// 爆発までのフレーム
@@ -43,9 +52,11 @@ private:
 	// 既にボスに当たっているか
 	bool isHit_ = false;
 
+	const WorldTransform* playerW_=nullptr;
+
 public:
 	// 値の初期化
-	void Initialize();
+	void Initialize(const WorldTransform&world);
 
 	void Update();
 
@@ -70,7 +81,11 @@ public:
 	bool GetIsBurst() const { return behavior_ == BURST; }
 	bool GetIsDestroy() const { return behavior_ == DESTROY; }
 
-	void SetBehavior(BEHAVIOR b) { reqBehavior_ = b; }
+	void SetBehavior(SomeType b) { eType_ = b; }
 	void SetPosition(const Vector3& pos) { world_.translate_ = pos; }
 private:
+
+	void MoveEnemyUpdate();
+
+	void ExpEnemyUpdate();
 };

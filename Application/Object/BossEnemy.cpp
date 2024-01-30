@@ -37,7 +37,7 @@ BossEnemy::BossEnemy()
 	srand((unsigned int)time(nullptr));
 }
 
-void BossEnemy::Initialize()
+void BossEnemy::Initialize(const WorldTransform& player)
 {
 	world_.Initialize();
 	world_.scale_ = { 1.0f,1.0f,1.0f };
@@ -69,6 +69,8 @@ void BossEnemy::Initialize()
 	uiWorld_.translate_ = uiPos_;
 	uiWorld_.scale_ = UIScale_;
 #pragma endregion
+	//プレイヤーworld取得
+	playerW_ = &player;
 
 }
 
@@ -260,14 +262,14 @@ void BossEnemy::OnCollision()
 void BossEnemy::SummmonEnemy()
 {
 	SomeEnemy* data = new SomeEnemy;
-	data->Initialize();
+	data->Initialize(*playerW_);
 	if (rand() % 3 == 0)
 	{
-		data->SetBehavior(SomeEnemy::IDOL);
+		data->SetBehavior(SomeEnemy::Move);
 	}
 	else
 	{
-		data->SetBehavior(SomeEnemy::MOVE);
+		data->SetBehavior(SomeEnemy::Explo);
 	}
 	int length = (int)moveLength_;
 	int rnd1 = length / 2 - rand() % length;

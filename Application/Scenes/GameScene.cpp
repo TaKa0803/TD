@@ -61,7 +61,7 @@ void GameScene::Initialize()
 
 	player_->Initialize();
 
-	boss_->Initialize();
+	boss_->Initialize(player_->GetWorld());
 
 	//初期化
 	camera_->Initialize();

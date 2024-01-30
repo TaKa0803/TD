@@ -86,12 +86,14 @@ private:
 
 #pragma endregion
 
+	//プレイヤーのworld情報
+	const WorldTransform* playerW_;
 
 public:
 	BossEnemy();
 
 	// 値の初期化
-	void Initialize();
+	void Initialize(const WorldTransform&player);
 
 	void Update();
 
