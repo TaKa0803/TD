@@ -72,6 +72,18 @@ public:
 	/// <param name="hit"></param>
 	void SetColor(bool hit);
 
+	/// <summary>
+	/// サイズ変更
+	/// </summary>
+	/// <param name="scale"></param>
+	void SetScale(const Vector3& scale) { world_.scale_ = scale; }
+
+	/// <summary>
+	/// サイズ変更（等倍
+	/// </summary>
+	/// <param name="scale"></param>
+	void SetScale(const float scale) { world_.scale_ = { scale,scale,scale }; }
+
 public:
 
 	/// <summary>
