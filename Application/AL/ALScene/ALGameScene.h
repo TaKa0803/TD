@@ -8,12 +8,12 @@
 #include"Input/Input.h"
 #include"Camera/Camera.h"
 
-#include"Player.h"
-#include"Plane.h"
-#include"Enemy.h"
-#include"EnemyPopManager.h"
+#include"AL/Player/ALPlayer.h"
+#include"Object/Plane.h"
+#include"AL/Enemy/ALEnemy.h"
+#include"AL/EnemyPopManager/EnemyPopManager.h"
 #include"Sprite/Sprite.h"
-#include"BrokenBody.h"
+#include"AL/BrokenBody/BrokenBody.h"
 
 class ALGameScene : public IScene {
 
@@ -51,11 +51,11 @@ private:
 	float yrotatenum = 0.02f;
 
 	///以下ゲーム実装
-	std::unique_ptr<Player>player_;
+	std::unique_ptr<ALPlayer>player_;
 
 	std::unique_ptr<Plane>plane_;
 
-	std::list<std::unique_ptr<Enemy>>enemies_;
+	std::list<std::unique_ptr<ALEnemy>>enemies_;
 
 	std::unique_ptr<EnemyPopManager>enemyPopManager_;
 

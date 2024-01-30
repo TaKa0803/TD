@@ -10,7 +10,7 @@ ALGameScene::ALGameScene() {
 	input_ = Input::GetInstance();
 
 	camera_ = std::make_unique<Camera>();
-	player_ = std::make_unique<Player>();
+	player_ = std::make_unique<ALPlayer>();
 
 	plane_ = std::make_unique<Plane>();
 
@@ -27,42 +27,42 @@ ALGameScene::ALGameScene() {
 		"LFoot",
 		"RFoot"
 	};
-	int texture = TextureManager::LoadTex("resources/Object/enemy.png");
+	int texture = TextureManager::LoadTex("resources/AppResource/Object/enemy.png");
 	for (auto& tag : eModelparts) {
 		IMM->SetTexture(tag, texture);
 	}
 
 
-	texture = TextureManager::LoadTex("resources/UI/skill.png");
+	texture = TextureManager::LoadTex("resources/AppResource/AL/skill.png");
 	skillSp_.reset(Sprite::Create(texture, { 90,90 }, { 90,90 }, { 90,90 }, { 1000,600 }));
 
 
 
-	texture = TextureManager::LoadTex("resources/UI/B.png");
+	texture = TextureManager::LoadTex("resources/AppResource/AL/B.png");
 	BButton_.reset(Sprite::Create(texture, { 180,90 }, { 90,90 }, { 64,64 }, { 1045, 650 }));
 
 
-	texture = TextureManager::LoadTex("resources/UI/punch.png");
+	texture = TextureManager::LoadTex("resources/AppResource/AL/punch.png");
 	punchSp_.reset(Sprite::Create(texture, { 180,90 }, { 90,90 }, { 90,90 }, { 1070,650 }));
 
-	texture = TextureManager::LoadTex("resources/UI/kick.png");
+	texture = TextureManager::LoadTex("resources/AppResource/AL/kick.png");
 	kickSp_.reset(Sprite::Create(texture, { 180,90 }, { 90,90 }, { 90,90 }, { 1070,650 }));
 
 
-	texture = TextureManager::LoadTex("resources/UI/ult.png");
+	texture = TextureManager::LoadTex("resources/AppResource/AL/ult.png");
 	ultSp_.reset(Sprite::Create(texture, { 180,90 }, { 90,90 }, { 90,90 }, { 1070,650 }));
 
 
-	texture = TextureManager::LoadTex("resources/UI/number64x90.png");
+	texture = TextureManager::LoadTex("resources/AppResource/AL/number64x90.png");
 	num1_.reset(Sprite::Create(texture, { 640,90 }, { 64,90 }, { 90,90 }, { 680,90 }));
 	num10_.reset(Sprite::Create(texture, { 640,90 }, { 64,90 }, { 90,90 }, { 610,90 }));
 	num100_.reset(Sprite::Create(texture, { 640,90 }, { 64,90 }, { 90,90 }, { 540,90 }));
 
 
-	texture = TextureManager::LoadTex("resources/UI/black.png");
+	texture = TextureManager::LoadTex("resources/AppResource/AL/black.png");
 	backScreen_.reset(Sprite::Create(texture, { 64,64 }, { 64,64 }, { 1280,720 }));
 
-	texture = TextureManager::LoadTex("resources/UI/result.png");
+	texture = TextureManager::LoadTex("resources/AppResource/AL/result.png");
 	resultText_.reset(Sprite::Create(texture, { 320,90 }, { 320,90 }, { 830,290 }));
 
 
@@ -154,7 +154,7 @@ void ALGameScene::Update() {
 		enemyPopManager_->Update();
 
 		//敵の生成処理
-		if (std::unique_ptr<Enemy>newEnemy = enemyPopManager_->PopEnemy()) {
+		if (std::unique_ptr<ALEnemy>newEnemy = enemyPopManager_->PopEnemy()) {
 			enemies_.push_back(std::move(newEnemy));
 		}
 
@@ -258,7 +258,7 @@ void ALGameScene::Collision() {
 	if (player_->IsPlayerATK()) {
 		for (auto& enemy : enemies_) {
 			if (!enemy->GetDead()) {
-				enemy->Collision(*player_->GetCollider());
+				enemy->Collision(player_->GetCollider());
 			}
 		}
 	}

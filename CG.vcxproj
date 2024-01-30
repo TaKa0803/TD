@@ -108,6 +108,11 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\AL\BrokenBody\BrokenBody.cpp" />
+    <ClCompile Include="Application\AL\EnemyPopManager\EnemyPopManager.cpp" />
+    <ClCompile Include="Application\AL\Enemy\ALEnemy.cpp" />
+    <ClCompile Include="Application\AL\items.cpp" />
+    <ClCompile Include="Application\AL\Player\ALPlayer.cpp" />
     <ClCompile Include="Application\Effect\EffectExplosion.cpp" />
     <ClCompile Include="Application\Object\BossEnemy.cpp" />
     <ClCompile Include="Application\Object\EchoBlast.cpp" />
@@ -118,8 +123,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Stage.cpp" />
     <ClCompile Include="Application\Object\StageWall.cpp" />
     <ClCompile Include="Application\SceneManager\SceneManager.cpp" />
-    <ClCompile Include="Application\Scenes\ALScene\ALGameScene.cpp" />
-    <ClCompile Include="Application\Scenes\ALScene\ALTitleScene.cpp" />
+    <ClCompile Include="Application\AL\ALScene\ALGameScene.cpp" />
+    <ClCompile Include="Application\AL\ALScene\ALTitleScene.cpp" />
     <ClCompile Include="Application\Scenes\DebugScene.cpp" />
     <ClCompile Include="Application\Scenes\GameScene.cpp" />
     <ClCompile Include="Application\Scenes\IScene.cpp" />
@@ -203,6 +208,11 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\AL\BrokenBody\BrokenBody.h" />
+    <ClInclude Include="Application\AL\EnemyPopManager\EnemyPopManager.h" />
+    <ClInclude Include="Application\AL\Enemy\ALEnemy.h" />
+    <ClInclude Include="Application\AL\items.h" />
+    <ClInclude Include="Application\AL\Player\ALPlayer.h" />
     <ClInclude Include="Application\Effect\EffectExplosion.h" />
     <ClInclude Include="Application\Object\BossEnemy.h" />
     <ClInclude Include="Application\Object\EchoBlast.h" />
@@ -214,8 +224,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Stage.h" />
     <ClInclude Include="Application\Object\StageWall.h" />
     <ClInclude Include="Application\SceneManager\SceneManager.h" />
-    <ClInclude Include="Application\Scenes\ALScene\ALGameScene.h" />
-    <ClInclude Include="Application\Scenes\ALScene\ALTitleScene.h" />
+    <ClInclude Include="Application\AL\ALScene\ALGameScene.h" />
+    <ClInclude Include="Application\AL\ALScene\ALTitleScene.h" />
     <ClInclude Include="Application\Scenes\DebugScene.h" />
     <ClInclude Include="Application\Scenes\GameScene.h" />
     <ClInclude Include="Application\Scenes\MT4Scene.h" />
@@ -299,6 +309,21 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\ALwinter\resources\Title\Press.png" />
+    <Image Include="..\ALwinter\resources\Title\Title.png" />
+    <Image Include="resources\AppResource\AL\B.png" />
+    <Image Include="resources\AppResource\AL\black.png" />
+    <Image Include="resources\AppResource\AL\kick.png" />
+    <Image Include="resources\AppResource\AL\number64x90.png" />
+    <Image Include="resources\AppResource\AL\Press.png" />
+    <Image Include="resources\AppResource\AL\punch.png" />
+    <Image Include="resources\AppResource\AL\result.png" />
+    <Image Include="resources\AppResource\AL\skill.png" />
+    <Image Include="resources\AppResource\AL\Title.png" />
+    <Image Include="resources\AppResource\AL\ult.png" />
+    <Image Include="resources\AppResource\AL\Z.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

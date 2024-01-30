@@ -74,8 +74,13 @@
     <ClCompile Include="Application\Scenes\FailScene\FailScene.cpp" />
     <ClCompile Include="Application\Object\Skydome\Skydome.cpp" />
     <ClCompile Include="Engine\base\DXC\DXCManager.cpp" />
-    <ClCompile Include="Application\Scenes\ALScene\ALGameScene.cpp" />
-    <ClCompile Include="Application\Scenes\ALScene\ALTitleScene.cpp" />
+    <ClCompile Include="Application\AL\ALScene\ALGameScene.cpp" />
+    <ClCompile Include="Application\AL\ALScene\ALTitleScene.cpp" />
+    <ClCompile Include="Application\AL\Player\ALPlayer.cpp" />
+    <ClCompile Include="Application\AL\items.cpp" />
+    <ClCompile Include="Application\AL\Enemy\ALEnemy.cpp" />
+    <ClCompile Include="Application\AL\BrokenBody\BrokenBody.cpp" />
+    <ClCompile Include="Application\AL\EnemyPopManager\EnemyPopManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Object\EchoBlast.h" />
@@ -145,8 +150,13 @@
     <ClInclude Include="Application\Scenes\FailScene\FailScene.h" />
     <ClInclude Include="Application\Object\Skydome\Skydome.h" />
     <ClInclude Include="Engine\base\DXC\DXCManager.h" />
-    <ClInclude Include="Application\Scenes\ALScene\ALGameScene.h" />
-    <ClInclude Include="Application\Scenes\ALScene\ALTitleScene.h" />
+    <ClInclude Include="Application\AL\ALScene\ALGameScene.h" />
+    <ClInclude Include="Application\AL\ALScene\ALTitleScene.h" />
+    <ClInclude Include="Application\AL\Player\ALPlayer.h" />
+    <ClInclude Include="Application\AL\items.h" />
+    <ClInclude Include="Application\AL\Enemy\ALEnemy.h" />
+    <ClInclude Include="Application\AL\BrokenBody\BrokenBody.h" />
+    <ClInclude Include="Application\AL\EnemyPopManager\EnemyPopManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\enemyPopData.json" />
@@ -160,5 +170,20 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\Imgui\LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\ALwinter\resources\Title\Press.png" />
+    <Image Include="..\ALwinter\resources\Title\Title.png" />
+    <Image Include="resources\AppResource\AL\Press.png" />
+    <Image Include="resources\AppResource\AL\Title.png" />
+    <Image Include="resources\AppResource\AL\B.png" />
+    <Image Include="resources\AppResource\AL\black.png" />
+    <Image Include="resources\AppResource\AL\kick.png" />
+    <Image Include="resources\AppResource\AL\number64x90.png" />
+    <Image Include="resources\AppResource\AL\punch.png" />
+    <Image Include="resources\AppResource\AL\result.png" />
+    <Image Include="resources\AppResource\AL\skill.png" />
+    <Image Include="resources\AppResource\AL\ult.png" />
+    <Image Include="resources\AppResource\AL\Z.png" />
   </ItemGroup>
 </Project>
