@@ -36,7 +36,7 @@ void SomeEnemy::Initialize(const WorldTransform& world)
 void SomeEnemy::Update()
 {
 	//死んでいたら早期リターン
-	if (!isActive_){
+	if (!isActive_) {
 		return;
 	}
 
@@ -96,19 +96,19 @@ void SomeEnemy::OnCollision(const Vector3& direction)
 	{
 		direct3_ = direction;
 	}
-	
+
 	//
-	if (eType_==Move){
+	if (eType_ == Move) {
 		direct3_ = direction;
 		reqBehavior_ = BURST;
 	}//
-	else if (eType_==Explo)
+	else if (eType_ == Explo)
 	{
 		reqBehavior_ = DESTROY;
 	}
 }
 
-void SomeEnemy::MoveEnemyUpdate(){
+void SomeEnemy::MoveEnemyUpdate() {
 #pragma region 動く敵の処理
 	if (reqBehavior_)
 	{
@@ -116,7 +116,7 @@ void SomeEnemy::MoveEnemyUpdate(){
 		switch (behavior_)
 		{
 		case SomeEnemy::IDOL:
-			
+
 			break;
 		case SomeEnemy::MOVE:
 			//momentFrame_ = cALIVEFRAME_;
@@ -261,10 +261,10 @@ void SomeEnemy::MoveToPlayer()
 	Vector3 moveVelo{};
 	moveVelo = playerW_->GetMatWorldTranslate();
 
-	Vector3 leng =  moveVelo-world_.GetMatWorldTranslate();
+	Vector3 leng = moveVelo - world_.GetMatWorldTranslate();
 
 	if (Length(leng) >= nearPRadius_) {
-		
+
 		//ノーマライズ
 		leng.SetNormalize();
 		//移動領分書ける
@@ -279,7 +279,7 @@ void SomeEnemy::MoveToPlayer()
 
 		//muki
 		if (leng != Vector3(0, 0, 0)) {
-			world_.rotate_.y = GetYRotate({leng.x,leng.z });
+			world_.rotate_.y = GetYRotate({ leng.x,leng.z });
 		}
 	}
 	else {
@@ -294,42 +294,54 @@ void SomeEnemy::ATKToPlayerUpdate()
 	//カウント最大数で変化
 	if (atkCount_[ATKStateCount_].count++ >= atkCount_[ATKStateCount_].maxCount) {
 
-		//上限ではなければ処理
-		if (ATKStateCount_ != back) {
-			ATKStateCount_++;
-			//先のデータ初期化
-			atkCount_[ATKStateCount_].count = 0;
-			atkCount_[ATKStateCount_].initialize = false;
+		//攻撃
+		if (ATKStateCount_ == wait) {
+			//プレイヤーの方向に移動
+			Vector3 moveVelo{};
+			moveVelo = playerW_->GetMatWorldTranslate();
 
-			//過去データ初期化
-			atkCount_[ATKStateCount_ - 1].initialize = false;
-			atkCount_[ATKStateCount_ - 1].count = 0;
+			Vector3 leng = moveVelo - world_.GetMatWorldTranslate();
 
-		}
-		else {
 
-			//待機状態に戻して初期化
-			reqBehavior_ = IDOL;
-
-			
-
+			//muki
+			if (leng != Vector3(0, 0, 0)) {
+				world_.rotate_.y = GetYRotate({ leng.x,leng.z });
+			}
 		}
 
-	}
-}
+			//上限ではなければ処理
+			if (ATKStateCount_ != back) {
+				ATKStateCount_++;
+				//先のデータ初期化
+				atkCount_[ATKStateCount_].count = 0;
+				atkCount_[ATKStateCount_].initialize = false;
 
-void SomeEnemy::OnEnemy(const Vector3& direction)
-{
-	if (eType_ == Explo)
-	{
-		isFactor_ = true;
-		reqBehavior_ = DESTROY;
+				//過去データ初期化
+				atkCount_[ATKStateCount_ - 1].initialize = false;
+				atkCount_[ATKStateCount_ - 1].count = 0;
+
+			}
+			else {
+
+				//待機状態に戻して初期化
+				reqBehavior_ = IDOL;
+			}
+
+		}
 	}
-	else if(eType_==Move)
+
+	void SomeEnemy::OnEnemy(const Vector3 & direction)
 	{
-		isFactor_ = true;
-		direct3_ = Normalize(direction);
-		reqBehavior_ = BURST;
+		if (eType_ == Explo)
+		{
+			isFactor_ = true;
+			reqBehavior_ = DESTROY;
+		}
+		else if (eType_ == Move)
+		{
+			isFactor_ = true;
+			direct3_ = Normalize(direction);
+			reqBehavior_ = BURST;
+		}
 	}
-}
 
