@@ -95,11 +95,17 @@ void SomeEnemy::OnCollision(const Vector3& direction)
 	if (behavior_ == BURST)
 	{
 		direct3_ = direction;
+		direct3_.y = 0;
+		direct3_.SetNormalize();
+		direct3_ *= burstSpd_;
 	}
 
 	//
 	if (eType_ == Move) {
 		direct3_ = direction;
+		direct3_.y = 0;
+		direct3_.SetNormalize();
+		direct3_ *= burstSpd_;
 		reqBehavior_ = BURST;
 	}//
 	else if (eType_ == Explo)

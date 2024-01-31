@@ -289,6 +289,12 @@ void GameScene::CheckCollision()
 		// 弾かれてる間の判定
 		if (itrE->get()->GetIsBurst())
 		{
+
+			//プレイヤーと飛ばされている敵の判定
+			if (some->GetCollider()->IsCollision(*player_->GetCollider(), temp)) {
+				some->OnCollision(temp);
+			}
+
 			BossEnemy* boss = boss_.get();
 			// ボスとの接触
 			if (some->GetCollider()->IsCollision(*boss->GetCollider(), temp))
@@ -313,7 +319,6 @@ void GameScene::CheckCollision()
 					wall->OnCollision();
 					some->OnCollision(wall->GetDirection());
 				}
-
 			}
 
 			// 敵同士の衝突
