@@ -21,7 +21,7 @@ public:
 		MOVE,	// 移動
 		BURST,	// 弾かれ中
 		DESTROY,// 爆発
-
+		ATK,	// 攻撃
 		_COUNT,	// カウント用
 	};
 
@@ -60,7 +60,40 @@ private:
 	// 既にボスに当たっているか
 	bool isHit_ = false;
 
-	const WorldTransform* playerW_=nullptr;
+#pragma region 移動関係
+	//プレイヤーのworldデータ
+	const WorldTransform* playerW_ = nullptr;
+
+	//移動速度
+	float spd_ = 0.1f;
+
+	//プレイヤーとの最短距離
+	float nearPRadius_ = 2.0f;
+#pragma endregion
+
+#pragma region 攻撃関係
+	//動きの各状態
+	enum ATKState {
+		wait,	//構え
+		atk,	//攻撃
+		stop,	//硬直
+		back,	//戻る
+		kCountOfATKState
+	};
+	
+	//攻撃の各動きのカウント
+	struct ATKCount
+	{
+		bool initialize=false;
+		int maxCount = 0;
+		int count = 0;
+	};	
+	ATKCount atkCount_[kCountOfATKState];
+
+	//攻撃状態カウント
+	int ATKStateCount_ = 0;
+#pragma endregion
+
 
 public:
 	// 値の初期化
@@ -101,4 +134,12 @@ private:
 	void MoveEnemyUpdate();
 
 	void ExpEnemyUpdate();
+
+	void IDOLUpdate();
+
+	//移動処理更新
+	void MoveToPlayer();
+
+	//攻撃処理更新
+	void ATKToPlayerUpdate();
 };

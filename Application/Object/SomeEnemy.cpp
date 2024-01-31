@@ -24,31 +24,45 @@ void SomeEnemy::Initialize(const WorldTransform& world)
 	reqBehavior_ = IDOL;
 
 	momentFrame_ = cALIVEFRAME_ + (int)RandomNumber::Get(0.0f, 10.0f);
+
+	//各データ待ち時間
+	atkCount_[wait].maxCount = 60;
+	atkCount_[atk].maxCount = 15;
+	atkCount_[stop].maxCount = 60;
+	atkCount_[back].maxCount = 60;
+
 }
 
 void SomeEnemy::Update()
 {
-	//����ł�����I���
+	//死んでいたら早期リターン
 	if (!isActive_){
 		return;
 	}
 
-	//�e�^�C�v�ɂ��s������
+	//共通処理
+	if (behavior_ != BURST) {
+		momentFrame_--;
+		if (momentFrame_ <= 0)
+		{
+			isActive_ = false;
+		}
+	}
+
+	//雑魚敵のタイプによる処理
 	switch (eType_)
 	{
 	case SomeEnemy::Move:
+		//動く敵の処理
 		MoveEnemyUpdate();
 		break;
 	case SomeEnemy::Explo:
+		//当たったら即爆するやつ
 		ExpEnemyUpdate();
 		break;
 	default:
 		break;
 	}
-
-	
-
-	
 
 	world_.UpdateMatrix();
 	collider_->SetTranslate(world_.translate_);
@@ -83,21 +97,19 @@ void SomeEnemy::OnCollision(const Vector3& direction)
 		direct3_ = direction;
 	}
 	
-	//�����^�C�v�̎�
-	if (eType_==Move)
-	{
+	//
+	if (eType_==Move){
 		direct3_ = direction;
 		reqBehavior_ = BURST;
-	}//�����^�C�v�̎�
+	}//
 	else if (eType_==Explo)
 	{
 		reqBehavior_ = DESTROY;
 	}
 }
 
-void SomeEnemy::MoveEnemyUpdate()
-{
-#pragma region �ړ�����G
+void SomeEnemy::MoveEnemyUpdate(){
+#pragma region 動く敵の処理
 	if (reqBehavior_)
 	{
 		behavior_ = reqBehavior_.value();
@@ -107,7 +119,7 @@ void SomeEnemy::MoveEnemyUpdate()
 			
 			break;
 		case SomeEnemy::MOVE:
-			momentFrame_ = cALIVEFRAME_;
+			//momentFrame_ = cALIVEFRAME_;
 			break;
 		case SomeEnemy::BURST:
 			momentFrame_ = cBURSTFRAME_;
@@ -115,6 +127,15 @@ void SomeEnemy::MoveEnemyUpdate()
 		case SomeEnemy::DESTROY:
 			momentFrame_ = 60;
 			break;
+
+		case SomeEnemy::ATK:
+			//全部初期化
+			for (auto& cont : atkCount_) {
+				cont.count = 0;
+				cont.initialize = false;
+			}
+			break;
+
 		default:
 			break;
 		}
@@ -124,18 +145,17 @@ void SomeEnemy::MoveEnemyUpdate()
 	switch (behavior_)
 	{
 	case SomeEnemy::IDOL:
-		momentFrame_--;
-		if (momentFrame_ <= 0)
-		{
-			isActive_ = false;
-		}
+
+		IDOLUpdate();
+
+
+
 		break;
 	case SomeEnemy::MOVE:
-		momentFrame_--;
-		if (momentFrame_ <= 0)
-		{
-			isActive_ = false;
-		}
+
+		//移動処理
+		MoveToPlayer();
+
 		break;
 	case SomeEnemy::BURST:
 		momentFrame_--;
@@ -146,17 +166,16 @@ void SomeEnemy::MoveEnemyUpdate()
 		world_.translate_ += direct3_ * 0.5f;
 		break;
 	case SomeEnemy::DESTROY:
-		momentFrame_--;
-		if (momentFrame_ <= 0)
-		{
-			isActive_ = false;
-		}
+
 		collider_->SetRadius(1.5f + (1.0f - momentFrame_ / 60.0f));
 		break;
-	default:
+
+	case SomeEnemy::ATK:
+
+		ATKToPlayerUpdate();
+
 		break;
 	}
-
 
 #pragma endregion
 }
@@ -187,13 +206,7 @@ void SomeEnemy::ExpEnemyUpdate()
 		reqBehavior_ = std::nullopt;
 	}
 
-	if (behavior_ != BURST) {
-		momentFrame_--;
-		if (momentFrame_ <= 0)
-		{
-			isActive_ = false;
-		}
-	}
+
 
 	switch (behavior_)
 	{
@@ -220,6 +233,89 @@ void SomeEnemy::ExpEnemyUpdate()
 
 #pragma endregion
 
+}
+
+void SomeEnemy::IDOLUpdate()
+{
+	//プレイヤーと離れていれば移動状態へ
+	Vector3 moveVelo{};
+	moveVelo = playerW_->GetMatWorldTranslate();
+
+	Vector3 leng = world_.GetMatWorldTranslate() - moveVelo;
+	if (Length(leng) >= nearPRadius_) {
+		reqBehavior_ = MOVE;
+	}
+	else {
+		//距離内なら攻撃状態へ
+		reqBehavior_ = ATK;
+	}
+
+
+
+}
+
+void SomeEnemy::MoveToPlayer()
+{
+#pragma region プレイヤーに寄る処理
+	//プレイヤーの方向に移動
+	Vector3 moveVelo{};
+	moveVelo = playerW_->GetMatWorldTranslate();
+
+	Vector3 leng =  moveVelo-world_.GetMatWorldTranslate();
+
+	if (Length(leng) >= nearPRadius_) {
+		
+		//ノーマライズ
+		leng.SetNormalize();
+		//移動領分書ける
+		leng *= spd_;
+		//割る
+
+		leng.y = 0;
+
+		//速度に追加
+		world_.translate_ += leng;
+
+
+		//muki
+		if (leng != Vector3(0, 0, 0)) {
+			world_.rotate_.y = GetYRotate({leng.x,leng.z });
+		}
+	}
+	else {
+		reqBehavior_ = IDOL;
+	}
+#pragma endregion
+
+}
+
+void SomeEnemy::ATKToPlayerUpdate()
+{
+	//カウント最大数で変化
+	if (atkCount_[ATKStateCount_].count++ >= atkCount_[ATKStateCount_].maxCount) {
+
+		//上限ではなければ処理
+		if (ATKStateCount_ != back) {
+			ATKStateCount_++;
+			//先のデータ初期化
+			atkCount_[ATKStateCount_].count = 0;
+			atkCount_[ATKStateCount_].initialize = false;
+
+			//過去データ初期化
+			atkCount_[ATKStateCount_ - 1].initialize = false;
+			atkCount_[ATKStateCount_ - 1].count = 0;
+
+		}
+		else {
+
+			//待機状態に戻して初期化
+			reqBehavior_ = IDOL;
+
+			
+
+		}
+
+	}
 }
 
 void SomeEnemy::OnEnemy(const Vector3& direction)

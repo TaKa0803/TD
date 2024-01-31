@@ -134,9 +134,7 @@ int TextureManager::LoadTex(const std::string& filePath)
 		//呼ばれている場合
 
 		return TextureManager::GetInstance()->GetDataFromPath(filePath);
-
 	}
-
 }
 
 
