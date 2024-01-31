@@ -21,6 +21,9 @@ public:
 
 	void Collision(SphereCollider* collider);
 
+	//osimodosi
+	void OshiDashi(SphereCollider* collider);
+
 	/// <summary>
 	/// 
 	/// </summary>
@@ -29,6 +32,7 @@ public:
 	//死んだか否か
 	bool GetDead() { return isDead_; }
 
+	SphereCollider* GetCollider() { return collider_.get(); }
 private:
 	//プレイヤーのワールド
 	const WorldTransform* playerWorld_;
@@ -122,4 +126,8 @@ private:
 	int HP_ = 1;
 
 	float tHeight = 0;
+
+	//破壊音
+	int breakSound_;
+
 };

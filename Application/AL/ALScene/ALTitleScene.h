@@ -49,4 +49,13 @@ private:
 
 	float sceneXhangeCount_ = 0;
 
+
+	//点滅
+	const int maxTenmetu = 30;
+	int tenmetuCount = 0;
+	bool isDrawB_ = true;
+
+
+	int titleSound_;
+
 };

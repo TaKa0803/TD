@@ -63,12 +63,13 @@ bool SphereCollider::IsCollision(const SphereCollider& sphere, Vector3& backVec)
 	Vector3 myP = world_.GetMatWorldTranslate();
 
 	//各半径取得
-	float wide = sphere.radius_;
-	float myW = radius_;
+	float wide = GetAllScaleX(sphere.GetWorld());
+	float myW = GetAllScaleX(world_);
 
 	//距離計算
-	Vector3 sub = myP - pos;
+	Vector3 sub = myP-pos;
 
+	//nagasa
 	Vector3 leng = sub;
 	//ヒットチェック
 	if (Length(sub) < wide + myW) {
@@ -77,7 +78,7 @@ bool SphereCollider::IsCollision(const SphereCollider& sphere, Vector3& backVec)
 		sub.SetNormalize();
 
 		//基コライダーから自分への向きベクトル作成
-		backVec = sub * (wide, myW);
+		sub *= (wide+ myW);
 
 		//押し出し量求める
 		backVec = sub - leng;

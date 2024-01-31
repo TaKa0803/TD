@@ -46,7 +46,7 @@ public:
 	/// 音の再生
 	/// </summary>
 	/// <param name="dataNum">音声データへのnum</param>
-	static void PlaySoundData(const int dataNum);
+	static void PlaySoundData(const int dataNum,float volume=1.0f);
 
 	/// <summary>
 	/// 音のストップ
@@ -73,7 +73,7 @@ private:
 	int LoadSoundNumFromTag(const std::string tag);
 
 	//再生
-	void Play(int num);
+	void Play(int num, float volume);
 
 	void Stop(int num);
 private:

@@ -219,7 +219,7 @@ void AudioManager::StopAllSounds()
 	 return tagDatas_[tag];
  }
 
- void AudioManager::Play(int num)
+ void AudioManager::Play(int num,float volume)
  {
 	 //要素番号のタグからデータ取得
 	 SoundData data = soundDatas_[num];
@@ -228,6 +228,9 @@ void AudioManager::StopAllSounds()
 	 HRESULT hr = xAudio2->CreateSourceVoice(&pSourceVoice, &data.wfex);
 	 //作成失敗
 	 assert(SUCCEEDED(hr));
+
+	 //音量設定
+	 pSourceVoice->SetVolume(volume);
 
 	 XAUDIO2_BUFFER buf{};
 	 buf.pAudioData = data.pBuffer;
@@ -256,12 +259,11 @@ void AudioManager::StopAllSounds()
 
 
 
-void AudioManager::PlaySoundData(const int dataNum)
+void AudioManager::PlaySoundData(const int dataNum, float volume)
 {
-
 	AudioManager* AM = AudioManager::GetInstance();
 
-	AM->Play(dataNum);
+	AM->Play(dataNum,volume);
 
 }
 

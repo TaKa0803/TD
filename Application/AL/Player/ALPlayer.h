@@ -228,5 +228,10 @@ private:
 
 #pragma endregion
 
+	int punchSound_;
+
+	int kickSound_;
+
+	int drilSound_;
 
 };

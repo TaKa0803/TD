@@ -4,6 +4,7 @@
 
 #include"InstancingModelManager/InstancingModelManager.h"
 #include"TextureManager/TextureManager.h"
+#include"AudioManager/AudioManager.h"
 #include"Scenes/Scenes.h"
 
 ALGameScene::ALGameScene() {
@@ -71,6 +72,13 @@ ALGameScene::ALGameScene() {
 	texture = TextureManager::LoadTex(white);
 	sceneC_.reset(Sprite::Create(texture, { 1,1 }, { 1,1 }, { 1280,720 }));
 	sceneC_->SetMaterialDataColor({ 0,0,0,1 });
+
+	bgmGame_ = AudioManager::LoadSoundNum("game");
+
+	bgmClear_ = AudioManager::LoadSoundNum("clear");
+
+
+
 }
 
 ALGameScene::~ALGameScene() {
@@ -121,6 +129,10 @@ void ALGameScene::Initialize() {
 	isSceneChange_ = false;
 	preSceneChange_ = false;
 	sceneC_->SetColorAlpha(1);
+
+	AudioManager::GetInstance()->StopAllSounds();
+	AudioManager::PlaySoundData(bgmGame_, 0.08f);
+
 }
 
 
@@ -177,7 +189,6 @@ void ALGameScene::Update() {
 
 		brokenBody_->Update();
 
-
 #pragma endregion
 
 		break;
@@ -188,17 +199,12 @@ void ALGameScene::Update() {
 		num100_->DrawDebugImGui("num100");
 		resultText_->DrawDebugImGui("taosita");
 
-
 		break;
 	default:
 		break;
 	}
 
-
 	SceneChange();
-
-
-
 }
 
 void ALGameScene::Draw() {
@@ -263,13 +269,26 @@ void ALGameScene::DebugWindows() {
 void ALGameScene::Collision() {
 
 
-	if (player_->IsPlayerATK()) {
+	
+	int e1Num = 0;
 		for (auto& enemy : enemies_) {
 			if (!enemy->GetDead()) {
-				enemy->Collision(player_->GetCollider());
+				if (player_->IsPlayerATK()) {
+					enemy->Collision(player_->GetCollider());
+				}
+				enemy->OshiDashi(player_->GetCollider());
+
+				int e2Num = 0;
+				for (auto& enemy2 : enemies_) {
+					if (!enemy2->GetDead()&&e1Num!=e2Num) {
+						enemy->OshiDashi(enemy2->GetCollider());
+					}
+					e2Num++;
+				}
 			}
+			e1Num++;
 		}
-	}
+	
 }
 
 void ALGameScene::SceneChange() {
@@ -278,6 +297,8 @@ void ALGameScene::SceneChange() {
 	case ALGameScene::Game:
 		if (limitMinute-- <= 0) {
 			scene_ = Clear;
+			AudioManager::GetInstance()->StopAllSounds();
+			AudioManager::PlaySoundData(bgmClear_, 0.08f);
 		}
 
 		
@@ -291,8 +312,10 @@ void ALGameScene::SceneChange() {
 
 		break;
 	case ALGameScene::Clear:
-		if (input_->TriggerKey(DIK_SPACE) || input_->IsTriggerButton(kButtonA)) {
-			isSceneChange_ = true;
+		if (serchComplete_) {
+			if (input_->TriggerKey(DIK_SPACE) || input_->IsTriggerButton(kButtonB)) {
+				isSceneChange_ = true;
+			}
 		}
 		break;
 	default:

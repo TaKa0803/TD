@@ -1,5 +1,6 @@
 #include"ALPlayer.h"
 
+#include"AudioManager/AudioManager.h"
 #include"TextureManager/TextureManager.h"
 #include<imgui.h>
 #include<json.hpp>
@@ -173,6 +174,10 @@ ALPlayer::ALPlayer() {
 	startATKData_.parts = ATKData1_;
 	startATKData_.ATKDerivation[0].parts = ATKData2_;
 	startATKData_.ATKDerivation[0].ATKDerivation[0].parts = ATKData3_;
+
+	punchSound_ = AudioManager::LoadSoundNum("com1");
+	kickSound_ = AudioManager::LoadSoundNum("com2");
+	drilSound_ = AudioManager::LoadSoundNum("com3");
 }
 
 ALPlayer::~ALPlayer() {
@@ -494,6 +499,16 @@ void ALPlayer::UpdateATK() {
 			for (int partsNum = 0; partsNum < modelNum_; ++partsNum) {
 				nowRoop_.stPartsWorlds[partsNum] = mWorlds[partsNum];
 				nowRoop_.edPartsWorlds[partsNum] = ATKData_.parts.edPartsWorlds[partsNum];
+
+				if (ATKConboCount == 1) {
+					AudioManager::PlaySoundData(punchSound_,0.05f);
+				}
+				else if (ATKConboCount == 2) {
+					AudioManager::PlaySoundData(kickSound_,0.05f);
+				}
+				else if (ATKConboCount == 3) {
+					AudioManager::PlaySoundData(drilSound_,0.05f);
+				}
 			}
 		}
 		else {
@@ -563,6 +578,16 @@ void ALPlayer::UpdateATK() {
 		//条件を満たしたら次の状態へ
 		if (updateATKData_.count >= ATKData_.RigorTime) {
 #pragma region 条件によるシーン転換
+
+			if (ATKConboCount == 1) {
+				AudioManager::StopSound(punchSound_);
+			}
+			else if (ATKConboCount == 2) {
+				AudioManager::StopSound(kickSound_);
+			}
+			else if (ATKConboCount == 3) {
+				AudioManager::StopSound(drilSound_);
+			}
 
 
 			//攻撃入力フラグON

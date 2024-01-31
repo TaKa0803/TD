@@ -1,5 +1,6 @@
 #include"ALTitleScene.h"
 #include"TextureManager/TextureManager.h"
+#include"AudioManager/AudioManager.h"
 #include"Scenes/Scenes.h"
 
 #include<imgui.h>
@@ -22,9 +23,9 @@ ALTitleScene::ALTitleScene() {
 	texture = TextureManager::LoadTex(white);
 	sceneC_.reset(Sprite::Create(texture, { 1,1 }, { 1,1 }, { 1280,720 }));
 	sceneC_->SetMaterialDataColor({ 0,0,0,1 });
+
+	titleSound_ = AudioManager::LoadSoundNum("title");
 }
-
-
 
 ALTitleScene::~ALTitleScene() {}
 
@@ -34,12 +35,35 @@ void ALTitleScene::Initialize() {
 	preSceneChange_ = false;
 	sceneC_->SetColorAlpha(1);
 
+	tenmetuCount = 0;
+	isDrawB_ = true;
+
+
+	AudioManager::GetInstance()->StopAllSounds();
+	AudioManager::PlaySoundData(titleSound_,0.08f);
 }
 
 void ALTitleScene::Update() {
 
 
 	Debug();
+
+	if (isDrawB_) {
+		
+		if (tenmetuCount++ >= maxTenmetu) {
+			isDrawB_ = false;
+			tenmetuCount = 0;
+			BButtonSp_->SetColorAlpha(0);
+		}
+
+	}
+	else {
+		if (tenmetuCount++ >= maxTenmetu) {
+			isDrawB_ = true;
+			tenmetuCount = 0;
+			BButtonSp_->SetColorAlpha(1);
+		}
+	}
 
 	SceneChange();
 	

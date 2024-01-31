@@ -134,4 +134,10 @@ private:
 	const float maxSceneChangeCount_ = 60;
 
 	float sceneXhangeCount_ = 0;
+
+	int bgmGame_;
+
+	int bgmClear_;
+
+	
 };

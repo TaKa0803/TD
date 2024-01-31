@@ -11,7 +11,11 @@ DebugScene::DebugScene()
 
 
 	sphere_ = std::make_unique<SphereCollider>();
+	sphere2_ = std::make_unique<SphereCollider>();
 	plane_ = std::make_unique<PlaneCollider>();
+
+	obb_ = std::make_unique<OBBCollider>();
+	obb2_ = std::make_unique<OBBCollider>();
 
 	//エフェクト
 	EffectExp_ = EffectExplosion::GetInstance();
@@ -29,19 +33,16 @@ void DebugScene::Initialize()
 
 	sWorld_.Initialize();
 
-	sphere_ = std::make_unique<SphereCollider>();
 	sphere_->Initialize("sphere",sWorld_);
+	sphere2_->Initialize("sphere", sWorld2_);
 
-	pWorld_.Initialize();
-	plane_ = std::make_unique<PlaneCollider>();
+	pWorld_.Initialize();	
 	plane_->Initialize("plane", pWorld_);
 
 	oWorld_.Initialize();
-	obb_ = std::make_unique<OBBCollider>();
 	obb_->Initialize("plane", oWorld_);
 
 	oWorld2_.Initialize();
-	obb2_ = std::make_unique<OBBCollider>();
 	obb2_->Initialize("plane", oWorld2_);
 
 
@@ -60,7 +61,12 @@ void DebugScene::Update()
 	oWorld_.translate_ += move.SetNormalize() * 0.1f;
 	oWorld_.UpdateMatrix();
 
+	sWorld2_.UpdateMatrix();
+	sWorld_.UpdateMatrix();
+
 	sphere_->Update();
+	sphere2_->Update();
+
 	plane_->Update();
 	obb_->Update();
 	obb2_->Update();
@@ -77,6 +83,11 @@ void DebugScene::Update()
 
 	}
 
+	if (sphere2_->IsCollision(*sphere_.get(), backV)) {
+		sWorld2_.translate_ += backV;
+		sWorld2_.UpdateMatrix();
+		sphere2_->Update();
+	}
 
 	if (input_->TriggerKey(DIK_SPACE)) {
 
@@ -116,6 +127,7 @@ void DebugScene::Update()
 void DebugScene::Draw()
 {
 	sphere_->Draw();
+	sphere2_->Draw();
 	plane_->Draw();
 	obb_->Draw();
 	obb2_->Draw();
@@ -128,7 +140,11 @@ void DebugScene::Draw()
 void DebugScene::Debug()
 {
 	sWorld_.DrawDebug("sphere");
+	sWorld2_.DrawDebug("sphere2");
+
 	sphere_->Debug("sphere");
+	
+
 	camera_->DrawDebugWindow("camera");
 	obb_->Debug("box");
 	obb2_->Debug("box2");

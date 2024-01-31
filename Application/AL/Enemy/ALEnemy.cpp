@@ -2,6 +2,7 @@
 
 #include"RandomNum/RandomNum.h"
 #include"TextureManager/TextureManager.h"
+#include"AudioManager/AudioManager.h"
 #include"AL/BrokenBody/BrokenBody.h"
 
 void ALEnemy::Initialize(const Vector3& position, const WorldTransform* playerWorld) {
@@ -20,7 +21,7 @@ void ALEnemy::Initialize(const Vector3& position, const WorldTransform* playerWo
 
 	world_.rotate_.y = RandomNumber::Get(0, 3.14f);
 
-	mWorlds[HEAD].parent_ =(&world_);
+	mWorlds[HEAD].parent_ = (&world_);
 	mWorlds[LARM].parent_ = (&mWorlds[HEAD]);
 	mWorlds[RARM].parent_ = (&mWorlds[HEAD]);
 	mWorlds[LFOOT].parent_ = (&mWorlds[HEAD]);
@@ -59,6 +60,8 @@ void ALEnemy::Initialize(const Vector3& position, const WorldTransform* playerWo
 	stopData_.edPartsWorlds[RARM].rotate_ = { 0.0f,0.0f,-0.3f };
 	stopData_.edPartsWorlds[LFOOT].rotate_ = { -0.05f,0.0f,0.0f };
 	stopData_.edPartsWorlds[RFOOT].rotate_ = { -0.05f,0.0f,0.0f };
+
+	breakSound_ = AudioManager::LoadSoundNum("break");
 }
 
 void ALEnemy::Update() {
@@ -191,6 +194,9 @@ void ALEnemy::Update() {
 				isDead_ = true;
 				BrokenBody* BB = BrokenBody::GetInstance();
 				BB->EffectOccurred(world_, 10);
+
+				//音発生
+				AudioManager::PlaySoundData(breakSound_, 0.2f);
 			}
 
 		}
@@ -216,7 +222,7 @@ void ALEnemy::Update() {
 void ALEnemy::Collision(SphereCollider* collider) {
 
 	Vector3 backVec;
-	if (collider_->IsCollision(*collider,backVec)) {
+	if (collider_->IsCollision(*collider, backVec)) {
 
 		state_ = Hit;
 
@@ -237,6 +243,17 @@ void ALEnemy::Collision(SphereCollider* collider) {
 
 		HP_--;
 
+	}
+
+}
+
+void ALEnemy::OshiDashi(SphereCollider* collider)
+{
+
+	Vector3 backVec;
+	if (collider_->IsCollision(*collider, backVec)) {
+		backVec.y = 0;
+		world_.translate_ += backVec;
 	}
 
 }

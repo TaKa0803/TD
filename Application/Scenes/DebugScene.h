@@ -38,6 +38,10 @@ private:
 	WorldTransform sWorld_;
 	std::unique_ptr<SphereCollider> sphere_;
 
+	WorldTransform sWorld2_;
+	std::unique_ptr<SphereCollider> sphere2_;
+
+
 	WorldTransform pWorld_;
 	std::unique_ptr<PlaneCollider>plane_;
 
