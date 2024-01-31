@@ -36,6 +36,15 @@ private:
 	/// UI更新
 	/// </summary>
 	void UIUpdate();
+
+	//エフェクト発生処理
+	void AddEffect(const WorldTransform& spawnW);
+
+	//Goodゲージ追加
+	void AddGoodGage(float num);
+
+	//BADゲージ追加
+	void AddBadGage();
 private:
 	//キー入力
 	Input* input_ = nullptr;
@@ -65,15 +74,16 @@ private:
 #pragma region ゲームルール関連
 
 	//GOODゲージ最大数
-	const int maxGoodGage_ = 100;
+	const float maxGoodGage_ = 30;
 
 	//GOODゲージ現カウント
-	int goodGage_ = 0;
+	float goodGage_ = 0;
 
-	//GOODゲージ最大数
-	const int maxBadGage_ = 100;
 
-	//GOODゲージ現カウント
+	//BADゲージ最大数
+	const int maxBadGage_ = 10;
+
+	//BADゲージ現カウント
 	int badGage_ = 0;
 
 
@@ -94,8 +104,8 @@ private:
 	std::string gageSpritePath[SpriteName::kNumSprite] = {
 		"resources/AppResource/UI/Gage_Frame.png",
 		"resources/AppResource/UI/Gage_BACK.png",
-		"resources/AppResource/UI/Gage_BAD.png",
-		"resources/AppResource/UI/Gage_GOOD.png"
+		"resources/AppResource/UI/Gage_GOOD.png",
+		"resources/AppResource/UI/Gage_BAD.png"
 	};
 
 	//ゲージのUIの全体の位置

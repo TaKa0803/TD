@@ -235,10 +235,12 @@ void GameScene::CheckCollision()
 
 	Vector3 temp{ 0.0f,0.0f,0.0f };
 
+	//壁関係処理
 	itrW = walls.begin();
 	for (; itrW != walls.end(); ++itrW)
 	{
 		StageWall* wall = itrW->get();
+		//プレイヤーと壁の当たり判定
 		if (player_->GetCollider()->IsCollision(*wall->GetCollider(), temp))
 		{
 			wall->OnCollision();
@@ -255,6 +257,7 @@ void GameScene::CheckCollision()
 		}
 		*/
 	}
+	//雑魚敵関係
 	itrE = enemies.begin();
 	for (; itrE != enemies.end(); ++itrE)
 	{
@@ -274,40 +277,12 @@ void GameScene::CheckCollision()
 				}
 				boss->OnCollision(some->GetAttackPower());
 
-#pragma region エフェクト出現
-				EffectData newData;
+				//エフェクト発生
+				AddEffect(some->GetWorld());
 
-				//エフェクトに使うモデルのタグ設定
-				newData.tag = eTag_;
+				//Goodゲージ増加
+				AddGoodGage(some->GetAttackPower());
 
-				//数分生成
-				for (int i = 0; i < 10; ++i)
-				{
-					moveData movedata;
-					//データ設定
-					movedata.world = some->GetWorld();
-					movedata.world.scale_ = { 0.2f,0.2f ,0.2f };
-					//初期速度ランダム
-					movedata.velo = {
-						RandomNumber::Get(-1,1),
-						RandomNumber::Get(-1,1),
-						RandomNumber::Get(-1,1)
-					};
-
-					movedata.velo.SetNormalize();
-					movedata.velo *= 1.0f;
-					//加速度設定
-					movedata.acce = { 0,-0.1f,0 };
-					//死亡までのカウント
-					movedata.maxDeadCount = 60;
-
-					//データ設定
-					newData.mData.emplace_back(movedata);
-
-				}
-				//各粒データを含めた総合データ送信
-				EffectExp_->AddEffectData(newData);
-#pragma endregion
 			}
 		}
 
@@ -321,40 +296,11 @@ void GameScene::CheckCollision()
 				some->OnCollision();
 				boss->OnCollision(some->GetAttackPower());
 
-#pragma region エフェクト出現
-				EffectData newData;
+				//エフェクト発生
+				AddEffect(some->GetWorld());
 
-				//エフェクトに使うモデルのタグ設定
-				newData.tag = eTag_;
-
-				//数分生成
-				for (int i = 0; i < 10; ++i)
-				{
-					moveData movedata;
-					//データ設定
-					movedata.world = some->GetWorld();
-					movedata.world.scale_ = { 0.2f,0.2f ,0.2f };
-					//初期速度ランダム
-					movedata.velo = {
-						RandomNumber::Get(-1,1),
-						RandomNumber::Get(-1,1),
-						RandomNumber::Get(-1,1)
-					};
-
-					movedata.velo.SetNormalize();
-					movedata.velo *= 1.0f;
-					//加速度設定
-					movedata.acce = { 0,-0.1f,0 };
-					//死亡までのカウント
-					movedata.maxDeadCount = 60;
-
-					//データ設定
-					newData.mData.emplace_back(movedata);
-
-				}
-				//各粒データを含めた総合データ送信
-				EffectExp_->AddEffectData(newData);
-#pragma endregion
+				//Goodゲージ増加
+				AddGoodGage(some->GetAttackPower());
 			}
 
 			// 壁との接触
@@ -429,14 +375,16 @@ void GameScene::CheckCollision()
 
 void GameScene::UIUpdate()
 {
+	//比率計算
 	float scaleX = float(goodGage_ / maxGoodGage_);
-
+	//比率に合わせたサイズ取得
 	scaleX *= barScale_.x;
-
+	//Vector3型にする
 	Vector3 scale = barScale_;
 	scale.x = scaleX;
-
+	//入れる
 	gageSprite_[Good]->SetScale(scale);
+
 
 	scaleX = float(badGage_ / maxBadGage_);
 
@@ -447,4 +395,59 @@ void GameScene::UIUpdate()
 	gageSprite_[Bad]->SetScale(scale);
 
 
+}
+
+void GameScene::AddEffect(const WorldTransform&spawnW)
+{
+#pragma region エフェクト出現
+	EffectData newData;
+
+	//エフェクトに使うモデルのタグ設定
+	newData.tag = eTag_;
+
+	//数分生成
+	for (int i = 0; i < 10; ++i)
+	{
+		moveData movedata;
+		//データ設定
+		movedata.world = spawnW;
+		movedata.world.scale_ = { 0.2f,0.2f ,0.2f };
+		//初期速度ランダム
+		movedata.velo = {
+			RandomNumber::Get(-1,1),
+			RandomNumber::Get(-1,1),
+			RandomNumber::Get(-1,1)
+		};
+
+		movedata.velo.SetNormalize();
+		movedata.velo *= 1.0f;
+		//加速度設定
+		movedata.acce = { 0,-0.1f,0 };
+		//死亡までのカウント
+		movedata.maxDeadCount = 60;
+
+		//データ設定
+		newData.mData.emplace_back(movedata);
+
+	}
+	//各粒データを含めた総合データ送信
+	EffectExp_->AddEffectData(newData);
+#pragma endregion
+}
+
+void GameScene::AddGoodGage(float num)
+{
+	goodGage_ += num;
+
+	if (goodGage_ > maxGoodGage_) {
+		goodGage_ = maxGoodGage_;
+	}
+}
+
+void GameScene::AddBadGage()
+{
+	badGage_++;
+	if (badGage_ > maxBadGage_) {
+		badGage_ = maxBadGage_;
+	}
 }

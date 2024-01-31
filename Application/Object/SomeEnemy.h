@@ -130,7 +130,7 @@ public:
 	void SetBehavior(SomeType b) { eType_ = b; }
 	void SetPosition(const Vector3& pos) { world_.translate_ = pos; }
 private:
-
+	
 	void MoveEnemyUpdate();
 
 	void ExpEnemyUpdate();
