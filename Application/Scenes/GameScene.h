@@ -10,6 +10,7 @@
 #include"Sprite/Sprite.h"
 
 #include"Effect/EffectExplosion.h"
+#include"Object/Step/Step.h"
 
 class GameScene : public IScene {
 
@@ -64,6 +65,14 @@ private:
 	std::unique_ptr<BossEnemy> boss_;
 
 	std::unique_ptr<Skydome>skydome_;
+
+#pragma region オーディエンス
+
+	float stepLength_=50;
+
+	std::unique_ptr<Step>steps_[5];
+#pragma endregion
+
 
 	//エフェクト
 	EffectExplosion* EffectExp_;

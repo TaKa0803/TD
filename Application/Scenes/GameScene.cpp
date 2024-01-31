@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include<imgui.h>
+#include<numbers>
 
 #include"Scenes.h"
 #include"InstancingModelManager/InstancingModelManager.h"
@@ -25,6 +26,23 @@ GameScene::GameScene()
 	boss_ = std::make_unique<BossEnemy>();
 
 	skydome_ = std::make_unique<Skydome>();
+
+
+	float pi = 0;
+
+	Vector3 offset = { 0,0,1 };
+	WorldTransform world;
+
+	for (auto& step : steps_) {
+		step = std::make_unique<Step>();
+		
+		world.rotate_.y = pi;
+		world.UpdateMatrix();
+		Vector3 pos= (TransformNormal(offset, world.matWorld_))*stepLength_;
+		step->SetTranslate(pos);
+		step->SetRotate(pi);
+		pi += (3.14f * 2.0f) / 5.0f;
+	}
 
 	EffectExp_ = EffectExplosion::GetInstance();
 
@@ -73,6 +91,11 @@ void GameScene::Initialize()
 	camera_->SetCameraDirection(-100);
 	skydome_->Initialize();
 
+
+	for (auto& step : steps_) {
+		step->Initialize();
+	}
+
 	EffectExp_->Initialize();
 
 	//ゲージ初期化
@@ -104,6 +127,15 @@ void GameScene::Update()
 
 	//カメラ更新
 	CameraUpdate();
+
+
+#pragma region 観客
+	for (auto& step : steps_) {
+		step->Update();
+	}
+#pragma endregion
+
+
 #pragma endregion
 
 	CheckCollision();
@@ -129,8 +161,17 @@ void GameScene::Draw()
 
 	EffectExp_->Draw();
 
+#pragma region 観客
+	for (auto& step : steps_) {
+		step->Draw();
+	}
+#pragma endregion
+
 	//インスタンシングのモデルを全描画
 	InstancingModelManager::GetInstance()->DrawAllModel(camera_->GetViewProjectionMatrix());
+
+
+
 
 
 #pragma region ゲームUI
@@ -165,6 +206,10 @@ void GameScene::DebugWindows()
 	}
 	if (ImGui::BeginMenuBar())return;
 	*/
+
+
+	steps_[0]->Debug();
+
 
 	ImGui::Begin("sprite");
 	ImGui::DragFloat3("all Pos", &UIWorld_.translate_.x);

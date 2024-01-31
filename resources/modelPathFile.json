@@ -9,7 +9,7 @@
     "RArm": [ "resources/AppResource/Object", "RArm" ],
     "LFoot": [ "resources/AppResource/Object", "LFoot" ],
     "RFoot": [ "resources/AppResource/Object", "RFoot" ],
-    "talker": [ "resources/AppResource", "tolker"]
+    "talker": [ "resources/AppResource", "tolker" ]
   },
   "InstancingmodelPathFile": {
     "weapon": [ "resources/AppResource", "Weapon", 64 ],
@@ -31,6 +31,7 @@
     "talker": [ "resources/AppResource", "tolker", 5 ],
     "parrot": [ "resources/AppResource", "parrot", 1000 ],
     "PAmmo": [ "resources/AppResource", "LongRangeSound", 50 ],
-    "SRS": [ "resources/AppResource", "ShortRangeSound", 50 ]
+    "SRS": [ "resources/AppResource", "ShortRangeSound", 50 ],
+    "step": [ "resources/AppResource", "step", 5 ]
   }
 }
