@@ -71,6 +71,8 @@ void BossEnemy::Initialize(const WorldTransform& player)
 	collider_->SetRadius(cSIZE_);
 
 	enemies_.clear();
+	attacks_.clear();
+
 	reqBehavior_ = IDOL;
 	isActive_ = true;
 
@@ -313,8 +315,9 @@ void BossEnemy::DebagWindow()
 	ImGui::Text("Boss UI");
 	ImGui::DragFloat3("ui pos", &uiWorld_.translate_.x);
 	ImGui::DragFloat3("ui scale", &uiWorld_.scale_.x, 0.01f);
-
-
+	
+	
+	ImGui::End();
 
 
 
@@ -512,7 +515,7 @@ void BossEnemy::UpdateIDOL()
 			}
 		}
 		// 範囲攻撃生成
-		else if (rnd == 1)
+		else if (rnd == 1 || rnd == 2)
 		{
 			rnd = rand() % (2 + attackCount_);
 			if (rnd == 0)
@@ -574,14 +577,19 @@ void BossEnemy::UpdateSUMMON()
 void BossEnemy::UpdateATTACK()
 {
 	momentFrame_--;
-	if (momentFrame_ % (cATTACKFRAME_ / cATTACKFREQUENCY_) == 0)
+	if (momentFrame_ % (cATTACKFRAME_ / cATTACKFREQUENCY_) == cATTACKFRAME_ % cATTACKFREQUENCY_)
 	{
 		CreateAttack();
 	}
 	if (momentFrame_ <= 0)
 	{
 		reqBehavior_ = IDOL;
-		momentFrame_ += 100;
+		momentFrame_ += 80;
+		// 仮で敵を出してみる
+		// 多分残す
+		SummmonEnemy();
+		SummmonEnemy();
+		SummmonEnemy();
 	}
 }
 
