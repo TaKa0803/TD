@@ -14,6 +14,7 @@ void Player::Initialize()
 	world_.Initialize();
 	world_.scale_ = { 1.0f,1.0f,1.0f };
 	world_.translate_.y = 1.0f;
+	world_.rotate_.y = 3.14f / 2.0f;
 	model_->SetUVScale({ 1.0f,1.0f,1.0f });
 	world_.UpdateMatrix();
 

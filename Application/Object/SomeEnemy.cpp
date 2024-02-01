@@ -170,6 +170,7 @@ void SomeEnemy::MoveEnemyUpdate() {
 			reqBehavior_ = DESTROY;
 		}
 		world_.translate_ += direct3_ * 0.5f;
+		world_.rotate_.y = GetYRotate({ direct3_.x,direct3_.z });
 		break;
 	case SomeEnemy::DESTROY:
 
