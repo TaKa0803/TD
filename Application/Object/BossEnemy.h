@@ -124,6 +124,7 @@ public:
 	SphereCollider* GetCollider() { return collider_.get(); }
 
 	auto& GetEnemies() { return enemies_; }
+	auto& GetAttacks() { return attacks_; }
 
 	void OnCollision(float damage);
 

@@ -408,7 +408,7 @@ void BossEnemy::UpdateIDOL()
 			}
 		}
 		// 範囲攻撃生成
-		else if (rnd == 1)
+		else if (rnd == 1 || rnd == 2)
 		{
 			rnd = rand() % (2 + attackCount_);
 			if (rnd == 0)

@@ -41,9 +41,11 @@ void AreaAttack::Update()
 		{
 		case AreaAttack::SETUP:
 			momentFrame_ = 60;
+			colliderWorld_.translate_.y = -100.0f;
 			break;
 		case AreaAttack::OUTBREAK:
 			momentFrame_ = 5;
+			colliderWorld_.translate_.y = 0.0f;
 			break;
 		case AreaAttack::SUSTAIN:
 			momentFrame_ = 20;

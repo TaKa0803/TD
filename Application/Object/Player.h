@@ -51,6 +51,9 @@ private:
 
 	uint32_t momentFrame_ = 20;
 
+	bool isInvisible_ = false;
+	int32_t invisibleFrame_ = 0;
+
 public:
 	Player();
 
@@ -73,6 +76,7 @@ public:
 	SphereCollider* GetCollider() { return collider_.get(); }
 
 	void SetCamera(Camera* camera) { camera_ = camera; }
+	bool GetIsInvisible() const { return isInvisible_; }
 
 private:
 

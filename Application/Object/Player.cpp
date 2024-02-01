@@ -34,6 +34,15 @@ void Player::Update()
 		return true;
 		});
 
+	if (isInvisible_)
+	{
+		invisibleFrame_--;
+		if (invisibleFrame_ <= 0)
+		{
+			isInvisible_ = false;
+		}
+	}
+
 	if (reqBehavior_)
 	{
 		behavior_ = reqBehavior_.value();
@@ -54,7 +63,7 @@ void Player::Update()
 		momentFrame_ = 5;
 		break;
 		case Player::MOMENT:
-			momentFrame_ = 5;
+			momentFrame_ = 15;
 			break;
 		default:
 			break;
@@ -117,6 +126,8 @@ void Player::Draw(const Matrix4x4& viewp)
 
 void Player::OnCollision()
 {
+	reqBehavior_ = MOMENT;
+	invisibleFrame_ = 180;
 }
 
 void Player::UpdateIDOL()

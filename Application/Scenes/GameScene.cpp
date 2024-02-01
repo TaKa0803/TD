@@ -32,12 +32,13 @@ GameScene::GameScene()
 	Vector3 offset = { 0,0,1 };
 	WorldTransform world;
 
-	for (auto& step : steps_) {
+	for (auto& step : steps_)
+	{
 		step = std::make_unique<Step>();
-		
+
 		world.rotate_.y = pi;
 		world.UpdateMatrix();
-		Vector3 pos= (TransformNormal(offset, world.matWorld_))*stepLength_;
+		Vector3 pos = (TransformNormal(offset, world.matWorld_)) * stepLength_;
 		step->SetTranslate(pos);
 		step->SetRotate(pi);
 		pi += (3.14f * 2.0f) / 5.0f;
@@ -90,7 +91,8 @@ void GameScene::Initialize()
 	skydome_->Initialize();
 
 
-	for (auto& step : steps_) {
+	for (auto& step : steps_)
+	{
 		step->Initialize();
 	}
 
@@ -125,7 +127,8 @@ void GameScene::Update()
 
 
 #pragma region 観客
-	for (auto& step : steps_) {
+	for (auto& step : steps_)
+	{
 		step->Update();
 	}
 #pragma endregion
@@ -160,7 +163,8 @@ void GameScene::Draw()
 	EffectExp_->Draw();
 
 #pragma region 観客
-	for (auto& step : steps_) {
+	for (auto& step : steps_)
+	{
 		step->Draw();
 	}
 #pragma endregion
@@ -206,7 +210,8 @@ void GameScene::DebugWindows()
 	Vector3 offset = { 0,0,1 };
 	WorldTransform world;
 
-	for (auto& step : steps_) {
+	for (auto& step : steps_)
+	{
 		step = std::make_unique<Step>();
 
 		world.rotate_.y = pi;
@@ -276,8 +281,14 @@ void GameScene::CameraUpdate()
 
 void GameScene::CheckCollision()
 {
+	// 雑魚敵リスト
 	auto& enemies = boss_->GetEnemies();
 	auto itrE = enemies.begin();
+
+	// 範囲攻撃リスト
+	auto& attacks = boss_->GetAttacks();
+	auto itrA = attacks.begin();
+
 
 	/*std::list<SphereCollider*> eCollider;
 	for (; itrE != enemies.end(); ++itrE)
@@ -285,6 +296,7 @@ void GameScene::CheckCollision()
 		eCollider.push_back(itrE->get()->GetCollider());
 	}*/
 
+	// 音攻撃リスト
 	auto& blasts = player_->GetEchoBlasts();
 	auto itrB = blasts.begin();
 
@@ -294,10 +306,27 @@ void GameScene::CheckCollision()
 	//	bCollider.push_back(itrB->get()->GetCollider());
 	//}
 
+	// 壁リスト
 	auto& walls = stage_->GetWalls();
 	auto itrW = walls.begin();
 
 	Vector3 temp{ 0.0f,0.0f,0.0f };
+
+	// 範囲攻撃とプレイヤー
+	itrA = attacks.begin();
+	for (; itrA != attacks.end(); ++itrA)
+	{
+		if (player_->GetIsInvisible())
+		{
+			break;
+		}
+		AreaAttack* attack = itrA->get();
+		if (player_->GetCollider()->IsCollision(*attack->GetCollider(), temp))
+		{
+			player_->OnCollision();
+			AddBadGage();
+		}
+	}
 
 	//壁関係処理
 	itrW = walls.begin();
@@ -305,7 +334,7 @@ void GameScene::CheckCollision()
 	{
 		StageWall* wall = itrW->get();
 		//プレイヤーと壁の当たり判定
-		if (player_->GetCollider()->IsCollision(*wall->GetCollider(), temp,1))
+		if (player_->GetCollider()->IsCollision(*wall->GetCollider(), temp, 1))
 		{
 			wall->OnCollision();
 			player_->BackVector(temp);
@@ -355,11 +384,13 @@ void GameScene::CheckCollision()
 		{
 
 			//プレイヤーと飛ばされている敵の判定
-			if (some->GetCollider()->IsCollision(*player_->GetCollider(), temp)) {
+			if (some->GetCollider()->IsCollision(*player_->GetCollider(), temp))
+			{
 				some->OnCollision(temp);
 			}
 
-			if (isCollisionBoss_) {
+			if (isCollisionBoss_)
+			{
 				BossEnemy* boss = boss_.get();
 				// ボスとの接触
 				if (some->GetCollider()->IsCollision(*boss->GetCollider(), temp))
@@ -380,7 +411,7 @@ void GameScene::CheckCollision()
 			for (; itrW != walls.end(); ++itrW)
 			{
 				StageWall* wall = itrW->get();
-				if (some->GetCollider()->IsCollision(*wall->GetCollider(), temp,5))
+				if (some->GetCollider()->IsCollision(*wall->GetCollider(), temp, 5))
 				{
 					wall->OnCollision();
 
@@ -422,7 +453,7 @@ void GameScene::CheckCollision()
 			for (; itrB != blasts.end(); ++itrB)
 			{
 				EchoBlast* echo = itrB->get();
-				if (some->GetCollider()->IsCollision(*echo->GetCollider(), temp,3))
+				if (some->GetCollider()->IsCollision(*echo->GetCollider(), temp, 3))
 				{
 					echo->OnCollision();
 					some->OnCollision(echo->GetDirection());
@@ -490,7 +521,7 @@ void GameScene::UIUpdate()
 
 }
 
-void GameScene::AddEffect(const WorldTransform&spawnW)
+void GameScene::AddEffect(const WorldTransform& spawnW)
 {
 #pragma region エフェクト出現
 	EffectData newData;
@@ -532,7 +563,8 @@ void GameScene::AddGoodGage(float num)
 {
 	goodGage_ += num;
 
-	if (goodGage_ > maxGoodGage_) {
+	if (goodGage_ > maxGoodGage_)
+	{
 		goodGage_ = maxGoodGage_;
 	}
 }
@@ -540,7 +572,8 @@ void GameScene::AddGoodGage(float num)
 void GameScene::AddBadGage()
 {
 	badGage_++;
-	if (badGage_ > maxBadGage_) {
+	if (badGage_ > maxBadGage_)
+	{
 		badGage_ = maxBadGage_;
 	}
 }
