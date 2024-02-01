@@ -91,5 +91,4 @@ private:
 	Vector4 hitColor = { 1,0,0,alpha_ };
 
 
-
 };

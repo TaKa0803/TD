@@ -17,4 +17,6 @@ void Skydome::Initialize()
 void Skydome::Draw()
 {
 InstancingGameObject::Update();
+InstancingGameObject::Draw();
+
 }

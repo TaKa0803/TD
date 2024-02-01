@@ -23,7 +23,7 @@ private:
 		ATTACK,	// 範囲攻撃
 		DAMAGE,	// 被弾
 		CRUSH,	// 撃破
-
+		SPECIAL,
 		_COUNT,	// カウント用
 	};
 
@@ -106,6 +106,66 @@ private:
 	
 #pragma endregion
 
+#pragma region ボスの必殺技関係
+
+	float goodGage_;
+
+	float maxGoodGage_;
+
+	enum SpecialATKState {
+		wait,		//ため時間
+		shotMove,	//攻撃発射モーション
+		shotedWait,	//打った後の待機時間
+		back,		//元の状態に戻る
+		HitDown,	//あたって気絶時間
+		kCountOfSpecialATKState	//数カウント
+	};
+
+	struct Count {
+		int maxCount;
+		int count;
+	};
+
+	struct SpecialATK
+	{
+		//特別攻撃ができる状態か
+		bool isSpecialATK_ = false;
+
+		//次のスペシャル攻撃が出るまでのカウント数
+		const int maxNextSpecialATKCount = 60 * 3;
+
+		//次の攻撃までのカウント
+		int nextSpecialATKCount = 0;
+
+		//状態のカウント
+		int stateCount = 0;
+
+		//各状態カウント
+		Count count[kCountOfSpecialATKState];
+
+		//攻撃を打ったか否か
+		bool isShot = false;
+
+		//弾の速度
+		float ammoSpd_ = 0.2f;
+
+		//攻撃弾のオブジェクトデータ
+		std::unique_ptr<InstancingGameObject>ammo;
+
+		//弾の速度
+		Vector3 velocity_;
+
+		//攻撃弾のコライダー
+		std::unique_ptr<SphereCollider> collider;
+	};
+
+	SpecialATK specialATK{};
+
+
+#pragma endregion
+
+
+
 	//プレイヤーのworld情報
 	const WorldTransform* playerW_;
 
@@ -129,7 +189,17 @@ public:
 
 	bool GetIsActive() const { return isActive_; }
 
+	//ゲージのポインタ取得
+	void SetGage(float goodgage, float maxGood) { goodGage_ = goodgage; maxGoodGage_ = maxGood; }
+
+	//攻撃弾の壁反射処理
+	SphereCollider* GetSpecialATKCollider() { return specialATK.collider.get(); };
+
+	void SPATKOnCollison(const Vector3&direc);
 private:
+
+	//プレイヤー方向を向く
+	void SeePlayer();
 
 	// 攻撃リストの更新
 	void UpdateLists();
@@ -147,4 +217,7 @@ private:
 	void UpdateATTACK();
 	void UpdateDAMAGE();
 	void UpdateCRUSH();
+
+	//必殺技の更新
+	void UpdateSpecialATK();
 };

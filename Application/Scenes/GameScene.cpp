@@ -24,6 +24,7 @@ GameScene::GameScene()
 	stage_ = std::make_unique<Stage>();
 
 	boss_ = std::make_unique<BossEnemy>();
+	boss_->SetGage(goodGage_, maxGoodGage_);
 
 	skydome_ = std::make_unique<Skydome>();
 
@@ -118,6 +119,7 @@ void GameScene::Update()
 
 	player_->Update();
 
+	boss_->SetGage(goodGage_,maxGoodGage_);
 	boss_->Update();
 
 	//カメラ更新

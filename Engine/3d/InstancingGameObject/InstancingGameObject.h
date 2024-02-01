@@ -22,6 +22,10 @@ public:
 	//ワールド取得
 	const WorldTransform& GetWorld()const  { return world_; }
 
+	void SetTranslate(const Vector3& trans) { world_.translate_ = trans; }
+
+	void SetScale(float scale) { world_.scale_ = { scale,scale ,scale }; }
+
 	//開放処理
 	virtual ~InstancingGameObject();
 
@@ -36,5 +40,6 @@ public:
 	/// </summary>
 	virtual void Update();
 
+	virtual void Draw();
 };
 

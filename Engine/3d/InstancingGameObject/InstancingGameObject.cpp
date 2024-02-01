@@ -22,8 +22,13 @@ void InstancingGameObject::Initialize(const std::string& tag) {
 void InstancingGameObject::Update() {
 	//行列更新
 	world_.UpdateMatrix();
+
+}
+
+void InstancingGameObject::Draw()
+{
 	//タグに対応したモデルにワールド追加
-	IMM_->SetData(tag_, world_,color);
+	IMM_->SetData(tag_, world_, color);
 }
 
 
