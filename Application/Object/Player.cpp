@@ -128,7 +128,7 @@ void Player::OnCollision()
 {
 	reqBehavior_ = MOMENT;
 	momentFrame_ += 20;
-	invisibleFrame_ = 180;
+	invisibleFrame_ = 140;
 	isInvisible_ = true;
 }
 
