@@ -138,6 +138,9 @@ void GameScene::Update()
 	EffectExp_->Update();
 
 	UIUpdate();
+
+
+	SceneChange();
 }
 
 void GameScene::Draw()
