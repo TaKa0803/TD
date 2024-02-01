@@ -426,7 +426,7 @@ void GameScene::CheckCollision()
 			{
 				continue;
 			}
-			if (some->GetCollider()->IsCollision(*wall->GetCollider(), temp, 5))
+			if (some->GetCollider()->IsCollision(*wall->GetCollider(), temp, 10))
 			{
 				wall->OnCollision();
 
