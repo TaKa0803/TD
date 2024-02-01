@@ -8,7 +8,7 @@ void SomeEnemy::Initialize(const WorldTransform& world)
 	InstancingGameObject::Initialize("parrot");
 	world_.Initialize();
 	world_.scale_ = { 1.0f,1.0f,1.0f };
-	world_.translate_.y = 2.0f;
+	world_.translate_.y = 1.0f;
 	world_.UpdateMatrix();
 
 	collider_.reset(new SphereCollider);
@@ -170,6 +170,7 @@ void SomeEnemy::MoveEnemyUpdate() {
 			reqBehavior_ = DESTROY;
 		}
 		world_.translate_ += direct3_ * 0.5f;
+		world_.rotate_.y = GetYRotate({ direct3_.x,direct3_.z });
 		break;
 	case SomeEnemy::DESTROY:
 
