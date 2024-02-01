@@ -108,7 +108,7 @@ void GameScene::Initialize()
 void GameScene::Update()
 {
 
-	
+
 
 #pragma region ゲームシーン
 	//デバッグウィンドウ表示
@@ -205,6 +205,7 @@ void GameScene::DebugWindows()
 	ImGui::DragFloat("length", &stepLength_);
 
 	ImGui::Checkbox("isCollision", &isCollisionBoss_);
+	ImGui::Text("Bad :%d", badGage_);
 	ImGui::End();
 	float pi = 0;
 	Vector3 offset = { 0,0,1 };
@@ -491,7 +492,8 @@ void GameScene::SceneChange()
 	}
 
 	//BADゲージがいっぱいになったら
-	if (badGage_ == maxBadGage_) {
+	if (badGage_ == maxBadGage_)
+	{
 		sceneNo = FAIL;
 	}
 
@@ -500,7 +502,7 @@ void GameScene::SceneChange()
 void GameScene::UIUpdate()
 {
 	//比率計算
-	float scaleX = float(goodGage_ / maxGoodGage_);
+	float scaleX = goodGage_ / float(maxGoodGage_);
 	//比率に合わせたサイズ取得
 	scaleX *= barScale_.x;
 	//Vector3型にする
@@ -510,7 +512,7 @@ void GameScene::UIUpdate()
 	gageSprite_[Good]->SetScale(scale);
 
 
-	scaleX = float(badGage_ / maxBadGage_);
+	scaleX = badGage_ / float(maxBadGage_);
 
 	scaleX *= barScale_.x;
 
