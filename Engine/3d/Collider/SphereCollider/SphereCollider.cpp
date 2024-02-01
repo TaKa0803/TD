@@ -98,7 +98,6 @@ bool SphereCollider::IsCollision(const SphereCollider& sphere, Vector3& backVec)
 bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec, float divisionVolume)
 {
 
-
 #pragma region OBBのワールド行列をスケールなしで作成
 
 	//OBBのworld行列生成
@@ -130,8 +129,44 @@ bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec, float divis
 		//当たり判定
 		Vector3 saikin{};
 		if (InCollision(aabb_, sphere, saikin)) {
+
+
 			//OBBLocalPosCange
 			saikin = Transform(saikin, OBBM);
+
+			//mosionajiiti
+			if (world_.GetMatWorldTranslate() == saikin) {
+				//スフィアコライダーの座標をOBBのローカル空間に出る
+				sphereLocal = Transform(preWorld_.GetMatWorldTranslate(), inverseM);
+				//Sphere取得
+				sphere = { sphereLocal,radius_ };
+				InCollision(aabb_, sphere, saikin);
+
+				saikin = Transform(saikin, OBBM);
+
+				Vector3 velo = preWorld_.GetMatWorldTranslate() - saikin;
+				velo.SetNormalize();
+				velo *= radius_;
+
+				backVec = velo;
+
+			}
+			else {
+				///押し出しベクトルを利用して計算
+				//最近接点から円の中心点への向きベクトルを算出
+				Vector3 velo = world_.GetMatWorldTranslate() - saikin;
+				//正規化
+
+				Vector3 norVe = velo;
+				norVe.SetNormalize();
+				//半径分伸ばす
+				norVe *= radius_;
+
+				//渡す
+				backVec = norVe - velo;
+
+
+			}
 
 #ifdef _DEBUG
 			////最近接点描画
@@ -147,23 +182,21 @@ bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec, float divis
 
 			//貫通しているかの処理
 			//最近接点から過去
-			Vector3 v1 = saikin-pos;
-			Vector3 dire = v1;
-			dire.SetNormalize();
-			dire *= sphere.radius;
-			backVec += dire - v1;
-
+			Vector3 v1 = preWorld_.GetMatWorldTranslate() - saikin;
 			//最近接点から現在
-			Vector3 v2 = saikin-world_.GetMatWorldTranslate();
-			////真反対の時押し出し量変更
-			//if (v1 == v2) {
-			//現在から過去へのベクトル取得
-			//現在位置から最近接点までの向きベクトル取得
-			
-			//求めた長さを押し出し量にタス
+			Vector3 v2 = world_.GetMatWorldTranslate() - saikin;
+			v2 *= -1;
+			//真反対の時押し出し量変更
+			if (v1 == v2) {
+				//現在から過去へのベクトル取得
+				Vector3 npVelo = preWorld_.GetMatWorldTranslate() - world_.GetMatWorldTranslate();
+				npVelo.SetNormalize();
+				//現在位置から最近接点までの向きベクトル取得
+				Vector3 v1 = preWorld_.GetMatWorldTranslate() - saikin;
+				//求めた長さを押し出し量にタス
 
-			backVec += v2;
-			//}
+				backVec += v1;
+			}
 
 			return true;
 		}
@@ -189,6 +222,7 @@ bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec, float divis
 	obb.SetColor(false);
 
 	return false;
+
 
 }
 
