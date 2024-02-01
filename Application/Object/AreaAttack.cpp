@@ -19,7 +19,7 @@ void AreaAttack::Initialize(const Infomation& info)
 	world_.translate_ = data_.popPosition_;
 	colliderWorld_.parent_ = &world_;
 
-	colliderWorld_.translate_.y = 2.0f;
+	colliderWorld_.translate_.y = 1.0f;
 	
 	collider_->SetRadius(data_.power_);
 
@@ -42,6 +42,9 @@ void AreaAttack::Update()
 	}
 
 	//world_.translate_ += direct3_ * (data_.power_ * 0.1f);
+	// behaviorで準備、発生、持続を変えたい
+	// 発生とか持続の時にスケール変える？
+	colliderWorld_.scale_ += {1.0f, 1.0f, 1.0f};
 
 	//行列更新
 	world_.UpdateMatrix();
