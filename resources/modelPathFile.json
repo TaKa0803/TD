@@ -33,6 +33,7 @@
     "parrot": [ "resources/AppResource", "parrot", 1000 ],
     "PAmmo": [ "resources/AppResource", "LongRangeSound", 50 ],
     "SRS": [ "resources/AppResource", "ShortRangeSound", 50 ],
-    "step": [ "resources/AppResource", "step", 5 ]
+    "step": [ "resources/AppResource", "step", 5 ],
+    "Explo": [ "resources/AppResource", "Explo", 100 ]
   }
 }

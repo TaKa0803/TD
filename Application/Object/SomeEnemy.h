@@ -145,4 +145,7 @@ private:
 
 	//攻撃処理更新
 	void ATKToPlayerUpdate();
+
+	//爆破処理設置
+	void SetExplo();
 };

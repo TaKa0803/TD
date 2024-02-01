@@ -76,6 +76,8 @@
     <ClCompile Include="Engine\base\DXC\DXCManager.cpp" />
     <ClCompile Include="Application\Object\AreaAttack.cpp" />
     <ClCompile Include="Application\Object\Step\Step.cpp" />
+    <ClCompile Include="Application\Effect\EffectSphereExplo\ESphereExplo.cpp" />
+    <ClCompile Include="Engine\Math\Vector4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Object\EchoBlast.h" />
@@ -147,6 +149,7 @@
     <ClInclude Include="Engine\base\DXC\DXCManager.h" />
     <ClInclude Include="Application\Object\AreaAttack.h" />
     <ClInclude Include="Application\Object\Step\Step.h" />
+    <ClInclude Include="Application\Effect\EffectSphereExplo\ESphereExplo.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\enemyPopData.json" />

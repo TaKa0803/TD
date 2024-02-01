@@ -2,6 +2,7 @@
 
 #include "ImGuiManager/ImGuiManager.h"
 #include "RandomNum/RandomNum.h"
+#include"Effect/EffectSphereExplo/ESphereExplo.h"
 
 void SomeEnemy::Initialize(const WorldTransform& world)
 {
@@ -136,8 +137,8 @@ void SomeEnemy::MoveEnemyUpdate() {
 			break;
 		case SomeEnemy::DESTROY:
 			momentFrame_ = 60;
+			SetExplo();
 			break;
-
 		case SomeEnemy::ATK:
 			//全部初期化
 			for (auto& cont : atkCount_) {
@@ -210,6 +211,8 @@ void SomeEnemy::ExpEnemyUpdate()
 			break;
 		case SomeEnemy::DESTROY:
 			momentFrame_ = 60;
+
+			SetExplo();
 			break;
 		default:
 			break;
@@ -340,6 +343,17 @@ void SomeEnemy::ATKToPlayerUpdate()
 
 		}
 	}
+
+void SomeEnemy::SetExplo()
+{
+	ExploData data;
+	data.maxDeadCount = cBURSTFRAME_;
+	data.maxScale = 2.5f;
+	data.maxScaleCount = cBURSTFRAME_;
+	data.minAlphaCount = cBURSTFRAME_ / 2;
+
+	EfSphereExplosion::GetInstance()->AddEffectData(data);
+}
 
 	void SomeEnemy::OnEnemy(const Vector3 & direction)
 	{
