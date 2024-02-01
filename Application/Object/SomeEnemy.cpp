@@ -83,11 +83,10 @@ void SomeEnemy::DebagWindow(int num)
 
 void SomeEnemy::Draw()
 {
-	if (!isActive_)
-	{
+	if (!isActive_){
 		return;
 	}
-	collider_->Draw();
+	//collider_->Draw();
 	IMM_->SetData(tag_, world_);
 }
 
@@ -347,6 +346,7 @@ void SomeEnemy::ATKToPlayerUpdate()
 void SomeEnemy::SetExplo()
 {
 	ExploData data;
+	data.world.translate_ = world_.GetMatWorldTranslate();
 	data.maxDeadCount = cBURSTFRAME_;
 	data.maxScale = 2.5f;
 	data.maxScaleCount = cBURSTFRAME_;

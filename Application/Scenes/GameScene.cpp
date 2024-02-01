@@ -119,6 +119,7 @@ void GameScene::Update()
 	skydome_->Update();
 
 	stage_->Update();
+	
 
 	player_->Update();
 

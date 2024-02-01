@@ -60,16 +60,18 @@ void DebugScene::Update()
 	oWorld_.translate_ += move.SetNormalize() * 0.1f;
 	oWorld_.UpdateMatrix();
 
+	sWorld_.UpdateMatrix();
+
 	sphere_->Update();
 	plane_->Update();
 	obb_->Update();
 	obb2_->Update();
 	
 	Vector3 backV;
-	if (obb_->IsCollision(sphere_.get(),backV)) {
-		oWorld_.translate_ += backV;
-		oWorld_.UpdateMatrix();
-		obb_->Update();
+	if (sphere_->IsCollision(*obb_.get(), backV,1)) {
+		sWorld_.translate_ += backV;
+		sWorld_.UpdateMatrix();
+		sphere_->Update();
 	}
 
 	if (obb2_->IsCollision(camera_->GetSegment())) {

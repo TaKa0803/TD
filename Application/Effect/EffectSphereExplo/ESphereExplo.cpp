@@ -36,10 +36,10 @@ void EfSphereExplosion::Update()
 		data.world.scale_ = { scale,scale ,scale };
 
 		//色関係
-		if (data.count >= data.minAlphaCount) {
+		/*if (data.count >= data.minAlphaCount) {
 			float colort = float((data.count-data.minAlphaCount) / (data.maxDeadCount - data.minAlphaCount));
 			data.color = Esing(data.mincolor, data.maxColor, colort);
-		}
+		}*/
 
 		data.world.UpdateMatrix();
 	}

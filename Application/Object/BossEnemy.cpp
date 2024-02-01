@@ -9,7 +9,7 @@
 
 BossEnemy::BossEnemy()
 {
-	GameObject::Initialize("ALPlayer");
+	GameObject::Initialize("Boss");
 
 #pragma region HPゲージ関連
 	//HPバー

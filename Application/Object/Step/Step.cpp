@@ -13,12 +13,12 @@ void Step::Initialize()
 
 void Step::Update()
 {
-	
+	InstancingGameObject::Update();
 }
 
 void Step::Draw()
 {
-	InstancingGameObject::Update();
+	InstancingGameObject::Draw();
 }
 
 void Step::Debug()
