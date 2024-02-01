@@ -1,5 +1,7 @@
 #pragma once
 
+#include <optional>
+
 #include "InstancingGameObject/InstancingGameObject.h"
 #include "ColliderOBB/OBBCollider.h"
 
@@ -23,6 +25,15 @@ public:
 	};
 
 private:
+
+	enum BEHABIOR
+	{
+		SETUP,		// 準備
+		OUTBREAK,		// 発生
+		SUSTAIN,	// 持続
+	};
+
+private:
 	Infomation data_;
 
 	// 攻撃の中心地
@@ -33,7 +44,10 @@ private:
 	std::unique_ptr<SphereCollider> collider_;
 
 	// 生きているフレーム
-	uint32_t aliveFrame_ = 60;
+	uint32_t momentFrame_ = 60;
+
+	BEHABIOR behavior_ = SETUP;
+	std::optional<BEHABIOR> reqBehavior_ = std::nullopt;
 
 	bool isActive_ = false;
 

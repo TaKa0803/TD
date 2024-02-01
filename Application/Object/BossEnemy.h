@@ -9,6 +9,7 @@
 #include <list>
 
 class SomeEnemy;
+class AreaAttack;
 
 class BossEnemy :public GameObject
 {
@@ -19,7 +20,7 @@ private:
 		IDOL,	// なにもしてない
 		MOVE,	// 移動
 		SUMMON,	// 雑魚敵召喚
-
+		ATTACK,	// 範囲攻撃
 		DAMAGE,	// 被弾
 		CRUSH,	// 撃破
 
@@ -42,6 +43,12 @@ private:
 	// 移動の回数とか期待値
 	int moveCount_ = 0;
 
+	// 攻撃にかかる時間
+	int32_t cATTACKFRAME_ = 400;
+	// 一度の攻撃回数
+	int32_t cATTACKFREQUENCY_ = 6;
+	// 攻撃が連続で出にくくなるやつ
+	int attackCount_ = 0;
 
 	// 次に向かう場所
 	Vector2 nextPosition_ = { 0.0f,0.0f };
@@ -54,7 +61,10 @@ private:
 
 	std::unique_ptr<SphereCollider> collider_;
 
+	// 雑魚敵
 	std::list<std::unique_ptr<SomeEnemy>> enemies_;
+	// 範囲攻撃
+	std::list<std::unique_ptr<AreaAttack>> attacks_;
 
 	uint32_t momentFrame_ = 20;
 
@@ -121,7 +131,12 @@ public:
 
 private:
 
+	// 攻撃リストの更新
+	void UpdateLists();
+
 	void SummmonEnemy();
+	// 範囲攻撃作成
+	void CreateAttack();
 
 	//HPバーの更新
 	void HPBarUpdate();
@@ -129,6 +144,7 @@ private:
 	void UpdateIDOL();
 	void UpdateMOVE();
 	void UpdateSUMMON();
+	void UpdateATTACK();
 	void UpdateDAMAGE();
 	void UpdateCRUSH();
 };

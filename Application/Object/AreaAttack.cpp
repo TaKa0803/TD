@@ -12,18 +12,19 @@ void AreaAttack::Initialize(const Infomation& info)
 
 	data_ = info;
 	data_.power_ = 1.0f;
-	aliveFrame_ = 20;
+	momentFrame_ = 20;
 
 	world_.Initialize();
 	colliderWorld_.Initialize();
 	world_.translate_ = data_.popPosition_;
 	colliderWorld_.parent_ = &world_;
 
-	colliderWorld_.translate_.y = 1.0f;
-	
+	//colliderWorld_.translate_.y = 1.0f;
+
 	collider_->SetRadius(data_.power_);
 
 	isActive_ = true;
+	reqBehavior_ = SETUP;
 	//collider_->SetColor({ 0.0f,0.0f,0.0f,1.0f });
 }
 
@@ -33,26 +34,75 @@ void AreaAttack::Update()
 	{
 		return;
 	}
-
-	aliveFrame_--;
-	if (aliveFrame_ <= 0)
+	if (reqBehavior_)
 	{
-		color = { 0.0f,0.0f,0.0f,0.0f };
-		isActive_ = false;
+		behavior_ = reqBehavior_.value();
+		switch (behavior_)
+		{
+		case AreaAttack::SETUP:
+			momentFrame_ = 60;
+			break;
+		case AreaAttack::OUTBREAK:
+			momentFrame_ = 5;
+			break;
+		case AreaAttack::SUSTAIN:
+			momentFrame_ = 20;
+			break;
+		default:
+			break;
+		}
+		reqBehavior_ = std::nullopt;
 	}
-
-	//world_.translate_ += direct3_ * (data_.power_ * 0.1f);
-	// behaviorで準備、発生、持続を変えたい
-	// 発生とか持続の時にスケール変える？
-	colliderWorld_.scale_ += {1.0f, 1.0f, 1.0f};
-
-	//行列更新
-	world_.UpdateMatrix();
-	colliderWorld_.UpdateMatrix();
-	collider_->Update();
-	//sCollider_->Update();
-	//タグに対応したモデルにワールド追加
-	IMM_->SetData(tag_, colliderWorld_);
+	switch (behavior_)
+	{
+	case AreaAttack::SETUP:
+		momentFrame_--;
+		if (momentFrame_ <= 0)
+		{
+			reqBehavior_ = OUTBREAK;
+		}
+		//行列更新
+		world_.UpdateMatrix();
+		colliderWorld_.UpdateMatrix();
+		collider_->Update();
+		//sCollider_->Update();
+		//タグに対応したモデルにワールド追加
+		IMM_->SetData(tag_, colliderWorld_);
+		break;
+	case AreaAttack::OUTBREAK:
+		momentFrame_--;
+		if (momentFrame_ <= 0)
+		{
+			reqBehavior_ = SUSTAIN;
+		}
+		//行列更新
+		world_.UpdateMatrix();
+		colliderWorld_.UpdateMatrix();
+		collider_->Update();
+		//sCollider_->Update();
+		//タグに対応したモデルにワールド追加
+		IMM_->SetData(tag_, colliderWorld_);
+		break;
+	case AreaAttack::SUSTAIN:
+		momentFrame_--;
+		if (momentFrame_ <= 0)
+		{
+			color = { 0.0f,0.0f,0.0f,0.0f };
+			isActive_ = false;
+		}
+		// 発生とか持続の時にスケール変える？
+		colliderWorld_.scale_ += Vector3{1.0f, 1.0f, 1.0f} * 0.5f;
+		//行列更新
+		world_.UpdateMatrix();
+		colliderWorld_.UpdateMatrix();
+		collider_->Update();
+		//sCollider_->Update();
+		//タグに対応したモデルにワールド追加
+		IMM_->SetData(tag_, colliderWorld_);
+		break;
+	default:
+		break;
+	}
 }
 
 void AreaAttack::Draw()
