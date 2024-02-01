@@ -277,11 +277,11 @@ void BossEnemy::SummmonEnemy()
 	data->Initialize(*playerW_);
 	if (rand() % 3 == 0)
 	{
-		data->SetBehavior(SomeEnemy::Move);
+		data->SetBehavior(SomeEnemy::Explo);
 	}
 	else
 	{
-		data->SetBehavior(SomeEnemy::Explo);
+		data->SetBehavior(SomeEnemy::Move);
 	}
 	int length = (int)moveLength_;
 	int rnd1 = length / 2 - rand() % length;
