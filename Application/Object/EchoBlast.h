@@ -12,7 +12,7 @@ public:
 	enum ATTACKMODE
 	{
 		aSPOT,
-		aARC,
+		aMIRROR,
 	};
 
 	struct Infomation
@@ -32,7 +32,6 @@ private:
 	// 当たり判定をたくさん取る
 	//std::vector<std::unique_ptr<SphereCollider>> spheres_;
 	std::unique_ptr<OBBCollider> collider_;
-	std::unique_ptr<SphereCollider> sCollider_;
 
 	Vector3 direct3_;
 
@@ -57,5 +56,9 @@ public:
 
 	void OnCollision();
 
+	void SetInfomation(const Infomation& info);
 	const Vector3& GetDirection() const { return direct3_; }
+
+	// 弾くやつか
+	bool GetIsSpot() const { return data_.mode_ == ATTACKMODE::aSPOT; }
 };

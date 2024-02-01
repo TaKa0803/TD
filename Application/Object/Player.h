@@ -20,6 +20,7 @@ private:
 		IDOL,	// なにもしてない
 		//MOVE,	// 移動
 		ATTACK,	// 攻撃してる？
+		MIRROR,	// 反射
 		MOMENT,	// 後隙的な動けない時間
 
 		_COUNT,	// カウント用
@@ -84,6 +85,8 @@ private:
 	void UpdateMove();
 
 	void UpdateATTACK();
+
+	void UpdateMIRROR();
 
 	void CreateEcho(const EchoBlast::Infomation& info);
 
