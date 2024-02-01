@@ -229,6 +229,35 @@ void Player::UpdateATTACK()
 
 void Player::UpdateMIRROR()
 {
+	Vector3 move = input_->GetWASD();
+	if (input_->IsControllerActive())
+	{
+		if (move.GetLength() == 0.0f)
+		{
+			move = input_->GetjoyStickLV3();
+		}
+	}
+	move.SetNormalize();
+
+	move = TransformNormal(move, camera_->GetMainCamera().matWorld_);
+
+	move.y = 0;
+
+	if (move != Vector3(0, 0, 0))
+	{
+		world_.rotate_.y = GetYRotate({ move.x,move.z });
+		direction_ = { std::sinf(world_.rotate_.y),std::cosf(world_.rotate_.y) };
+		world_.rotate_.y += 3.14f / 2.0f;
+		//reqBehavior_ = MOVE;
+	}
+
+	EchoBlast::Infomation info;
+	info.mode_ = ATTACKMODE::aMIRROR;
+	info.direction_ = direction_;
+	info.popPosition_ = world_.translate_;
+	// クラス内で定義
+	info.power_ = 1.0f;
+	blasts_.back()->SetInfomation(info);
 	momentFrame_--;
 	if (momentFrame_ <= 0)
 	{
