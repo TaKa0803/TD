@@ -349,7 +349,7 @@ void BossEnemy::SummmonEnemy()
 	int length = (int)moveLength_;
 	int rnd1 = length / 2 - rand() % length;
 	int rnd2 = length / 2 - rand() % length;
-	data->SetPosition({ (float)rnd1,world_.translate_.y,(float)rnd2 });
+	data->SetPosition({ (float)rnd1,1.0f,(float)rnd2 });
 	enemies_.emplace_back(data);
 }
 
