@@ -317,8 +317,7 @@ void BossEnemy::DebagWindow()
 	ImGui::DragFloat3("ui scale", &uiWorld_.scale_.x, 0.01f);
 	
 	
-	ImGui::End();
-
+	
 
 
 	ImGui::End();
