@@ -394,10 +394,11 @@ void GameScene::CheckCollision()
 				}
 				if (some->GetCollider()->IsCollision(*some2->GetCollider(), temp))
 				{
-					Vector3 direct = some->GetDirection();
+					/*Vector3 direct = some->GetDirection();
 					direct.x += RandomNumber::Get(-0.6f, 0.6f);
 					direct.z += RandomNumber::Get(-0.6f, 0.6f);
-					some2->OnEnemy(direct);
+					some2->OnEnemy(direct);*/
+					some2->OnEnemy(-temp);
 				}
 			}
 
