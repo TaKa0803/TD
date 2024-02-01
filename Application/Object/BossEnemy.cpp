@@ -5,6 +5,7 @@
 #include "GlobalVariables/GlobalVariables.h"
 #include "ImGuiManager/ImGuiManager.h"
 #include "SomeEnemy.h"
+#include "AreaAttack.h"
 
 BossEnemy::BossEnemy()
 {
@@ -101,7 +102,7 @@ void BossEnemy::Update()
 		switch (behavior_)
 		{
 		case BossEnemy::IDOL:
-			momentFrame_ = 60;
+			momentFrame_ += 60;
 			break;
 		case BossEnemy::MOVE:
 		{
@@ -112,11 +113,19 @@ void BossEnemy::Update()
 		}
 		momentFrame_ = cMOVEFRAME_;
 		moveCount_++;
+		attackCount_ = 0;
 		break;
 		case BossEnemy::SUMMON:
 			momentFrame_ = cSUMMONFRAME_;
 			// 移動期待値 0
 			moveCount_ = 0;
+			attackCount_ = 0;
+			break;
+		case BossEnemy::ATTACK:
+			momentFrame_ = cATTACKFRAME_;
+			// 移動期待値 0
+			moveCount_ = 0;
+			attackCount_++;
 			break;
 		case BossEnemy::DAMAGE:
 			momentFrame_ = 30;
@@ -146,6 +155,9 @@ void BossEnemy::Update()
 	case BossEnemy::SUMMON:
 		UpdateSUMMON();
 		break;
+	case BossEnemy::ATTACK:
+		UpdateATTACK();
+		break;
 	case BossEnemy::DAMAGE:
 		UpdateDAMAGE();
 		break;
@@ -155,11 +167,15 @@ void BossEnemy::Update()
 	default:
 		break;
 	}
+	/*
 	std::list<std::unique_ptr<SomeEnemy>>::iterator itr = enemies_.begin();
 	for (; itr != enemies_.end(); ++itr)
 	{
 		itr->get()->Update();
-	}
+	}*/
+
+	// List 更新
+	UpdateLists();
 
 	if (isInvisible_)
 	{
@@ -185,14 +201,15 @@ void BossEnemy::DebagWindow()
 
 	ImGui::Begin("boss");
 
-	ImGui::Text("invisible  : %d", invisibleFrame_);
-	ImGui::Text("isInvisible: %s", isInvisible_ ? "TRUE" : "FALSE");
-	ImGui::Text("moment     : %d", momentFrame_);
-	ImGui::Text("isActive   : %s", isActive_ ? "TRUE" : "FALSE");
 	ImGui::DragInt("HP", &HP_);
 
 	ImGui::DragFloat3("position", &world_.translate_.x, 0.01f);
 
+	ImGui::Text("invisible  : %d", invisibleFrame_);
+	ImGui::Text("isInvisible: %s", isInvisible_ ? "TRUE" : "FALSE");
+	ImGui::Text("moment     : %d", momentFrame_);
+	//ImGui::Text("isActive   : %s", isActive_ ? "TRUE" : "FALSE");
+	ImGui::Separator();
 	switch (behavior_)
 	{
 	case BossEnemy::IDOL:
@@ -204,6 +221,9 @@ void BossEnemy::DebagWindow()
 	case BossEnemy::SUMMON:
 		ImGui::Text("SUMMON");
 		break;
+	case BossEnemy::ATTACK:
+		ImGui::Text("ATTACK");
+		break;
 	case BossEnemy::DAMAGE:
 		ImGui::Text("DAMAGE");
 		break;
@@ -213,9 +233,19 @@ void BossEnemy::DebagWindow()
 	default:
 		break;
 	}
+	ImGui::Separator();
+	ImGui::Text("Enemy  : %d", enemies_.size());
+	ImGui::Text("Attack : %d", attacks_.size());
+	ImGui::Text("A++    : %d", attackCount_);
+	ImGui::Separator();
 	if (ImGui::Button("Summon"))
 	{
 		reqBehavior_ = SUMMON;
+	}
+
+	if (ImGui::Button("Attack"))
+	{
+		reqBehavior_ = ATTACK;
 	}
 
 	std::list<std::unique_ptr<SomeEnemy>>::iterator itr = enemies_.begin();
@@ -252,6 +282,11 @@ void BossEnemy::Draw(const Matrix4x4& viewp)
 	{
 		itr->get()->Draw();
 	}
+	std::list<std::unique_ptr<AreaAttack>>::iterator itra = attacks_.begin();
+	for (; itra != attacks_.end(); ++itra)
+	{
+		itra->get()->Draw();
+	}
 	GameObject::Draw(viewp);
 	collider_->Draw();
 
@@ -271,6 +306,34 @@ void BossEnemy::OnCollision(float damage)
 	}
 }
 
+void BossEnemy::UpdateLists()
+{
+	// 雑魚敵
+	for (std::list<std::unique_ptr<SomeEnemy>>::iterator itr = enemies_.begin();
+		itr != enemies_.end();)
+	{
+		if (!itr->get()->GetIsActive())
+		{
+			itr = enemies_.erase(itr);
+			continue;
+		}
+		itr->get()->Update();
+		++itr;
+	}
+	// 範囲攻撃
+	for (std::list<std::unique_ptr<AreaAttack>>::iterator itr = attacks_.begin();
+		itr != attacks_.end();)
+	{
+		if (!itr->get()->GetIsActive())
+		{
+			itr = attacks_.erase(itr);
+			continue;
+		}
+		itr->get()->Update();
+		++itr;
+	}
+}
+
 void BossEnemy::SummmonEnemy()
 {
 	SomeEnemy* data = new SomeEnemy;
@@ -286,9 +349,19 @@ void BossEnemy::SummmonEnemy()
 	int length = (int)moveLength_;
 	int rnd1 = length / 2 - rand() % length;
 	int rnd2 = length / 2 - rand() % length;
-	data->SetPosition({ (float)rnd1,world_.translate_.y,(float)rnd2 });
+	data->SetPosition({ (float)rnd1,1.0f,(float)rnd2 });
 	enemies_.emplace_back(data);
-	reqBehavior_ = IDOL;
+}
+
+void BossEnemy::CreateAttack()
+{
+	AreaAttack* data = new AreaAttack();
+	AreaAttack::Infomation info;
+	info.mode_ = AreaAttack::ATTACKMODE::aSPOT;
+	info.popPosition_ = playerW_->translate_;
+	info.power_ = 1.0f;
+	data->Initialize(info);
+	attacks_.emplace_back(data);
 }
 
 void BossEnemy::HPBarUpdate()
@@ -328,17 +401,28 @@ void BossEnemy::UpdateIDOL()
 			{
 				reqBehavior_ = MOVE;
 			}
-			else if (enemies_.size() < 10)
+			else
 			{
-				reqBehavior_ = SUMMON;
+				reqBehavior_ = IDOL;
+				momentFrame_ -= 10;
+			}
+		}
+		// 範囲攻撃生成
+		else if (rnd == 1)
+		{
+			rnd = rand() % (2 + attackCount_);
+			if (rnd == 0)
+			{
+				reqBehavior_ = ATTACK;
 			}
 			else
 			{
 				reqBehavior_ = IDOL;
+				momentFrame_ -= 10;
 			}
 		}
 		// 雑魚敵生成
-		else //if (rnd == 1)
+		else //if (rnd == 1 || rnd == 2)
 		{
 			if (enemies_.size() < 10)
 			{
@@ -347,6 +431,7 @@ void BossEnemy::UpdateIDOL()
 			else
 			{
 				reqBehavior_ = IDOL;
+				momentFrame_ -= 10;
 			}
 		}
 	}
@@ -378,6 +463,21 @@ void BossEnemy::UpdateSUMMON()
 	if (momentFrame_ <= 0)
 	{
 		reqBehavior_ = IDOL;
+		momentFrame_ += 20;
+	}
+}
+
+void BossEnemy::UpdateATTACK()
+{
+	momentFrame_--;
+	if (momentFrame_ % (cATTACKFRAME_ / cATTACKFREQUENCY_) == 0)
+	{
+		CreateAttack();
+	}
+	if (momentFrame_ <= 0)
+	{
+		reqBehavior_ = IDOL;
+		momentFrame_ += 100;
 	}
 }
 
