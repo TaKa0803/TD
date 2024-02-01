@@ -35,7 +35,7 @@ void EchoBlast::Initialize(const Infomation& info)
 	world_.rotate_.y = GetYRotate(info.direction_);
 	colliderWorld_.parent_ = &world_;
 
-	colliderWorld_.translate_.y = 2.0f;
+	//colliderWorld_.translate_.y = 1.0f;
 
 	isActive_ = true;
 	collider_->SetColor({ 0.0f,0.0f,0.0f,1.0f });

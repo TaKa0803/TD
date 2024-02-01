@@ -8,7 +8,7 @@ void SomeEnemy::Initialize(const WorldTransform& world)
 	InstancingGameObject::Initialize("parrot");
 	world_.Initialize();
 	world_.scale_ = { 1.0f,1.0f,1.0f };
-	world_.translate_.y = 2.0f;
+	world_.translate_.y = 1.0f;
 	world_.UpdateMatrix();
 
 	collider_.reset(new SphereCollider);
