@@ -53,7 +53,7 @@ void Player::Update()
 		case Player::ATTACK:
 		{
 			EchoBlast::Infomation info;
-			info.mode_ = mode_;
+			info.mode_ = ATTACKMODE::aSPOT;
 			info.direction_ = direction_;
 			info.popPosition_ = world_.translate_;
 			// クラス内で定義
@@ -61,6 +61,18 @@ void Player::Update()
 			CreateEcho(info);
 		}
 		momentFrame_ = 5;
+		break;
+		case Player::MIRROR:
+		{
+			EchoBlast::Infomation info;
+			info.mode_ = ATTACKMODE::aMIRROR;
+			info.direction_ = direction_;
+			info.popPosition_ = world_.translate_;
+			// クラス内で定義
+			info.power_ = 1.0f;
+			CreateEcho(info);
+		}
+		momentFrame_ = 60;
 		break;
 		case Player::MOMENT:
 			momentFrame_ += 10;
@@ -77,6 +89,9 @@ void Player::Update()
 		break;
 	case Player::ATTACK:
 		UpdateATTACK();
+		break;
+	case Player::MIRROR:
+		UpdateMIRROR();
 		break;
 	case Player::MOMENT:
 		momentFrame_--;
@@ -136,31 +151,37 @@ void Player::UpdateIDOL()
 {
 	UpdateMove();
 
-	// モード切替
-	if (input_->TriggerKey(DIK_Q))
+
+	if (input_->PushKey(DIK_E) ||
+		input_->IsPushButton(kRightTrigger))
 	{
-		mode_ = ATTACKMODE::aSPOT;
+		reqBehavior_ = MIRROR;
 	}
-	else if (input_->TriggerKey(DIK_E))
-	{
-		mode_ = ATTACKMODE::aARC;
-	}
-	if (input_->IsTriggerButton(kRightTrigger))
-	{
-		switch (mode_)
-		{
-		case ATTACKMODE::aSPOT:
-			mode_ = ATTACKMODE::aARC;
-			break;
-		case ATTACKMODE::aARC:
-			mode_ = ATTACKMODE::aSPOT;
-			break;
-		default:
-			break;
-		}
-	}
+	//// モード切替
+	//if (input_->TriggerKey(DIK_Q))
+	//{
+	//	mode_ = ATTACKMODE::aSPOT;
+	//}
+	//else if (input_->TriggerKey(DIK_E))
+	//{
+	//	mode_ = ATTACKMODE::aMIRROR;
+	//}
+	//if (input_->IsTriggerButton(kRightTrigger))
+	//{
+	//	switch (mode_)
+	//	{
+	//	case ATTACKMODE::aSPOT:
+	//		mode_ = ATTACKMODE::aMIRROR;
+	//		break;
+	//	case ATTACKMODE::aMIRROR:
+	//		mode_ = ATTACKMODE::aSPOT;
+	//		break;
+	//	default:
+	//		break;
+	//	}
+	//}
 	// 音発射
-	if (input_->TriggerKey(DIK_SPACE) ||
+	else if (input_->TriggerKey(DIK_SPACE) ||
 		input_->IsTriggerButton(kLeftTrigger))
 	{
 		reqBehavior_ = ATTACK;
@@ -198,6 +219,15 @@ void Player::UpdateMove()
 }
 
 void Player::UpdateATTACK()
+{
+	momentFrame_--;
+	if (momentFrame_ <= 0)
+	{
+		reqBehavior_ = MOMENT;
+	}
+}
+
+void Player::UpdateMIRROR()
 {
 	momentFrame_--;
 	if (momentFrame_ <= 0)

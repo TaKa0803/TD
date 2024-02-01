@@ -334,38 +334,13 @@ void GameScene::CheckCollision()
 		}
 	}
 
-	//壁関係処理
-	itrW = walls.begin();
-	for (; itrW != walls.end(); ++itrW)
-	{
-		StageWall* wall = itrW->get();
-		//プレイヤーと壁の当たり判定
-		if (player_->GetCollider()->IsCollision(*wall->GetCollider(), temp, 1))
-		{
-			wall->OnCollision();
-			player_->BackVector(temp);
-		}
-		/*
-		//透明化処理
-		OBBCollider* obbc = wall->GetCollider();
-		if (obbc->IsCollision(camera_->GetSegment())) {
-			wall->SetColor(true);
-		}
-		else {
-			wall->SetColor(false);
-		}
-		*/
-	}
-	//雑魚敵関係
 	itrE = enemies.begin();
 	for (; itrE != enemies.end(); ++itrE)
 	{
 		SomeEnemy* some = itrE->get();
-
 		// こわれている時
 		if (itrE->get()->GetIsDestroy())
 		{
-
 			BossEnemy* boss = boss_.get();
 			// ボスとの接触
 			if (some->GetCollider()->IsCollision(*boss->GetCollider(), temp))
@@ -384,9 +359,8 @@ void GameScene::CheckCollision()
 
 			}
 		}
-
 		// 弾かれてる間の判定
-		if (itrE->get()->GetIsBurst())
+		else if (itrE->get()->GetIsBurst())
 		{
 
 			//プレイヤーと飛ばされている敵の判定
@@ -394,7 +368,6 @@ void GameScene::CheckCollision()
 			{
 				some->OnCollision(temp);
 			}
-
 			if (isCollisionBoss_)
 			{
 				BossEnemy* boss = boss_.get();
@@ -412,23 +385,6 @@ void GameScene::CheckCollision()
 				}
 			}
 
-			// 壁との接触
-			itrW = walls.begin();
-			for (; itrW != walls.end(); ++itrW)
-			{
-				StageWall* wall = itrW->get();
-				if (some->GetCollider()->IsCollision(*wall->GetCollider(), temp, 5))
-				{
-					wall->OnCollision();
-
-					Vector3 direc = wall->GetDirection();
-
-					direc.SetNormalize();
-					direc *= Length(temp);
-
-					some->OnCollision(direc);
-				}
-			}
 
 			// 敵同士の衝突
 			auto itrE2 = enemies.begin();
@@ -448,27 +404,94 @@ void GameScene::CheckCollision()
 					some2->OnEnemy(-temp);
 				}
 			}
-
-
 		}
+	}
+	//壁関係処理
+	itrW = walls.begin();
+	for (; itrW != walls.end(); ++itrW)
+	{
+		StageWall* wall = itrW->get();
+		//プレイヤーと壁の当たり判定
+		if (player_->GetCollider()->IsCollision(*wall->GetCollider(), temp, 1))
+		{
+			wall->OnCollision();
+			player_->BackVector(temp);
+		}
+
+		itrE = enemies.begin();
+		for (; itrE != enemies.end(); ++itrE)
+		{
+			SomeEnemy* some = itrE->get();
+			if (!some->GetIsBurst())
+			{
+				continue;
+			}
+			if (some->GetCollider()->IsCollision(*wall->GetCollider(), temp, 5))
+			{
+				wall->OnCollision();
+
+				Vector3 direc = wall->GetDirection();
+
+				direc.SetNormalize();
+				direc *= Length(temp);
+
+				some->OnCollision(direc);
+			}
+		}
+		/*
+		//透明化処理
+		OBBCollider* obbc = wall->GetCollider();
+		if (obbc->IsCollision(camera_->GetSegment())) {
+			wall->SetColor(true);
+		}
+		else {
+			wall->SetColor(false);
+		}
+		*/
+	}
+	//雑魚敵関係
+	itrE = enemies.begin();
+	for (; itrE != enemies.end(); ++itrE)
+	{
+		SomeEnemy* some = itrE->get();
+
 		// 弾かれてない時
-		else
+		if (!itrE->get()->GetIsBurst())
 		{
 			// 攻撃との接触
 			itrB = blasts.begin();
 			for (; itrB != blasts.end(); ++itrB)
 			{
 				EchoBlast* echo = itrB->get();
-				if (some->GetCollider()->IsCollision(*echo->GetCollider(), temp, 3))
+				if (echo->GetIsSpot())
 				{
-					echo->OnCollision();
-					some->OnCollision(echo->GetDirection());
-
+					if (some->GetCollider()->IsCollision(*echo->GetCollider(), temp, 3))
+					{
+						echo->OnCollision();
+						some->OnCollision(echo->GetDirection());
+					}
+				}
+			}
+		}
+		else
+		{
+			itrB = blasts.begin();
+			for (; itrB != blasts.end(); ++itrB)
+			{
+				EchoBlast* echo = itrB->get();
+				if (!echo->GetIsSpot())
+				{
+					if (some->GetCollider()->IsCollision(*echo->GetCollider(), temp, 3))
+					{
+						echo->OnCollision();
+						some->OnCollision(echo->GetDirection());
+					}
 				}
 			}
 		}
 
 	}
+
 
 	//std::list<SphereCollider*>::iterator blast = bCollider.begin();
 	//for (; blast != bCollider.end(); ++blast)
