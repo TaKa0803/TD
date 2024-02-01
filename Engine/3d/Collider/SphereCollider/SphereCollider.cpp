@@ -92,7 +92,7 @@ bool SphereCollider::IsCollision(const SphereCollider& sphere, Vector3& backVec)
 
 
 
-bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec)
+bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec, float divisionVolume)
 {
 
 
@@ -103,91 +103,123 @@ bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec)
 
 	//逆行列
 	Matrix4x4 inverseM = obb.GetInverseWorldM();
-#pragma endregion
 
-
-	//スフィアコライダーの座標をOBBのローカル空間に出る
-	Vector3 sphereLocal = Transform(world_.GetMatWorldTranslate(), inverseM);
 	//すべてのスケールからサイズ取得
 	Vector3 size = GetAllScale(obb.GetWorld());
 
-	//AABB取得
-	AABB aabb_ = { .minV = -size,.maxV = size };
-	//Sphere取得
-	Sphere sphere = { sphereLocal,GetAllScaleX(world_)};
+#pragma endregion
 
-	//当たり判定
-	Vector3 saikin{};
-	if (InCollision(aabb_, sphere, saikin)) {
+	
+	float t = 0;
+	while ( t <= 1.0f) {
+
+		//過去位置から現在位置までの場所取得
+		Vector3 pos = Esing(preWorld_.GetMatWorldTranslate(), world_.GetMatWorldTranslate(),t);
+
+		//スフィアコライダーの座標をOBBのローカル空間に出る
+		Vector3 sphereLocal = Transform(pos, inverseM);
+
+		//AABB取得
+		AABB aabb_ = { .minV = -size,.maxV = size };
+		//Sphere取得
+		Sphere sphere = { sphereLocal,GetAllScaleX(world_) };
+
+		//当たり判定
+		Vector3 saikin{};
+		if (InCollision(aabb_, sphere, saikin)) {
 
 
-		//OBBLocalPosCange
-		saikin = Transform(saikin, OBBM);
-
-		//mosionajiiti
-		if (world_.GetMatWorldTranslate() == saikin) {
-			//スフィアコライダーの座標をOBBのローカル空間に出る
-			sphereLocal = Transform(preWorld_.GetMatWorldTranslate(), inverseM);
-			//Sphere取得
-			sphere = { sphereLocal,radius_ };
-			InCollision(aabb_, sphere, saikin);
-
+			//OBBLocalPosCange
 			saikin = Transform(saikin, OBBM);
 
-			Vector3 velo = preWorld_.GetMatWorldTranslate() - saikin;
-			velo.SetNormalize();
-			velo *= radius_;
+			//mosionajiiti
+			if (world_.GetMatWorldTranslate() == saikin) {
+				//スフィアコライダーの座標をOBBのローカル空間に出る
+				sphereLocal = Transform(preWorld_.GetMatWorldTranslate(), inverseM);
+				//Sphere取得
+				sphere = { sphereLocal,radius_ };
+				InCollision(aabb_, sphere, saikin);
 
-			backVec = velo;
+				saikin = Transform(saikin, OBBM);
 
+				Vector3 velo = preWorld_.GetMatWorldTranslate() - saikin;
+				velo.SetNormalize();
+				velo *= radius_;
+
+				backVec = velo;
+
+			}
+			else {
+				///押し出しベクトルを利用して計算
+				//最近接点から円の中心点への向きベクトルを算出
+				Vector3 velo = world_.GetMatWorldTranslate() - saikin;
+				//正規化
+
+				Vector3 norVe = velo;
+				norVe.SetNormalize();
+				//半径分伸ばす
+				norVe *= radius_;
+
+				//渡す
+				backVec = norVe - velo;
+
+
+			}
+
+#ifdef _DEBUG
+			////最近接点描画
+			WorldTransform sWo;
+			sWo.translate_ = saikin;
+			sWo.scale_ = { 0.1f,0.1f,0.1f };
+			sWo.UpdateMatrix();
+			IMM_->SetData("sphere", sWo);
+#endif // _DEBUG
+			obb.SetColor(true);
+			//色の変更
+			SetColor(true);
+
+			//貫通しているかの処理
+			//最近接点から過去
+			Vector3 v1 = preWorld_.GetMatWorldTranslate() - saikin;
+			//最近接点から現在
+			Vector3 v2 = world_.GetMatWorldTranslate() - saikin;
+			v2 *= -1;
+			//真反対の時押し出し量変更
+			if (v1 == v2) {
+				//現在から過去へのベクトル取得
+				Vector3 npVelo = preWorld_.GetMatWorldTranslate() - world_.GetMatWorldTranslate();
+				npVelo.SetNormalize();
+				//現在位置から最近接点までの向きベクトル取得
+				Vector3 v1 = preWorld_.GetMatWorldTranslate() - saikin;
+				//求めた長さを押し出し量にタス
+
+				backVec += v1;
+			}
+
+			return true;
 		}
 		else {
-			///押し出しベクトルを利用して計算
-			//最近接点から円の中心点への向きベクトルを算出
-			Vector3 velo = world_.GetMatWorldTranslate() - saikin;
-			//正規化
 
-			Vector3 norVe = velo;
-			norVe.SetNormalize();
-			//半径分伸ばす
-			norVe *= radius_;
-
-			//渡す
-			backVec = norVe - velo;
-
-
+#ifdef _DEBUG
+			//最近接点描画
+			WorldTransform sWo;
+			sWo.translate_ = Transform(saikin, OBBM);
+			sWo.scale_ = { 0.1f,0.1f,0.1f };
+			sWo.UpdateMatrix();
+			IMM_->SetData("sphere", sWo);
+#endif // _DEBUG
 		}
 
-#ifdef _DEBUG
-		////最近接点描画
-		WorldTransform sWo;
-		sWo.translate_ = saikin;
-		sWo.scale_ = { 0.1f,0.1f,0.1f };
-		sWo.UpdateMatrix();
-		IMM_->SetData("sphere", sWo);
-#endif // _DEBUG
-		obb.SetColor(true);
-		//色の変更
-		SetColor(true);
-		return true;
+
+		t += 1.0f / divisionVolume;
 	}
-	else {
 
-#ifdef _DEBUG
-		//最近接点描画
-		WorldTransform sWo;
-		sWo.translate_ = Transform(saikin, OBBM);
-		sWo.scale_ = { 0.1f,0.1f,0.1f };
-		sWo.UpdateMatrix();
-		IMM_->SetData("sphere", sWo);
-#endif // _DEBUG
+	//色の変更
+	SetColor(false);
+	obb.SetColor(false);
 
-		//色の変更
-		SetColor(false);
-		obb.SetColor(false);
+	return false;
 
-		return false;
-	}
 }
 
 void SphereCollider::Debug(const char* name) {

@@ -199,6 +199,8 @@ void GameScene::DebugWindows()
 
 	ImGui::Begin("dai");
 	ImGui::DragFloat("length", &stepLength_);
+
+	ImGui::Checkbox("isCollision", &isCollisionBoss_);
 	ImGui::End();
 	float pi = 0;
 	Vector3 offset = { 0,0,1 };
@@ -303,7 +305,7 @@ void GameScene::CheckCollision()
 	{
 		StageWall* wall = itrW->get();
 		//プレイヤーと壁の当たり判定
-		if (player_->GetCollider()->IsCollision(*wall->GetCollider(), temp))
+		if (player_->GetCollider()->IsCollision(*wall->GetCollider(), temp,1))
 		{
 			wall->OnCollision();
 			player_->BackVector(temp);
@@ -357,18 +359,20 @@ void GameScene::CheckCollision()
 				some->OnCollision(temp);
 			}
 
-			BossEnemy* boss = boss_.get();
-			// ボスとの接触
-			if (some->GetCollider()->IsCollision(*boss->GetCollider(), temp))
-			{
-				some->OnCollision();
-				boss->OnCollision(some->GetAttackPower());
+			if (isCollisionBoss_) {
+				BossEnemy* boss = boss_.get();
+				// ボスとの接触
+				if (some->GetCollider()->IsCollision(*boss->GetCollider(), temp))
+				{
+					some->OnCollision();
+					boss->OnCollision(some->GetAttackPower());
 
-				//エフェクト発生
-				AddEffect(some->GetWorld());
+					//エフェクト発生
+					AddEffect(some->GetWorld());
 
-				//Goodゲージ増加
-				AddGoodGage(some->GetAttackPower());
+					//Goodゲージ増加
+					AddGoodGage(some->GetAttackPower());
+				}
 			}
 
 			// 壁との接触
@@ -376,10 +380,16 @@ void GameScene::CheckCollision()
 			for (; itrW != walls.end(); ++itrW)
 			{
 				StageWall* wall = itrW->get();
-				if (some->GetCollider()->IsCollision(*wall->GetCollider(), temp))
+				if (some->GetCollider()->IsCollision(*wall->GetCollider(), temp,5))
 				{
 					wall->OnCollision();
-					some->OnCollision(wall->GetDirection());
+
+					Vector3 direc = wall->GetDirection();
+
+					direc.SetNormalize();
+					direc *= Length(temp);
+
+					some->OnCollision(direc);
 				}
 			}
 
@@ -411,7 +421,7 @@ void GameScene::CheckCollision()
 			for (; itrB != blasts.end(); ++itrB)
 			{
 				EchoBlast* echo = itrB->get();
-				if (some->GetCollider()->IsCollision(*echo->GetCollider(), temp))
+				if (some->GetCollider()->IsCollision(*echo->GetCollider(), temp,3))
 				{
 					echo->OnCollision();
 					some->OnCollision(echo->GetDirection());

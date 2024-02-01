@@ -178,6 +178,8 @@ void BossEnemy::Update()
 
 void BossEnemy::DebagWindow()
 {
+#ifdef _DEBUG
+
 	//model_->DebugParameter("boss");
 	collider_->Debug("boss");
 
@@ -226,13 +228,17 @@ void BossEnemy::DebagWindow()
 	ImGui::Begin("Boss UI");
 	ImGui::DragFloat3("ui pos", &uiWorld_.translate_.x);
 	ImGui::DragFloat3("ui scale", &uiWorld_.scale_.x, 0.01f);
+	
+	
 	ImGui::End();
 
-	hpBar_->DrawDebugImGui("HPBar");
-	hpBarBack_->DrawDebugImGui("HPBarBack");
-	hpBarFrame_->DrawDebugImGui("HPBarFrame");
+
 
 	ImGui::End();
+
+
+#endif // _DEBUG
+
 }
 
 void BossEnemy::Draw(const Matrix4x4& viewp)
@@ -257,6 +263,7 @@ void BossEnemy::Draw(const Matrix4x4& viewp)
 
 void BossEnemy::OnCollision(float damage)
 {
+
 	if (!isInvisible_)
 	{
 		damage_ = damage;

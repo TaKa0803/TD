@@ -93,6 +93,7 @@ private:
 	//HPバーの初期スケール
 	Vector3 hpBarScale = { 962,56,1 };
 
+	
 #pragma endregion
 
 	//プレイヤーのworld情報

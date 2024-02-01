@@ -15,7 +15,7 @@
   "InstancingmodelPathFile": {
     "weapon": [ "resources/AppResource", "Weapon", 64 ],
     "wall": [ "resources/AppResource", "Stage", 5 ],
-    "sphere": [ "resources/SystemResources", "sphere", 1000 ],
+    "sphere": [ "resources/SystemResources", "sphere", 100000 ],
     "z+Plane": [ "resources/SystemResources", "normalZ+Plane", 1000 ],
     "box": [ "resources/SystemResources", "ALPlayer", 1000 ],
     "ALPlayer": [ "resources/AppResource", "ALPlayer", 1 ],

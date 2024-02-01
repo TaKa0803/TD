@@ -34,7 +34,7 @@ public:
 	/// <param name="obb">元となるコライダー</param>
 	/// <param name="backVec">押し出しベクトル</param>
 	/// <returns>引数の押し出しベクトルに値を渡して成否チェック</returns>
-	bool IsCollision(OBBCollider& obb, Vector3& backVec);
+	bool IsCollision(OBBCollider& obb, Vector3& backVec, float divisionVolume);
 
 	//デバッグImGui
 	void Debug(const char* name);

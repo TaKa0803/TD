@@ -27,6 +27,16 @@ float Vector3::GetLength() {
 
 
 
+Vector3 Esing(const Vector3& p1, const Vector3& p2, float t)
+{
+	return{
+		p1.x * (1.0f - t) + p2.x * t,
+		p1.y * (1.0f - t) + p2.y * t,
+		p1.z * (1.0f - t) + p2.z * t,
+	};
+
+}
+
 // 内積
 float Dot(const Vector3& v1, const Vector3& v2) {
 	float Answer = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;

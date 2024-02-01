@@ -129,5 +129,8 @@ private:
 	Vector3 barScale_ = { 842,117,1 };
 #pragma endregion
 
+	//当たり判定処理するか否か
+	bool isCollisionBoss_ = true;
+
 
 };

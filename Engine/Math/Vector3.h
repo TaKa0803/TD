@@ -45,6 +45,8 @@ public:
 
 };
 
+Vector3 Esing(const Vector3& p1, const Vector3& p2,float t);
+
 // クロス積
 Vector3 Cross(const Vector3& v1, const Vector3& v2);
 

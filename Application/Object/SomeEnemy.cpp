@@ -94,6 +94,7 @@ void SomeEnemy::OnCollision(const Vector3& direction)
 {
 	if (behavior_ == BURST)
 	{
+		world_.translate_ += direction;
 		direct3_ = direction;
 		direct3_.y = 0;
 		direct3_.SetNormalize();
@@ -112,6 +113,9 @@ void SomeEnemy::OnCollision(const Vector3& direction)
 	{
 		reqBehavior_ = DESTROY;
 	}
+
+	world_.UpdateMatrix();
+	collider_->Update();
 }
 
 void SomeEnemy::MoveEnemyUpdate() {
