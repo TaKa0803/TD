@@ -27,11 +27,17 @@ public:
 	void Draw() override;
 
 private:
+	//デバッグウィンドウ
 	void DebugWindows();
 
+	//カメラ更新
 	void CameraUpdate();
 
+	//コリジョン
 	void CheckCollision();
+
+	//シーン変更
+	void SceneChange();
 
 	/// <summary>
 	/// UI更新

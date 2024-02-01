@@ -8,7 +8,7 @@ Skydome::Skydome()
 
 void Skydome::Initialize()
 {
-	world_.SetScale(100.0f);
+	world_.SetScale(500.0f);
 
 }
 

@@ -106,10 +106,7 @@ void GameScene::Initialize()
 void GameScene::Update()
 {
 
-	if (!boss_->GetIsActive())
-	{
-		sceneNo = SCENE::CLEAR;
-	}
+	
 
 #pragma region ゲームシーン
 	//デバッグウィンドウ表示
@@ -448,6 +445,21 @@ void GameScene::CheckCollision()
 	//	}
 	//}
 
+
+}
+
+void GameScene::SceneChange()
+{
+	//ボスが死んでたら
+	if (!boss_->GetIsActive())
+	{
+		sceneNo = SCENE::CLEAR;
+	}
+
+	//BADゲージがいっぱいになったら
+	if (badGage_ == maxBadGage_) {
+		sceneNo = FAIL;
+	}
 
 }
 
