@@ -68,7 +68,7 @@ private:
 
 #pragma region オーディエンス
 
-	float stepLength_=50;
+	float stepLength_=90;
 
 	std::unique_ptr<Step>steps_[5];
 #pragma endregion

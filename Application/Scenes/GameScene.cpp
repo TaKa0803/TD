@@ -29,7 +29,6 @@ GameScene::GameScene()
 
 
 	float pi = 0;
-
 	Vector3 offset = { 0,0,1 };
 	WorldTransform world;
 
@@ -43,7 +42,6 @@ GameScene::GameScene()
 		step->SetRotate(pi);
 		pi += (3.14f * 2.0f) / 5.0f;
 	}
-
 	EffectExp_ = EffectExplosion::GetInstance();
 
 
@@ -198,6 +196,25 @@ void GameScene::DebugWindows()
 	stage_->DebagWindow();
 
 	boss_->DebagWindow();
+
+	ImGui::Begin("dai");
+	ImGui::DragFloat("length", &stepLength_);
+	ImGui::End();
+	float pi = 0;
+	Vector3 offset = { 0,0,1 };
+	WorldTransform world;
+
+	for (auto& step : steps_) {
+		step = std::make_unique<Step>();
+
+		world.rotate_.y = pi;
+		world.UpdateMatrix();
+		Vector3 pos = (TransformNormal(offset, world.matWorld_)) * stepLength_;
+		step->SetTranslate(pos);
+		step->SetRotate(pi);
+		pi += (3.14f * 2.0f) / 5.0f;
+	}
+	EffectExp_ = EffectExplosion::GetInstance();
 
 #pragma region ゲームUI
 	/*

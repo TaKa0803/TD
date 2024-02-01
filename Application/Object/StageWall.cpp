@@ -80,12 +80,13 @@ void StageWall::Update()
 	//行列更新
 	world_.UpdateMatrix();
 	collider_->Update();
-	//タグに対応したモデルにワールド追加
-	IMM_->SetData(tag_, world_,color);
 }
 
 void StageWall::Draw()
 {
+	//タグに対応したモデルにワールド追加
+	//IMM_->SetData(tag_, world_, color);
+
 	collider_->Draw();
 }
 
