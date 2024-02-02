@@ -26,7 +26,7 @@ void EchoBlast::Initialize(const Infomation& info)
 		collider_->SetScale({ 5.0f,1.0f,1.0f });
 		colliderWorld_.translate_.z = 2.0f;
 		data_.power_ = 1.0f;
-		aliveFrame_ = 10;
+		aliveFrame_ = 20;
 		break;
 	}
 
@@ -116,7 +116,8 @@ void EchoBlast::SetInfomation(const Infomation& info)
 	world_.rotate_.y = GetYRotate(data_.direction_);
 	colliderWorld_.parent_ = &world_;
 
-	aliveFrame_ = 10;
+	// 反射板を残す時間
+	aliveFrame_ = 20;
 	//colliderWorld_.translate_.y = 1.0f;
 
 	isActive_ = true;

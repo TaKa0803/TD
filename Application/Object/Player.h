@@ -55,6 +55,9 @@ private:
 	bool isInvisible_ = false;
 	int32_t invisibleFrame_ = 0;
 
+	// 反射板終了フラグ
+	bool isEndMirror_ = false;
+
 public:
 	Player();
 

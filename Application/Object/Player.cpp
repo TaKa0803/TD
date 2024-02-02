@@ -72,7 +72,8 @@ void Player::Update()
 			info.power_ = 1.0f;
 			CreateEcho(info);
 		}
-		momentFrame_ = 60;
+		momentFrame_ = 30;
+		isEndMirror_ = false;
 		break;
 		case Player::MOMENT:
 			momentFrame_ += 10;
@@ -229,6 +230,24 @@ void Player::UpdateATTACK()
 
 void Player::UpdateMIRROR()
 {
+	// 押していない
+	if (!input_->PushKey(DIK_E) &&
+		!input_->IsPushButton(kRightTrigger))
+	{
+		isEndMirror_ = true;
+	}
+
+	// 反射板終了動作のコードを書ける...?
+	if(isEndMirror_)
+	{
+		momentFrame_--;
+		if (momentFrame_ <= 0)
+		{
+			reqBehavior_ = MOMENT;
+		}
+		return;
+	}
+
 	Vector3 move = input_->GetWASD();
 	if (input_->IsControllerActive())
 	{
@@ -259,24 +278,6 @@ void Player::UpdateMIRROR()
 	info.power_ = 1.0f;
 	blasts_.back()->SetInfomation(info);
 	
-	// 押している
-	if (input_->PushKey(DIK_E)||
-		input_->IsPushButton(kRightTrigger))
-	{
-		momentFrame_ = 30;
-	}
-	// 押していない
-	// 反射板終了動作のコードを書ける...?
-	else
-	{
-
-	}
-
-	momentFrame_--;
-	if (momentFrame_ <= 0)
-	{
-		reqBehavior_ = MOMENT;
-	}
 }
 
 void Player::CreateEcho(const EchoBlast::Infomation& info)
