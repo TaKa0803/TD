@@ -321,6 +321,15 @@ void GameScene::CheckCollision()
 
 	Vector3 temp{ 0.0f,0.0f,0.0f };
 
+	//プレイヤーとスペシャル攻撃との判定
+	//反射板なしでプレイヤーヒットで爆破
+	if (boss_->IsSpecialAttackActive()&&player_->GetCollider()->IsCollision(*boss_->GetSpecialATKCollider(), temp)) {
+		AddBadGage();
+
+		//爆発
+		boss_->SPATKOnColliExplo();
+	}
+
 	// 範囲攻撃とプレイヤー
 	itrA = attacks.begin();
 	for (; itrA != attacks.end(); ++itrA)
@@ -371,10 +380,11 @@ void GameScene::CheckCollision()
 			{
 				some->OnCollision(temp);
 			}
+
+			// ボスとの接触
 			if (isCollisionBoss_)
 			{
-				BossEnemy* boss = boss_.get();
-				// ボスとの接触
+				BossEnemy* boss = boss_.get();	
 				if (some->GetCollider()->IsCollision(*boss->GetCollider(), temp))
 				{
 					some->OnCollision();
@@ -421,6 +431,7 @@ void GameScene::CheckCollision()
 			player_->BackVector(temp);
 		}
 
+		//雑魚敵と壁の判定
 		itrE = enemies.begin();
 		for (; itrE != enemies.end(); ++itrE)
 		{
@@ -441,6 +452,19 @@ void GameScene::CheckCollision()
 				some->OnCollision(direc);
 			}
 		}
+
+		//スペシャル攻撃の判定
+		if (boss_->GetSpecialATKCollider()->IsCollision(*wall->GetCollider(), temp, 1)) {
+
+			wall->OnCollision();
+
+			//押し返しベクトル計算
+			Vector3 direc = wall->GetDirection();
+			direc.SetNormalize();
+			direc *= Length(temp);
+			boss_->SPATKOnCollison(direc);
+		}
+
 		/*
 		//透明化処理
 		OBBCollider* obbc = wall->GetCollider();

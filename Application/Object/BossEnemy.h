@@ -197,6 +197,11 @@ public:
 	SphereCollider* GetSpecialATKCollider() { return specialATK.collider.get(); };
 
 	void SPATKOnCollison(const Vector3&direc);
+
+	//あたって爆破処理
+	void SPATKOnColliExplo();
+
+	bool IsSpecialAttackActive() { return specialATK.isShot; }
 private:
 
 	//プレイヤー方向を向く

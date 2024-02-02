@@ -2,6 +2,7 @@
 #include <random>
 #include <time.h>
 
+#include"Effect/EffectSphereExplo/ESphereExplo.h"
 #include "GlobalVariables/GlobalVariables.h"
 #include "ImGuiManager/ImGuiManager.h"
 #include "SomeEnemy.h"
@@ -352,15 +353,15 @@ void BossEnemy::Draw(const Matrix4x4& viewp)
 	hpBarFrame_->Draw();
 
 	if (specialATK.isShot) {
-		collider_->Draw();
+		//collider_->Draw();
 		specialATK.ammo->Draw();
 	}
 }
 
 void BossEnemy::OnCollision(float damage)
 {
-
-	if (!isInvisible_)
+	//特殊攻撃使用時ではない
+	if (!isInvisible_&&behavior_!=SPECIAL)
 	{
 		damage_ = damage;
 		reqBehavior_ = DAMAGE;
@@ -379,6 +380,13 @@ void BossEnemy::SPATKOnCollison(const Vector3& direc)
 	specialATK.velocity_.SetNormalize();
 	specialATK.velocity_ *= specialATK.ammoSpd_;
 	world_.UpdateMatrix();
+}
+
+void BossEnemy::SPATKOnColliExplo()
+{
+	//カウントを最大まで進める
+	int stateCount = specialATK.stateCount;
+	specialATK.count[stateCount].count = specialATK.count[stateCount].maxCount;
 }
 
 void BossEnemy::SeePlayer()
@@ -645,6 +653,16 @@ void BossEnemy::UpdateSpecialATK()
 				specialATK.isShot = false;
 
 				//以下爆発
+				ExploData data;
+				data.world = specialATK.ammo->GetWorld();
+				data.maxDeadCount = 60 * 1;
+				data.minScale = 0;
+				data.maxScale = specialATK.ammo->GetWorld().scale_.x*2.0f;
+				data.maxScaleCount = 30;
+				data.mincolor = { 1,1,1,0.5f };
+				data.minAlphaCount = 30;
+
+				EfSphereExplosion::GetInstance()->AddEffectData(data);
 			}
 
 

@@ -10,6 +10,9 @@ void EfSphereExplosion::Initialize(const std::string& tag)
 {
 	InstancingGameObject::Initialize(tag);
 
+	IMM_->SetEnableShader(tag_, false);
+	IMM_->SetBlendMode(tag_, BlendMode::kAdd);
+
 	datas_.clear();
 }
 
