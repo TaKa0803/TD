@@ -146,8 +146,14 @@ private:
 		//攻撃を打ったか否か
 		bool isShot = false;
 
+		//プレイヤー反射板にあたったか否か
+		bool isHitPlayerWall = false;
+
+		//プレイヤー反射板にあたった時の速度
+		float refrectSpd_ = 1.0f;
+
 		//弾の速度
-		float ammoSpd_ = 0.2f;
+		float ammoSpd_ = 0.5f;
 
 		//攻撃弾のオブジェクトデータ
 		std::unique_ptr<InstancingGameObject>ammo;
@@ -196,12 +202,20 @@ public:
 	//攻撃弾の壁反射処理
 	SphereCollider* GetSpecialATKCollider() { return specialATK.collider.get(); };
 
+	//壁反射処理
 	void SPATKOnCollison(const Vector3&direc);
+
+	//反射板にあたった時の処理
+	void SPATKReflectOnCollision(const Vector3& direc);
 
 	//あたって爆破処理
 	void SPATKOnColliExplo();
 
+	
+	//特殊弾が出ているか否か
 	bool IsSpecialAttackActive() { return specialATK.isShot; }
+
+	bool IsHitPlayerReflection() { return specialATK.isHitPlayerWall; }
 private:
 
 	//プレイヤー方向を向く

@@ -321,14 +321,7 @@ void GameScene::CheckCollision()
 
 	Vector3 temp{ 0.0f,0.0f,0.0f };
 
-	//プレイヤーとスペシャル攻撃との判定
-	//反射板なしでプレイヤーヒットで爆破
-	if (boss_->IsSpecialAttackActive()&&player_->GetCollider()->IsCollision(*boss_->GetSpecialATKCollider(), temp)) {
-		AddBadGage();
-
-		//爆発
-		boss_->SPATKOnColliExplo();
-	}
+	
 
 	// 範囲攻撃とプレイヤー
 	itrA = attacks.begin();
@@ -502,6 +495,7 @@ void GameScene::CheckCollision()
 		}
 		else
 		{
+			//プレイヤー反射板か否か
 			itrB = blasts.begin();
 			for (; itrB != blasts.end(); ++itrB)
 			{
@@ -513,12 +507,29 @@ void GameScene::CheckCollision()
 						echo->OnCollision();
 						some->OnCollision(echo->GetDirection());
 					}
+
+					//ボスの必殺技との処理
+					if (boss_->IsSpecialAttackActive() &&boss_->GetSpecialATKCollider()->IsCollision(*echo->GetCollider(), temp,3)) {
+						//押し返しベクトル計算
+						Vector3 direc = echo->GetDirection();
+						direc.SetNormalize();
+						direc *= Length(temp);
+						boss_->SPATKReflectOnCollision(direc);
+					}
 				}
 			}
 		}
 
 	}
 
+	//プレイヤーとスペシャル攻撃との判定
+	//反射板なしでプレイヤーヒットで爆破
+	if (!boss_->IsHitPlayerReflection() && boss_->IsSpecialAttackActive() && player_->GetCollider()->IsCollision(*boss_->GetSpecialATKCollider(), temp)) {
+		AddBadGage();
+
+		//爆発
+		boss_->SPATKOnColliExplo();
+	}
 
 	//std::list<SphereCollider*>::iterator blast = bCollider.begin();
 	//for (; blast != bCollider.end(); ++blast)

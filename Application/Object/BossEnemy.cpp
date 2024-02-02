@@ -380,6 +380,9 @@ void BossEnemy::SPATKOnCollison(const Vector3& direc)
 	specialATK.velocity_.SetNormalize();
 	specialATK.velocity_ *= specialATK.ammoSpd_;
 	world_.UpdateMatrix();
+
+	//プレイヤーが反射したという処理を消す
+	specialATK.isHitPlayerWall = false;
 }
 
 void BossEnemy::SPATKOnColliExplo()
@@ -387,6 +390,21 @@ void BossEnemy::SPATKOnColliExplo()
 	//カウントを最大まで進める
 	int stateCount = specialATK.stateCount;
 	specialATK.count[stateCount].count = specialATK.count[stateCount].maxCount;
+}
+
+void BossEnemy::SPATKReflectOnCollision(const Vector3&direc)
+{
+	//座標を変更して移動方向変更
+	world_.translate_ += direc;
+	specialATK.velocity_ = direc;
+	specialATK.velocity_.y = 0;
+	specialATK.velocity_.SetNormalize();
+	specialATK.velocity_ *= specialATK.refrectSpd_;
+	world_.UpdateMatrix();
+
+
+	//プレイヤーが反射したという処理を入れる
+	specialATK.isHitPlayerWall = true;
 }
 
 void BossEnemy::SeePlayer()
