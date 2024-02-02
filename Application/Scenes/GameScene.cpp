@@ -46,6 +46,8 @@ GameScene::GameScene()
 	}
 	EffectExp_ = EffectExplosion::GetInstance();
 	
+	eSExplo_ = EfSphereExplosion::GetInstance();
+
 
 #pragma region UI関係
 	for (int i = 0; i < kNumSprite; ++i)
@@ -98,8 +100,8 @@ void GameScene::Initialize()
 	}
 
 	EffectExp_->Initialize();
-	EfSphereExplosion::GetInstance()->Initialize("Explo");
-
+	
+	eSExplo_->Initialize("Explo");
 	//ゲージ初期化
 	goodGage_ = 0;
 	badGage_ = 0;
@@ -143,7 +145,7 @@ void GameScene::Update()
 	CheckCollision();
 
 	EffectExp_->Update();
-	EfSphereExplosion::GetInstance()->Update();
+	eSExplo_->Update();
 
 	UIUpdate();
 
@@ -166,7 +168,7 @@ void GameScene::Draw()
 	//player_->Draw(camera_->GetViewProjectionMatrix());
 
 	EffectExp_->Draw();
-	EfSphereExplosion::GetInstance()->Draw();
+	eSExplo_->Draw();
 
 #pragma region 観客
 	for (auto& step : steps_)

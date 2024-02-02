@@ -10,6 +10,7 @@
 #include"Sprite/Sprite.h"
 
 #include"Effect/EffectExplosion.h"
+#include"Effect/EffectSphereExplo/ESphereExplo.h"
 #include"Object/Step/Step.h"
 
 class GameScene : public IScene {
@@ -85,6 +86,7 @@ private:
 	//エフェクト
 	std::string eTag_ = "box";
 
+	EfSphereExplosion* eSExplo_;
 
 #pragma region ゲームルール関連
 

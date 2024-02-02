@@ -1,6 +1,7 @@
 #pragma once
 #include"WorldTransform/WorldTransform.h"
 #include"InstancingModelManager/InstancingModelManager.h"
+#include"InstancingGameObject/InstancingGameObject.h"
 #include<list>
 
 struct ExploData
@@ -18,9 +19,10 @@ struct ExploData
 
 	int minAlphaCount;//アルファ消え始めるまでのカウント
 
+	bool isDead = false;
 };
 
-class EfSphereExplosion {
+class EfSphereExplosion : public InstancingGameObject{
 
 public://シングルトンパターン
 	static EfSphereExplosion* GetInstance();
@@ -45,10 +47,7 @@ public:
 	void Draw();
 
 private:
-	std::string tag_;
-
-	//Instancingモデルのマネージャ
-	InstancingModelManager* IMM_ = nullptr;
+	
 
 	//データ群
 	std::list<ExploData>datas_;

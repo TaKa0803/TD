@@ -347,10 +347,11 @@ void SomeEnemy::SetExplo()
 {
 	ExploData data;
 	data.world.translate_ = world_.GetMatWorldTranslate();
-	data.maxDeadCount = cBURSTFRAME_;
+	data.maxDeadCount = 60;
+	data.minScale = 0.0f;
 	data.maxScale = 2.5f;
-	data.maxScaleCount = cBURSTFRAME_;
-	data.minAlphaCount = cBURSTFRAME_ / 2;
+	data.maxScaleCount = 60;
+	data.minAlphaCount = 60 / 2;
 
 	EfSphereExplosion::GetInstance()->AddEffectData(data);
 }
