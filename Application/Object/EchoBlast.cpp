@@ -12,8 +12,9 @@ void EchoBlast::Initialize(const Infomation& info)
 	collider_.reset(new OBBCollider);
 	collider_->Initialize("echo", colliderWorld_);
 
-	data_ = info;
-	switch (info.mode_)
+	SetInfomation(info);
+
+	switch (data_.mode_)
 	{
 	case ATTACKMODE::aSPOT:
 		InstancingGameObject::Initialize("PAmmo");
@@ -25,11 +26,9 @@ void EchoBlast::Initialize(const Infomation& info)
 		collider_->SetScale({ 5.0f,1.0f,1.0f });
 		colliderWorld_.translate_.z = 2.0f;
 		data_.power_ = 1.0f;
-		aliveFrame_ = 60;
+		aliveFrame_ = 10;
 		break;
 	}
-
-	SetInfomation(data_);
 
 	//switch (info.mode_)
 	//{
@@ -114,11 +113,12 @@ void EchoBlast::SetInfomation(const Infomation& info)
 	data_ = info;
 	direct3_ = { data_.direction_.x,0.0f,data_.direction_.y };
 	world_.translate_ = data_.popPosition_ + direct3_ * 0.3f;
-	world_.rotate_.y = GetYRotate(info.direction_);
+	world_.rotate_.y = GetYRotate(data_.direction_);
 	colliderWorld_.parent_ = &world_;
 
+	aliveFrame_ = 10;
 	//colliderWorld_.translate_.y = 1.0f;
 
 	isActive_ = true;
-	collider_->SetColor({ 0.0f,0.0f,0.0f,1.0f });
+	//collider_->SetColor({ 0.0f,0.0f,0.0f,1.0f });
 }

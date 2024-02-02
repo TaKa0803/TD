@@ -258,6 +258,20 @@ void Player::UpdateMIRROR()
 	// クラス内で定義
 	info.power_ = 1.0f;
 	blasts_.back()->SetInfomation(info);
+	
+	// 押している
+	if (input_->PushKey(DIK_E)||
+		input_->IsPushButton(kRightTrigger))
+	{
+		momentFrame_ = 30;
+	}
+	// 押していない
+	// 反射板終了動作のコードを書ける...?
+	else
+	{
+
+	}
+
 	momentFrame_--;
 	if (momentFrame_ <= 0)
 	{
