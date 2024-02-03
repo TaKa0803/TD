@@ -370,8 +370,11 @@ void GameScene::CheckCollision()
 				AddBadGage();
 				player_->OnCollision();
 				some->OnCollision();
-				//some->OnCollision(temp);
+				
+				//エフェクト発生
+				AddEffect(some->GetWorld());
 
+				//some->OnCollision(temp);
 			}
 		}
 		// 弾かれてる間の判定
@@ -384,6 +387,10 @@ void GameScene::CheckCollision()
 				AddBadGage();
 				player_->OnCollision();
 				some->OnCollision();
+				
+				//エフェクト発生
+				AddEffect(some->GetWorld());
+
 			}
 
 			// ボスとの接触

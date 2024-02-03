@@ -42,13 +42,13 @@ void SomeEnemy::Update()
 	}
 
 	//共通処理
-	if (behavior_ != BURST) {
+	//if (behavior_ != BURST) {
 		momentFrame_--;
 		if (momentFrame_ <= 0)
 		{
 			isActive_ = false;
 		}
-	}
+	//}
 
 	//雑魚敵のタイプによる処理
 	switch (eType_)
