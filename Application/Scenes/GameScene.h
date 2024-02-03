@@ -11,6 +11,7 @@
 
 #include"Effect/EffectExplosion.h"
 #include"Effect/EffectSphereExplo/ESphereExplo.h"
+#include"Effect/dZoneE/DZone.h"
 #include"Object/Step/Step.h"
 
 class GameScene : public IScene {
@@ -87,6 +88,8 @@ private:
 	std::string eTag_ = "box";
 
 	EfSphereExplosion* eSExplo_;
+
+	DZoneEffect* dZoneEM_;
 
 #pragma region ゲームルール関連
 

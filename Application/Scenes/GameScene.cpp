@@ -5,7 +5,7 @@
 #include"Scenes.h"
 #include"InstancingModelManager/InstancingModelManager.h"
 #include"TextureManager/TextureManager.h"
-#include"Effect/EffectSphereExplo/ESphereExplo.h"
+
 //#include "SphereCollider/SphereCollider.h"
 #include"RandomNum/RandomNum.h"
 
@@ -48,6 +48,7 @@ GameScene::GameScene()
 	
 	eSExplo_ = EfSphereExplosion::GetInstance();
 
+	dZoneEM_ = DZoneEffect::GetInstance();
 
 #pragma region UI関係
 	for (int i = 0; i < kNumSprite; ++i)
@@ -102,6 +103,8 @@ void GameScene::Initialize()
 	EffectExp_->Initialize();
 	
 	eSExplo_->Initialize("Explo");
+
+	dZoneEM_->Initialize();
 	//ゲージ初期化
 	goodGage_ = 0;
 	badGage_ = 0;
@@ -144,10 +147,11 @@ void GameScene::Update()
 
 	CheckCollision();
 
+	UIUpdate();
+
 	EffectExp_->Update();
 	eSExplo_->Update();
-
-	UIUpdate();
+	dZoneEM_->Update();
 
 
 	SceneChange();
@@ -169,6 +173,7 @@ void GameScene::Draw()
 
 	EffectExp_->Draw();
 	eSExplo_->Draw();
+	dZoneEM_->Draw();
 
 #pragma region 観客
 	for (auto& step : steps_)

@@ -108,6 +108,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\Effect\dZoneE\DZone.cpp" />
     <ClCompile Include="Application\Effect\EffectExplosion.cpp" />
     <ClCompile Include="Application\Effect\EffectSphereExplo\ESphereExplo.cpp" />
     <ClCompile Include="Application\Object\AreaAttack.cpp" />
@@ -205,6 +206,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\Effect\dZoneE\DZone.h" />
     <ClInclude Include="Application\Effect\EffectExplosion.h" />
     <ClInclude Include="Application\Effect\EffectSphereExplo\ESphereExplo.h" />
     <ClInclude Include="Application\Object\AreaAttack.h" />

@@ -3,6 +3,7 @@
 #include <time.h>
 
 #include"Effect/EffectSphereExplo/ESphereExplo.h"
+#include"Effect/dZoneE/DZone.h"
 #include "GlobalVariables/GlobalVariables.h"
 #include "ImGuiManager/ImGuiManager.h"
 #include "SomeEnemy.h"
@@ -491,6 +492,19 @@ void BossEnemy::CreateAttack()
 	info.power_ = 1.0f;
 	data->Initialize(info);
 	attacks_.emplace_back(data);
+
+	//エリア生成
+	DZoneEData effect;
+	effect.maxCount = 60;
+	effect.tenmetu = 3;
+	effect.isSphere = true;
+	effect.pos.st = playerW_->GetMatWorldTranslate();
+	effect.pos.ed = playerW_->GetMatWorldTranslate();
+
+	effect.scale.st = { 10.0f,10.0f,10.0f };
+	effect.scale.ed = { 10.0f,10.0f,10.0f };
+
+	DZoneEffect::GetInstance()->AddData(effect);
 }
 
 void BossEnemy::HPBarUpdate()
