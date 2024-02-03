@@ -46,7 +46,7 @@ public:
 	void SetRadius(float wide) { radius_ = wide; world_.scale_ = { radius_,radius_,radius_ }; }
 
 	//座標設定
-	void SetTranslate(const Vector3& pos) { world_.translate_ = pos; }
+	void SetTranslate(const Vector3& pos) { world_.translate_ = pos; world_.UpdateMatrix(); }
 
 	//フラグに併せて色変更
 	void SetColor(bool hit);

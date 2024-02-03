@@ -1,5 +1,7 @@
 #pragma once
 #include"WorldTransform/WorldTransform.h"
+#include"ColliderOBB/OBBCollider.h"
+#include"SphereCollider/SphereCollider.h"
 #include"struct.h"
 
 
@@ -30,6 +32,9 @@ public:
 	/// マトリックス更新
 	/// </summary>
 	void UpdateMatrixes();
+
+	//カメラとobb判定
+	void IsCollision(OBBCollider*obb);
 public:
 
 	/// <summary>
@@ -37,6 +42,8 @@ public:
 	/// </summary>
 	/// <returns>translateを返却</returns>
 	const Vector3& GetFeaturedPos()const { return CameraMotionSupport_.translate_; }
+
+	const WorldTransform& GetFeaturedWorld()const { return *FeaturedWorldTransform_; }
 
 	/// <summary>
 	/// メインカメラのWorldTransform取得
@@ -102,7 +109,7 @@ private:
 	//完全追従するか座標のみ取得するか
 	bool isOnlyGetPosition = true;
 
-	//
+	//描画距離
 	float FarZ = 1000.0f;
 
 	//ビュー
@@ -114,6 +121,14 @@ private:
 	//VP
 	Matrix4x4 viewProjection_ = MakeIdentity4x4();
 
+	//注目点都の値
+	float farFeaturedPos_ = -50;
+
 	//カメラの視線
 	Segment segment_;
+
+	//あたった時の追加で寄せる量
+	float direction = 0;
+
+	bool isCollision_ = false;
 };

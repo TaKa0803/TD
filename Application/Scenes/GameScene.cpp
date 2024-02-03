@@ -128,9 +128,7 @@ void GameScene::Update()
 	boss_->SetGage(goodGage_,maxGoodGage_);
 	boss_->Update();
 
-	//カメラ更新
-	CameraUpdate();
-
+	
 
 #pragma region 観客
 	for (auto& step : steps_)
@@ -139,6 +137,8 @@ void GameScene::Update()
 	}
 #pragma endregion
 
+	//カメラ更新
+	CameraUpdate();
 
 #pragma endregion
 
@@ -457,6 +457,9 @@ void GameScene::CheckCollision()
 			direc *= Length(temp);
 			boss_->SPATKOnCollison(direc);
 		}
+
+		//カメラとの判定
+		camera_->IsCollision(wall->GetCollider());
 
 		/*
 		//透明化処理

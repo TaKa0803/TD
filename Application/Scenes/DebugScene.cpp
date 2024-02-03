@@ -17,7 +17,7 @@ DebugScene::DebugScene()
 	EffectExp_ = EffectExplosion::GetInstance();
 }
 
-DebugScene::~DebugScene(){}
+DebugScene::~DebugScene() {}
 
 
 void DebugScene::Initialize()
@@ -30,7 +30,7 @@ void DebugScene::Initialize()
 	sWorld_.Initialize();
 
 	sphere_ = std::make_unique<SphereCollider>();
-	sphere_->Initialize("sphere",sWorld_);
+	sphere_->Initialize("sphere", sWorld_);
 
 	pWorld_.Initialize();
 	plane_ = std::make_unique<PlaneCollider>();
@@ -66,18 +66,16 @@ void DebugScene::Update()
 	plane_->Update();
 	obb_->Update();
 	obb2_->Update();
-	
+
 	Vector3 backV;
-	if (sphere_->IsCollision(*obb_.get(), backV,1)) {
+	if (sphere_->IsCollision(*obb_.get(), backV, 1)) {
 		sWorld_.translate_ += backV;
 		sWorld_.UpdateMatrix();
 		sphere_->Update();
 	}
 
-	if (obb2_->IsCollision(camera_->GetSegment())) {
-		obb2_->SetColor(true);
 
-	}
+	camera_->IsCollision(obb2_.get());
 
 
 	if (input_->TriggerKey(DIK_SPACE)) {
