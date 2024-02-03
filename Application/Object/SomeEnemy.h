@@ -62,7 +62,7 @@ private:
 	bool isHit_ = false;
 
 	//飛ぶ速度
-	float burstSpd_ = 5.0f;
+	float burstSpd_ = 2.0f;
 
 #pragma region 移動関係
 	//プレイヤーのworldデータ

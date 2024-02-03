@@ -135,6 +135,17 @@ void BossEnemy::Update()
 		{
 			return false;
 		}
+		//エフェクトを生成
+		ExploData data;
+		data.world.translate_ = some->GetWorld().GetMatWorldTranslate();
+		data.maxDeadCount = 60;
+		data.minScale = 0.0f;
+		data.maxScale = 2.5f;
+		data.maxScaleCount = 60;
+		data.minAlphaCount = 60 / 2;
+
+		EfSphereExplosion::GetInstance()->AddEffectData(data);
+
 		return true;
 		});
 
