@@ -490,6 +490,8 @@ void GameScene::CheckCollision()
 						echo->OnCollision();
 						some->OnCollision(echo->GetDirection());
 					}
+
+					
 				}
 			}
 		}
@@ -508,18 +510,29 @@ void GameScene::CheckCollision()
 						some->OnCollision(echo->GetDirection());
 					}
 
-					//ボスの必殺技との処理
-					if (boss_->IsSpecialAttackActive() &&boss_->GetSpecialATKCollider()->IsCollision(*echo->GetCollider(), temp,3)) {
-						//押し返しベクトル計算
-						Vector3 direc = echo->GetDirection();
-						direc.SetNormalize();
-						direc *= Length(temp);
-						boss_->SPATKReflectOnCollision(direc);
-					}
 				}
+
+				
 			}
+
+			
 		}
 
+	}
+
+
+	//ボスの必殺技との処理
+	if (boss_->IsSpecialAttackActive()) {
+		for (; itrB != blasts.end(); ++itrB){
+			EchoBlast* echo = itrB->get();
+			if (!echo->GetIsSpot()&&boss_->GetSpecialATKCollider()->IsCollision(*echo->GetCollider(), temp, 3)) {
+				//押し返しベクトル計算
+				Vector3 direc = echo->GetDirection();
+				direc.SetNormalize();
+				direc *= Length(temp);
+				boss_->SPATKReflectOnCollision(direc);
+			}
+		}
 	}
 
 	//プレイヤーとスペシャル攻撃との判定
