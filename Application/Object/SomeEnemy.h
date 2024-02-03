@@ -4,6 +4,7 @@
 #include "SphereCollider/SphereCollider.h"
 
 #include <optional>
+#include<iostream>
 
 class SomeEnemy :public InstancingGameObject
 {
@@ -71,7 +72,7 @@ private:
 	float spd_ = 0.1f;
 
 	//プレイヤーとの最短距離
-	float nearPRadius_ = 2.0f;
+	float nearPRadius_ = 5.0f;
 #pragma endregion
 
 #pragma region 攻撃関係
@@ -95,6 +96,12 @@ private:
 
 	//攻撃状態カウント
 	int ATKStateCount_ = 0;
+
+	//攻撃方向
+	Vector3 atkDirection_{};
+
+	//攻撃移動速度
+	float atkSpd_ = 0.1f;
 #pragma endregion
 
 

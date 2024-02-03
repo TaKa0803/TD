@@ -83,7 +83,7 @@ void SomeEnemy::DebagWindow(int num)
 
 void SomeEnemy::Draw()
 {
-	if (!isActive_){
+	if (!isActive_) {
 		return;
 	}
 	//collider_->Draw();
@@ -304,44 +304,61 @@ void SomeEnemy::MoveToPlayer()
 
 void SomeEnemy::ATKToPlayerUpdate()
 {
+	//攻撃
+	if (ATKStateCount_ == wait) {
+		//プレイヤーの方向にmuku
+		Vector3 moveVelo{};
+		moveVelo = playerW_->GetMatWorldTranslate();
+
+		Vector3 leng = moveVelo - world_.GetMatWorldTranslate();
+
+
+		//muki
+		if (leng != Vector3(0, 0, 0)) {
+			world_.rotate_.y = GetYRotate({ leng.x,leng.z });
+		}
+	}
+
+	//攻撃時の更新処理
+	if (ATKStateCount_ == atk) {
+		world_.translate_ += atkDirection_;
+	}
+
 	//カウント最大数で変化
 	if (atkCount_[ATKStateCount_].count++ >= atkCount_[ATKStateCount_].maxCount) {
 
-		//攻撃
-		if (ATKStateCount_ == wait) {
-			//プレイヤーの方向に移動
-			Vector3 moveVelo{};
-			moveVelo = playerW_->GetMatWorldTranslate();
+		//上限ではなければ処理
+		if (ATKStateCount_ != back) {
+			ATKStateCount_++;
+			//先のデータ初期化
+			atkCount_[ATKStateCount_].count = 0;
+			atkCount_[ATKStateCount_].initialize = false;
 
-			Vector3 leng = moveVelo - world_.GetMatWorldTranslate();
-
-
-			//muki
-			if (leng != Vector3(0, 0, 0)) {
-				world_.rotate_.y = GetYRotate({ leng.x,leng.z });
-			}
-		}
-
-			//上限ではなければ処理
-			if (ATKStateCount_ != back) {
-				ATKStateCount_++;
-				//先のデータ初期化
-				atkCount_[ATKStateCount_].count = 0;
-				atkCount_[ATKStateCount_].initialize = false;
-
-				//過去データ初期化
-				atkCount_[ATKStateCount_ - 1].initialize = false;
-				atkCount_[ATKStateCount_ - 1].count = 0;
-
-			}
-			else {
-
-				//待機状態に戻して初期化
-				reqBehavior_ = IDOL;
-			}
+			//過去データ初期化
+			atkCount_[ATKStateCount_ - 1].initialize = false;
+			atkCount_[ATKStateCount_ - 1].count = 0;
 
 		}
+		else {
+
+			//待機状態に戻して初期化
+			reqBehavior_ = IDOL;
+		}
+
+		//攻撃の初期化処理
+		if (ATKStateCount_ == atk) {
+			Vector3 moveVelo = playerW_->GetMatWorldTranslate();
+			Vector3 pos = world_.GetMatWorldTranslate();
+
+			Vector3 leng = moveVelo - pos;
+
+
+			atkDirection_ = leng.SetNormalize() * atkSpd_;
+		
+		}
+
 	}
+}
 
 void SomeEnemy::SetExplo()
 {
@@ -356,18 +373,18 @@ void SomeEnemy::SetExplo()
 	EfSphereExplosion::GetInstance()->AddEffectData(data);
 }
 
-	void SomeEnemy::OnEnemy(const Vector3 & direction)
+void SomeEnemy::OnEnemy(const Vector3& direction)
+{
+	if (eType_ == Explo)
 	{
-		if (eType_ == Explo)
-		{
-			isFactor_ = true;
-			reqBehavior_ = DESTROY;
-		}
-		else if (eType_ == Move)
-		{
-			isFactor_ = true;
-			direct3_ = Normalize(direction);
-			reqBehavior_ = BURST;
-		}
+		isFactor_ = true;
+		reqBehavior_ = DESTROY;
 	}
+	else if (eType_ == Move)
+	{
+		isFactor_ = true;
+		direct3_ = Normalize(direction);
+		reqBehavior_ = BURST;
+	}
+}
 

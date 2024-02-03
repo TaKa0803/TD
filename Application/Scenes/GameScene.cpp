@@ -363,6 +363,16 @@ void GameScene::CheckCollision()
 				AddGoodGage(some->GetAttackPower());
 
 			}
+
+			//プレイヤーと爆破
+			if (some->GetCollider()->IsCollision(*player_->GetCollider(), temp))
+			{
+				AddBadGage();
+				player_->OnCollision();
+				some->OnCollision();
+				//some->OnCollision(temp);
+
+			}
 		}
 		// 弾かれてる間の判定
 		else if (itrE->get()->GetIsBurst())
@@ -371,7 +381,9 @@ void GameScene::CheckCollision()
 			//プレイヤーと飛ばされている敵の判定
 			if (some->GetCollider()->IsCollision(*player_->GetCollider(), temp))
 			{
-				some->OnCollision(temp);
+				AddBadGage();
+				player_->OnCollision();
+				some->OnCollision();
 			}
 
 			// ボスとの接触
@@ -542,7 +554,7 @@ void GameScene::CheckCollision()
 	//反射板なしでプレイヤーヒットで爆破
 	if (!boss_->IsHitPlayerReflection() && boss_->IsSpecialAttackActive() && player_->GetCollider()->IsCollision(*boss_->GetSpecialATKCollider(), temp)) {
 		AddBadGage();
-
+		player_->OnCollision();
 		//爆発
 		boss_->SPATKOnColliExplo();
 	}
