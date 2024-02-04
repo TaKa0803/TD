@@ -11,7 +11,7 @@
 #include"Scenes/ClearScene/ClearScene.h"
 #include"Scenes/FailScene/FailScene.h"
 #include"Scenes/DebugScene.h"
-
+#include"CG/CGScene.h"
 #pragma endregion
 
 
@@ -28,12 +28,14 @@ void SceneManager::Initialize()
 	sceneArr_[CLEAR] = std::make_unique<ClearScene>();
 	sceneArr_[FAIL] = std::make_unique<FailScene>();
 	sceneArr_[DEBUG] = std::make_unique<DebugScene>();
+	sceneArr_[CG] = std::make_unique<CGScnene>();
 	sceneName_.clear();
 	sceneName_.push_back("TITLE");
 	sceneName_.push_back("GAME");
 	sceneName_.push_back("CLEAR");
 	sceneName_.push_back("FAIL");
 	sceneName_.push_back("DEBUG");
+	sceneName_.push_back("CG");
 
 
 	/*
@@ -44,7 +46,7 @@ void SceneManager::Initialize()
 
 
 	//初期シーン設定
-	IScene::SetSceneNo(TITLE);
+	IScene::SetSceneNo(CG);
 
 }
 

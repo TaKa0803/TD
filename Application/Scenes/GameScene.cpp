@@ -162,9 +162,9 @@ void GameScene::Draw()
 
 	skydome_->Draw();
 
-	player_->Draw(camera_->GetViewProjectionMatrix());
+	player_->Draw(*camera_);
 	//地面
-	plane_->Draw(camera_->GetViewProjectionMatrix());
+	plane_->Draw(*camera_);
 
 	boss_->Draw(camera_->GetViewProjectionMatrix());
 

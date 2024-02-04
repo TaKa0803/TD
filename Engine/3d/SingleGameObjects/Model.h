@@ -9,10 +9,11 @@
 #include"struct.h"
 
 #include"SingleModelManager/ModelManager.h"
+#include"Camera/Camera.h"
 
 class Model {
 public:
-	
+
 
 	/// <summary>
 	/// デストラクタ
@@ -27,7 +28,7 @@ public:
 	/// <param name="kSubdivision">分割量</param>
 	/// <param name="enableLighting">影をつけるか</param>
 	/// <returns>モデルデータ</returns>
-	static Model* CreateSphere(float kSubdivision, bool enableLighting, const std::string& filePath="");
+	static Model* CreateSphere(float kSubdivision, bool enableLighting, const std::string& filePath = "");
 
 	/// <summary>
 	/// OBJ作成
@@ -44,7 +45,7 @@ public:
 	/// <param name="WVP"></param>
 	/// <param name="viewProjection"></param>
 	/// <param name="texture"></param>
-	void Draw(const Matrix4x4& WVP,const Matrix4x4& viewProjection, int texture=-1);
+	void Draw(const Matrix4x4& WVP, const Camera& camera, int texture = -1);
 
 	/// <summary>
 	/// Debug用ImGui表示
@@ -64,7 +65,7 @@ public:
 	/// <param name="ans">画像を使うか</param>
 	void IsEnableTexture(bool ans) { materialData_->enableTexture = ans; }
 #pragma region セッター
-	
+
 	/// <summary>
 	/// uv座標の変換
 	/// </summary>
@@ -100,20 +101,20 @@ public:
 
 	const Vector3 GetUVScale()const { return uvscale; }
 private:
-	
-	
+
+
 	//初期化
 	void Initialize(
 		std::string name,
-		int point, 
+		int point,
 		ID3D12Resource* vertexRtea,
 		D3D12_VERTEX_BUFFER_VIEW vertexBufferView,
 		ID3D12Resource* wvpResource,
-		WorldTransformation* wvpData		
+		WorldTransformation* wvpData
 	);
 
 private:
-	
+
 	DirectXFunc* DXF_;
 
 	ObjectPSO* grarphics_;
@@ -142,8 +143,12 @@ private:
 	ID3D12Resource* directionalLightResource_;
 	DirectionalLight* directionalLightData_ = nullptr;
 
+	ID3D12Resource* cameraResource_;
+	Camera4GPU* cameraData_ = nullptr;
+
+
 	Vector3 uvpos{};
-	Vector3 uvscale{1.0f,1.0f,1.0f};
+	Vector3 uvscale{ 1.0f,1.0f,1.0f };
 	Vector3 uvrotate{};
 };
 

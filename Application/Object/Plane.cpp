@@ -27,6 +27,6 @@ void Plane::DebagWindow() {
 	
 }
 
-void Plane::Draw(const Matrix4x4& viewp) {
+void Plane::Draw(const Camera& viewp) {
 	GameObject::Draw(viewp);
 }

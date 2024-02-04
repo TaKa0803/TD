@@ -68,23 +68,28 @@ struct ModelData {
 
 
 struct Material {
+	//色
 	Vector4 color;
-		
-	Matrix4x4 uvTransform;	   
-	
+	//UV座標
+	Matrix4x4 uvTransform;
+
 	int32_t enableLighting;
 	//float padding[3];
 
 	int32_t enableTexture;
 	//float padding2[3];
-	
+
 	int32_t enableHalfLambert;
 	//float padding3[3];
-	
+
 	float discardNum;
 	//float padding4[3];
 
-	
+	int32_t enablePhongReflection = 1;
+
+	//光沢度
+	float shininess = 1.0f;
+
 };
 
 struct DirectionalLight {
@@ -94,6 +99,9 @@ struct DirectionalLight {
 	//float padding2[3];
 };
 
+struct Camera4GPU {
+	Vector3 worldPosition;
+};
 
 struct Segment {
 	Vector3 origin;

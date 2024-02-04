@@ -356,7 +356,7 @@ void BossEnemy::Draw(const Matrix4x4& viewp)
 	{
 		itra->get()->Draw();
 	}
-	GameObject::Draw(viewp);
+	GameObject::Draw(*camera_);
 	collider_->Draw();
 
 

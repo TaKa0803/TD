@@ -129,7 +129,7 @@ void Player::DebagWindow()
 	}
 }
 
-void Player::Draw(const Matrix4x4& viewp)
+void Player::Draw(const Camera& viewp)
 {
 	GameObject::Draw(viewp);
 	collider_->Draw();
