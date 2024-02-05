@@ -114,6 +114,9 @@ bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec, float divis
 
 	float t = 0;
 	while (t <= 1.0f) {
+		if (divisionVolume < 1.0f) {
+			t = 1.0f;
+		}
 
 		//過去位置から現在位置までの場所取得
 		Vector3 pos = Esing(preWorld_.GetMatWorldTranslate(), world_.GetMatWorldTranslate(), t);
@@ -149,7 +152,7 @@ bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec, float divis
 				velo *= radius_;
 
 				backVec = velo;
-
+				
 			}
 			else {
 				///押し出しベクトルを利用して計算
@@ -164,7 +167,7 @@ bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec, float divis
 
 				//渡す
 				backVec = norVe - velo;
-
+				
 
 			}
 
@@ -198,7 +201,15 @@ bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec, float divis
 				backVec += v1;
 			}
 
-			return true;
+			if (backVec == Vector3(0, 0, 0)) {
+				t += 1.0f / divisionVolume;
+				continue;
+			}
+			else {
+				return true;
+			}
+
+			
 		}
 		else {
 
@@ -212,8 +223,9 @@ bool SphereCollider::IsCollision(OBBCollider& obb, Vector3& backVec, float divis
 #endif // _DEBUG
 		}
 
-
+		
 		t += 1.0f / divisionVolume;
+		
 	}
 
 
