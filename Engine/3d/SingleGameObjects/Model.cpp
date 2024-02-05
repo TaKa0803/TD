@@ -127,9 +127,8 @@ Model* Model::CreateFromOBJ(const std::string& filePath)
 	DirectXFunc* DXF = DirectXFunc::GetInstance();
 
 #pragma region モデル
-	ModelManager*mManager= ModelManager::GetInstance();
-	
-
+	//モデルのデータ取得
+	ModelManager* mManager = ModelManager::GetInstance();
 	ModelData modeltea =mManager->GetModelData(filePath); 
 
 	

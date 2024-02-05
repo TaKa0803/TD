@@ -5,7 +5,7 @@
 #pragma comment(lib,"dxguid.lib")
 #pragma comment(lib,"Xinput9_1_0.lib")
 
-
+#include<imgui.h>
 #include<cassert>
 
 Input* Input::GetInstance() {
@@ -52,6 +52,22 @@ void Input::Update() {
 	if (res != ERROR_SUCCESS) {
 		//assert(false);
 	}
+}
+
+void Input::Debug()
+{
+#ifdef _DEBUG
+	if (ImGui::BeginMenu("input")) {
+
+		ImGui::Text("IsActive");
+		ImGui::Text("controller :%d", IsControllerActive());
+		ImGui::Text("R Stick : %4.1f ,%4.1f", GetjoyStickR());
+		ImGui::Text("L Stick : %4.1f ,%4.1f", GetjoyStickL());
+		ImGui::Text("A B X Y LT RT: %d ,%d ,%d ,%d", IsPushButton(kButtonA), IsPushButton(kButtonB), IsPushButton(kButtonX), IsPushButton(kButtonY), IsPushButton(kLeftTrigger), IsPushButton(kRightTrigger));
+		ImGui::Text("up down left right", IsPushButton(kUp), IsPushButton(kDown));
+	}
+#endif // _DEBUG
+
 }
 
 bool Input::PushKey(BYTE keyNum) {

@@ -37,7 +37,7 @@ public:
 	ModelData GetModelData( const std::string& filename);
 private:
 	//モデルデータのパスが記入されたファイルへのパス
-	const std::string& modelPathFile = "resources/modelPathFile.json";
+	const std::string& modelPathFile = "resources/jsonfile/modelPathFile.json";
 	
 	//モデルデータのパス群
 	const std::string& groupName = "modelPathFile";

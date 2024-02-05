@@ -137,10 +137,11 @@ void InstancingModel::Draw(const Matrix4x4& viewProjection, int texture) {
 
 void InstancingModel::Debug(const char* name)
 {
+#ifdef _DEBUG
 	bool uselight = materialData_->enableLighting;
 	bool useHalfLam = materialData_->enableHalfLambert;
 	bool useTex = materialData_->enableTexture;
-	
+
 
 	Vector4 color = materialData_->color;
 
@@ -154,6 +155,9 @@ void InstancingModel::Debug(const char* name)
 
 		ImGui::EndMenu();
 	}
+#endif // DEBUG
+
+	
 }
 
 void InstancingModel::Initialize(

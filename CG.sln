@@ -19,24 +19,31 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
+		Demo|x64 = Demo|x64
 		Profile|x64 = Profile|x64
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{AB69E61D-7E95-4AD3-9B60-BFBD7C8C91E3}.Debug|x64.ActiveCfg = Debug|x64
 		{AB69E61D-7E95-4AD3-9B60-BFBD7C8C91E3}.Debug|x64.Build.0 = Debug|x64
+		{AB69E61D-7E95-4AD3-9B60-BFBD7C8C91E3}.Demo|x64.ActiveCfg = Demo|x64
+		{AB69E61D-7E95-4AD3-9B60-BFBD7C8C91E3}.Demo|x64.Build.0 = Demo|x64
 		{AB69E61D-7E95-4AD3-9B60-BFBD7C8C91E3}.Profile|x64.ActiveCfg = Release|x64
 		{AB69E61D-7E95-4AD3-9B60-BFBD7C8C91E3}.Profile|x64.Build.0 = Release|x64
 		{AB69E61D-7E95-4AD3-9B60-BFBD7C8C91E3}.Release|x64.ActiveCfg = Release|x64
 		{AB69E61D-7E95-4AD3-9B60-BFBD7C8C91E3}.Release|x64.Build.0 = Release|x64
 		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Debug|x64.ActiveCfg = Debug|x64
 		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Debug|x64.Build.0 = Debug|x64
+		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Demo|x64.ActiveCfg = Demo|x64
+		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Demo|x64.Build.0 = Demo|x64
 		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Profile|x64.ActiveCfg = Profile|x64
 		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Profile|x64.Build.0 = Profile|x64
 		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Release|x64.ActiveCfg = Release|x64
 		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Release|x64.Build.0 = Release|x64
 		{83E6D898-002F-4495-8FFD-40BB189340BD}.Debug|x64.ActiveCfg = Debug|x64
 		{83E6D898-002F-4495-8FFD-40BB189340BD}.Debug|x64.Build.0 = Debug|x64
+		{83E6D898-002F-4495-8FFD-40BB189340BD}.Demo|x64.ActiveCfg = Demo|x64
+		{83E6D898-002F-4495-8FFD-40BB189340BD}.Demo|x64.Build.0 = Demo|x64
 		{83E6D898-002F-4495-8FFD-40BB189340BD}.Profile|x64.ActiveCfg = Debug|x64
 		{83E6D898-002F-4495-8FFD-40BB189340BD}.Profile|x64.Build.0 = Debug|x64
 		{83E6D898-002F-4495-8FFD-40BB189340BD}.Release|x64.ActiveCfg = Release|x64

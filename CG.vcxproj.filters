@@ -79,6 +79,8 @@
     <ClCompile Include="Application\Effect\EffectSphereExplo\ESphereExplo.cpp" />
     <ClCompile Include="Engine\Math\Vector4.cpp" />
     <ClCompile Include="Application\Effect\dZoneE\DZone.cpp" />
+    <ClCompile Include="Application\GE\Scene\GEScene.cpp" />
+    <ClCompile Include="Application\GE\Scene\GEModelScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Object\EchoBlast.h" />
@@ -152,13 +154,15 @@
     <ClInclude Include="Application\Object\Step\Step.h" />
     <ClInclude Include="Application\Effect\EffectSphereExplo\ESphereExplo.h" />
     <ClInclude Include="Application\Effect\dZoneE\DZone.h" />
+    <ClInclude Include="Application\GE\Scene\GEScene.h" />
+    <ClInclude Include="Application\GE\Scene\GEModelScene.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\enemyPopData.json" />
+    <None Include="resources\jsonfile\enemyPopData.json" />
     <None Include="resources\GlobalVariables\StageWall.json" />
     <None Include="resources\jsonfile\resourcePath.json" />
-    <None Include="resources\modelPathFile.json" />
-    <None Include="resources\PlayerATKData.json" />
+    <None Include="resources\jsonfile\modelPathFile.json" />
+    <None Include="resources\jsonfile\PlayerATKData.json" />
     <None Include="resources\shaders\InstancingObject.hlsli" />
     <None Include="resources\shaders\Object3d.hlsli" />
     <None Include="resources\shaders\Particle.hlsli" />

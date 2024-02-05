@@ -42,6 +42,8 @@ public:
 
 	void Update();
 
+	void Debug();
+
 	bool PushKey(BYTE keyNum);
 
 	bool TriggerKey(BYTE keyNum);
