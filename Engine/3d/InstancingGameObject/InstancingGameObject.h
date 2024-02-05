@@ -26,6 +26,8 @@ public:
 
 	void SetScale(float scale) { world_.scale_ = { scale,scale ,scale }; }
 
+	void SetRotate(const Vector3& rotate) { world_.rotate_ = rotate; }
+
 	void SetParent(const WorldTransform* parent) { world_.parent_ = parent; }
 	//開放処理
 	virtual ~InstancingGameObject();
