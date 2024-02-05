@@ -2,6 +2,7 @@
 
 #include "SphereCollider/SphereCollider.h"
 #include "ImGuiManager/ImGuiManager.h"
+#include"Effect/EffectSphereExplo/ESphereExplo.h"
 
 void AreaAttack::Initialize(const Infomation& info)
 {
@@ -46,6 +47,7 @@ void AreaAttack::Update()
 		case AreaAttack::OUTBREAK:
 			momentFrame_ = 5;
 			colliderWorld_.translate_.y = 0.0f;
+			SetExplo();
 			break;
 		case AreaAttack::SUSTAIN:
 			momentFrame_ = 20;
@@ -83,7 +85,7 @@ void AreaAttack::Update()
 		collider_->Update();
 		//sCollider_->Update();
 		//タグに対応したモデルにワールド追加
-		IMM_->SetData(tag_, colliderWorld_);
+		//IMM_->SetData(tag_, colliderWorld_);
 		break;
 	case AreaAttack::SUSTAIN:
 		momentFrame_--;
@@ -100,7 +102,7 @@ void AreaAttack::Update()
 		collider_->Update();
 		//sCollider_->Update();
 		//タグに対応したモデルにワールド追加
-		IMM_->SetData(tag_, colliderWorld_);
+		//IMM_->SetData(tag_, colliderWorld_);
 		break;
 	default:
 		break;
@@ -130,4 +132,17 @@ void AreaAttack::DebugWindow()
 
 void AreaAttack::OnCollision()
 {
+}
+
+void AreaAttack::SetExplo()
+{
+	ExploData data;
+	data.world.translate_ = world_.GetMatWorldTranslate();
+	data.maxDeadCount = 30;
+	data.minScale = 0.0f;
+	data.maxScale = 12.5f;
+	data.maxScaleCount = 10;
+	data.minAlphaCount = 15;
+
+	EfSphereExplosion::GetInstance()->AddEffectData(data);
 }
