@@ -7,6 +7,7 @@
 #include"SingleModelManager/ModelManager.h"
 #include"functions/function.h"
 
+#include<imgui.h>
 /*
 #include<assimp/Importer.hpp>
 #include<assimp/scene.h>
@@ -131,6 +132,27 @@ void InstancingModel::Draw(const Matrix4x4& viewProjection, int texture) {
 		//描画！		
 		DXF_->GetCMDList()->DrawInstanced(point_, index, 0, 0);
 
+	}
+}
+
+void InstancingModel::Debug(const char* name)
+{
+	bool uselight = materialData_->enableLighting;
+	bool useHalfLam = materialData_->enableHalfLambert;
+	bool useTex = materialData_->enableTexture;
+	
+
+	Vector4 color = materialData_->color;
+
+	if (ImGui::BeginMenu(name)) {
+
+		ImGui::Text("Material");
+		ImGui::Checkbox("lighting", &uselight);
+		ImGui::Checkbox("HalfLam", &useHalfLam);
+		ImGui::Checkbox("texture", &useTex);
+		ImGui::ColorEdit4("color", &color.x);
+
+		ImGui::EndMenu();
 	}
 }
 

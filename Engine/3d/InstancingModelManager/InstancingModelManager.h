@@ -44,7 +44,7 @@ public:
 	/// <param name="tag"></param>
 	bool SerchTag(const std::string& tag);
 
-
+	void Debug(const std::string& tag,  const char* name);
 public:
 	/// <summary>
 	/// タグのモデルのα値取得

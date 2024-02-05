@@ -125,6 +125,16 @@ bool InstancingModelManager::SerchTag(const std::string& tag) {
 	return false;
 }
 
+void InstancingModelManager::Debug(const std::string& tag,const char*name)
+{
+	if (modelDatas_[tag] != nullptr) {
+		modelDatas_[tag]->Debug(name);
+		return;
+	}
+	//タグがない
+	assert(false);
+}
+
 float InstancingModelManager::GetAlpha(const std::string& tag)
 {
 	////タグのモデルデータ探索
