@@ -25,7 +25,7 @@ Model::~Model() {
 	wvpResource_->Release();
 	materialResource_->Release();
 	directionalLightResource_->Release();
-
+	cameraResource_->Release();
 }
 
 Model* Model::CreateSphere(float kSubdivision,bool enableLighting, const std::string& filePath)
@@ -215,6 +215,8 @@ void Model::Initialize(
 	materialData_->enableTexture = true;
 	materialData_->enableHalfLambert = true;
 	materialData_->discardNum = 0.0f;
+	materialData_->enablePhongReflection = 1;
+	materialData_->shininess = 1.0f;
 #pragma endregion
 
 #pragma region ライト
@@ -226,20 +228,29 @@ void Model::Initialize(
 	directionalLightData_->intensity = 1.0f;
 #pragma endregion
 
+#pragma region カメラ関係
+	cameraResource_ = CreateBufferResource(DXF_->GetDevice(), sizeof(Camera4GPU));
+	cameraResource_->Map(0, nullptr, reinterpret_cast<void**>(&cameraData_));
+	cameraData_->worldPosition = { 0,0,0 };
+#pragma endregion
+
+
 	Log("Model is Created!\n");
 }
 
 
-void Model::Draw(const Matrix4x4& worldMatrix,const Matrix4x4& viewProjection,int texture)
+void Model::Draw(const Matrix4x4& worldMatrix, const Camera& camera,int texture)
 {
 	grarphics_->PreDraw(DXF_->GetCMDList());
 
 	materialData_->uvTransform = MakeAffineMatrix(uvscale, uvrotate, uvpos);
 
-	Matrix4x4 WVP = worldMatrix* viewProjection;
+	Matrix4x4 WVP = worldMatrix* camera.GetViewProjectionMatrix();
 
 	wvpData_->WVP = WVP;
 	wvpData_->World = worldMatrix;
+
+	cameraData_->worldPosition = camera.GetMainCamera().GetMatWorldTranslate();
 
 	DXF_->GetCMDList()->IASetVertexBuffers(0, 1, &vertexBufferView_);
 	//形状を設定、PSOに設定しているものとはまた別、同じものを設定すると考えておけばいい
@@ -250,7 +261,8 @@ void Model::Draw(const Matrix4x4& worldMatrix,const Matrix4x4& viewProjection,in
 	DXF_->GetCMDList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	//
 	DXF_->GetCMDList()->SetGraphicsRootConstantBufferView(3, directionalLightResource_->GetGPUVirtualAddress());
-
+	//カメラ位置転送
+	DXF_->GetCMDList()->SetGraphicsRootConstantBufferView(4, cameraResource_->GetGPUVirtualAddress());
 	if (texture == -1) {
 		DXF_->GetCMDList()->SetGraphicsRootDescriptorTable(2, texture_);
 	}
@@ -276,38 +288,43 @@ void Model::DebugParameter(const char* name)
 
 	float discardnum = materialData_->discardNum;
 
-	
+	bool usePhong = materialData_->enablePhongReflection;
+	float shininess = materialData_->shininess;
 
 
-	ImGui::Begin(name);
-	ImGui::Checkbox("Texture", &useTexture);
-	ImGui::Checkbox("Shader", &useShader);
-	ImGui::Checkbox("HalfLambert", &useHalf);
-	ImGui::ColorEdit4("color", &color.x);
-	if (ImGui::Combo("blendmode", &currentItem, items, IM_ARRAYSIZE(items))) {
-		blend = static_cast<BlendMode>(currentItem);
+	if (ImGui::BeginMenu(name)) {
+		ImGui::Checkbox("Texture", &useTexture);
+		ImGui::Checkbox("Shader", &useShader);
+		ImGui::Checkbox("HalfLambert", &useHalf);
+		ImGui::ColorEdit4("color", &color.x);
+		if (ImGui::Combo("blendmode", &currentItem, items, IM_ARRAYSIZE(items))) {
+			blend = static_cast<BlendMode>(currentItem);
+		}
+		ImGui::DragFloat("discardNum", &discardnum, 0.01f);
+
+			ImGui::Text("UV");
+			ImGui::DragFloat2("uv pos", &uvpos.x, 0.1f);
+		ImGui::DragFloat("uv rotate", &uvrotate.z, 0.1f);
+		ImGui::DragFloat2("uv scale", &uvscale.x, 0.1f);
+
+		ImGui::Text("color");
+		ImGui::DragFloat3("light direction", &directionalLightData_->direction.x, 0.01f);
+		ImGui::DragFloat("light intensity", &directionalLightData_->intensity, 0.01f);
+		ImGui::ColorEdit4("light color", &directionalLightData_->color.x);
+		ImGui::Checkbox("PhongReflection", &usePhong);
+		ImGui::DragFloat("Shininess", &shininess);
+		ImGui::EndMenu();
 	}
-	ImGui::DragFloat("discardNum", &discardnum, 0.01f);
-
-	ImGui::Text("UV");
-	ImGui::DragFloat2("uv pos", &uvpos.x, 0.1f);
-	ImGui::DragFloat("uv rotate", &uvrotate.z, 0.1f);
-	ImGui::DragFloat2("uv scale", &uvscale.x, 0.1f);
-
-	ImGui::Text("color");
-	ImGui::DragFloat3("light direction", &directionalLightData_->direction.x,0.01f);
-	ImGui::DragFloat("light intensity", &directionalLightData_->intensity,0.01f);
-	ImGui::ColorEdit4("light color", &directionalLightData_->color.x);
-	ImGui::End();
-
 	
+
 	materialData_->enableTexture = useTexture;
 	materialData_->enableLighting = useShader;
 	materialData_->enableHalfLambert = useHalf;
 	materialData_->color = color;
 	grarphics_->SetBlendMode(blend);
 	materialData_->discardNum= discardnum;
-	
+	materialData_->enablePhongReflection = usePhong;
+	materialData_->shininess = shininess;
 #endif // _DEBUG
 	
 }

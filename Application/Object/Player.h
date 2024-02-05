@@ -68,7 +68,7 @@ public:
 
 	void DebagWindow();
 
-	void Draw(const Matrix4x4& viewp);
+	void Draw(const Camera& viewp);
 
 	auto& GetEchoBlasts() { return blasts_; }
 
