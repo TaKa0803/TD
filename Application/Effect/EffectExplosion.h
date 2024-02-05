@@ -15,6 +15,7 @@ struct moveData {
 	Vector3 acce;
 	//各死亡カウント（フレーム数）
 	int maxDeadCount;
+
 	//実際のカウント（初期で0
 	int deadCount = 0;
 	//死亡フラグ

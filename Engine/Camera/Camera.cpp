@@ -98,10 +98,10 @@ void Camera::DrawDebugWindow(const char* name) {
 		ImGui::DragFloat3("mainC rotate", &mainCamera_.rotate_.x, 0.01f);
 		ImGui::DragFloat3("mainC scale", &mainCamera_.scale_.x, 0.01f);
 
-		ImGui::Text("LocationCenterMotion");
-		ImGui::DragFloat3("PCM pos", &CameraMotionSupport_.translate_.x, 0.01f);
-		ImGui::DragFloat3("PCM rotate", &CameraMotionSupport_.rotate_.x, 0.01f);
-		ImGui::DragFloat3("PCM scale", &CameraMotionSupport_.scale_.x, 0.01f);
+		ImGui::Text("Axis of target point");
+		ImGui::DragFloat3("Axis pos", &CameraMotionSupport_.translate_.x, 0.01f);
+		ImGui::DragFloat3("Axis rotate", &CameraMotionSupport_.rotate_.x, 0.01f);
+		ImGui::DragFloat3("Axis scale", &CameraMotionSupport_.scale_.x, 0.01f);
 		ImGui::Checkbox("isOnlyGetPosition", &isOnlyGetPosition);
 		ImGui::EndMenu();
 	}

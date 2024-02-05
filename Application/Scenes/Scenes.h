@@ -3,11 +3,8 @@
 
 //シーン
 enum SCENE {
-	TITLE,
-	GAME,
-	CLEAR,
-	FAIL,
-	DEBUG,
-	CG,
+	SPRITE,
+	MODEL,
+	GEParticle,
 	SceneCount	//使うな
 };

@@ -33,10 +33,10 @@ void EffectExplosion::Update()
 			pdata.velo += pdata.acce;
 
 			//0以下で停止
-			if (pdata.world.translate_.y < 0) {
+			/*if (pdata.world.translate_.y < 0) {
 				pdata.world.translate_.y = 0;
 				pdata.velo.SetZero();
-			}
+			}*/
 
 			//行列更新
 			pdata.world.UpdateMatrix();

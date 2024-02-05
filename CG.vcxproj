@@ -109,9 +109,13 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application\CG\CGScene.cpp" />
+    <ClCompile Include="Application\CG\GECollider.cpp" />
     <ClCompile Include="Application\Effect\dZoneE\DZone.cpp" />
     <ClCompile Include="Application\Effect\EffectExplosion.cpp" />
     <ClCompile Include="Application\Effect\EffectSphereExplo\ESphereExplo.cpp" />
+    <ClCompile Include="Application\GE\Scene\GEModelScene.cpp" />
+    <ClCompile Include="Application\GE\Scene\GEParticle.cpp" />
+    <ClCompile Include="Application\GE\Scene\GEScene.cpp" />
     <ClCompile Include="Application\Object\AreaAttack.cpp" />
     <ClCompile Include="Application\Object\BossEnemy.cpp" />
     <ClCompile Include="Application\Object\EchoBlast.cpp" />
@@ -124,11 +128,17 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Step\Step.cpp" />
     <ClCompile Include="Application\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Application\Scenes\DebugScene.cpp" />
-    <ClCompile Include="Application\Scenes\GameScene.cpp" />
+    <ClCompile Include="Application\Scenes\GameScene.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Application\Scenes\IScene.cpp" />
     <ClCompile Include="Application\Scenes\MT4Scene.cpp" />
-    <ClCompile Include="Application\Scenes\TitleScene.cpp" />
-    <ClCompile Include="Application\Scenes\ClearScene\ClearScene.cpp" />
+    <ClCompile Include="Application\Scenes\TitleScene.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Application\Scenes\ClearScene\ClearScene.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Engine\3d\Collider\ColliderOBB\OBBCollider.cpp" />
     <ClCompile Include="Engine\3d\Collider\ColliderPlane\PlaneCollider.cpp" />
     <ClCompile Include="Engine\3d\Collider\IsCollisions.cpp" />
@@ -176,7 +186,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="externals\Imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="externals\Imgui\imgui_tables.cpp" />
     <ClCompile Include="externals\Imgui\imgui_widgets.cpp" />
-    <ClCompile Include="Application\Scenes\FailScene\FailScene.cpp" />
+    <ClCompile Include="Application\Scenes\FailScene\FailScene.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -207,9 +219,13 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\CG\CGScene.h" />
+    <ClInclude Include="Application\CG\GECollider.h" />
     <ClInclude Include="Application\Effect\dZoneE\DZone.h" />
     <ClInclude Include="Application\Effect\EffectExplosion.h" />
     <ClInclude Include="Application\Effect\EffectSphereExplo\ESphereExplo.h" />
+    <ClInclude Include="Application\GE\Scene\GEModelScene.h" />
+    <ClInclude Include="Application\GE\Scene\GEParticle.h" />
+    <ClInclude Include="Application\GE\Scene\GEScene.h" />
     <ClInclude Include="Application\Object\AreaAttack.h" />
     <ClInclude Include="Application\Object\BossEnemy.h" />
     <ClInclude Include="Application\Object\EchoBlast.h" />
@@ -290,11 +306,11 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\enemyPopData.json" />
+    <None Include="resources\jsonfile\enemyPopData.json" />
     <None Include="resources\GlobalVariables\StageWall.json" />
     <None Include="resources\jsonfile\resourcePath.json" />
-    <None Include="resources\modelPathFile.json" />
-    <None Include="resources\PlayerATKData.json" />
+    <None Include="resources\jsonfile\modelPathFile.json" />
+    <None Include="resources\jsonfile\PlayerATKData.json" />
     <None Include="resources\shaders\InstancingObject.hlsli">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
