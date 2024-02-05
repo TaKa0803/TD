@@ -67,6 +67,7 @@ public:
 	/// </summary>
 	/// <param name="ans">画像を使うか</param>
 	//void IsEnableTexture(bool ans) { materialData_->enableTexture = ans; }
+	void Debug(const char* name);
 #pragma region セッター
 
 	/// <summary>

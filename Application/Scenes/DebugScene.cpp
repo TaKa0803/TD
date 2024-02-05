@@ -9,9 +9,41 @@ DebugScene::DebugScene()
 
 	camera_ = std::make_unique<Camera>();
 
+	/*pHead_ = std::make_unique<InstancingGameObject>();
+	pLA_ = std::make_unique<InstancingGameObject>();
+	pRA_ = std::make_unique<InstancingGameObject>();
+	pLF_ = std::make_unique<InstancingGameObject>();
+	pRF_ = std::make_unique<InstancingGameObject>();
+	pHI_ = std::make_unique<InstancingGameObject>();
 
-	sphere_ = std::make_unique<SphereCollider>();
-	plane_ = std::make_unique<PlaneCollider>();
+	pHead_->SetParent(&cWorld_);
+	pLA_->SetParent(&pHead_->GetWorld());
+	pRA_->SetParent(&pHead_->GetWorld());
+	pLF_->SetParent(&pHead_->GetWorld());
+	pRF_->SetParent(&pHead_->GetWorld());
+	pHI_->SetParent(&pHead_->GetWorld());
+
+	pLA_->SetTranslate({ -0.8f,0,0 });
+	pRA_->SetTranslate({ 0.8f,0,0 });
+	pLF_->SetTranslate({ -0.6f,-1.0f,0 });
+	pRF_->SetTranslate({ 0.6f,-0.98f,0 });
+	pHI_->SetTranslate({0,0.93f,0});*/
+
+	h_ = std::make_unique<InstancingGameObject>();
+	B_ = std::make_unique<InstancingGameObject>();
+	LA_ = std::make_unique<InstancingGameObject>();
+	RA_ = std::make_unique<InstancingGameObject>();
+
+	B_->SetParent(&cWorld_);
+	h_->SetParent(&B_->GetWorld());
+	LA_->SetParent(&B_->GetWorld());
+	RA_->SetParent(&B_->GetWorld());
+
+	B_->SetTranslate({});
+	h_->SetTranslate({ 0,0.57f,0 });
+	LA_->SetTranslate({ -1.0f,0,0, });
+	RA_->SetTranslate({ 1.0f,0,0, });
+
 
 	//エフェクト
 	EffectExp_ = EffectExplosion::GetInstance();
@@ -27,22 +59,17 @@ void DebugScene::Initialize()
 	camera_->Initialize();
 	camera_->SetTarget(&cWorld_);
 
-	sWorld_.Initialize();
+	/*pHead_->Initialize("pH");
+	pLA_->Initialize("pLA");
+	pRA_->Initialize("pRA");
+	pLF_->Initialize("pLF");
+	pRF_->Initialize("pRF");
+	pHI_->Initialize("pHI");*/
 
-	sphere_ = std::make_unique<SphereCollider>();
-	sphere_->Initialize("sphere", sWorld_);
-
-	pWorld_.Initialize();
-	plane_ = std::make_unique<PlaneCollider>();
-	plane_->Initialize("plane", pWorld_);
-
-	oWorld_.Initialize();
-	obb_ = std::make_unique<OBBCollider>();
-	obb_->Initialize("plane", oWorld_);
-
-	oWorld2_.Initialize();
-	obb2_ = std::make_unique<OBBCollider>();
-	obb2_->Initialize("plane", oWorld2_);
+	h_->Initialize("aH");
+	B_->Initialize("aB");
+	LA_->Initialize("aLA");
+	RA_->Initialize("aRA");
 
 
 	EffectExp_->Initialize();
@@ -57,25 +84,9 @@ void DebugScene::Update()
 
 	Vector3 move = input_->GetAllArrowKey();
 
-	oWorld_.translate_ += move.SetNormalize() * 0.1f;
-	oWorld_.UpdateMatrix();
 
-	sWorld_.UpdateMatrix();
-
-	sphere_->Update();
-	plane_->Update();
-	obb_->Update();
-	obb2_->Update();
 
 	Vector3 backV;
-	if (sphere_->IsCollision(*obb_.get(), backV, 1)) {
-		sWorld_.translate_ += backV;
-		sWorld_.UpdateMatrix();
-		sphere_->Update();
-	}
-
-
-	camera_->IsCollision(obb2_.get());
 
 
 	if (input_->TriggerKey(DIK_SPACE)) {
@@ -111,14 +122,32 @@ void DebugScene::Update()
 
 	EffectExp_->Update();
 
+	/*pHead_->Update();
+	pLA_->Update();
+	pRA_->Update();
+	pLF_->Update();
+	pRF_->Update();
+	pHI_->Update();*/
+	h_->Update();
+	B_->Update();
+	LA_->Update();
+	RA_->Update();
+
 }
 
 void DebugScene::Draw()
 {
-	sphere_->Draw();
-	plane_->Draw();
-	obb_->Draw();
-	obb2_->Draw();
+	/*pHead_->Draw();
+	pLA_->Draw();
+	pRA_->Draw();
+	pLF_->Draw();
+	pRF_->Draw();
+	pHI_->Draw();*/
+	h_->Draw();
+	B_->Draw();
+	LA_->Draw();
+	RA_->Draw();
+
 
 	EffectExp_->Draw();
 
@@ -127,10 +156,18 @@ void DebugScene::Draw()
 
 void DebugScene::Debug()
 {
-	sWorld_.DrawDebug("sphere");
-	sphere_->Debug("sphere");
 	camera_->DrawDebugWindow("camera");
-	obb_->Debug("box");
-	obb2_->Debug("box2");
+
+	/*pHead_->Debug("pH");
+	pLA_->Debug("pLA");
+	pRA_->Debug("pRA");
+	pLF_->Debug("pLF");
+	pRF_->Debug("pRF");
+	pHI_->Debug("pHI");*/
+
+	h_->Debug("h");
+	B_->Debug("B");
+	LA_->Debug("LA");
+	RA_->Debug("RA");
 
 }

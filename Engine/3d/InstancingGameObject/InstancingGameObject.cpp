@@ -1,5 +1,6 @@
 #include "InstancingGameObject/InstancingGameObject.h"
 #include<cassert>
+#include<imgui.h>
 
 InstancingGameObject::~InstancingGameObject() {
 }
@@ -29,6 +30,20 @@ void InstancingGameObject::Draw()
 {
 	//タグに対応したモデルにワールド追加
 	IMM_->SetData(tag_, world_, color);
+}
+
+void InstancingGameObject::Debug(const char* name)
+{
+	
+		if (ImGui::BeginMenu(name)) {
+
+			IMM_->Debug(tag_, name);
+
+			world_.DrawDebug(name);
+
+			ImGui::EndMenu();
+		}
+	
 }
 
 
