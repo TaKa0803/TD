@@ -166,7 +166,7 @@ void GameScene::Draw()
 	//地面
 	plane_->Draw(*camera_);
 
-	boss_->Draw(camera_->GetViewProjectionMatrix());
+	boss_->Draw(*camera_);
 
 	stage_->Draw();
 	//player_->Draw(camera_->GetViewProjectionMatrix());

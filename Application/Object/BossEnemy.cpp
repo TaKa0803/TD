@@ -340,7 +340,7 @@ void BossEnemy::DebagWindow()
 
 }
 
-void BossEnemy::Draw(const Matrix4x4& viewp)
+void BossEnemy::Draw(const Camera& camera_)
 {
 	if (!isActive_)
 	{
@@ -356,7 +356,7 @@ void BossEnemy::Draw(const Matrix4x4& viewp)
 	{
 		itra->get()->Draw();
 	}
-	GameObject::Draw(*camera_);
+	GameObject::Draw(camera_);
 	collider_->Draw();
 
 
