@@ -15,12 +15,25 @@ GEColliderScene::~GEColliderScene()
 
 void GEColliderScene::Initialize()
 {
+	camera_->Initialize();
+	plane_->Initialize();
+	wall->Initialize("");
+	sphere->Initialize("");
 }
 
 void GEColliderScene::Update()
 {
+
+	plane_->Update();
+	wall->Update();
+	sphere->Update();
 }
 
 void GEColliderScene::Draw()
 {
+	plane_->Draw(*camera_);
+	wall->Draw();
+	sphere->Draw();
+
+	InstancingModelManager::GetInstance()->DrawAllModel(camera_->GetViewProjectionMatrix());
 }

@@ -82,7 +82,7 @@
     <ClCompile Include="Application\GE\Scene\GEModelScene.cpp" />
     <ClCompile Include="Application\GE\Scene\GEScene.cpp" />
     <ClCompile Include="Application\GE\Scene\GEParticle.cpp" />
-    <ClCompile Include="Application\CG\GECollider.cpp" />
+    <ClCompile Include="Application\GE\Scene\GECollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Object\EchoBlast.h" />
@@ -159,7 +159,7 @@
     <ClInclude Include="Application\GE\Scene\GEModelScene.h" />
     <ClInclude Include="Application\GE\Scene\GEScene.h" />
     <ClInclude Include="Application\GE\Scene\GEParticle.h" />
-    <ClInclude Include="Application\CG\GECollider.h" />
+    <ClInclude Include="Application\GE\Scene\GECollider.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\jsonfile\enemyPopData.json" />
