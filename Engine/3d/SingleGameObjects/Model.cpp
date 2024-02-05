@@ -215,8 +215,8 @@ void Model::Initialize(
 	materialData_->enableTexture = true;
 	materialData_->enableHalfLambert = true;
 	materialData_->discardNum = 0.0f;
-	materialData_->enablePhongReflection = 1;
-	materialData_->shininess = 1.0f;
+	materialData_->enablePhongReflection = 0;
+	materialData_->shininess = 20.0f;
 #pragma endregion
 
 #pragma region ライト

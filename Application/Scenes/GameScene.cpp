@@ -84,7 +84,7 @@ void GameScene::Initialize()
 	player_->Initialize();
 
 	boss_->Initialize(player_->GetWorld());
-
+	boss_->SetCamera(*camera_.get());
 	//初期化
 	camera_->Initialize();
 	//各種設定

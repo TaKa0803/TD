@@ -79,6 +79,7 @@
     <ClCompile Include="Engine\Math\Vector4.cpp" />
     <ClCompile Include="Application\Effect\dZoneE\DZone.cpp" />
     <ClCompile Include="Application\CG\CGScene.cpp" />
+    <ClCompile Include="Application\Object\Audience\audience.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Object\EchoBlast.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="Application\Effect\EffectSphereExplo\ESphereExplo.h" />
     <ClInclude Include="Application\Effect\dZoneE\DZone.h" />
     <ClInclude Include="Application\CG\CGScene.h" />
+    <ClInclude Include="Application\Object\Audience\audience.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\enemyPopData.json" />

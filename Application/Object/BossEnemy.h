@@ -2,7 +2,7 @@
 
 #include "SingleGameObjects/GameObject.h"
 #include "SphereCollider/SphereCollider.h"
-
+#include"Camera/Camera.h"
 #include"Sprite/Sprite.h"
 
 #include <optional>
@@ -188,6 +188,8 @@ public:
 	void DebagWindow();
 
 	void Draw(const Matrix4x4& viewp);
+
+	void SetCamera(const Camera& camera) { camera_ = &camera; }
 
 	SphereCollider* GetCollider() { return collider_.get(); }
 

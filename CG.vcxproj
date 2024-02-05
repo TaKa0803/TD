@@ -113,6 +113,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Effect\EffectExplosion.cpp" />
     <ClCompile Include="Application\Effect\EffectSphereExplo\ESphereExplo.cpp" />
     <ClCompile Include="Application\Object\AreaAttack.cpp" />
+    <ClCompile Include="Application\Object\Audience\audience.cpp" />
     <ClCompile Include="Application\Object\BossEnemy.cpp" />
     <ClCompile Include="Application\Object\EchoBlast.cpp" />
     <ClCompile Include="Application\Object\Plane.cpp" />
@@ -211,6 +212,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Effect\EffectExplosion.h" />
     <ClInclude Include="Application\Effect\EffectSphereExplo\ESphereExplo.h" />
     <ClInclude Include="Application\Object\AreaAttack.h" />
+    <ClInclude Include="Application\Object\Audience\audience.h" />
     <ClInclude Include="Application\Object\BossEnemy.h" />
     <ClInclude Include="Application\Object\EchoBlast.h" />
     <ClInclude Include="Application\Object\Objects.h" />
