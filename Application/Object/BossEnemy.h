@@ -29,7 +29,7 @@ private:
 
 private:
 
-	//const Camera* camera_;
+	const Camera* camera_;
 
 	// 移動範囲
 	// 中心からの距離
@@ -187,7 +187,7 @@ public:
 
 	void DebagWindow();
 
-	void Draw(const Camera& camera_);
+	void Draw();
 
 	void SetCamera(const Camera& camera) { camera_ = &camera; }
 
