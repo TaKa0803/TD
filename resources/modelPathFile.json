@@ -5,6 +5,9 @@
     "player": [ "resources/AppResource", "player" ],
     "talker": [ "resources/AppResource", "tolker" ],
     "stage": [ "resources/AppResource", "Stage" ],
+
+    "sphere": [ "resources/SystemResources", "sphere" ],
+
     "Boss": [ "resources/AppResource", "Boss" ]
   },
   "InstancingmodelPathFile": {

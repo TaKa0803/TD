@@ -1,5 +1,6 @@
 #pragma once
 #include "SingleGameObjects/GameObject.h"
+#include"Camera/Camera.h"
 class Plane :public GameObject {
 
 public:
@@ -10,7 +11,7 @@ public:
 
 	void DebagWindow();
 
-	void Draw(const Matrix4x4& viewp);
+	void Draw(const Camera& viewp);
 
 
 };

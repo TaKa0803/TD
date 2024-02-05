@@ -29,6 +29,8 @@ private:
 
 private:
 
+	const Camera* camera_;
+
 	// 移動範囲
 	// 中心からの距離
 	float moveLength_ = 0.0f;
