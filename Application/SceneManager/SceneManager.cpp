@@ -9,7 +9,6 @@
 #include"GE/Scene/GEScene.h"
 #include"GE/Scene/GEModelScene.h"
 #include"GE/Scene/GEParticle.h"
-#include"GE/Scene/GECollider.h"
 #pragma endregion
 
 
@@ -24,7 +23,6 @@ void SceneManager::Initialize()
 	sceneArr_[SPRITE] = std::make_unique<GEScene>();
 	sceneArr_[MODEL] = std::make_unique<GEModelScene>();
 	sceneArr_[GEParticle] = std::make_unique<GEEffectScene>();
-	sceneArr_[Collider] = std::make_unique<GEColliderScene>();
 	sceneName_.clear();
 	sceneName_.push_back("SPRITE");
 	sceneName_.push_back("MODEL AND CAMERA");

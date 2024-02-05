@@ -70,6 +70,7 @@ void GEColliderScene::Update()
 		
 	}
 
+	camera_->Update();
 }
 
 void GEColliderScene::Draw()
