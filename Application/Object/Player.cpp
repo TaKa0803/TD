@@ -22,6 +22,9 @@ void Player::Initialize()
 	collider_->Initialize("player", world_);
 
 	blasts_.clear();
+	isInvisible_ = true;
+	invisibleFrame_ = 60;
+	reqBehavior_ = IDOL;
 }
 
 void Player::Update()
