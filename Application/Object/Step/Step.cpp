@@ -24,12 +24,19 @@ void Step::Initialize()
 
 void Step::Update()
 {
+	InstancingGameObject::Update();
+	for (int i = 0; i < 3; i++) {
+		for (int h = 0; h < 5; h++) {
+			audience_[i][h]->SetParent(&world_);
+		}
+	}
+
 	for (int i = 0; i < 3; i++) {
 		for (int h = 0; h < 5; h++) {
 			audience_[i][h]->Update();
 		}
 	}
-	InstancingGameObject::Update();
+	
 }
 
 void Step::Draw()
@@ -37,7 +44,7 @@ void Step::Draw()
 
 	for (int i = 0; i < 3; i++) {
 		for (int h = 0; h < 5; h++) {
-			audience_[i][h]->Draw();
+//			audience_[i][h]->Draw();
 		}
 	}
 	InstancingGameObject::Draw();

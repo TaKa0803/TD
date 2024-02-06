@@ -94,7 +94,7 @@ private:
 #pragma region ゲームルール関連
 
 	//GOODゲージ最大数
-	const float maxGoodGage_ = 1;
+	const float maxGoodGage_ = 5;
 
 	//GOODゲージ現カウント
 	float goodGage_ = 0;

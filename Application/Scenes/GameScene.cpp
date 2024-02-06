@@ -45,7 +45,7 @@ GameScene::GameScene()
 		pi += (3.14f * 2.0f) / 5.0f;
 	}
 	EffectExp_ = EffectExplosion::GetInstance();
-	
+
 	eSExplo_ = EfSphereExplosion::GetInstance();
 
 	dZoneEM_ = DZoneEffect::GetInstance();
@@ -101,7 +101,7 @@ void GameScene::Initialize()
 	}
 
 	EffectExp_->Initialize();
-	
+
 	eSExplo_->Initialize("Explo");
 
 	dZoneEM_->Initialize();
@@ -124,14 +124,14 @@ void GameScene::Update()
 	skydome_->Update();
 
 	stage_->Update();
-	
+
 
 	player_->Update();
 
-	boss_->SetGage(goodGage_,maxGoodGage_);
+	boss_->SetGage(goodGage_, maxGoodGage_);
 	boss_->Update();
 
-	
+
 
 #pragma region 観客
 	for (auto& step : steps_)
@@ -326,7 +326,7 @@ void GameScene::CheckCollision()
 
 	Vector3 temp{ 0.0f,0.0f,0.0f };
 
-	
+
 
 	// 範囲攻撃とプレイヤー
 	itrA = attacks.begin();
@@ -375,7 +375,7 @@ void GameScene::CheckCollision()
 				AddBadGage();
 				player_->OnCollision();
 				some->OnCollision();
-				
+
 				//エフェクト発生
 				AddEffect(some->GetWorld());
 
@@ -392,7 +392,7 @@ void GameScene::CheckCollision()
 				AddBadGage();
 				player_->OnCollision();
 				some->OnCollision();
-				
+
 				//エフェクト発生
 				AddEffect(some->GetWorld());
 
@@ -401,7 +401,7 @@ void GameScene::CheckCollision()
 			// ボスとの接触
 			if (isCollisionBoss_)
 			{
-				BossEnemy* boss = boss_.get();	
+				BossEnemy* boss = boss_.get();
 				if (some->GetCollider()->IsCollision(*boss->GetCollider(), temp))
 				{
 					some->OnCollision();
@@ -518,7 +518,7 @@ void GameScene::CheckCollision()
 						some->OnCollision(echo->GetDirection());
 					}
 
-					
+
 				}
 			}
 		}
@@ -539,10 +539,10 @@ void GameScene::CheckCollision()
 
 				}
 
-				
+
 			}
 
-			
+
 		}
 
 	}
@@ -550,9 +550,9 @@ void GameScene::CheckCollision()
 
 	//ボスの必殺技との処理
 	if (boss_->IsSpecialAttackActive()) {
-		for (; itrB != blasts.end(); ++itrB){
+		for (; itrB != blasts.end(); ++itrB) {
 			EchoBlast* echo = itrB->get();
-			if (!echo->GetIsSpot()&&boss_->GetSpecialATKCollider()->IsCollision(*echo->GetCollider(), temp, 3)) {
+			if (!echo->GetIsSpot() && boss_->GetSpecialATKCollider()->IsCollision(*echo->GetCollider(), temp, 3)) {
 				//押し返しベクトル計算
 				Vector3 direc = echo->GetDirection();
 				direc.SetNormalize();
@@ -571,23 +571,26 @@ void GameScene::CheckCollision()
 		boss_->SPATKOnColliExplo();
 	}
 
-	//std::list<SphereCollider*>::iterator blast = bCollider.begin();
-	//for (; blast != bCollider.end(); ++blast)
-	//{
-	//	SphereCollider* sb = (*blast);
-	//	std::list<SphereCollider*>::iterator enemy = eCollider.begin();
-	//	for (; enemy != eCollider.end(); enemy++)
-	//	{
-	//		SphereCollider& se = *(*enemy);
-	//		if (sb->IsHit(se, temp))
-	//		{
-	//			
-	//		}
-	//	}
-	//}
+	if (boss_->IsSpecialAttackActive()) {
 
+		if (boss_->IsHitPlayerReflection()) {
+			boss_->SetAplta(1.0f);
+			if (boss_->GetSpecialATKCollider()->IsCollision(*boss_->GetCollider(), temp)) {
+				boss_->SPATKOnColliExplo();
+				boss_->OnCollision(10);
+				AddGoodGage(10);
 
+			}
+		}
+		else {
+			boss_->SetAplta(0.5f);
+		}
+	}
+	else {
+		boss_->SetAplta(1.0f);
+	}
 }
+
 
 void GameScene::SceneChange()
 {

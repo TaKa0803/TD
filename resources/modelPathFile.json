@@ -37,7 +37,7 @@
     "aH": [ "resources/AppResource/audience", "aH", 200 ],
     "aB": [ "resources/AppResource/audience", "aB", 200 ],
     "aLA": [ "resources/AppResource/audience", "aLA", 200 ],
-    "aRA": [ "resources/AppResource/audience", "aRA", 200 ]
-
+    "aRA": [ "resources/AppResource/audience", "aRA", 200 ],
+    "bomb": [ "resources/AppResource", "soundBomb", 5 ]
   }
 }

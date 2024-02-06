@@ -91,7 +91,7 @@ void Audience::Update()
 	RA_->SetRotate(nowAnime.rotate[RARM]);
 
 
-	InstancingGameObject::Update();
+	world_.UpdateMatrix();
 
 	B_->Update();
 	h_->Update();
@@ -109,7 +109,7 @@ void Audience::Draw()
 
 void Audience::Debug(const char* name)
 {
-	world_.DrawDebug(name); 
+	//world_.DrawDebug(name); 
 	h_->Debug("aH");
 	B_->Debug("aB");
 	LA_->Debug("aLA");

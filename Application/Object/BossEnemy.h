@@ -220,6 +220,8 @@ public:
 	bool IsSpecialAttackActive() { return specialATK.isShot; }
 
 	bool IsHitPlayerReflection() { return specialATK.isHitPlayerWall; }
+
+	void SetAplta(float alpha) { model_->SetAlpha(alpha); }
 private:
 
 	//プレイヤー方向を向く

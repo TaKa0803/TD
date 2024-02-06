@@ -41,7 +41,7 @@ BossEnemy::BossEnemy()
 #pragma region ボス攻撃関連
 
 	specialATK.ammo = std::make_unique<InstancingGameObject>();
-	specialATK.ammo->Initialize("sphere");
+	specialATK.ammo->Initialize("bomb");
 	specialATK.collider = std::make_unique<SphereCollider>();
 
 	specialATK.count[wait].maxCount = 60 * 1;
@@ -170,12 +170,14 @@ void BossEnemy::Update()
 		attackCount_ = 0;
 		break;
 		case BossEnemy::SUMMON:
+			SeePlayer();
 			momentFrame_ = cSUMMONFRAME_;
 			// 移動期待値 0
 			moveCount_ = 0;
 			attackCount_ = 0;
 			break;
 		case BossEnemy::ATTACK:
+			SeePlayer();
 			momentFrame_ = cATTACKFRAME_;
 			// 移動期待値 0
 			moveCount_ = 0;
@@ -202,6 +204,7 @@ void BossEnemy::Update()
 			specialATK.isShot = 0;
 			specialATK.nextSpecialATKCount = 0;
 			specialATK.stateCount = 0;
+			specialATK.isHitPlayerWall = false;
 			break;
 		default:
 			break;
@@ -365,7 +368,7 @@ void BossEnemy::Draw()
 	hpBarFrame_->Draw();
 
 	if (specialATK.isShot) {
-		//collider_->Draw();
+		collider_->Draw();
 		specialATK.ammo->Draw();
 	}
 }
@@ -386,7 +389,9 @@ void BossEnemy::OnCollision(float damage)
 void BossEnemy::SPATKOnCollison(const Vector3& direc)
 {
 	//座標を変更して移動方向変更
-	world_.translate_ += direc;
+	/*Vector3 trans = specialATK.ammo->GetWorld().translate_;
+	trans += direc;
+	specialATK.ammo->SetTranslate(trans);*/
 	specialATK.velocity_ = direc;
 	specialATK.velocity_.y = 0;
 	specialATK.velocity_.SetNormalize();
@@ -407,7 +412,9 @@ void BossEnemy::SPATKOnColliExplo()
 void BossEnemy::SPATKReflectOnCollision(const Vector3&direc)
 {
 	//座標を変更して移動方向変更
-	world_.translate_ += direc;
+	/*Vector3 trans = specialATK.ammo->GetWorld().translate_;
+	trans+= direc;
+	specialATK.ammo->SetTranslate(trans);*/
 	specialATK.velocity_ = direc;
 	specialATK.velocity_.y = 0;
 	specialATK.velocity_.SetNormalize();
@@ -673,7 +680,11 @@ void BossEnemy::UpdateSpecialATK()
 	if (specialATK.isShot) {
 		Vector3 newpos = specialATK.ammo->GetWorld().translate_ + specialATK.velocity_;
 		specialATK.ammo->SetTranslate(newpos);
-
+		
+			//muki
+		if (specialATK.velocity_ != Vector3(0, 0, 0)) {
+			specialATK.ammo->SetRotateY(GetYRotate({ specialATK.velocity_.x,specialATK.velocity_.z }));
+		}
 		specialATK.ammo->Update();
 		specialATK.collider->Update();
 	}

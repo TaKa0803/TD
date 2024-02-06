@@ -28,6 +28,8 @@ public:
 
 	void SetRotate(const Vector3& rotate) { world_.rotate_ = rotate; }
 
+	void SetRotateY(const float rotate) { world_.rotate_.y = rotate; }
+
 	void SetParent(const WorldTransform* parent) { world_.parent_ = parent; }
 	//開放処理
 	virtual ~InstancingGameObject();
