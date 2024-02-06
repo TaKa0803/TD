@@ -140,12 +140,17 @@ void Player::Draw(const Camera& viewp)
 	}
 }
 
-void Player::OnCollision()
+bool Player::OnCollision()
 {
+	if (isInvisible_)
+	{
+		return false;
+	}
 	reqBehavior_ = MOMENT;
 	momentFrame_ += 20;
 	invisibleFrame_ = 140;
 	isInvisible_ = true;
+	return true;
 }
 
 void Player::UpdateIDOL()

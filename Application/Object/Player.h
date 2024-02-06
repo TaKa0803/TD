@@ -72,7 +72,7 @@ public:
 
 	auto& GetEchoBlasts() { return blasts_; }
 
-	void OnCollision();
+	bool OnCollision();
 
 	// 押し出しを反映
 	void BackVector(const Vector3& vector) { world_.translate_ += vector; }

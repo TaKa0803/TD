@@ -332,15 +332,13 @@ void GameScene::CheckCollision()
 	itrA = attacks.begin();
 	for (; itrA != attacks.end(); ++itrA)
 	{
-		if (player_->GetIsInvisible())
-		{
-			break;
-		}
 		AreaAttack* attack = itrA->get();
 		if (player_->GetCollider()->IsCollision(*attack->GetCollider(), temp))
 		{
-			player_->OnCollision();
-			AddBadGage();
+			if (player_->OnCollision())
+			{
+				AddBadGage();
+			}
 		}
 	}
 
@@ -372,14 +370,17 @@ void GameScene::CheckCollision()
 			//プレイヤーと爆破
 			if (some->GetCollider()->IsCollision(*player_->GetCollider(), temp))
 			{
-				AddBadGage();
-				player_->OnCollision();
-				some->OnCollision();
+				// プレイヤーが衝突判定を取れる時
+				if (player_->OnCollision())
+				{
+					AddBadGage();
+					some->OnCollision();
 
-				//エフェクト発生
-				AddEffect(some->GetWorld());
+					//エフェクト発生
+					AddEffect(some->GetWorld());
 
-				//some->OnCollision(temp);
+					//some->OnCollision(temp);
+				}
 			}
 		}
 		// 弾かれてる間の判定
@@ -389,13 +390,15 @@ void GameScene::CheckCollision()
 			//プレイヤーと飛ばされている敵の判定
 			if (some->GetCollider()->IsCollision(*player_->GetCollider(), temp))
 			{
-				AddBadGage();
-				player_->OnCollision();
-				some->OnCollision();
+				// プレイヤーが衝突判定を取れる時
+				if (player_->OnCollision())
+				{
+					AddBadGage();
+					some->OnCollision();
 
-				//エフェクト発生
-				AddEffect(some->GetWorld());
-
+					//エフェクト発生
+					AddEffect(some->GetWorld());
+				}
 			}
 
 			// ボスとの接触
@@ -471,7 +474,8 @@ void GameScene::CheckCollision()
 		}
 
 		//スペシャル攻撃の判定
-		if (boss_->GetSpecialATKCollider()->IsCollision(*wall->GetCollider(), temp, 1)) {
+		if (boss_->GetSpecialATKCollider()->IsCollision(*wall->GetCollider(), temp, 1))
+		{
 
 			wall->OnCollision();
 
@@ -549,10 +553,13 @@ void GameScene::CheckCollision()
 
 
 	//ボスの必殺技との処理
-	if (boss_->IsSpecialAttackActive()) {
-		for (; itrB != blasts.end(); ++itrB) {
+	if (boss_->IsSpecialAttackActive())
+	{
+		for (; itrB != blasts.end(); ++itrB)
+		{
 			EchoBlast* echo = itrB->get();
-			if (!echo->GetIsSpot() && boss_->GetSpecialATKCollider()->IsCollision(*echo->GetCollider(), temp, 3)) {
+			if (!echo->GetIsSpot() && boss_->GetSpecialATKCollider()->IsCollision(*echo->GetCollider(), temp, 3))
+			{
 				//押し返しベクトル計算
 				Vector3 direc = echo->GetDirection();
 				direc.SetNormalize();
@@ -564,29 +571,38 @@ void GameScene::CheckCollision()
 
 	//プレイヤーとスペシャル攻撃との判定
 	//反射板なしでプレイヤーヒットで爆破
-	if (!boss_->IsHitPlayerReflection() && boss_->IsSpecialAttackActive() && player_->GetCollider()->IsCollision(*boss_->GetSpecialATKCollider(), temp)) {
-		AddBadGage();
-		player_->OnCollision();
-		//爆発
-		boss_->SPATKOnColliExplo();
+	if (!boss_->IsHitPlayerReflection() && boss_->IsSpecialAttackActive() && player_->GetCollider()->IsCollision(*boss_->GetSpecialATKCollider(), temp))
+	{
+		// プレイヤーが衝突判定を取れる時
+		if (player_->OnCollision())
+		{
+			AddBadGage();
+			//爆発
+			boss_->SPATKOnColliExplo();
+		}
 	}
 
-	if (boss_->IsSpecialAttackActive()) {
+	if (boss_->IsSpecialAttackActive())
+	{
 
-		if (boss_->IsHitPlayerReflection()) {
+		if (boss_->IsHitPlayerReflection())
+		{
 			boss_->SetAplta(1.0f);
-			if (boss_->GetSpecialATKCollider()->IsCollision(*boss_->GetCollider(), temp)) {
+			if (boss_->GetSpecialATKCollider()->IsCollision(*boss_->GetCollider(), temp))
+			{
 				boss_->SPATKOnColliExplo();
 				boss_->OnCollision(10);
 				AddGoodGage(10);
 
 			}
 		}
-		else {
+		else
+		{
 			boss_->SetAplta(0.5f);
 		}
 	}
-	else {
+	else
+	{
 		boss_->SetAplta(1.0f);
 	}
 }
