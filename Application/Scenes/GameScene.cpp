@@ -272,14 +272,12 @@ void GameScene::DebugWindows()
 void GameScene::CameraUpdate()
 {
 	Vector2 stick;
-	if (input_->IsControllerActive())
+	Vector3 sti = input_->GetAllArrowKey();
+	stick = { sti.x,sti.z };
+	if (Length(stick) == 0.0f &&
+		input_->IsControllerActive())
 	{
 		stick = input_->GetjoyStickR();
-	}
-	else
-	{
-		Vector3 sti = input_->GetAllArrowKey();
-		stick = { sti.x,sti.z };
 	}
 	stick.Normalize();
 	stick.x *= xrotateNum;
@@ -566,6 +564,8 @@ void GameScene::CheckCollision()
 		for (; itrB != blasts.end(); ++itrB)
 		{
 			EchoBlast* echo = itrB->get();
+			// 反射板
+			// 球とOBBの判定
 			if (!echo->GetIsSpot() && boss_->GetSpecialATKCollider()->IsCollision(*echo->GetCollider(), temp, 3))
 			{
 				//押し返しベクトル計算
@@ -575,23 +575,21 @@ void GameScene::CheckCollision()
 				boss_->SPATKReflectOnCollision(direc);
 			}
 		}
-	}
-#pragma endregion
-
-#pragma region ボスの必殺技とプレイヤー
-
-	//プレイヤーとスペシャル攻撃との判定
-	//反射板なしでプレイヤーヒットで爆破
-	if (!boss_->IsHitPlayerReflection() && boss_->IsSpecialAttackActive() && player_->GetCollider()->IsCollision(*boss_->GetSpecialATKCollider(), temp))
-	{
-		// プレイヤーが衝突判定を取れる時
-		if (player_->OnCollision())
+		//プレイヤーとスペシャル攻撃との判定
+		//反射板なしでプレイヤーヒットで爆破
+		if (!boss_->IsHitPlayerReflection() &&
+			player_->GetCollider()->IsCollision(*boss_->GetSpecialATKCollider(), temp))
 		{
-			AddBadGage();
-			//爆発
-			boss_->SPATKOnColliExplo();
+			// プレイヤーが衝突判定を取れる時
+			if (player_->OnCollision())
+			{
+				AddBadGage();
+				//爆発
+				boss_->SPATKOnColliExplo();
+			}
 		}
 	}
+
 
 #pragma endregion
 
@@ -599,7 +597,6 @@ void GameScene::CheckCollision()
 
 	if (boss_->IsSpecialAttackActive())
 	{
-
 		if (boss_->IsHitPlayerReflection())
 		{
 			boss_->SetAplta(1.0f);
