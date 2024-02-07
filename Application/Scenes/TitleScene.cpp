@@ -20,7 +20,7 @@ TitleScene::TitleScene() {
 	BButtonSp_->SetPosition({ 750,500 });*/
 
 	int tex = TextureManager::LoadTex("resources/AppResource/Title/Title.png");
-	title_.reset(Sprite::Create(tex, { 800,600 }, { 800,600 }, { 1280, 720 }));
+	title_.reset(Sprite::Create(tex, { 850,500 }, { 850,500 }, { 1280, 720 }));
 
 	tex = TextureManager::LoadTex(white);
 	sceneC_.reset(Sprite::Create(tex, { 1,1 }, { 1,1 }, { 1280,720 }));
@@ -53,7 +53,7 @@ void TitleScene::Draw() {
 
 	title_->Draw();
 
-	space_->Draw();
+	//space_->Draw();
 
 	sceneC_->Draw();
 }

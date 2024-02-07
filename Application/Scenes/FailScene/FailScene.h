@@ -28,6 +28,7 @@ private:
 	//キー入力
 	Input* input_ = nullptr;
 
+	std::unique_ptr<Sprite>sprite_;
 
 	//シーンチェンジ用
 	std::string white = "resources/SystemResources/white.png";

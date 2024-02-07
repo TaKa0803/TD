@@ -421,6 +421,18 @@ void BossEnemy::SPATKOnCollison(const Vector3& direc)
 
 void BossEnemy::SPATKOnColliExplo()
 {
+	//以下爆発
+	ExploData data;
+	data.world = specialATK.ammo->GetWorld();
+	data.maxDeadCount = 60 * 1;
+	data.minScale = 0;
+	data.maxScale = specialATK.ammo->GetWorld().scale_.x * 2.0f;
+	data.maxScaleCount = 30;
+	data.mincolor = { 1,1,1,0.5f };
+	data.minAlphaCount = 30;
+
+	EfSphereExplosion::GetInstance()->AddEffectData(data);
+
 	//カウントを最大まで進める
 	int stateCount = specialATK.stateCount;
 	specialATK.count[stateCount].count = specialATK.count[stateCount].maxCount;
@@ -726,17 +738,7 @@ void BossEnemy::UpdateSpecialATK()
 			if (specialATK.isShot == true) {
 				specialATK.isShot = false;
 
-				//以下爆発
-				ExploData data;
-				data.world = specialATK.ammo->GetWorld();
-				data.maxDeadCount = 60 * 1;
-				data.minScale = 0;
-				data.maxScale = specialATK.ammo->GetWorld().scale_.x*2.0f;
-				data.maxScaleCount = 30;
-				data.mincolor = { 1,1,1,0.5f };
-				data.minAlphaCount = 30;
-
-				EfSphereExplosion::GetInstance()->AddEffectData(data);
+				
 			}
 
 

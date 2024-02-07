@@ -8,7 +8,7 @@ ClearScene::ClearScene()
 	input_ = Input::GetInstance();
 
 	int tex = TextureManager::LoadTex(space);
-	space_.reset(Sprite::Create(tex, { 1,1 }, { 1,1 }, { 300,100 }, { 640,600 }));
+	space_.reset(Sprite::Create(tex, { 850,500 }, { 850,500 },{ 1280,720 }));
 
 	tex = TextureManager::LoadTex(white);
 	sceneC_.reset(Sprite::Create(tex, { 1,1 }, { 1,1 }, { 1280,720 }));

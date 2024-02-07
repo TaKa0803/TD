@@ -31,7 +31,7 @@ private:
 	//キー入力
 	Input* input_ = nullptr;
 
-	std::string space = "resources/AppResource/space.png";
+	std::string space = "resources/AppResource/GameOver_Clear.png";
 	std::unique_ptr<Sprite>space_;
 
 	//シーンチェンジ用

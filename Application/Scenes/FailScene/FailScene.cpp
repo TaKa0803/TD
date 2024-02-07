@@ -11,6 +11,8 @@ FailScene::FailScene()
 	sceneC_.reset(Sprite::Create(tex, { 1,1 }, { 1,1 }, { 1280,720 }));
 	sceneC_->SetMaterialDataColor({ 0,0,0,1 });
 
+	tex = TextureManager::LoadTex("resources/AppResource/GameOver_Failed.png");
+	sprite_.reset(Sprite::Create(tex, { 850,500 }, { 850,500 }, { 1280,720 }));
 }
 
 FailScene::~FailScene()
@@ -34,6 +36,8 @@ void FailScene::Update()
 
 void FailScene::Draw()
 {
+
+	sprite_->Draw();
 	sceneC_->Draw();
 }
 
