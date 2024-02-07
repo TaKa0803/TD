@@ -655,6 +655,23 @@ void GameScene::CheckCollision()
 
 #pragma endregion
 
+#pragma region ボスとプレイヤー
+
+	// 判定を取れるか
+	if (!player_->GetIsInvisible())
+	{
+		if (player_->GetCollider()->IsCollision(*boss_->GetCollider(), temp))
+		{
+			if (player_->OnCollision())
+			{
+				AddBadGage();
+			}
+		}
+
+	}
+
+#pragma endregion
+
 
 }
 
@@ -802,6 +819,7 @@ void GameScene::AddGoodGage(float num)
 
 void GameScene::AddBadGage()
 {
+	goodGage_ /= 2.0f;
 	badGage_++;
 	if (badGage_ > maxBadGage_)
 	{
