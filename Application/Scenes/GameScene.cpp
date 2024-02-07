@@ -799,6 +799,7 @@ void GameScene::AddGoodGage(float num)
 
 void GameScene::AddBadGage()
 {
+	goodGage_ /= 2.0f;
 	badGage_++;
 	if (badGage_ > maxBadGage_)
 	{

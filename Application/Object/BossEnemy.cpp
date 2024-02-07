@@ -610,6 +610,10 @@ void BossEnemy::UpdateIDOL()
 		{
 			specialATK.isSpecialATK_ = true;
 		}
+		else
+		{
+			specialATK.isSpecialATK_ = false;
+		}
 
 		//条件達成＆カウントmax
 		if (specialATK.isSpecialATK_ && specialATK.nextSpecialATKCount >= specialATK.maxNextSpecialATKCount)
