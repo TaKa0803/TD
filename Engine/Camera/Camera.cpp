@@ -155,6 +155,7 @@ void Camera::IsCollision(OBBCollider* obb)
 		SphereCollider* sphere = new SphereCollider();
 		sphere->Initialize("sphere");
 		sphere->SetTranslate(pos);
+		sphere->SetRadius(0.1f);
 		sphere->Update();
 
 		//あたったかチェック

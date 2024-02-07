@@ -10,15 +10,22 @@ Audience::Audience()
 	LA_ = std::make_unique<InstancingGameObject>();
 	RA_ = std::make_unique<InstancingGameObject>();
 
-	B_->SetParent(&world_);
-	h_->SetParent(&B_->GetWorld());
-	LA_->SetParent(&B_->GetWorld());
-	RA_->SetParent(&B_->GetWorld());
+	
+	
+#pragma endregion
+	h_->Initialize("aH");
+	B_->Initialize("aB");
+	LA_->Initialize("aLA");
+	RA_->Initialize("aRA");
 
-	B_->SetTranslate({});
-	h_->SetTranslate({ 0,0.57f,0 });
-	LA_->SetTranslate({ -1.0f,0,0, });
-	RA_->SetTranslate({ 1.0f,0,0, });
+}
+
+Audience::~Audience()
+{
+}
+
+void Audience::Initialize()
+{
 
 	animeData[NORMAL].parts[HEAD].pos.st = { 0,0.57f,0 };
 	animeData[NORMAL].parts[HEAD].pos.ed = { 0,0.57f,0 };
@@ -53,28 +60,54 @@ Audience::Audience()
 	animeData[BAD].parts[RARM].pos.st = { 0.6f,-0.22f,0, };
 	animeData[BAD].parts[RARM].pos.ed = { 0.7f,-0.07f,0, };
 
-#pragma endregion
-	h_->Initialize("aH");
-	B_->Initialize("aB");
-	LA_->Initialize("aLA");
-	RA_->Initialize("aRA");
-
-}
-
-Audience::~Audience()
-{
-}
-
-void Audience::Initialize()
-{
-
-
-
 	nowAnime = animeData[NORMAL];
 }
 
 void Audience::Update()
 {
+	animeData[NORMAL].parts[HEAD].pos.st = { 0,0.57f,0 };
+	animeData[NORMAL].parts[HEAD].pos.ed = { 0,0.57f,0 };
+	animeData[NORMAL].parts[BODY].pos.st;
+	animeData[NORMAL].parts[BODY].pos.ed;
+	animeData[NORMAL].parts[LARM].pos.st = { -1.0f,0.1f,0, };
+	animeData[NORMAL].parts[LARM].pos.ed = { -1.0f,-0.1f,0, };
+	animeData[NORMAL].parts[RARM].pos.st = { 1.0f,0.1f,0, };
+	animeData[NORMAL].parts[RARM].pos.ed = { 1.0f,-0.1f,0, };
+
+	animeData[GOOD].parts[HEAD].pos.st = { 0,0.57f,0 };
+	animeData[GOOD].parts[HEAD].pos.ed = { 0,0.57f,0 };
+	animeData[GOOD].parts[BODY].pos.st = { 0,0.1f,0 };
+	animeData[GOOD].parts[BODY].pos.ed = { 0,0.1f,0 };
+	animeData[GOOD].parts[BODY].rotate.st = { 0,0,0.2f };
+	animeData[GOOD].parts[BODY].rotate.ed = { 0,0,-0.2f };
+	animeData[GOOD].parts[LARM].pos.st = { -1.0f,1.2f,0, };
+	animeData[GOOD].parts[LARM].pos.ed = { -1.0f,1.2f,0, };
+	animeData[GOOD].parts[RARM].pos.st = { 1.0f,1.2f,0, };
+	animeData[GOOD].parts[RARM].pos.ed = { 1.0f,1.2f,0, };
+
+	animeData[BAD].parts[HEAD].pos.st = { 0,0.57f,0 };
+	animeData[BAD].parts[HEAD].pos.ed = { 0,0.57f,0 };
+	animeData[BAD].parts[HEAD].rotate.st = { 0.5f,0,0 };
+	animeData[BAD].parts[HEAD].rotate.ed = { 0.4f,0,0 };
+	animeData[BAD].parts[BODY].pos.st;
+	animeData[BAD].parts[BODY].pos.ed;
+	animeData[BAD].parts[BODY].rotate.st;
+	animeData[BAD].parts[BODY].rotate.ed;
+	animeData[BAD].parts[LARM].pos.st = { -0.6f,-0.22f,0, };
+	animeData[BAD].parts[LARM].pos.ed = { -0.7f,-0.07f,0, };
+	animeData[BAD].parts[RARM].pos.st = { 0.6f,-0.22f,0, };
+	animeData[BAD].parts[RARM].pos.ed = { 0.7f,-0.07f,0, };
+
+
+	B_->SetParent(&world_);
+	h_->SetParent(&B_->GetWorld());
+	LA_->SetParent(&B_->GetWorld());
+	RA_->SetParent(&B_->GetWorld());
+
+	B_->SetTranslate({});
+	h_->SetTranslate({ 0,0.57f,0 });
+	LA_->SetTranslate({ -1.0f,0,0, });
+	RA_->SetTranslate({ 1.0f,0,0, });
 
 	Animation();
 

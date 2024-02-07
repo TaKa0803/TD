@@ -26,6 +26,9 @@ public:
 
 	void SetScale(float scale) { world_.scale_ = { scale,scale ,scale }; }
 
+	void SetScale(const Vector3& scale) { world_.scale_ = scale; }
+
+
 	void SetRotate(const Vector3& rotate) { world_.rotate_ = rotate; }
 
 	void SetRotateY(const float rotate) { world_.rotate_.y = rotate; }

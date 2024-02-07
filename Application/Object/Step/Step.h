@@ -23,5 +23,5 @@ public:
 
 private:
 
-	std::unique_ptr<Audience>audience_[3][5];
+	std::unique_ptr<Audience>audience_[3][10];
 };
