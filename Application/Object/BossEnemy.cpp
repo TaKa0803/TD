@@ -167,16 +167,17 @@ void BossEnemy::Update()
 			int rnd1 = length / 2 - rand() % length;
 			int rnd2 = length / 2 - rand() % length;
 			nextPosition_ = { (float)rnd1,(float)rnd2 };
+			Vector3 pos = { nextPosition_.x,world_.translate_.y,nextPosition_.y };
 			//エリア生成
 			DZoneEData effect;
 			effect.maxCount = float(cMOVEFRAME_ / 3);
 			effect.tenmetu = 2;
 			effect.isSphere = true;
-			effect.pos.st = world_.translate_;
-			effect.pos.ed = world_.translate_;
+			effect.pos.st = pos;
+			effect.pos.ed = pos;
 
-			effect.scale.st = { 5.0f,10.0f,5.0f };
-			effect.scale.ed = { 5.0f,10.0f,5.0f };
+			effect.scale.st = { 10.0f,10.0f,10.0f };
+			effect.scale.ed = { 10.0f,10.0f,10.0f };
 
 			DZoneEffect::GetInstance()->AddData(effect);
 		}
@@ -209,8 +210,8 @@ void BossEnemy::Update()
 			break;
 		case BossEnemy::DAMAGE:
 			SetAplta(0.5f);
-			momentFrame_ = 20;
-			invisibleFrame_ = 40;
+			momentFrame_ = 5;
+			invisibleFrame_ = 10;
 			isInvisible_ = true;
 			HP_ -= (int)damage_;
 			damage_ = 0.0f;
@@ -426,20 +427,31 @@ void BossEnemy::Draw()
 	}
 }
 
-void BossEnemy::OnCollision(float damage, bool issPecial)
+bool BossEnemy::OnCollision(float damage, bool issPecial)
 {
+	// スペシャル攻撃中だった場合
+	if (behavior_ == SPECIAL)
+	{
+		// 跳ね返しなら
+		if (issPecial)
+		{
+			damage_ = damage;
+			reqBehavior_ = DAMAGE;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 	//特殊攻撃使用時ではない
-	if (!isInvisible_ && behavior_ != SPECIAL)
+	else if (!isInvisible_)
 	{
 		damage_ = damage;
 		reqBehavior_ = DAMAGE;
+		return true;
 	}
-
-	if (issPecial)
-	{
-		damage_ = damage;
-		reqBehavior_ = DAMAGE;
-	}
+	return false;
 }
 
 void BossEnemy::SPATKOnCollison(const Vector3& direc)

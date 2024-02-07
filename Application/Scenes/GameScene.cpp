@@ -423,9 +423,9 @@ void GameScene::CheckCollision()
 			// ボスとの接触
 			if (some->GetCollider()->IsCollision(*boss->GetCollider(), temp))
 			{
-				if (some->OnCollision())
+				if (boss->OnCollision(some->GetAttackPower()))
 				{
-					boss->OnCollision(some->GetAttackPower());
+					some->OnCollision(temp);
 
 					//エフェクト発生
 					AddEffect(some->GetWorld());
@@ -442,7 +442,7 @@ void GameScene::CheckCollision()
 				if (player_->OnCollision())
 				{
 					AddBadGage();
-					some->OnCollision();
+					some->OnCollision(temp);
 
 					//エフェクト発生
 					AddEffect(some->GetWorld());
@@ -462,7 +462,7 @@ void GameScene::CheckCollision()
 				if (player_->OnCollision())
 				{
 					AddBadGage();
-					some->OnCollision();
+					some->OnCollision(temp);
 
 					//エフェクト発生
 					AddEffect(some->GetWorld());
@@ -475,9 +475,9 @@ void GameScene::CheckCollision()
 				BossEnemy* boss = boss_.get();
 				if (some->GetCollider()->IsCollision(*boss->GetCollider(), temp))
 				{
-					if (some->OnCollision())
+					if (boss->OnCollision(some->GetAttackPower()))
 					{
-						boss->OnCollision(some->GetAttackPower());
+						some->OnCollision(temp);
 
 						//エフェクト発生
 						AddEffect(some->GetWorld());
@@ -633,7 +633,7 @@ void GameScene::CheckCollision()
 			if (boss_->GetSpecialATKCollider()->IsCollision(*boss_->GetCollider(), temp))
 			{
 				boss_->SPATKOnColliExplo();
-				boss_->OnCollision(5,true);
+				boss_->OnCollision(5, true);
 				AddGoodGage(10);
 
 			}
@@ -676,16 +676,19 @@ void GameScene::SceneChange()
 {
 
 
-	if (!isPreScene) {
+	if (!isPreScene)
+	{
 		alpha -= 1.0f / 30.0f;
 
 		sceneC_->SetColorAlpha(alpha);
-		if (alpha <= 0.0f) {
+		if (alpha <= 0.0f)
+		{
 			alpha = 0.0f;
 			isPreScene = true;
 		}
 	}
-	else {
+	else
+	{
 		//ボスが死んでたら
 		if (!boss_->GetIsActive())
 		{
@@ -699,17 +702,20 @@ void GameScene::SceneChange()
 		}
 
 #ifdef _DEBUG
-		if (input_->TriggerKey(DIK_P)) {
+		if (input_->TriggerKey(DIK_P))
+		{
 			isSceneChange = true;
 		}
 #endif // _DEBUG
 	}
 
-	if (isPreScene&&isSceneChange) {
+	if (isPreScene && isSceneChange)
+	{
 		alpha += 1.0f / 60.0f;
 
 		sceneC_->SetColorAlpha(alpha);
-		if (alpha >= 1.0f) {
+		if (alpha >= 1.0f)
+		{
 			//ボスが死んでたら
 			if (!boss_->GetIsActive())
 			{
@@ -723,7 +729,8 @@ void GameScene::SceneChange()
 			}
 
 #ifdef _DEBUG
-			if (input_->TriggerKey(DIK_P)) {
+			if (input_->TriggerKey(DIK_P))
+			{
 				sceneNo = SCENE::CLEAR;
 			}
 #endif // _DEBUG
@@ -731,7 +738,8 @@ void GameScene::SceneChange()
 		}
 	}
 
-	if (input_->TriggerKey(DIK_ESCAPE)) {
+	if (input_->TriggerKey(DIK_ESCAPE))
+	{
 		leaveGame = true;
 	}
 
