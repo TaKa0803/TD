@@ -63,7 +63,7 @@ private:
 	// 撃破演出
 	int32_t cCRUSHFRAME_ = 120;
 	// 小さい爆発
-	float cCRUSHMINIMUM_ = 17.0f;
+	float cCRUSHMINIMUM_ = 15.0f;
 
 	// 次に向かう場所
 	Vector2 nextPosition_ = { 0.0f,0.0f };
