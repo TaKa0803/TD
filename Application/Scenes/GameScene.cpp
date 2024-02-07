@@ -571,6 +571,7 @@ void GameScene::CheckCollision()
 	//ボスの必殺技との処理
 	if (boss_->IsSpecialAttackActive())
 	{
+		itrB = blasts.begin();
 		for (; itrB != blasts.end(); ++itrB)
 		{
 			EchoBlast* echo = itrB->get();
