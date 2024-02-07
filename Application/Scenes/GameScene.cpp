@@ -68,6 +68,10 @@ GameScene::GameScene()
 	int tex = TextureManager::LoadTex(white);
 	sceneC_.reset(Sprite::Create(tex, { 1,1 }, { 1,1 }, { 1280,720 }));
 	sceneC_->SetMaterialDataColor({ 0,0,0,1 });
+
+	tex = TextureManager::LoadTex("resources/AppResource/ControllUI.png");
+	ui_.reset(Sprite::Create(tex, { 1,1 }, { 1,1 }, { 1280,720 }));
+
 }
 
 GameScene::~GameScene()
@@ -204,7 +208,10 @@ void GameScene::Draw()
 	}
 #pragma endregion
 
+	ui_->Draw();
+
 	sceneC_->Draw();
+
 }
 
 void GameScene::DebugWindows()
