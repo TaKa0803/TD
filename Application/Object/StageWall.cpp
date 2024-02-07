@@ -34,7 +34,7 @@ void StageWall::LoadGlobalVariable()
 
 void StageWall::CalculateInit()
 {
-	world_.scale_.x = vModelScale_.x * vModifierScale_.x;
+	world_.scale_.x = vModelScale_.x * vModifierScale_.x * (vSize_ / 75.0f);
 	world_.scale_.y = vModelScale_.y * vModifierScale_.y;
 	world_.scale_.z = vModelScale_.z * vModifierScale_.z;
 

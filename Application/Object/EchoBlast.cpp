@@ -115,6 +115,7 @@ void EchoBlast::SetInfomation(const Infomation& info)
 	world_.translate_ = data_.popPosition_ + direct3_ * 0.3f;
 	world_.rotate_.y = GetYRotate(data_.direction_);
 	colliderWorld_.parent_ = &world_;
+	colliderWorld_.rotate_.y = 3.14f;
 
 	// 反射板を残す時間
 	aliveFrame_ = 20;
