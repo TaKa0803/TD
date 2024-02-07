@@ -92,6 +92,10 @@ void SomeEnemy::Draw()
 
 void SomeEnemy::OnCollision(const Vector3& direction)
 {
+	if (behavior_ == DESTROY)
+	{
+		return;
+	}
 	if (behavior_ == BURST)
 	{
 		world_.translate_ += direction;
@@ -133,6 +137,7 @@ void SomeEnemy::MoveEnemyUpdate() {
 			break;
 		case SomeEnemy::BURST:
 			momentFrame_ = cBURSTFRAME_;
+			//isHit_ = false;
 			break;
 		case SomeEnemy::DESTROY:
 			momentFrame_ = 60;
@@ -177,7 +182,11 @@ void SomeEnemy::MoveEnemyUpdate() {
 		world_.rotate_.y = GetYRotate({ direct3_.x,direct3_.z });
 		break;
 	case SomeEnemy::DESTROY:
-
+		momentFrame_--;
+		if (momentFrame_ <= 0)
+		{
+			isActive_ = false;
+		}
 		collider_->SetRadius(1.5f + (1.0f - momentFrame_ / 60.0f));
 		break;
 
@@ -237,6 +246,11 @@ void SomeEnemy::ExpEnemyUpdate()
 		world_.translate_ += direct3_ * 0.5f;
 		break;
 	case SomeEnemy::DESTROY:
+		momentFrame_--;
+		if (momentFrame_ <= 0)
+		{
+			isActive_ = false;
+		}
 
 		collider_->SetRadius(1.5f + (1.0f - momentFrame_ / 60.0f));
 		break;
