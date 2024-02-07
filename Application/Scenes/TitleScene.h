@@ -31,6 +31,7 @@ private:
 	std::unique_ptr<Sprite>title_;
 
 
+	std::unique_ptr<Sprite>Bsprite_;
 
 	//シーンチェンジ用
 	std::string white = "resources/SystemResources/white.png";

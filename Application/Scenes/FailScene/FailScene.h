@@ -37,5 +37,7 @@ private:
 	bool isSceneChange = false;
 	bool isPreScene = false;
 
+
+	std::unique_ptr<Sprite>Bsprite_;
 };
 

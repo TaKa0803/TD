@@ -13,6 +13,9 @@ ClearScene::ClearScene()
 	tex = TextureManager::LoadTex(white);
 	sceneC_.reset(Sprite::Create(tex, { 1,1 }, { 1,1 }, { 1280,720 }));
 	sceneC_->SetMaterialDataColor({ 0,0,0,1 });
+
+	tex = TextureManager::LoadTex("resources/AppResource/UI/B.png");
+	Bsprite_.reset(Sprite::Create(tex, { 180,90 }, { 90,90 }, { 100,100 },{640,650}));
 }
 
 ClearScene::~ClearScene()
@@ -37,6 +40,8 @@ void ClearScene::Update()
 void ClearScene::Draw()
 {
 	space_->Draw();
+
+	Bsprite_->Draw();
 
 	sceneC_->Draw();
 }

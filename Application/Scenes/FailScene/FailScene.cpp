@@ -13,6 +13,9 @@ FailScene::FailScene()
 
 	tex = TextureManager::LoadTex("resources/AppResource/GameOver_Failed.png");
 	sprite_.reset(Sprite::Create(tex, { 850,500 }, { 850,500 }, { 1280,720 }));
+
+	tex = TextureManager::LoadTex("resources/AppResource/UI/B.png");
+	Bsprite_.reset(Sprite::Create(tex, { 180,90 }, { 90,90 }, { 100,100 }, { 640,650 }));
 }
 
 FailScene::~FailScene()
@@ -38,6 +41,7 @@ void FailScene::Draw()
 {
 
 	sprite_->Draw();
+	Bsprite_->Draw();
 	sceneC_->Draw();
 }
 

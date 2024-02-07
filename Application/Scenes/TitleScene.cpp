@@ -29,6 +29,8 @@ TitleScene::TitleScene() {
 	tex = TextureManager::LoadTex(space);
 	space_.reset(Sprite::Create(tex, { 1,1 }, { 1,1 }, { 300,100 },{640,600}));
 
+	tex = TextureManager::LoadTex("resources/AppResource/UI/B.png");
+	Bsprite_.reset(Sprite::Create(tex, { 180,90 }, { 90,90 }, { 100,100 }, { 640,650 }));
 }
 
 TitleScene::~TitleScene() {
@@ -54,6 +56,8 @@ void TitleScene::Draw() {
 	title_->Draw();
 
 	//space_->Draw();
+
+	Bsprite_->Draw();
 
 	sceneC_->Draw();
 }
