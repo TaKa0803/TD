@@ -487,16 +487,14 @@ void BossEnemy::UpdateLists()
 
 void BossEnemy::SummmonEnemy()
 {
-	SomeEnemy* data = new SomeEnemy;
-	data->Initialize(*playerW_);
 	if (rand() % 3 == 0)
 	{
-		data->SetBehavior(SomeEnemy::Explo);
+		return;
 	}
-	else
-	{
+	SomeEnemy* data = new SomeEnemy;
+	data->Initialize(*playerW_);
 		data->SetBehavior(SomeEnemy::Move);
-	}
+	
 	int length = (int)moveLength_;
 	int rnd1 = length / 2 - rand() % length;
 	int rnd2 = length / 2 - rand() % length;
