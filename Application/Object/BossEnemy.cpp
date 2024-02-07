@@ -97,7 +97,8 @@ void BossEnemy::Initialize(const WorldTransform& player)
 #pragma endregion
 
 #pragma region ボス必殺技関係
-	for (auto& count : specialATK.count) {
+	for (auto& count : specialATK.count)
+	{
 		count.count = 0;
 	}
 
@@ -128,7 +129,8 @@ void BossEnemy::Update()
 	}
 
 	//必殺技状態ではないときカウント増加
-	if (behavior_ != SPECIAL) {
+	if (behavior_ != SPECIAL)
+	{
 		specialATK.nextSpecialATKCount++;
 	}
 
@@ -192,7 +194,8 @@ void BossEnemy::Update()
 			HP_ -= (int)damage_;
 			damage_ = 0.0f;
 
-			for (auto& count : specialATK.count) {
+			for (auto& count : specialATK.count)
+			{
 				count.count = 0;
 			}
 			specialATK.isShot = 0;
@@ -208,7 +211,8 @@ void BossEnemy::Update()
 
 			SeePlayer();
 
-			for (auto& count : specialATK.count) {
+			for (auto& count : specialATK.count)
+			{
 				count.count = 0;
 			}
 			specialATK.isShot = 0;
@@ -346,9 +350,9 @@ void BossEnemy::DebagWindow()
 	ImGui::Text("Boss UI");
 	ImGui::DragFloat3("ui pos", &uiWorld_.translate_.x);
 	ImGui::DragFloat3("ui scale", &uiWorld_.scale_.x, 0.01f);
-	
-	
-	
+
+
+
 
 
 	ImGui::End();
@@ -382,22 +386,24 @@ void BossEnemy::Draw()
 	hpBar_->Draw();
 	hpBarFrame_->Draw();
 
-	if (specialATK.isShot) {
+	if (specialATK.isShot)
+	{
 		collider_->Draw();
 		specialATK.ammo->Draw();
 	}
 }
 
-void BossEnemy::OnCollision(float damage,bool issPecial)
+void BossEnemy::OnCollision(float damage, bool issPecial)
 {
 	//特殊攻撃使用時ではない
-	if (!isInvisible_&&behavior_!=SPECIAL)
+	if (!isInvisible_ && behavior_ != SPECIAL)
 	{
 		damage_ = damage;
 		reqBehavior_ = DAMAGE;
 	}
 
-	if (issPecial) {
+	if (issPecial)
+	{
 		damage_ = damage;
 		reqBehavior_ = DAMAGE;
 	}
@@ -438,7 +444,7 @@ void BossEnemy::SPATKOnColliExplo()
 	specialATK.count[stateCount].count = specialATK.count[stateCount].maxCount;
 }
 
-void BossEnemy::SPATKReflectOnCollision(const Vector3&direc)
+void BossEnemy::SPATKReflectOnCollision(const Vector3& direc)
 {
 	//座標を変更して移動方向変更
 	/*Vector3 trans = specialATK.ammo->GetWorld().translate_;
@@ -462,7 +468,8 @@ void BossEnemy::SeePlayer()
 	seen.y = 0;
 
 	//muki
-	if (seen != Vector3(0, 0, 0)) {
+	if (seen != Vector3(0, 0, 0))
+	{
 		seen *= -1;
 		world_.rotate_.y = GetYRotate({ seen.x,seen.z });
 	}
@@ -497,18 +504,16 @@ void BossEnemy::UpdateLists()
 	}
 }
 
-void BossEnemy::SummmonEnemy()
+void BossEnemy::SummmonEnemy(bool spawn)
 {
+	if (!spawn && rand() % 3 == 0)
+	{
+		return;
+	}
 	SomeEnemy* data = new SomeEnemy;
 	data->Initialize(*playerW_);
-	if (rand() % 3 == 0)
-	{
-		data->SetBehavior(SomeEnemy::Explo);
-	}
-	else
-	{
-		data->SetBehavior(SomeEnemy::Move);
-	}
+	data->SetBehavior(SomeEnemy::Move);
+
 	int length = (int)moveLength_;
 	int rnd1 = length / 2 - rand() % length;
 	int rnd2 = length / 2 - rand() % length;
@@ -568,12 +573,14 @@ void BossEnemy::UpdateIDOL()
 	if (momentFrame_ <= 0)
 	{
 #pragma region 必殺技関係
-		if (goodGage_ >= maxGoodGage_) {
+		if (goodGage_ >= maxGoodGage_)
+		{
 			specialATK.isSpecialATK_ = true;
 		}
 
 		//条件達成＆カウントmax
-		if (specialATK.isSpecialATK_ && specialATK.nextSpecialATKCount >= specialATK.maxNextSpecialATKCount) {
+		if (specialATK.isSpecialATK_ && specialATK.nextSpecialATKCount >= specialATK.maxNextSpecialATKCount)
+		{
 			reqBehavior_ = SPECIAL;
 			return;
 		}
@@ -650,7 +657,7 @@ void BossEnemy::UpdateSUMMON()
 	}*/
 	if (momentFrame_ % 20 == 0)
 	{
-		SummmonEnemy();
+		SummmonEnemy(true);
 	}
 	if (momentFrame_ <= 0)
 	{
@@ -676,7 +683,6 @@ void BossEnemy::UpdateATTACK()
 		momentFrame_ += 80;
 		// 仮で敵を出してみる
 		// 多分残す
-		SummmonEnemy();
 		SummmonEnemy();
 		SummmonEnemy();
 	}
@@ -709,12 +715,14 @@ void BossEnemy::UpdateSpecialATK()
 	int stateCount = specialATK.stateCount;
 
 	//弾の更新
-	if (specialATK.isShot) {
+	if (specialATK.isShot)
+	{
 		Vector3 newpos = specialATK.ammo->GetWorld().translate_ + specialATK.velocity_;
 		specialATK.ammo->SetTranslate(newpos);
-		
-			//muki
-		if (specialATK.velocity_ != Vector3(0, 0, 0)) {
+
+		//muki
+		if (specialATK.velocity_ != Vector3(0, 0, 0))
+		{
 			specialATK.ammo->SetRotateY(GetYRotate({ specialATK.velocity_.x,specialATK.velocity_.z }));
 		}
 		specialATK.ammo->Update();
@@ -723,10 +731,12 @@ void BossEnemy::UpdateSpecialATK()
 
 
 	//一定カウントで次の処理へ
-	if (specialATK.count[stateCount].count++ >= specialATK.count[stateCount].maxCount) {
+	if (specialATK.count[stateCount].count++ >= specialATK.count[stateCount].maxCount)
+	{
 
 		//戻る状態ではない場合次の状態へ
-		if (stateCount != back) {
+		if (stateCount != back)
+		{
 			//次の状態へ
 			specialATK.stateCount++;
 			//以降の処理初期化要に設定
@@ -735,7 +745,8 @@ void BossEnemy::UpdateSpecialATK()
 			specialATK.count[stateCount].count = 0;
 
 			//弾があったら消して爆発処理
-			if (specialATK.isShot == true) {
+			if (specialATK.isShot == true)
+			{
 				specialATK.isShot = false;
 
 				
@@ -743,7 +754,8 @@ void BossEnemy::UpdateSpecialATK()
 
 
 			//攻撃を打つとき
-			if (stateCount == shotedWait) {
+			if (stateCount == shotedWait)
+			{
 				specialATK.isShot = true;
 
 				//体の向きと反対に撃つのでベクトルを計算
@@ -761,7 +773,8 @@ void BossEnemy::UpdateSpecialATK()
 			}
 
 		}
-		else {
+		else
+		{
 			//戻る処理が終わった時の処理
 			reqBehavior_ = IDOL;
 

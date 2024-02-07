@@ -230,7 +230,9 @@ private:
 	// 攻撃リストの更新
 	void UpdateLists();
 
-	void SummmonEnemy();
+	// 敵を沸かせる
+	// true で確定沸き
+	void SummmonEnemy(bool spawn = false);
 	// 範囲攻撃作成
 	void CreateAttack();
 
