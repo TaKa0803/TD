@@ -76,6 +76,7 @@ GameScene::GameScene()
 	bgm = AudioManager::LoadSoundNum("BGM");
 	bound = AudioManager::LoadSoundNum("Bound");
 	hit = AudioManager::LoadSoundNum("Hit");
+	damage = AudioManager::LoadSoundNum("pDamage");
 }
 
 GameScene::~GameScene()
@@ -125,18 +126,13 @@ void GameScene::Initialize()
 	isPreScene = false;
 
 	AudioManager::GetInstance()->StopAllSounds();
-
-
-	AudioManager::PlaySoundData(bgm);
+	AudioManager::PlaySoundData(bgm,true);
 }
 
 
 
 void GameScene::Update()
 {
-
-
-
 #pragma region ゲームシーン
 	//デバッグウィンドウ表示
 	DebugWindows();
@@ -829,4 +825,6 @@ void GameScene::AddBadGage()
 	{
 		badGage_ = 0;
 	}
+
+	AudioManager::PlaySoundData(damage);
 }

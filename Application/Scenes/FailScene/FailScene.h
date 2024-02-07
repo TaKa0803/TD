@@ -39,5 +39,7 @@ private:
 
 
 	std::unique_ptr<Sprite>Bsprite_;
+
+	int bgm_;
 };
 

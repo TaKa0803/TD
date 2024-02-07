@@ -43,5 +43,6 @@ private:
 	std::string space = "resources/AppResource/space.png";
 	std::unique_ptr<Sprite>space_;
 
+	int bgm_;
 };
 

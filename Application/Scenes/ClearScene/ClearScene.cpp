@@ -2,6 +2,7 @@
 #include<imgui.h>
 #include"Scenes/Scenes.h"
 #include"TextureManager/TextureManager.h"
+#include"AudioManager/AudioManager.h"
 
 ClearScene::ClearScene()
 {
@@ -16,6 +17,8 @@ ClearScene::ClearScene()
 
 	tex = TextureManager::LoadTex("resources/AppResource/UI/B.png");
 	Bsprite_.reset(Sprite::Create(tex, { 180,90 }, { 90,90 }, { 100,100 },{640,650}));
+
+	bgm_=AudioManager::LoadSoundNum("CLEAR");
 }
 
 ClearScene::~ClearScene()
@@ -28,6 +31,9 @@ void ClearScene::Initialize()
 	alpha = 1;
 	isSceneChange = false;
 	isPreScene = false;
+
+	AudioManager::GetInstance()->StopAllSounds();
+	AudioManager::GetInstance()->PlaySoundData(bgm_, true);
 }
 
 void ClearScene::Update()

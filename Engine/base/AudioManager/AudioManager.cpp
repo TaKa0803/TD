@@ -161,11 +161,19 @@ void AudioManager::StopAllSounds()
 	FormatChunk format = {};
 
 	//チャンクヘッダーの確認
-	fs.read((char*)&format, sizeof(ChunkHeader));
-	if (strncmp(format.chunk.id, "fmt ", 4) != 0) {
-		assert(0);
+	while (true)
+	{
+		fs.read((char*)&format, sizeof(ChunkHeader));
+		if (strncmp(format.chunk.id, "fmt ", 4) != 0) {
+			if (strncmp(format.chunk.id, "JUNK", 4) == 0) {
+				fs.seekg(format.chunk.size, std::ios_base::cur);
+			}
+			//assert(0);
+		}
+		else {
+			break;
+		}
 	}
-
 	//チャンク本体の読み込み
 	assert(format.chunk.size <= sizeof(format.fmt));
 	fs.read((char*)&format.fmt, format.chunk.size);
@@ -219,7 +227,7 @@ void AudioManager::StopAllSounds()
 	 return tagDatas_[tag];
  }
 
- void AudioManager::Play(int num)
+ void AudioManager::Play(int num,bool loop)
  {
 	 //要素番号のタグからデータ取得
 	 SoundData data = soundDatas_[num];
@@ -229,11 +237,16 @@ void AudioManager::StopAllSounds()
 	 //作成失敗
 	 assert(SUCCEEDED(hr));
 
+	 pSourceVoice->SetVolume(0.5f);
+	 
+
 	 XAUDIO2_BUFFER buf{};
 	 buf.pAudioData = data.pBuffer;
 	 buf.AudioBytes = data.bufferSize;
 	 buf.Flags = XAUDIO2_END_OF_STREAM;
-
+	 if (loop) {
+		 buf.LoopCount = XAUDIO2_LOOP_INFINITE;
+	 }
 	 hr = pSourceVoice->SubmitSourceBuffer(&buf);
 	 hr = pSourceVoice->Start();
 
@@ -256,12 +269,12 @@ void AudioManager::StopAllSounds()
 
 
 
-void AudioManager::PlaySoundData(const int dataNum)
+void AudioManager::PlaySoundData(const int dataNum, bool loop)
 {
 
 	AudioManager* AM = AudioManager::GetInstance();
 
-	AM->Play(dataNum);
+	AM->Play(dataNum,loop);
 
 }
 

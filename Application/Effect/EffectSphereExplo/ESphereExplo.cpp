@@ -1,4 +1,5 @@
 #include "ESphereExplo.h"
+#include"AudioManager/AudioManager.h"
 
 EfSphereExplosion* EfSphereExplosion::GetInstance()
 {
@@ -14,11 +15,15 @@ void EfSphereExplosion::Initialize(const std::string& tag)
 	IMM_->SetBlendMode(tag_, BlendMode::kAdd);
 
 	datas_.clear();
+
+	sound_ = AudioManager::LoadSoundNum("maxExplo");
 }
 
 void EfSphereExplosion::AddEffectData(const ExploData& eData)
 {
 	datas_.emplace_back(eData);
+
+	AudioManager::PlaySoundData(sound_);
 }
 
 void EfSphereExplosion::Update()

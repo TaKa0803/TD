@@ -155,7 +155,7 @@ private:
 
 
 #pragma region 音
-	int bgm, bound, hit;
+	int bgm, bound, hit,damage;
 #pragma endregion
 
 };

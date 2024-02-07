@@ -52,4 +52,5 @@ private:
 	//データ群
 	std::list<ExploData>datas_;
 
+	int sound_;
 };

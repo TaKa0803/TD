@@ -3,6 +3,11 @@
 		"BGM": [ "BGM.wav" ],
 		"Bound": ["Bound.wav"],
 		"PlayerShot": [ "PlayerShot.wav" ],
-		"Hit": [ "EnemyHitBossOrEnemy.wav" ]
+		"Hit": [ "EnemyHitBossOrEnemy.wav" ],
+		"CLEAR": [ "Clear.wav" ],
+		"FAIL": [ "Failed.wav" ],
+		"minExplo": [ "explode_big.wav" ],
+		"maxExplo": [ "explode_smale.wav" ],
+		"pDamage": [ "playerDamage.wav" ]
 	}
 }
