@@ -105,8 +105,8 @@ void SomeEnemy::OnCollision(const Vector3& direction)
 		direct3_ *= burstSpd_;
 	}
 
-	//
-	if (eType_ == Move) {
+	// 一度だけバースト初期化
+	else if (eType_ == Move) {
 		direct3_ = direction;
 		direct3_.y = 0;
 		direct3_.SetNormalize();
@@ -239,6 +239,7 @@ void SomeEnemy::ExpEnemyUpdate()
 
 		break;
 	case SomeEnemy::BURST:
+		momentFrame_--;
 		if (momentFrame_ <= 0)
 		{
 			reqBehavior_ = DESTROY;

@@ -209,8 +209,8 @@ void BossEnemy::Update()
 			break;
 		case BossEnemy::DAMAGE:
 			SetAplta(0.5f);
-			momentFrame_ = 20;
-			invisibleFrame_ = 40;
+			momentFrame_ = 5;
+			invisibleFrame_ = 10;
 			isInvisible_ = true;
 			HP_ -= (int)damage_;
 			damage_ = 0.0f;
@@ -426,20 +426,21 @@ void BossEnemy::Draw()
 	}
 }
 
-void BossEnemy::OnCollision(float damage, bool issPecial)
+bool BossEnemy::OnCollision(float damage, bool issPecial)
 {
-	//特殊攻撃使用時ではない
-	if (!isInvisible_ && behavior_ != SPECIAL)
-	{
-		damage_ = damage;
-		reqBehavior_ = DAMAGE;
-	}
-
 	if (issPecial)
 	{
 		damage_ = damage;
 		reqBehavior_ = DAMAGE;
+		return true;
+	}	//特殊攻撃使用時ではない
+	if (!isInvisible_)
+	{
+		damage_ = damage;
+		reqBehavior_ = DAMAGE;
+		return true;
 	}
+	return false;
 }
 
 void BossEnemy::SPATKOnCollison(const Vector3& direc)

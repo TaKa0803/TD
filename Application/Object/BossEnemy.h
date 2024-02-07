@@ -85,7 +85,7 @@ private:
 
 	bool isActive_ = false;
 
-	uint32_t invisibleFrame_ = 60;
+	uint32_t invisibleFrame_ = 10;
 	bool isInvisible_ = false;
 
 	// 被ダメージ
@@ -209,7 +209,7 @@ public:
 	auto& GetEnemies() { return enemies_; }
 	auto& GetAttacks() { return attacks_; }
 
-	void OnCollision(float damage,bool isSpecial=false);
+	bool OnCollision(float damage,bool isSpecial=false);
 
 	bool GetIsActive() const {return isActive_; }
 

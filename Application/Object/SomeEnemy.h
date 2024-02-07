@@ -118,13 +118,13 @@ public:
 	SphereCollider* GetCollider() { return collider_.get(); }
 
 	// ボスとぶつかった時
-	bool OnCollision()
+	/*bool OnCollision()
 	{
 		if (isHit_) { return false; }
 		reqBehavior_ = DESTROY;
 		isHit_ = true;
 		return true;
-	}
+	}*/
 	// 壁、攻撃の時
 	void OnCollision(const Vector3& direction);
 	// 敵同士の衝突用
