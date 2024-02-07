@@ -220,6 +220,8 @@ void GameScene::DebugWindows()
 
 	stage_->DebagWindow();
 
+	plane_->CaluclateInit();
+
 	boss_->DebagWindow();
 
 	ImGui::Begin("dai");
@@ -596,15 +598,11 @@ void GameScene::CheckCollision()
 				boss_->SPATKOnColliExplo();
 			}
 		}
-	}
-
 
 #pragma endregion
 
 #pragma region ボスの必殺技とボス
 
-	if (boss_->IsSpecialAttackActive())
-	{
 		if (boss_->IsHitPlayerReflection())
 		{
 			boss_->SetAplta(1.0f);
@@ -768,6 +766,10 @@ void GameScene::AddGoodGage(float num)
 	{
 		goodGage_ = maxGoodGage_;
 	}
+	else if (0 < goodGage_)
+	{
+		goodGage_ = 0;
+	}
 }
 
 void GameScene::AddBadGage()
@@ -776,5 +778,9 @@ void GameScene::AddBadGage()
 	if (badGage_ > maxBadGage_)
 	{
 		badGage_ = maxBadGage_;
+	}
+	else if (0 < badGage_)
+	{
+		badGage_ = 0;
 	}
 }

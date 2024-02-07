@@ -59,12 +59,9 @@ void Stage::DebagWindow()
 		ImGui::Separator();
 	}
 
-	if (ImGui::Button("LoadAllData"))
+	for (size_t i = 0; i < Placement::_COUNT; i++)
 	{
-		for (size_t i = 0; i < Placement::_COUNT; i++)
-		{
-			walls_[i]->Load();
-		}
+		walls_[i]->Load();
 	}
 	if (ImGui::Button("SaveAllData"))
 	{
