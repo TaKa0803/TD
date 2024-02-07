@@ -185,8 +185,9 @@ void BossEnemy::Update()
 			attackCount_++;
 			break;
 		case BossEnemy::DAMAGE:
-			momentFrame_ = 30;
-			invisibleFrame_ = 60;
+			SetAplta(0.5f);
+			momentFrame_ = 20;
+			invisibleFrame_ = 40;
 			isInvisible_ = true;
 			HP_ -= (int)damage_;
 			damage_ = 0.0f;
@@ -402,9 +403,6 @@ void BossEnemy::OnCollision(float damage,bool issPecial)
 	}
 }
 
-
-
-
 void BossEnemy::SPATKOnCollison(const Vector3& direc)
 {
 	//座標を変更して移動方向変更
@@ -440,26 +438,22 @@ void BossEnemy::SPATKReflectOnCollision(const Vector3&direc)
 	specialATK.velocity_ *= specialATK.refrectSpd_;
 	world_.UpdateMatrix();
 
-
 	//プレイヤーが反射したという処理を入れる
 	specialATK.isHitPlayerWall = true;
 }
 
 void BossEnemy::SeePlayer()
 {
-
 	//ボスからプレイヤーへのベクトル
 	Vector3 seen = playerW_->GetMatWorldTranslate() - world_.GetMatWorldTranslate();
 	seen.SetNormalize();
 	seen.y = 0;
-
 
 	//muki
 	if (seen != Vector3(0, 0, 0)) {
 		seen *= -1;
 		world_.rotate_.y = GetYRotate({ seen.x,seen.z });
 	}
-
 
 }
 
@@ -541,7 +535,6 @@ void BossEnemy::HPBarUpdate()
 	{
 		uiWorld_.UpdateMatrix();
 
-
 		//最大HPと現HPの比率計算
 		float hphiritu = (float)HP_ / (float)maxHP_;
 
@@ -573,8 +566,6 @@ void BossEnemy::UpdateIDOL()
 			return;
 		}
 #pragma endregion
-
-
 
 		int rnd = rand() % 5;
 		// 移動
@@ -638,10 +629,15 @@ void BossEnemy::UpdateMOVE()
 void BossEnemy::UpdateSUMMON()
 {
 	momentFrame_--;
+	/*
 	if (momentFrame_ == cSUMMONFRAME_ / 2)
 	{
 		SummmonEnemy();
 		SummmonEnemy();
+		SummmonEnemy();
+	}*/
+	if (momentFrame_ % 20 == 0)
+	{
 		SummmonEnemy();
 	}
 	if (momentFrame_ <= 0)
@@ -657,6 +653,10 @@ void BossEnemy::UpdateATTACK()
 	if (momentFrame_ % (cATTACKFRAME_ / cATTACKFREQUENCY_) == cATTACKFRAME_ % cATTACKFREQUENCY_)
 	{
 		CreateAttack();
+		if (momentFrame_ % (cATTACKFRAME_ / cATTACKFREQUENCY_) == cATTACKFRAME_ % (cATTACKFREQUENCY_ * 2))
+		{
+			SummmonEnemy();
+		}
 	}
 	if (momentFrame_ <= 0)
 	{
@@ -675,8 +675,8 @@ void BossEnemy::UpdateDAMAGE()
 	momentFrame_--;
 	if (momentFrame_ <= 0)
 	{
+		SetAplta(1.0f);
 		reqBehavior_ = IDOL;
-
 	}
 }
 
@@ -765,7 +765,4 @@ void BossEnemy::UpdateSpecialATK()
 
 		}
 	}
-
-
-
 }

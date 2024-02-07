@@ -38,7 +38,7 @@ private:
 	// 召喚時間
 	int32_t cSUMMONFRAME_ = 60;
 
-	float cSIZE_ = 3.0f;
+	float cSIZE_ = 3.5f;
 
 	// 移動にかかる時間
 	int32_t cMOVEFRAME_ = 120;
@@ -82,7 +82,7 @@ private:
 
 #pragma region ボスのHPと表示
 	//最大HP
-	const int maxHP_ = 20;
+	const int maxHP_ = 40;
 	//現HP
 	int HP_ = maxHP_;
 

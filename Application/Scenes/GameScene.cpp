@@ -766,7 +766,7 @@ void GameScene::AddGoodGage(float num)
 	{
 		goodGage_ = maxGoodGage_;
 	}
-	else if (0 < goodGage_)
+	else if (goodGage_ < 0)
 	{
 		goodGage_ = 0;
 	}
@@ -779,7 +779,7 @@ void GameScene::AddBadGage()
 	{
 		badGage_ = maxBadGage_;
 	}
-	else if (0 < badGage_)
+	else if (badGage_ < 0)
 	{
 		badGage_ = 0;
 	}
