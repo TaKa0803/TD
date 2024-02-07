@@ -24,6 +24,7 @@ private:
 		DAMAGE,	// 被弾
 		CRUSH,	// 撃破
 		SPECIAL,
+		STOMP,	// 落下攻撃
 		_COUNT,	// カウント用
 	};
 
@@ -51,6 +52,18 @@ private:
 	int32_t cATTACKFREQUENCY_ = 6;
 	// 攻撃が連続で出にくくなるやつ
 	int attackCount_ = 0;
+
+	// 落下攻撃にかかる時間
+	int32_t cSTOMPFRAME_ = 300;
+	// どの程度で落下しきるか
+	int32_t cSTOMPFALLING_ = 30;
+	// 連続妨害
+	int stompCount_ = 0;
+
+	// 撃破演出
+	int32_t cCRUSHFRAME_ = 120;
+	// 小さい爆発
+	float cCRUSHMINIMUM_ = 17.0f;
 
 	// 次に向かう場所
 	Vector2 nextPosition_ = { 0.0f,0.0f };
@@ -245,6 +258,7 @@ private:
 	void UpdateATTACK();
 	void UpdateDAMAGE();
 	void UpdateCRUSH();
+	void UpdateSTOMP();
 
 	//必殺技の更新
 	void UpdateSpecialATK();
