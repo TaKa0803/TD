@@ -190,6 +190,14 @@ void BossEnemy::Update()
 			isInvisible_ = true;
 			HP_ -= (int)damage_;
 			damage_ = 0.0f;
+
+			for (auto& count : specialATK.count) {
+				count.count = 0;
+			}
+			specialATK.isShot = 0;
+			specialATK.nextSpecialATKCount = 0;
+			specialATK.stateCount = 0;
+			specialATK.isHitPlayerWall = false;
 			break;
 		case BossEnemy::CRUSH:
 			momentFrame_ = 120;
@@ -374,11 +382,16 @@ void BossEnemy::Draw()
 	}
 }
 
-void BossEnemy::OnCollision(float damage)
+void BossEnemy::OnCollision(float damage,bool issPecial)
 {
 	//特殊攻撃使用時ではない
 	if (!isInvisible_&&behavior_!=SPECIAL)
 	{
+		damage_ = damage;
+		reqBehavior_ = DAMAGE;
+	}
+
+	if (issPecial) {
 		damage_ = damage;
 		reqBehavior_ = DAMAGE;
 	}

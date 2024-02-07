@@ -611,7 +611,7 @@ void GameScene::CheckCollision()
 			if (boss_->GetSpecialATKCollider()->IsCollision(*boss_->GetCollider(), temp))
 			{
 				boss_->SPATKOnColliExplo();
-				boss_->OnCollision(10);
+				boss_->OnCollision(5,true);
 				AddGoodGage(10);
 
 			}

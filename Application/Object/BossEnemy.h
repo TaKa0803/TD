@@ -196,9 +196,9 @@ public:
 	auto& GetEnemies() { return enemies_; }
 	auto& GetAttacks() { return attacks_; }
 
-	void OnCollision(float damage);
+	void OnCollision(float damage,bool isSpecial=false);
 
-	bool GetIsActive() const { return isActive_; }
+	bool GetIsActive() const {return isActive_; }
 
 	//ゲージのポインタ取得
 	void SetGage(float goodgage, float maxGood) { goodGage_ = goodgage; maxGoodGage_ = maxGood; }
