@@ -628,6 +628,23 @@ void GameScene::CheckCollision()
 
 #pragma endregion
 
+#pragma region ボスとプレイヤー
+
+	// 判定を取れるか
+	if (!player_->GetIsInvisible())
+	{
+		if (player_->GetCollider()->IsCollision(*boss_->GetCollider(), temp))
+		{
+			if (player_->OnCollision())
+			{
+				AddBadGage();
+			}
+		}
+
+	}
+
+#pragma endregion
+
 
 }
 

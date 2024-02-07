@@ -167,10 +167,23 @@ void BossEnemy::Update()
 			int rnd1 = length / 2 - rand() % length;
 			int rnd2 = length / 2 - rand() % length;
 			nextPosition_ = { (float)rnd1,(float)rnd2 };
+			//エリア生成
+			DZoneEData effect;
+			effect.maxCount = float(cMOVEFRAME_ / 3);
+			effect.tenmetu = 2;
+			effect.isSphere = true;
+			effect.pos.st = world_.translate_;
+			effect.pos.ed = world_.translate_;
+
+			effect.scale.st = { 5.0f,10.0f,5.0f };
+			effect.scale.ed = { 5.0f,10.0f,5.0f };
+
+			DZoneEffect::GetInstance()->AddData(effect);
 		}
 		momentFrame_ = cMOVEFRAME_;
 		moveCount_++;
 		attackCount_ = 0;
+		stompCount_ = 0;
 		break;
 		case BossEnemy::SUMMON:
 			SeePlayer();
@@ -178,6 +191,7 @@ void BossEnemy::Update()
 			// 移動期待値 0
 			moveCount_ = 0;
 			attackCount_ = 0;
+			stompCount_ = 0;
 			break;
 		case BossEnemy::ATTACK:
 			SeePlayer();
@@ -185,6 +199,13 @@ void BossEnemy::Update()
 			// 移動期待値 0
 			moveCount_ = 0;
 			attackCount_++;
+			stompCount_ = 0;
+			break;
+		case BossEnemy::STOMP:
+			momentFrame_ = cSTOMPFRAME_;
+			moveCount_ = 0;
+			attackCount_ = 0;
+			stompCount_++;
 			break;
 		case BossEnemy::DAMAGE:
 			SetAplta(0.5f);
@@ -204,7 +225,8 @@ void BossEnemy::Update()
 			specialATK.isHitPlayerWall = false;
 			break;
 		case BossEnemy::CRUSH:
-			momentFrame_ = 120;
+			SetAplta(0.5f);
+			momentFrame_ = cCRUSHFRAME_;
 			isInvisible_ = true;
 			break;
 		case BossEnemy::SPECIAL:
@@ -249,7 +271,11 @@ void BossEnemy::Update()
 	case BossEnemy::SPECIAL:
 		UpdateSpecialATK();
 		break;
+	case BossEnemy::STOMP:
+		UpdateSTOMP();
+		break;
 	default:
+		reqBehavior_ = IDOL;
 		break;
 	}
 	/*
@@ -309,6 +335,9 @@ void BossEnemy::DebagWindow()
 	case BossEnemy::ATTACK:
 		ImGui::Text("ATTACK");
 		break;
+	case BossEnemy::STOMP:
+		ImGui::Text("STOMP");
+		break;
 	case BossEnemy::DAMAGE:
 		ImGui::Text("DAMAGE");
 		break;
@@ -336,6 +365,10 @@ void BossEnemy::DebagWindow()
 	if (ImGui::Button("Special"))
 	{
 		reqBehavior_ = SPECIAL;
+	}
+	if (ImGui::Button("Stomp"))
+	{
+		reqBehavior_ = STOMP;
 	}
 
 	std::list<std::unique_ptr<SomeEnemy>>::iterator itr = enemies_.begin();
@@ -602,12 +635,26 @@ void BossEnemy::UpdateIDOL()
 			}
 		}
 		// 範囲攻撃生成
-		else if (rnd == 1 || rnd == 2)
+		else if (rnd == 1)
 		{
 			rnd = rand() % (2 + attackCount_);
 			if (rnd == 0)
 			{
 				reqBehavior_ = ATTACK;
+			}
+			else
+			{
+				reqBehavior_ = IDOL;
+				momentFrame_ -= 10;
+			}
+		}
+		// 落下攻撃生成
+		else if (rnd == 2)
+		{
+			rnd = rand() % (2 + stompCount_);
+			if (rnd == 0)
+			{
+				reqBehavior_ = STOMP;
 			}
 			else
 			{
@@ -624,7 +671,7 @@ void BossEnemy::UpdateIDOL()
 			}
 			else
 			{
-				reqBehavior_ = IDOL;
+				reqBehavior_ = MOVE;
 				momentFrame_ -= 10;
 			}
 		}
@@ -700,12 +747,102 @@ void BossEnemy::UpdateDAMAGE()
 
 void BossEnemy::UpdateCRUSH()
 {
-	world_.scale_ += {0.05f, 0.05f, 0.05f};
+	//world_.scale_ += {0.05f, 0.05f, 0.05f};
 	invisibleFrame_ = 10;
 	momentFrame_--;
+	if (momentFrame_ % 20 == 0)
+	{
+		//以下爆発
+		ExploData data;
+		data.world = world_;
+		data.world.translate_.x += rand() % 11 - 5;
+		data.world.translate_.z += rand() % 11 - 5;
+		data.maxDeadCount = 30;
+		data.minScale = 0;
+		data.maxScale = cCRUSHMINIMUM_;
+		data.maxScaleCount = 30;
+		data.mincolor = { 1,1,1,0.5f };
+		data.minAlphaCount = 10;
+
+		EfSphereExplosion::GetInstance()->AddEffectData(data);
+	}
 	if (momentFrame_ <= 0)
 	{
 		isActive_ = false;
+	}
+}
+
+void BossEnemy::UpdateSTOMP()
+{
+	momentFrame_--;
+	// 半分以上で
+	if (cSTOMPFRAME_ / 2 <= (int32_t)momentFrame_)
+	{
+		// 10 フレームごと
+		if (momentFrame_ % (cSTOMPFRAME_ / 10) == 0)
+		{
+			nextPosition_.x = playerW_->translate_.x;
+			nextPosition_.y = playerW_->translate_.z;
+			Vector3 pos = playerW_->translate_;
+			//エリア生成
+			DZoneEData effect;
+			effect.maxCount = float(cSTOMPFALLING_);
+			effect.tenmetu = 2;
+			effect.isSphere = true;
+			effect.pos.st = pos;
+			effect.pos.ed = pos;
+
+			effect.scale.st = { 5.0f,10.0f,5.0f };
+			effect.scale.ed = { 5.0f,10.0f,5.0f };
+
+			DZoneEffect::GetInstance()->AddData(effect);
+		}
+	}
+
+	// 場所決定
+	if (momentFrame_ == cSTOMPFRAME_ / 2 - (cSTOMPFRAME_ / 10))
+	{
+		//nextPosition_.x = playerW_->translate_.x;
+		//nextPosition_.y = playerW_->translate_.z;
+		Vector3 pos = { nextPosition_.x,playerW_->translate_.y,nextPosition_.y };
+		//エリア生成
+		DZoneEData effect;
+		effect.maxCount = float(cSTOMPFRAME_ / 2);
+		effect.tenmetu = 5;
+		effect.isSphere = true;
+		effect.pos.st = pos;
+		effect.pos.ed = pos;
+
+		effect.scale.st = { 10.0f,10.0f,10.0f };
+		effect.scale.ed = { 10.0f,10.0f,10.0f };
+
+		DZoneEffect::GetInstance()->AddData(effect);
+		world_.translate_.x = nextPosition_.x;
+		world_.translate_.z = nextPosition_.y;
+		world_.translate_.y = 22.0f;
+	}
+	if (momentFrame_ <= 10)
+	{
+		world_.translate_.y -= 2.0f;
+	}
+	if (momentFrame_ <= 0)
+	{
+		//以下爆発
+		ExploData data;
+		data.world = world_;
+		data.world.translate_.y = 2.0f;
+		data.maxDeadCount = cSTOMPFALLING_;
+		data.minScale = 0;
+		data.maxScale = cCRUSHMINIMUM_;
+		data.maxScaleCount = 10;
+		data.mincolor = { 1,1,1,0.5f };
+		data.minAlphaCount = 10;
+
+		EfSphereExplosion::GetInstance()->AddEffectData(data);
+
+		world_.translate_.y = 2.0f;
+		reqBehavior_ = IDOL;
+		momentFrame_ += 60;
 	}
 }
 
@@ -749,7 +886,7 @@ void BossEnemy::UpdateSpecialATK()
 			{
 				specialATK.isShot = false;
 
-				
+
 			}
 
 
