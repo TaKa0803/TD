@@ -310,13 +310,14 @@ void BossEnemy::DebagWindow()
 	case BossEnemy::CRUSH:
 		ImGui::Text("CRUSH");
 		break;
+	case BossEnemy::SPECIAL:
+		ImGui::Text("SPECIAL");
+		break;
 	default:
 		break;
 	}
 	ImGui::Separator();
-	ImGui::Text("Enemy  : %d", enemies_.size());
-	ImGui::Text("Attack : %d", attacks_.size());
-	ImGui::Text("A++    : %d", attackCount_);
+
 	ImGui::Separator();
 	if (ImGui::Button("Summon"))
 	{
@@ -326,6 +327,10 @@ void BossEnemy::DebagWindow()
 	if (ImGui::Button("Attack"))
 	{
 		reqBehavior_ = ATTACK;
+	}
+	if (ImGui::Button("Special"))
+	{
+		reqBehavior_ = SPECIAL;
 	}
 
 	std::list<std::unique_ptr<SomeEnemy>>::iterator itr = enemies_.begin();
@@ -748,6 +753,9 @@ void BossEnemy::UpdateSpecialATK()
 				//弾の発射処理
 				specialATK.ammo->SetTranslate(world_.GetMatWorldTranslate());
 				specialATK.ammo->SetScale(10);
+				// 最初の更新
+				specialATK.ammo->Update();
+				specialATK.collider->Update();
 			}
 
 		}

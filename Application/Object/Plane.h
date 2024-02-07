@@ -7,6 +7,8 @@ public:
 
 	Plane();
 
+	void CaluclateInit();
+
 	void Initialize();
 
 	void DebagWindow();
