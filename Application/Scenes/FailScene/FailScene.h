@@ -1,6 +1,7 @@
 #pragma once
 #include "IScene/IScene.h"
 #include"Input/Input.h"
+#include"Sprite/Sprite.h"
 
 class FailScene : public IScene
 {
@@ -28,6 +29,12 @@ private:
 	Input* input_ = nullptr;
 
 
+	//シーンチェンジ用
+	std::string white = "resources/SystemResources/white.png";
+	std::unique_ptr<Sprite>sceneC_;
+	float alpha = 0;
+	bool isSceneChange = false;
+	bool isPreScene = false;
 
 };
 

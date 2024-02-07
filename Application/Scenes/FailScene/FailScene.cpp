@@ -1,11 +1,16 @@
 #include "FailScene.h"
 #include<imgui.h>
 #include"Scenes/Scenes.h"
+#include"TextureManager/TextureManager.h"
 
 
 FailScene::FailScene()
 {
 	input_ = Input::GetInstance();
+	int tex = TextureManager::LoadTex(white);
+	sceneC_.reset(Sprite::Create(tex, { 1,1 }, { 1,1 }, { 1280,720 }));
+	sceneC_->SetMaterialDataColor({ 0,0,0,1 });
+
 }
 
 FailScene::~FailScene()
@@ -14,6 +19,10 @@ FailScene::~FailScene()
 
 void FailScene::Initialize()
 {
+	sceneC_->SetColorAlpha(1.0f);
+	alpha = 1;
+	isSceneChange = false;
+	isPreScene = false;
 }
 
 void FailScene::Update()
@@ -25,6 +34,7 @@ void FailScene::Update()
 
 void FailScene::Draw()
 {
+	sceneC_->Draw();
 }
 
 void FailScene::Debug()
@@ -40,12 +50,33 @@ void FailScene::Debug()
 
 void FailScene::SceneCahnge()
 {
-	if (input_->TriggerKey(DIK_SPACE)) {
-		sceneNo = TITLE;
-	}
 
-	if (input_->IsControllerActive() && input_->IsTriggerButton(kButtonB)) {
-		sceneNo = TITLE;
+	if (!isPreScene) {
+		alpha -= 1.0f / 30.0f;
+
+		sceneC_->SetColorAlpha(alpha);
+		if (alpha <= 0.0f) {
+			alpha = 0.0f;
+			isPreScene = true;
+		}
+	}
+	else {
+		if (input_->TriggerKey(DIK_SPACE)) {
+			isSceneChange = true;
+		}
+
+		if (input_->IsControllerActive() && input_->IsTriggerButton(kButtonB)) {
+			isSceneChange = true;
+		}
+
+		if (isSceneChange) {
+			alpha += 1.0f / 60.0f;
+
+			sceneC_->SetColorAlpha(alpha);
+			if (alpha >= 1.0f) {
+				sceneNo = TITLE;
+			}
+		}
 	}
 
 	if (input_->TriggerKey(DIK_ESCAPE)) {

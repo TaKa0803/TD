@@ -65,7 +65,9 @@ GameScene::GameScene()
 	UIWorld_.scale_ = UIScale_;
 #pragma endregion
 
-
+	int tex = TextureManager::LoadTex(white);
+	sceneC_.reset(Sprite::Create(tex, { 1,1 }, { 1,1 }, { 1280,720 }));
+	sceneC_->SetMaterialDataColor({ 0,0,0,1 });
 }
 
 GameScene::~GameScene()
@@ -108,6 +110,11 @@ void GameScene::Initialize()
 	//ゲージ初期化
 	goodGage_ = 0;
 	badGage_ = 0;
+
+	sceneC_->SetColorAlpha(1.0f);
+	alpha = 1;
+	isSceneChange = false;
+	isPreScene = false;
 }
 
 
@@ -197,6 +204,7 @@ void GameScene::Draw()
 	}
 #pragma endregion
 
+	sceneC_->Draw();
 }
 
 void GameScene::DebugWindows()
@@ -627,16 +635,65 @@ void GameScene::CheckCollision()
 
 void GameScene::SceneChange()
 {
-	//ボスが死んでたら
-	if (!boss_->GetIsActive())
-	{
-		sceneNo = SCENE::CLEAR;
+
+
+	if (!isPreScene) {
+		alpha -= 1.0f / 30.0f;
+
+		sceneC_->SetColorAlpha(alpha);
+		if (alpha <= 0.0f) {
+			alpha = 0.0f;
+			isPreScene = true;
+		}
+	}
+	else {
+		//ボスが死んでたら
+		if (!boss_->GetIsActive())
+		{
+			isSceneChange = true;
+		}
+
+		//BADゲージがいっぱいになったら
+		if (badGage_ == maxBadGage_)
+		{
+			isSceneChange = true;
+		}
+
+#ifdef _DEBUG
+		if (input_->TriggerKey(DIK_P)) {
+			isSceneChange = true;
+		}
+#endif // _DEBUG
 	}
 
-	//BADゲージがいっぱいになったら
-	if (badGage_ == maxBadGage_)
-	{
-		sceneNo = FAIL;
+	if (isPreScene&&isSceneChange) {
+		alpha += 1.0f / 60.0f;
+
+		sceneC_->SetColorAlpha(alpha);
+		if (alpha >= 1.0f) {
+			//ボスが死んでたら
+			if (!boss_->GetIsActive())
+			{
+				sceneNo = SCENE::CLEAR;
+			}
+
+			//BADゲージがいっぱいになったら
+			if (badGage_ == maxBadGage_)
+			{
+				sceneNo = FAIL;
+			}
+
+#ifdef _DEBUG
+			if (input_->TriggerKey(DIK_P)) {
+				sceneNo = SCENE::CLEAR;
+			}
+#endif // _DEBUG
+
+		}
+	}
+
+	if (input_->TriggerKey(DIK_ESCAPE)) {
+		leaveGame = true;
 	}
 
 }

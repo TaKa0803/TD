@@ -37,6 +37,7 @@ private:
 	std::unique_ptr<Sprite>sceneC_;
 	float alpha = 0;
 	bool isSceneChange = false;
+	bool isPreScene = false;
 
 	std::string space = "resources/AppResource/space.png";
 	std::unique_ptr<Sprite>space_;

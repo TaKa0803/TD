@@ -35,9 +35,10 @@ TitleScene::~TitleScene() {
 }
 
 void TitleScene::Initialize() {
-	sceneC_->SetColorAlpha(0.0f);
-	alpha = 0;
+	sceneC_->SetColorAlpha(1.0f);
+	alpha = 1;
 	isSceneChange = false;
+	isPreScene = false;
 }
 
 void TitleScene::Update() {
@@ -72,21 +73,32 @@ void TitleScene::Debug() {
 void TitleScene::SceneCahnge()
 {
 
+	if (!isPreScene) {
+		alpha -= 1.0f / 30.0f;
 
-	if (input_->TriggerKey(DIK_SPACE)) {
-		isSceneChange = true;
+		sceneC_->SetColorAlpha(alpha);
+		if (alpha <= 0.0f) {
+			alpha = 0.0f;
+			isPreScene = true;
+		}
 	}
+	else {
+		if (input_->TriggerKey(DIK_SPACE)) {
+			isSceneChange = true;
+		}
 
-	if (input_->IsControllerActive() && input_->IsTriggerButton(kButtonB)) {
-		isSceneChange = true;
+		if (input_->IsControllerActive() && input_->IsTriggerButton(kButtonB)) {
+			isSceneChange = true;
+		}
+
+		if (input_->TriggerKey(DIK_ESCAPE)) {
+			leaveGame = true;
+		}
 	}
-
-	if (input_->TriggerKey(DIK_ESCAPE)) {
-		leaveGame = true;
-	}
+	
 
 
-	if (isSceneChange) {
+	if (isPreScene&&isSceneChange) {
 		alpha += 1.0f / 60.0f;
 
 		sceneC_->SetColorAlpha(alpha);
