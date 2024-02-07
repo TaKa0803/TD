@@ -4,6 +4,7 @@
 
 #include"Scenes.h"
 #include"InstancingModelManager/InstancingModelManager.h"
+#include"AudioManager/AudioManager.h"
 #include"TextureManager/TextureManager.h"
 
 //#include "SphereCollider/SphereCollider.h"
@@ -72,6 +73,9 @@ GameScene::GameScene()
 	tex = TextureManager::LoadTex("resources/AppResource/ControllUI.png");
 	ui_.reset(Sprite::Create(tex, { 1,1 }, { 1,1 }, { 1280,720 }));
 
+	bgm = AudioManager::LoadSoundNum("BGM");
+	bound = AudioManager::LoadSoundNum("Bound");
+	hit = AudioManager::LoadSoundNum("Hit");
 }
 
 GameScene::~GameScene()
@@ -119,6 +123,11 @@ void GameScene::Initialize()
 	alpha = 1;
 	isSceneChange = false;
 	isPreScene = false;
+
+	AudioManager::GetInstance()->StopAllSounds();
+
+
+	AudioManager::PlaySoundData(bgm);
 }
 
 
@@ -500,6 +509,8 @@ void GameScene::CheckCollision()
 					direct.z += RandomNumber::Get(-0.6f, 0.6f);
 					some2->OnEnemy(direct);*/
 					some2->OnEnemy(-temp);
+
+					AudioManager::PlaySoundData(hit);
 				}
 			}
 		}
@@ -540,6 +551,9 @@ void GameScene::CheckCollision()
 				direc *= Length(temp);
 
 				some->OnCollision(direc);
+
+
+				AudioManager::PlaySoundData(bound);
 			}
 		}
 
@@ -554,6 +568,9 @@ void GameScene::CheckCollision()
 			direc.SetNormalize();
 			direc *= Length(temp);
 			boss_->SPATKOnCollison(direc);
+
+
+			AudioManager::PlaySoundData(bound);
 		}
 
 		//カメラとの判定
@@ -591,6 +608,9 @@ void GameScene::CheckCollision()
 				direc.SetNormalize();
 				direc *= Length(temp);
 				boss_->SPATKReflectOnCollision(direc);
+
+
+				AudioManager::PlaySoundData(bound);
 			}
 		}
 		//プレイヤーとスペシャル攻撃との判定

@@ -93,4 +93,5 @@ private:
 
 	void CreateEcho(const EchoBlast::Infomation& info);
 
+	int shotSound_;
 };

@@ -152,4 +152,10 @@ private:
 	bool isPreScene = false;
 
 	std::unique_ptr<Sprite>ui_;
+
+
+#pragma region 音
+	int bgm, bound, hit;
+#pragma endregion
+
 };

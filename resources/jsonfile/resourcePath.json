@@ -1,7 +1,8 @@
 {
 	"audios": {
-		"audio1": [ "se_soa03.wav" ],
-		"BGM": [ "c46nt-ifwwl.wav" ],
-		"maou": [ "s2ylj-qqrf5.wav" ]
+		"BGM": [ "BGM.wav" ],
+		"Bound": ["Bound.wav"],
+		"PlayerShot": [ "PlayerShot.wav" ],
+		"Hit": [ "EnemyHitBossOrEnemy.wav" ]
 	}
 }

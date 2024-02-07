@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include "Camera/Camera.h"
+#include"AudioManager/AudioManager.h"
 
 Player::Player()
 {
@@ -25,6 +26,8 @@ void Player::Initialize()
 	isInvisible_ = true;
 	invisibleFrame_ = 60;
 	reqBehavior_ = IDOL;
+
+	shotSound_ = AudioManager::LoadSoundNum("PlayerShot");
 }
 
 void Player::Update()
@@ -55,6 +58,8 @@ void Player::Update()
 			break;
 		case Player::ATTACK:
 		{
+			AudioManager::PlaySoundData(shotSound_);
+
 			EchoBlast::Infomation info;
 			info.mode_ = ATTACKMODE::aSPOT;
 			info.direction_ = direction_;
