@@ -104,6 +104,7 @@ void BossEnemy::Initialize(const WorldTransform& player)
 	specialATK.isSpecialATK_ = false;
 	specialATK.nextSpecialATKCount = 0;
 	specialATK.stateCount = 0;
+	specialATK.isHitPlayerWall = false;
 	specialATK.isShot = false;
 
 	specialATK.collider->Initialize("ammo", specialATK.ammo->GetWorld());
@@ -437,6 +438,7 @@ void BossEnemy::SeePlayer()
 
 	//muki
 	if (seen != Vector3(0, 0, 0)) {
+		seen *= -1;
 		world_.rotate_.y = GetYRotate({ seen.x,seen.z });
 	}
 
@@ -725,7 +727,7 @@ void BossEnemy::UpdateSpecialATK()
 				specialATK.isShot = true;
 
 				//体の向きと反対に撃つのでベクトルを計算
-				Vector3 offset = { 0,0,-1 };
+				Vector3 offset = { 0,0,1 };
 				offset = TransformNormal(offset, world_.matWorld_);
 				offset.SetNormalize();
 				offset *= specialATK.ammoSpd_;

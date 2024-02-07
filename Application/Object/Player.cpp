@@ -161,8 +161,8 @@ void Player::UpdateIDOL()
 	UpdateMove();
 
 
-	if (input_->PushKey(DIK_E) ||
-		input_->IsPushButton(kRightTrigger))
+	if (input_->TriggerKey(DIK_LSHIFT) ||
+		input_->IsTriggerButton(kRightTrigger))
 	{
 		reqBehavior_ = MIRROR;
 	}
@@ -239,7 +239,7 @@ void Player::UpdateATTACK()
 void Player::UpdateMIRROR()
 {
 	// 押していない
-	if (!input_->PushKey(DIK_E) &&
+	if (!input_->PushKey(DIK_LSHIFT) &&
 		!input_->IsPushButton(kRightTrigger))
 	{
 		isEndMirror_ = true;

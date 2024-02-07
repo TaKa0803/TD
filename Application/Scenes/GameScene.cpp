@@ -272,14 +272,12 @@ void GameScene::DebugWindows()
 void GameScene::CameraUpdate()
 {
 	Vector2 stick;
-	if (input_->IsControllerActive())
+	Vector3 sti = input_->GetAllArrowKey();
+	stick = { sti.x,sti.z };
+	if (Length(stick) == 0.0f &&
+		input_->IsControllerActive())
 	{
 		stick = input_->GetjoyStickR();
-	}
-	else
-	{
-		Vector3 sti = input_->GetAllArrowKey();
-		stick = { sti.x,sti.z };
 	}
 	stick.Normalize();
 	stick.x *= xrotateNum;
@@ -326,7 +324,7 @@ void GameScene::CheckCollision()
 
 	Vector3 temp{ 0.0f,0.0f,0.0f };
 
-
+#pragma region 範囲攻撃とプレイヤー
 
 	// 範囲攻撃とプレイヤー
 	itrA = attacks.begin();
@@ -342,6 +340,56 @@ void GameScene::CheckCollision()
 		}
 	}
 
+#pragma endregion
+
+#pragma region 雑魚敵とプレイヤーの攻撃
+
+	//雑魚敵関係
+	itrE = enemies.begin();
+	for (; itrE != enemies.end(); ++itrE)
+	{
+		SomeEnemy* some = itrE->get();
+		// 弾かれてない時
+		if (!itrE->get()->GetIsBurst())
+		{
+			// 攻撃との接触
+			itrB = blasts.begin();
+			for (; itrB != blasts.end(); ++itrB)
+			{
+				EchoBlast* echo = itrB->get();
+				if (echo->GetIsSpot())
+				{
+					if (some->GetCollider()->IsCollision(*echo->GetCollider(), temp, 3))
+					{
+						echo->OnCollision();
+						some->OnCollision(echo->GetDirection());
+					}
+				}
+			}
+		}
+		else
+		{
+			//プレイヤー反射板か否か
+			itrB = blasts.begin();
+			for (; itrB != blasts.end(); ++itrB)
+			{
+				EchoBlast* echo = itrB->get();
+				if (!echo->GetIsSpot())
+				{
+					if (some->GetCollider()->IsCollision(*echo->GetCollider(), temp, 3))
+					{
+						echo->OnCollision();
+						some->OnCollision(echo->GetDirection());
+					}
+				}
+			}
+		}
+	}
+
+#pragma endregion
+
+#pragma region 雑魚敵とボス
+
 	itrE = enemies.begin();
 	for (; itrE != enemies.end(); ++itrE)
 	{
@@ -353,18 +401,16 @@ void GameScene::CheckCollision()
 			// ボスとの接触
 			if (some->GetCollider()->IsCollision(*boss->GetCollider(), temp))
 			{
-				if (!some->OnCollision())
+				if (some->OnCollision())
 				{
-					break;
+					boss->OnCollision(some->GetAttackPower());
+
+					//エフェクト発生
+					AddEffect(some->GetWorld());
+
+					//Goodゲージ増加
+					AddGoodGage(some->GetAttackPower());
 				}
-				boss->OnCollision(some->GetAttackPower());
-
-				//エフェクト発生
-				AddEffect(some->GetWorld());
-
-				//Goodゲージ増加
-				AddGoodGage(some->GetAttackPower());
-
 			}
 
 			//プレイヤーと爆破
@@ -407,14 +453,16 @@ void GameScene::CheckCollision()
 				BossEnemy* boss = boss_.get();
 				if (some->GetCollider()->IsCollision(*boss->GetCollider(), temp))
 				{
-					some->OnCollision();
-					boss->OnCollision(some->GetAttackPower());
+					if (some->OnCollision())
+					{
+						boss->OnCollision(some->GetAttackPower());
 
-					//エフェクト発生
-					AddEffect(some->GetWorld());
+						//エフェクト発生
+						AddEffect(some->GetWorld());
 
-					//Goodゲージ増加
-					AddGoodGage(some->GetAttackPower());
+						//Goodゲージ増加
+						AddGoodGage(some->GetAttackPower());
+					}
 				}
 			}
 
@@ -439,6 +487,11 @@ void GameScene::CheckCollision()
 			}
 		}
 	}
+
+#pragma endregion
+
+#pragma region 雑魚敵と壁
+
 	//壁関係処理
 	itrW = walls.begin();
 	for (; itrW != walls.end(); ++itrW)
@@ -500,57 +553,10 @@ void GameScene::CheckCollision()
 		}
 		*/
 	}
-	//雑魚敵関係
-	itrE = enemies.begin();
-	for (; itrE != enemies.end(); ++itrE)
-	{
-		SomeEnemy* some = itrE->get();
 
-		// 弾かれてない時
-		if (!itrE->get()->GetIsBurst())
-		{
-			// 攻撃との接触
-			itrB = blasts.begin();
-			for (; itrB != blasts.end(); ++itrB)
-			{
-				EchoBlast* echo = itrB->get();
-				if (echo->GetIsSpot())
-				{
-					if (some->GetCollider()->IsCollision(*echo->GetCollider(), temp, 3))
-					{
-						echo->OnCollision();
-						some->OnCollision(echo->GetDirection());
-					}
+#pragma endregion
 
-
-				}
-			}
-		}
-		else
-		{
-			//プレイヤー反射板か否か
-			itrB = blasts.begin();
-			for (; itrB != blasts.end(); ++itrB)
-			{
-				EchoBlast* echo = itrB->get();
-				if (!echo->GetIsSpot())
-				{
-					if (some->GetCollider()->IsCollision(*echo->GetCollider(), temp, 3))
-					{
-						echo->OnCollision();
-						some->OnCollision(echo->GetDirection());
-					}
-
-				}
-
-
-			}
-
-
-		}
-
-	}
-
+#pragma region ボスの必殺技とプレイヤーの攻撃
 
 	//ボスの必殺技との処理
 	if (boss_->IsSpecialAttackActive())
@@ -558,6 +564,8 @@ void GameScene::CheckCollision()
 		for (; itrB != blasts.end(); ++itrB)
 		{
 			EchoBlast* echo = itrB->get();
+			// 反射板
+			// 球とOBBの判定
 			if (!echo->GetIsSpot() && boss_->GetSpecialATKCollider()->IsCollision(*echo->GetCollider(), temp, 3))
 			{
 				//押し返しベクトル計算
@@ -567,24 +575,28 @@ void GameScene::CheckCollision()
 				boss_->SPATKReflectOnCollision(direc);
 			}
 		}
-	}
-
-	//プレイヤーとスペシャル攻撃との判定
-	//反射板なしでプレイヤーヒットで爆破
-	if (!boss_->IsHitPlayerReflection() && boss_->IsSpecialAttackActive() && player_->GetCollider()->IsCollision(*boss_->GetSpecialATKCollider(), temp))
-	{
-		// プレイヤーが衝突判定を取れる時
-		if (player_->OnCollision())
+		//プレイヤーとスペシャル攻撃との判定
+		//反射板なしでプレイヤーヒットで爆破
+		if (!boss_->IsHitPlayerReflection() &&
+			player_->GetCollider()->IsCollision(*boss_->GetSpecialATKCollider(), temp))
 		{
-			AddBadGage();
-			//爆発
-			boss_->SPATKOnColliExplo();
+			// プレイヤーが衝突判定を取れる時
+			if (player_->OnCollision())
+			{
+				AddBadGage();
+				//爆発
+				boss_->SPATKOnColliExplo();
+			}
 		}
 	}
 
+
+#pragma endregion
+
+#pragma region ボスの必殺技とボス
+
 	if (boss_->IsSpecialAttackActive())
 	{
-
 		if (boss_->IsHitPlayerReflection())
 		{
 			boss_->SetAplta(1.0f);
@@ -605,6 +617,11 @@ void GameScene::CheckCollision()
 	{
 		boss_->SetAplta(1.0f);
 	}
+
+
+#pragma endregion
+
+
 }
 
 
